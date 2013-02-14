@@ -44,12 +44,23 @@
   <body>
     <div id="chart1" class="chart"></div>
     <script type="text/javascript">
-      graph = new SimpleGraph("chart1", {
-          "xmax": 60, "xmin": 0,
-          "ymax": 40, "ymin": 0, 
+    d3.json("PathList.json", function(json) {
+
+	    var NodeList = json.node;
+	    var LinkList = json.path;
+	    var MaxX = json.MaxX*2;
+	    var MaxY = json.MaxY*1.1;
+	    console.log(json);
+	    console.log(MaxY);
+	 graph = new SimpleGraph("chart1", {
+          "xmax": MaxX, "xmin": -1*MaxX*0.5,
+          "ymax": MaxY, "ymin": -1*MaxY*0.3, 
           "title": "Simple Graph1",
           "xlabel": "X Axis",
-          "ylabel": "Y Axis"  
+          "ylabel": "Y Axis" ,  
+          "Node": NodeList,
+          "Link": LinkList
+          });
         });
     </script>
   </body>

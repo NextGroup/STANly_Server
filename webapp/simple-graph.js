@@ -1,3 +1,113 @@
+GraphData = function(node,link,xmax,ymax){
+ 	var self = this;
+ 	var Xmax = xmax;
+ 	var Ymax = ymax*0.8;
+ 	this.LinkCount = link.length;
+
+ 	this.NodeList = d3.range(node.length).map(function(i) { 
+    	return { id:node[i].id, layer:node[i].Layer, x: node[i].x , y:Ymax -(node[i].y)  }; 
+    	}, self);
+ 	
+ 	console.log(this.NodeList);
+ 	this.LinkList = new Array();
+ 	
+ 	for(var i=0;i<this.LinkCount;i++)
+ 	{
+ 		var Llist = link[i]; 
+ 		this.LinkList.push(d3.range(Llist.InflectionPoint.length).map(function(i) { 
+	 		return { src:Llist.sid , tar: Llist.tid,
+	 		x: Llist.InflectionPoint[i].x , y: Ymax-(Llist.InflectionPoint[i].y)  }; 
+	 		}, self));
+    }
+ 	//판에 크기에 대한 데이터 및 두개 사이의 넓이에 대한 정보도 필요
+ 	return this;
+};
+GraphData.prototype.ChangeLocation = function(id,x,y,dx,dy)
+{
+	var ChangeNode = new Array();
+	for(var i=0;i<this.NodeList.length;i++)
+	{
+		if(this.NodeList[i].id == id)
+			continue;
+			
+		if(this.NodeList[i].y < y)
+		{
+			this.NodeList[i].y-=dy
+			this.NodeList[i].x = (this.NodeList[i].x > x) ? 
+									this.NodeList[i].x+dx: this.NodeList[i].x-dx;
+			ChangeNode.push(this.NodeList[i].id);
+		} 
+		else if(this.NodeList[i].y == y)
+		{
+			this.NodeList[i].x = (this.NodeList[i].x > x) ? 
+									this.NodeList[i].x+dx: this.NodeList[i].x-dx;
+			ChangeNode.push(this.NodeList[i].id);		}
+	}
+				console.log("Hello");
+			console.log(ChangeNode);
+	
+	for(var i=0;i<this.LinkList.length;i++)
+	{
+		var Chksum = false;
+		
+		for(var k=0;k<ChangeNode.length;k++)
+		{
+			console.log(this.LinkList[i][0].tar);
+			if(this.LinkList[i][0].tar ==ChangeNode[k])
+			{
+			console.log("들어옴)");
+				Chksum = true;
+				break;
+			}
+		}
+		if(Chksum)
+		{
+			console.log("들어옴)");
+
+			for(var j=0;j<this.LinkList[i].length;j++)
+			{
+				if(j==0)
+				{
+					if(this.LinkList[i][0].src == id)
+						continue;
+					var Chk2 = true;	
+					for(var t=0;t<ChangeNode.length;t++)
+					{
+						if(ChangeNode[t]==this.LinkList[i][0].src)
+						{
+							Chk2= false;
+							break;
+						}	
+							
+					}
+					if(Chk2)
+						continue;
+				}
+				if(this.LinkList[i][j].y<y)
+				{
+					this.LinkList[i][j].y-=dy;
+				}
+						this.LinkList[i][j].x = (this.LinkList[i][j].x > x) ? 
+									this.LinkList[i][j].x+dx: this.LinkList[i][j].x-dx;
+			}
+		}
+	}
+}
+GraphData.prototype.getLinkList = function(index){
+	
+	if(index>=this.LinkCount)
+		return null;
+ 
+	return this.LinkList[index];
+  
+}
+GraphData.prototype.getLinkListCount = function(){
+	return this.LinkCount;
+}
+
+
+
+
 registerKeyboardHandler = function(callback) {
   var callback = callback;
   d3.select(window).on("keydown", callback);  
@@ -44,7 +154,8 @@ SimpleGraph = function(elemid, options) {
   // drag y-axis logic
   this.downy = Math.NaN;
  
-  this.dragged = this.selected = null;
+  this.SelectedNode = new Array();
+
  
   this.line = d3.svg.line()
       .x(function(d, i) { return this.x(d.x); })
@@ -54,27 +165,30 @@ SimpleGraph = function(elemid, options) {
       yrange2 = (this.options.ymax - this.options.ymin) / 2,
       yrange4 = yrange2 / 2,
       datacount = 5;     
-      console.log(datacount);
-      
-  this.points  = d3.range(datacount).map(function(i) { 
-    return { t: 0, x: i*i , y:i*i  }; 
-  }, self);
-    
-   this.pointsf  = d3.range(datacount).map(function(i) { 
-    return { t: 0, x: i , y:i*i*i  }; 
-  }, self);
-  
-  console.log("BbBBB");
-  console.log(this.points);
-  console.log("AAAAA");
-  console.log(this.pointsf);
+
+  this.GraphPosition = new GraphData(options.Node,options.Link,this.options.xmax,this.options.ymax);
+      console.log(this.GraphPosition);
+
+
   
   this.vis = d3.select(this.chart).append("svg")
       .attr("width",  this.cx)
       .attr("height", this.cy)
       .append("g")
         .attr("transform", "translate(" + this.padding.left + "," + this.padding.top + ")");
+        
+        //화살표 지정 
+        
+   this.vis.append("svg:defs").selectAll("marker")
+     .data("H").enter().append("svg:marker")
+     .attr("id", String).attr("viewBox", "0 -5 10 10")
+     .attr("refX", 15).attr("refY", -1.5)
+     .attr("markerWidth", 5)
+     .attr("markerHeight", 5)
+     .attr("orient", "auto").append("svg:path").attr("d", "M0,-5L10,0L0,5");
+
  
+
   this.plot = this.vis.append("rect")
       .attr("width", this.size.width)
       .attr("height", this.size.height)
@@ -94,12 +208,13 @@ SimpleGraph = function(elemid, options) {
  	     .attr("viewBox", "0 0 "+this.size.width+" "+this.size.height)
  	     .attr("class", "line");
           
-          this.addPath(plotView,this.points);
-          this.addPath(plotView,this.pointsf);
-
-
-          
-     
+    for(var i=0;i<this.GraphPosition.getLinkListCount();i++)
+    {
+ 	   this.addPath(plotView,this.GraphPosition.getLinkList(i));
+    }          
+        
+        
+ 
   // add Chart Title
   if (this.options.title) {
     this.vis.append("text")
@@ -150,30 +265,22 @@ SimpleGraph.prototype.plot_drag = function() {
  
 SimpleGraph.prototype.update = function() {
   var self = this;
-  var arry= [this.points,this.pointsf];
+  
   //이동했을 때를 처리하는 곳
-  
-
-  var foo = function(array, self) {
-	  return self.vis.selectAll("path").attr("d",function(d, i) { 
-  					console.log(i);
-  				return self.line(array[i]); }
+   	this.vis.select("svg").selectAll("path").attr("d",function(d, i) { 	
+   					
+  				return self.line(self.GraphPosition.getLinkList(i)); }
   				);
-  };
-  var lines2  = foo(arry,this);
-  
 
-          
-      
   var circle = this.vis.select("svg").selectAll("circle")
-      .data(this.points, function(d) { return d; });
+      .data(self.GraphPosition.NodeList, function(d) { return d; });
  
   circle.enter().append("circle")
       .attr("class", function(d) { return d === self.selected ? "selected" : null; })
       .attr("cx",    function(d) { return self.x(d.x); })
       .attr("cy",    function(d) { return self.y(d.y); })
       .attr("r", 10.0)
-      .style("cursor", "ns-resize");
+      .style("cursor", "ns-resize").on("mousedown.drag",  self.NodeMouseDown());
       
   circle
       .attr("class", function(d) { return d === self.selected ? "selected" : null; })
@@ -262,7 +369,7 @@ SimpleGraph.prototype.mouseup = function() {
  
 SimpleGraph.prototype.keydown = function() {
   var self = this;
-  console.log("Key Down Drag");
+
   //마우스 키이벤트 처리하는 부분
   return function() {
     if (!self.selected) return;
@@ -382,8 +489,52 @@ SimpleGraph.prototype.yaxis_drag = function(d) {
   }
 };
 
+SimpleGraph.prototype.NodeMouseDown = function(d){
+
+	var self = this;
+  return function(d) {
+    registerKeyboardHandler(self.keydown());
+    document.onselectstart = function() { return false; };
+    	console.log(d.id);
+    	self.NodeViewUpdate(d);
+    	console.log(self.SelectedNode);
+    	self.update();
+    }
+};
+
+SimpleGraph.prototype.NodeViewUpdate = function(d)
+{
+	var self =this;
+	var chk = true;
+	for(var i=0;i<this.SelectedNode.length;i++)
+	{
+		if(this.SelectedNode[i].id == d.id)
+		{
+			chk= false;
+			break;
+		}
+	}
+	if(chk == true)
+	{
+		var Data = {
+			id:d.id,
+			x:d.x,
+			y:d.y,
+			width:50,
+			height:30,	
+		};
+		this.SelectedNode.push(Data);
+		this.GraphPosition.ChangeLocation(Data.id,Data.x,Data.y,Data.width/2,Data.height);
+	}
+	
+	
+}
+
 SimpleGraph.prototype.addPath = function(view,pointList){
 	  view.append("path")
           .attr("class", "line")
-          .attr("d", this.line(pointList));
+          .attr("d", this.line(pointList))
+         .attr("marker-end", function(d) {
+	     return "url(#H)";
+	     });
 }
