@@ -1,11 +1,12 @@
 GraphData = function(node,link,xmax,ymax){
  	var self = this;
  	var Xmax = xmax;
- 	var Ymax = ymax*0.8;
+ 	var Ymax = ymax;
  	this.LinkCount = link.length;
 
- 	this.NodeList = d3.range(node.length).map(function(i) { 
-    	return { id:node[i].id, layer:node[i].Layer, x: node[i].x , y:Ymax -(node[i].y)  }; 
+ 	this.NodeList = d3.range(node.length).map(function(i) {
+ 		console.log(Ymax -(node[i].y)); 
+    	return { id:node[i].id, width:node[i].width,height:node[i].height,  x: node[i].x , y:-(node[i].y)  }; 
     	}, self);
  	
  	console.log(this.NodeList);
@@ -16,83 +17,13 @@ GraphData = function(node,link,xmax,ymax){
  		var Llist = link[i]; 
  		this.LinkList.push(d3.range(Llist.InflectionPoint.length).map(function(i) { 
 	 		return { src:Llist.sid , tar: Llist.tid,
-	 		x: Llist.InflectionPoint[i].x , y: Ymax-(Llist.InflectionPoint[i].y)  }; 
+	 		x: Llist.InflectionPoint[i].x , y: -(Llist.InflectionPoint[i].y)  }; 
 	 		}, self));
     }
  	//판에 크기에 대한 데이터 및 두개 사이의 넓이에 대한 정보도 필요
  	return this;
 };
-GraphData.prototype.ChangeLocation = function(id,x,y,dx,dy)
-{
-	var ChangeNode = new Array();
-	for(var i=0;i<this.NodeList.length;i++)
-	{
-		if(this.NodeList[i].id == id)
-			continue;
-			
-		if(this.NodeList[i].y < y)
-		{
-			this.NodeList[i].y-=dy
-			this.NodeList[i].x = (this.NodeList[i].x > x) ? 
-									this.NodeList[i].x+dx: this.NodeList[i].x-dx;
-			ChangeNode.push(this.NodeList[i].id);
-		} 
-		else if(this.NodeList[i].y == y)
-		{
-			this.NodeList[i].x = (this.NodeList[i].x > x) ? 
-									this.NodeList[i].x+dx: this.NodeList[i].x-dx;
-			ChangeNode.push(this.NodeList[i].id);		}
-	}
-				console.log("Hello");
-			console.log(ChangeNode);
-	
-	for(var i=0;i<this.LinkList.length;i++)
-	{
-		var Chksum = false;
-		
-		for(var k=0;k<ChangeNode.length;k++)
-		{
-			console.log(this.LinkList[i][0].tar);
-			if(this.LinkList[i][0].tar ==ChangeNode[k])
-			{
-			console.log("들어옴)");
-				Chksum = true;
-				break;
-			}
-		}
-		if(Chksum)
-		{
-			console.log("들어옴)");
 
-			for(var j=0;j<this.LinkList[i].length;j++)
-			{
-				if(j==0)
-				{
-					if(this.LinkList[i][0].src == id)
-						continue;
-					var Chk2 = true;	
-					for(var t=0;t<ChangeNode.length;t++)
-					{
-						if(ChangeNode[t]==this.LinkList[i][0].src)
-						{
-							Chk2= false;
-							break;
-						}	
-							
-					}
-					if(Chk2)
-						continue;
-				}
-				if(this.LinkList[i][j].y<y)
-				{
-					this.LinkList[i][j].y-=dy;
-				}
-						this.LinkList[i][j].x = (this.LinkList[i][j].x > x) ? 
-									this.LinkList[i][j].x+dx: this.LinkList[i][j].x-dx;
-			}
-		}
-	}
-}
 GraphData.prototype.getLinkList = function(index){
 	
 	if(index>=this.LinkCount)
@@ -155,7 +86,8 @@ SimpleGraph = function(elemid, options) {
   this.downy = Math.NaN;
  
   this.SelectedNode = new Array();
-
+  
+  this.SubGraphArray = new Array();
  
   this.line = d3.svg.line()
       .x(function(d, i) { return this.x(d.x); })
@@ -167,7 +99,7 @@ SimpleGraph = function(elemid, options) {
       datacount = 5;     
 
   this.GraphPosition = new GraphData(options.Node,options.Link,this.options.xmax,this.options.ymax);
-      console.log(this.GraphPosition);
+
 
 
   
@@ -210,7 +142,7 @@ SimpleGraph = function(elemid, options) {
           
     for(var i=0;i<this.GraphPosition.getLinkListCount();i++)
     {
- 	   this.addPath(plotView,this.GraphPosition.getLinkList(i));
+ 	   this.addPath(plotView,"MainGraph",this.GraphPosition.getLinkList(i));
     }          
         
         
@@ -231,7 +163,8 @@ SimpleGraph = function(elemid, options) {
       .on("touchmove.drag", self.mousemove())
       .on("mouseup.drag",   self.mouseup())
       .on("touchend.drag",  self.mouseup());
- 
+ this.SubGraphInsert(plotView,options.Node,this.options.ymax);
+
   this.redraw()();
 };
   
@@ -267,28 +200,76 @@ SimpleGraph.prototype.update = function() {
   var self = this;
   
   //이동했을 때를 처리하는 곳
-   	this.vis.select("svg").selectAll("path").attr("d",function(d, i) { 	
+   	this.vis.select("svg").selectAll("#MainGraph").attr("d",function(d, i) { 	
    					
   				return self.line(self.GraphPosition.getLinkList(i)); }
   				);
 
-  var circle = this.vis.select("svg").selectAll("circle")
-      .data(self.GraphPosition.NodeList, function(d) { return d; });
+  var circle = this.vis.select("svg").selectAll("#MainNode")
+      .data(self.GraphPosition.NodeList, function(d) {  return d; });
  
-  circle.enter().append("circle")
-      .attr("class", function(d) { return d === self.selected ? "selected" : null; })
-      .attr("cx",    function(d) { return self.x(d.x); })
-      .attr("cy",    function(d) { return self.y(d.y); })
-      .attr("r", 10.0)
-      .style("cursor", "ns-resize").on("mousedown.drag",  self.NodeMouseDown());
+  circle.enter().append("rect")
+      .attr("x",    function(d) { 
+      	var Temp = self.x(d.x);
+      	return Temp; })
+      .attr("y",    function(d) { return self.y(d.y); })
+      .attr("width", function(d) { return (self.x(d.x+d.width) - self.x(d.x));})
+      .attr("height", function(d){ return (self.y(d.y)-self.y(d.y+d.height));})
+      .attr("id","MainNode")
+      .on("mousedown.drag",  self.NodeMouseDown());
       
-  circle
-      .attr("class", function(d) { return d === self.selected ? "selected" : null; })
-      .attr("cx",    function(d) { 
-        return self.x(d.x); })
-      .attr("cy",    function(d) { return self.y(d.y); });
+      
+       circle
+      .attr("x",    function(d) { 
+      	var Temp = self.x(d.x);
+      	return Temp; })
+      .attr("y",    function(d) { 
+      	console.log(d.y);
+      return self.y(d.y); })
+      .attr("width", function(d) { return (self.x(d.x+d.width) - self.x(d.x));})
+      .attr("height", function(d){ return (self.y(d.y)-self.y(d.y+d.height));});
+
  
-  circle.exit().remove();
+      circle.exit().remove();
+ 
+     for(var j=0;j<this.subId.length;j++)
+	 {
+		 this.vis.select("svg").selectAll("#Sub"+this.subId[j]).attr("d",function(d, i) { 	
+  					return self.line(self.SubGraphArray[j].getLinkList(i)); }
+  					);
+	 }	
+	 for(var j=0;j<this.subId.length;j++)
+	 {
+		 
+
+		  
+		 var circle2 = this.vis.select("svg").selectAll("#SubNode"+this.subId[j])
+		 .data(self.SubGraphArray[j].NodeList, function(d) {  return d; });
+ 
+		 circle2.enter().append("rect")
+		 .attr("x",    function(d) { 
+			 var Temp = self.x(d.x);
+			 return Temp; })
+			 .attr("y",    function(d) { return self.y(d.y); })
+			 .attr("width", function(d) { return (self.x(d.x+d.width) - self.x(d.x));})
+			 .attr("height", function(d){ return (self.y(d.y)-self.y(d.y+d.height));})
+			 .attr("id","MainNode")
+			 .on("mousedown.drag",  self.NodeMouseDown());
+      
+      
+		 circle2
+		 .attr("x",    function(d) { 
+			 var Temp = self.x(d.x);
+			 return Temp; })
+			 .attr("y",    function(d) { 
+				 return self.y(d.y); })
+				 .attr("width", function(d) { return (self.x(d.x+d.width) - self.x(d.x));})
+				 .attr("height", function(d){ return (self.y(d.y)-self.y(d.y+d.height));});
+
+ 
+				 circle2.exit().remove();
+	 }
+
  
   if (d3.event && d3.event.keyCode) {
     d3.event.preventDefault();
@@ -524,16 +505,51 @@ SimpleGraph.prototype.NodeViewUpdate = function(d)
 			height:30,	
 		};
 		this.SelectedNode.push(Data);
-		this.GraphPosition.ChangeLocation(Data.id,Data.x,Data.y,Data.width/2,Data.height);
 	}
 	
 	
 }
+SimpleGraph.prototype.SubGraphInsert = function(view, NodeList, ymax){
+	var self = this;
+	this.subId = new Array();
 
-SimpleGraph.prototype.addPath = function(view,pointList){
+	for(var i=0;i<NodeList.length;i++)
+	{
+		if(NodeList[i].SubGraph)
+		{
+			var subGraph = NodeList[i].SubGraph;
+			
+			this.SubGraphArray.push(new GraphData(subGraph.node,subGraph.path,0,ymax));
+			
+			this.subId.push(NodeList[i].id);
+		}	
+	}
+	
+	for(var i=0;i<this.SubGraphArray.length;i++)
+	{
+
+		for(var j=0;j<this.SubGraphArray[i].getLinkListCount();j++)
+		{
+			self.addPath(view,"Sub"+this.subId[i],this.SubGraphArray[i].getLinkList(j));
+				console.log(this.SubGraphArray[i].getLinkList(j));
+			}
+	}
+
+}
+
+SimpleGraph.prototype.SubGraphUpdate = function()
+{
+
+
+
+}
+
+
+SimpleGraph.prototype.addPath = function(view,id, pointList){
 	  view.append("path")
           .attr("class", "line")
           .attr("d", this.line(pointList))
+          .attr("id",id)
          .attr("marker-end", function(d) {
 	     return "url(#H)";
 	     });

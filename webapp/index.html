@@ -22,7 +22,7 @@
         background-color: #F7F2C5;
         width: 960px;
         height: 500px; }
-      circle, .line {
+      rect, .line {
         fill: none;
         stroke: steelblue;
         stroke-width: 2px; }
@@ -48,9 +48,9 @@
 
 	    var NodeList = json.node;
 	    var LinkList = json.path;
-	    var MaxX = json.MaxX*2;
-	    var MaxY = json.MaxY*1.1;
-	    console.log(json);
+	    var MaxX = json.width*1.1;
+	    var MaxY = json.height*0.9;
+	    console.log(MaxX);
 	    console.log(MaxY);
 	 graph = new SimpleGraph("chart1", {
           "xmax": MaxX, "xmin": -1*MaxX*0.5,
