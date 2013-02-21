@@ -1,33 +1,65 @@
+function createRequst(){
+	var request;
+	try{
+		request = new XMLHttpRequest();
+		
+	}catch(exception){
+		try{
+			request = new ActiveXObject('Msxml2.XMLHTTP');
+		}catch(innerexception)
+		{
+			request = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		
+	}
+	return request;
+	
+	
+}
+
+var MainGraph;
+var clickNodeList = new Array();
 
 Graph = function(svg, svgGroup, GraphId, graphML){
 
 	this.nodes;
 	this.edges;
 	this.id = GraphId;
-	this.GMLData = graphML;
-
-	this.svg = svg;
-
-	this.svgGroup = svgGroup;
-	this.clickNodeList = new Array();
-	this.subGraphList = new Array();
-
-	this.tryDraw();
-	if(this.id=="Main")
-	{
-		var self = this;
-		  this.svg.call(d3.behavior.zoom().on("zoom", function redraw() {
-			  self.svgGroup.attr("transform",
-          "translate(" + d3.event.translate + ")"
-          + " scale(" + d3.event.scale + ")");
-          }));
-	}
+	var self = this;
+	self.svgGroup = svgGroup;
+	self.svg = svg;
+	this.request = createRequst();
+	this.request.open('GET',graphML,false);
+	var subGraphList = new Array();
+	this.request.send(null);
 	
+
+
+
+		self.GMLData = eval('('+this.request.responseText+')').dot;
+
+
+
+
+
+		self.tryDraw();
+		if(self.id=="Main")
+		{
+			MainGraph = this;
+			  self.svg.call(d3.behavior.zoom().on("zoom", function redraw() {
+				  self.svgGroup.attr("transform",
+				  "translate(" + d3.event.translate + ")"
+				  + " scale(" + d3.event.scale + ")");
+          }));
+         }
+	
+
 
 }
 
 Graph.prototype.tryDraw = function() {
-  var result;
+ 	
+ 	 var result;
  
 
       result = dagre.dot.toObjects(this.GMLData);
@@ -44,8 +76,8 @@ Graph.prototype.tryDraw = function() {
         edge.source.outEdges.push(edge);
         edge.target.inEdges.push(edge);
       });
-      this.subGraphList=[];
-  
+
+
       this.draw(result.nodes, result.edges);
     
   }
@@ -56,12 +88,16 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   // so for now we remove everything.
   
   var self=this;
+   console.log(this.request.readyState);
+  console.log(this.svgGroup);
+ 
   this.svgGroup.selectAll("*").remove();
-
+      this.subGraphList=[];// 모두 초기화
+      
   this.nodes = this.svgGroup
     .selectAll("g ."+this.id+"-node")
     .data(nodeData, function(d) {  return d.id; });
-    console.log(nodeData);
+   
  
   var nodeEnter = this.nodes
     .enter()
@@ -77,20 +113,20 @@ Graph.prototype.draw = function(nodeData, edgeData) {
 	 	
 	 	if(!d.subgraph)
 	 		return;
-		if(!self.clickNodeList[d.id])
+		if(!clickNodeList[d.id])
 		{
-			self.clickNodeList[d.id]= true;
-					self.tryDraw();
-			//이벤트 중첩 발생을 막기 위한 코드 임시적으로 클릭 이벤트를 없앤다.
+			clickNodeList[d.id]= true;
 			self.nodes.filter(function(data){return data.id == d.id;})
 				.on("click",function(d){});
+			MainGraph.tryDraw();
+			//이벤트 중첩 발생을 막기 위한 코드 임시적으로 클릭 이벤트를 없앤다.
 		}	
 		
 	  })
 
   nodeEnter.attr("id", function(d){ 
       	var chk=false;
-      		console.log(self.subGraphList.length);
+      
       		for(var i=0;i<self.subGraphList.length;i++)
       		{	
        			if(self.subGraphList[i].id.split("-")[1] == d.id)
@@ -122,7 +158,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   
 
   this.edges.on("click", function(d) {
-		console.log(d.id);
+
 
 		self.Draw();
 	  })
@@ -136,7 +172,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   	var layout = dagre.layout()
   	    .nodeSep(50)
     .edgeSep(10)
-    .rankSep(50)
+    .rankSep(30)
     .nodes(nodeData)
     .edges(edgeData)
     .debugLevel(0)
@@ -169,7 +205,7 @@ Graph.prototype.addLabels = function(selection) {
 
   labelGroup
     .filter(function(d) { 
-        return (d.label[0] !== "<")&&(!self.clickNodeList[d.id]); }) //동등하지 않은 경우 TEXT 형태로 
+        return (d.label[0] !== "<")&&(!clickNodeList[d.id]); }) //동등하지 않은 경우 TEXT 형태로 
     .append("text");
     
    
@@ -178,18 +214,18 @@ Graph.prototype.addLabels = function(selection) {
  
     var LabelData = labelGroup
     .filter(function(d) { 
-        return (d.subgraph)&&(self.clickNodeList[d.id]); })
+        return (d.subgraph)&&(clickNodeList[d.id]); })
     .append("text")
     .attr("id",function(d) {return "subgraph-"+d.id;}).on("click",function(d){
-		 			console.log("접기 이벤트 "+ d.id);
-		 			self.clickNodeList[d.id]= false;
-					self.tryDraw();
+		 			
+		 			clickNodeList[d.id]= false;
+					MainGraph.tryDraw();
 	 			});
 	 			
 
     labelGroup
     .filter(function(d) { 
-        return (d.subgraph)&&(self.clickNodeList[d.id]); }) 
+        return (d.subgraph)&&(clickNodeList[d.id]); }) 
     .append("svg")
     .attr("class",function(d) { 
     	SubArray.push("subgraph-"+d.id);
@@ -199,8 +235,13 @@ Graph.prototype.addLabels = function(selection) {
     for(var i=0;i<SubArray.length;i++)
     {
 	 	var subSvg = d3.select("."+SubArray[i]);
-		var subGroup = subSvg.append("g").attr("id",SubArray[i]);
-	 	this.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],"#inputGraphTest"));
+	 	var subgraphData;
+		var subGroup = subSvg.append("g").attr("id",SubArray[i]).each(function(d){
+				subgraphData = d.subgraph;
+		});
+	 			self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData));	
+	 
+	 	console.log(SubArray[i] + ":"+subGroup.node().getBBox().width+" ----- "+subGroup.node().getBBox().height);
 	}
   
 
@@ -213,7 +254,6 @@ Graph.prototype.recalcLabels = function() {
 
   var foLabel = labelGroup
     .selectAll(".htmllabel")
-    // TODO find a better way to get the dimensions for foriegnObjects
     .attr("width", "10000");	//Web 객체의 사이즈를 알지 못하므로 width를 크게 설정
 
   foLabel
@@ -231,7 +271,7 @@ Graph.prototype.recalcLabels = function() {
     .attr("height", function(d) { return d.height; });
 
   var textLabel = labelGroup
-    .filter(function(d) { return (d.label[0] !== "<")&&(!self.clickNodeList[d.id]); });
+    .filter(function(d) { return (d.label[0] !== "<")&&(!clickNodeList[d.id]); });
 
   textLabel
     .select("text")
@@ -280,7 +320,8 @@ Graph.prototype.ensureTwoControlPoints = function(d) {
 }
 
 Graph.prototype.update = function() {
-  	
+  
+
   	var self = this;
  
  
@@ -333,7 +374,7 @@ Graph.prototype.update = function() {
       var y = (points[0].y + points[1].y) / 2;
       return "translate(" + (-d.bbox.width / 2 + x) + "," + (-d.bbox.height / 2 + y) + ")";
       });
-      
+      //함수의 d는 우리가 데이터로 넘겨준 엣지와 노드 데이터들
       //서브 그래프 갱신 
      for(var i=0;i<this.subGraphList.length;i++)
   		this.subGraphList[i].update();

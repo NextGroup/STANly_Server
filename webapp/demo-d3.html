@@ -149,7 +149,8 @@ DiGraph = function(transitions){
       .append("g")
       .attr("class", "node")
       .attr("id", function(d) { return "node-" + d.label });
-
+      
+      console.log(states);
   var edges = svgGroup
     .selectAll("path .edge")
     .data(transitions)

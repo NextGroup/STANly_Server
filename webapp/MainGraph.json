@@ -1,0 +1,5 @@
+{
+"dot" : "digraph { A [label=\"<div style='padding: 10px;'>A <span style='font-size:32px'>Big</span> <span style='color:red;'>HTML</span> Source!</div>\"]; D [subgraph = \"DsubGraph.json\"]; E [label=\"A blue sink\"]; A -> B -> C;   B -> D -> E; C -> E;  A -> D [label=\"<div>A multi-rank <span style='color:blue;'>HTML</span> edge!</div>\"];}"
+
+}
+  

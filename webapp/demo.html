@@ -123,17 +123,11 @@ digraph {
 <script src="dagre.js"></script>
 <script src="PackageGraph.js"></script>
 <script>
-// Input related code goes here
-
-
-</script>
-
-<script>
 
 var Grapdata = document.querySelector("#inputGraph");
 var Mainsvg = d3.select("svg");
 var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main",Grapdata.value);
+var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","MainGraph.json");
 
 </script>
 
