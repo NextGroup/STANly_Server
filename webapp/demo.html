@@ -12,6 +12,78 @@ rect {
   fill: #fff;
 }
 
+
+#package  {
+  stroke-width: 3px;
+
+  stroke: #f7d27d;
+  fill: none;
+}
+
+#package:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+
+#setpackage  {
+  stroke-width: 3px;
+
+  stroke: #f7d27d;
+  fill: none;
+}
+
+#setpackage:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+#JavaClass  {
+  stroke-width: 3px;
+
+  stroke: #6da77d;
+  fill: none;
+}
+
+#JavaClass:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}
+#setJavaClass  {
+  stroke-width: 3px;
+
+  stroke: #6da77d;
+  fill: none;
+}
+
+#setJavaClass:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+
+#Interface  {
+  stroke-width: 3px;
+  stroke: #9589c1;
+  fill: none;
+}
+
+#Interface:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}
+#setInterface   {
+  stroke-width: 3px;
+  stroke: #9589c1;
+  fill: none;
+}
+
+#setInterface :hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+
 #setnode > rect {
   stroke-width: 3px;
   stroke: #333;
@@ -55,55 +127,15 @@ rect {
 </style>
 
 <style>
-h1, h2 {
-  color: #333;
-}
 
-textarea {
-  width: 800px;
-}
-
-
-.error {
-  color: red;
-}
-
-svg {
+#MainSVG {
   border: 1px solid #999;
 }
 </style>
 
-<form>
-  <textarea id="inputGraph" rows="5" style="display: block" onKeyUp="MainGraph.tryDraw();">
-/* Example */
-digraph {
-    A [label="<div style='padding: 10px;'>A <span style='font-size:32px'>Big</span> <span style='color:red;'>HTML</span> Source!</div>"];
-    
-    D [subgraph = true];
-    E [label="A blue sink"];
-    A -> B -> C;
-    B -> D -> E;
-    C -> E;
-    A -> D [label="<div>A multi-rank <span style='color:blue;'>HTML</span> edge!</div>"];
-}
-  </textarea>
-  <textarea id="inputGraphTest" rows="5" style="display: block" onKeyUp="MainGraph.tryDraw();">
-/* Example */
-digraph {
-    F [label="<div style='padding: 10px;'>A <span style='font-size:32px'>Big</span> <span style='color:red;'>HTML</span> Source!</div>"];
-    G;
-    H [label="A blue sink"];
-    F -> G -> H;
-    G -> H -> I;
-    H -> F;
-
-}
-  </textarea>
-</form>
-
 <h2>Graph Visualization</h2>
 
-<svg width=800 height=600>
+<svg width=800 height=600 id="MainSVG">
   <defs>
     <marker id="arrowhead"
             viewBox="0 0 10 10"

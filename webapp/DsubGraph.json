@@ -1,5 +1,5 @@
 {
-"dot" : "digraph {    F [label=\"<div style='padding: 10px;'>A <span style='font-size:32px'>Big</span> <span style='color:red;'>HTML</span> Source!</div>\"];    G[subgraph = \"HSubGraph.json\"];    H [subgraph = \"HSubGraph.json\"];    F -> G -> H;    G -> H -> I;    H -> F;}"
+"dot" : "digraph {    F [label=\"<div style='padding: 10px;'>A <span style='font-size:32px'>Big</span> <span style='color:red;'>HTML</span> Source!</div>\"];    G[subgraph = \"HSubGraph.json\"];    H [subgraph = \"QQsubGraph.json\"];    F -> G [label=\"100\"]; G-> H;    G -> H -> I;    H -> F;}"
 
 }
   

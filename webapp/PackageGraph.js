@@ -88,9 +88,8 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   // so for now we remove everything.
   
   var self=this;
-   console.log(this.request.readyState);
-  console.log(this.svgGroup);
- 
+
+  
   this.svgGroup.selectAll("*").remove();
       this.subGraphList=[];// 모두 초기화
       
@@ -109,20 +108,35 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   this.addLabels(nodeEnter);
   
     
-  this.nodes.on("click", function(d,i) {
+  this.nodes
+   		.filter(function(d) { 
+   		     var chk=true;
+      
+      		for(var i=0;i<self.subGraphList.length;i++)
+      		{	
+       			if(self.subGraphList[i].id.split("-")[1] == d.id)
+      			{
+	      			chk = false;
+	      			break;		
+      			}
+      		}
+   		return chk; })
+   		.on("click", function(d) {
 	 	
-	 	if(!d.subgraph)
-	 		return;
-		if(!clickNodeList[d.id])
-		{
-			clickNodeList[d.id]= true;
-			self.nodes.filter(function(data){return data.id == d.id;})
-				.on("click",function(d){});
-			MainGraph.tryDraw();
+		 	if(!d.subgraph)
+		 		return;
+		 		
+		 		if(!clickNodeList[d.id])
+		 		{
+			 		console.log("AAAAAAA");
+					clickNodeList[d.id]= true;
+					self.nodes.filter(function(data){return data.id == d.id;})
+						.on("click",function(d){});
+					MainGraph.tryDraw();
 			//이벤트 중첩 발생을 막기 위한 코드 임시적으로 클릭 이벤트를 없앤다.
-		}	
-		
-	  })
+				}	
+				
+			  });
 
   nodeEnter.attr("id", function(d){ 
       	var chk=false;
@@ -159,8 +173,6 @@ Graph.prototype.draw = function(nodeData, edgeData) {
 
   this.edges.on("click", function(d) {
 
-
-		self.Draw();
 	  })
 	  
   this.edges.exit().remove();
@@ -175,7 +187,6 @@ Graph.prototype.draw = function(nodeData, edgeData) {
     .rankSep(30)
     .nodes(nodeData)
     .edges(edgeData)
-    .debugLevel(0)
     .run();
 
     // Ensure that we have at least two points between source and target
@@ -192,21 +203,20 @@ Graph.prototype.addLabels = function(selection) {
     .append("g")
       .attr("class", this.id+"-label");
 
-   labelGroup.append("rect");
-      
+   labelGroup.append("rect").attr("id",function(d){return d.type;});
+      	//foLabel이 안나오는 경우 값이 정상 출력됨
   var foLabel = labelGroup
-    .filter(function(d) { return d.label[0] === "<"; })	//두 값이 동등해야 같다
+    .filter(function(d) { return d.label[0] === "<"; })
     .append("foreignObject")
-      .attr("class", "htmllabel");
+    .attr("class", "htmllabel").attr('requiredFeatures','http://www.w3.org/TR/SVG11/feature#Extensibility').append("xhtml:div")
+    .style("float", "left");
 
-  foLabel
-    .append("xhtml:div")
-      .style("float", "left");
 
-  labelGroup
+
+    labelGroup
     .filter(function(d) { 
-        return (d.label[0] !== "<")&&(!clickNodeList[d.id]); }) //동등하지 않은 경우 TEXT 형태로 
-    .append("text");
+        return (d.label[0] !== "<")&&(!clickNodeList[d.id]); }).append("text");
+
     
    
    //SubGraphLabel 추가 
@@ -218,7 +228,9 @@ Graph.prototype.addLabels = function(selection) {
     .append("text")
     .attr("id",function(d) {return "subgraph-"+d.id;}).on("click",function(d){
 		 			
+		 			console.log("Event Loading  "+d.id);
 		 			clickNodeList[d.id]= false;
+		 			console.log(clickNodeList[d.id]);
 					MainGraph.tryDraw();
 	 			});
 	 			
@@ -230,17 +242,22 @@ Graph.prototype.addLabels = function(selection) {
     .attr("class",function(d) { 
     	SubArray.push("subgraph-"+d.id);
     return "subgraph-"+d.id; })
-    .attr("y",30); //있는 놈들 서브 그래프 수집
+    .attr("y",30);
+  
+     //있는 놈들 서브 그래프 수집
 
     for(var i=0;i<SubArray.length;i++)
     {
 	 	var subSvg = d3.select("."+SubArray[i]);
+	 	
 	 	var subgraphData;
 		var subGroup = subSvg.append("g").attr("id",SubArray[i]).each(function(d){
 				subgraphData = d.subgraph;
 		});
 	 			self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData));	
-	 
+	 	
+	 	subSvg.attr("width",subGroup.node().getBBox().width+10);	//svg 테그가 자동적으로 크기를 리사이징 해주는줄 알았는데 그게 아님 이거 없으면 에러 남
+	 	subSvg.attr("height",subGroup.node().getBBox().height+10);
 	 	console.log(SubArray[i] + ":"+subGroup.node().getBBox().width+" ----- "+subGroup.node().getBBox().height);
 	}
   
