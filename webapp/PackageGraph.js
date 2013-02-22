@@ -34,7 +34,7 @@ Graph = function(svg, svgGroup, GraphId, graphML){
 	this.request.send(null);
 	
 
-
+		console.log(graphML);
 
 		self.GMLData = eval('('+this.request.responseText+')').dot;
 
@@ -71,7 +71,7 @@ Graph.prototype.tryDraw = function() {
         node.inEdges = [];
         node.outEdges = [];
       });
-      
+      console.log(result.edges);
       result.edges.forEach(function(edge) {
         edge.source.outEdges.push(edge);
         edge.target.inEdges.push(edge);
@@ -107,7 +107,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   nodeEnter.append("rect");
   this.addLabels(nodeEnter);
   
-    
+   console.log(edgeData); 
   this.nodes
    		.filter(function(d) { 
    		     var chk=true;
@@ -128,7 +128,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
 		 		
 		 		if(!clickNodeList[d.id])
 		 		{
-			 		console.log("AAAAAAA");
+			 		console.log("AAAAAAA...");
 					clickNodeList[d.id]= true;
 					self.nodes.filter(function(data){return data.id == d.id;})
 						.on("click",function(d){});

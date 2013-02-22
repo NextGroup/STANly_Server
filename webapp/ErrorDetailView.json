@@ -1,0 +1,3 @@
+{
+"dot" : "digraph { G[label= \"logdog.ErrorDetailView.Communicator\", subgraph=\"ErrorDetailViewDTO.json\", type=\"package\"]; H[label= \"logdog.ErrorDetailView.Controller\", type=\"JavaClass\"];I[label= \"logdog.ErrorDetailView.DTO\", type=\"JavaClass\"];G->H[label=\"18\"]; H->I[label=\"11\"];}"
+}
