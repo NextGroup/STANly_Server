@@ -104,9 +104,9 @@ Graph.prototype.draw = function(nodeData, edgeData) {
       .attr("class",this.id+"-node")
       .each(function(d) { d.nodePadding = 10; });
       
-  nodeEnter.append("rect");
+  nodeEnter.append("rect").attr("id",function(d){return d.id+"rect";});
   this.addLabels(nodeEnter);
-  
+  	
    console.log(edgeData); 
   this.nodes
    		.filter(function(d) { 
@@ -259,6 +259,7 @@ Graph.prototype.addLabels = function(selection) {
 	 	subSvg.attr("width",subGroup.node().getBBox().width+10);	//svg 테그가 자동적으로 크기를 리사이징 해주는줄 알았는데 그게 아님 이거 없으면 에러 남
 	 	subSvg.attr("height",subGroup.node().getBBox().height+10);
 	 	console.log(SubArray[i] + ":"+subGroup.node().getBBox().width+" ----- "+subGroup.node().getBBox().height);
+	 	
 	}
   
 
