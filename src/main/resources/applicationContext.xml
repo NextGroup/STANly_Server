@@ -4,6 +4,6 @@
     xmlns:beans="http://www.springframework.org/schema/beans"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
      
-    <beans:import resource="context/context-common.xml" />
+    <beans:import resource="classpath:/config/spring/context/context-common.xml" />
    
 </beans:beans>

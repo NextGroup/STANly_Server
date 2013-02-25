@@ -47,7 +47,7 @@
  
     <servlet-mapping>
         <servlet-name>springDispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </servlet-mapping>
  
     <session-config>
@@ -55,7 +55,7 @@
     </session-config>
  
     <welcome-file-list>
-        <welcome-file>demo.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
         <welcome-file>Index.do</welcome-file>
     </welcome-file-list>
 </web-app>
