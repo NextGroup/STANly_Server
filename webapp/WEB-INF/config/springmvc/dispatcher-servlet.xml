@@ -10,46 +10,6 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
  
-    <!-- annotation config & scan -->
-    <context:annotation-config />
- 
-    <context:component-scan base-package="stanly.server">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-    </context:component-scan>
- 
-    <!--
-        JSR-303 support will be detected on classpath and enabled automatically
-    -->
-    <mvc:annotation-driven>
-        <mvc:message-converters>
-            <bean class="org.springframework.http.converter.FormHttpMessageConverter">
-                <property name="charset">
-                    <bean class="java.nio.charset.Charset" factory-method="forName">
-                        <constructor-arg value="UTF-8"/>
-                    </bean>
-                </property>
-            </bean>
-            <bean class="org.springframework.http.converter.feed.AtomFeedHttpMessageConverter">
-                <property name="supportedMediaTypes" value="application/atom+xml" />
-            </bean>
-            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-                <property name="supportedMediaTypes" value="application/json" />
-            </bean>
-        </mvc:message-converters>
-    </mvc:annotation-driven>
- 
-    <!-- classpath 로딩시 locale parameter 가 정상적으로 동작하지 않음. <mvc:annotation-driven> 과 같은 파일내에서 사용 -->
-    <mvc:interceptors>
-        <bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
-            <property name="cacheSeconds" value="0"/>
-            <property name="useExpiresHeader" value="true"/>
-            <property name="useCacheControlHeader" value="true"/>
-            <property name="useCacheControlNoStore" value="true"/>
-        </bean>
-    </mvc:interceptors>
- 
     <!-- view name tanslator -->
     <bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
  
@@ -73,4 +33,6 @@
             </list>
         </property>
     </bean>
+    
+    
 </beans>
