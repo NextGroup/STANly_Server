@@ -8,9 +8,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/applicationContext.xml")
+@ContextConfiguration(locations = "classpath:/config/spring/context-root.xml")
 public class sampleTest {
-
+	//Test할 Context를 넣어야 한다. 
 
 	@Test
 	public void TestTrue()

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +32,7 @@ public class PersonService {
 	 
 	// Retrieve session from Hibernate
 	Session session = sessionFactory.getCurrentSession();
-	 
+
 	// Create a Hibernate query (HQL)
 	Query query = session.createQuery("FROM  Person");
 	 
@@ -57,7 +58,7 @@ public class PersonService {
 	person.setFirstname(firstName);
 	person.setLastname(lastName);
 	person.setMoney(money);
-	 
+
 	// Save
 	session.save(person);
 	}
