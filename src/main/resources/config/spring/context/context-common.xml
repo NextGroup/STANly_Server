@@ -12,7 +12,7 @@
     <!-- annotation enabled -->
     <context:annotation-config />
  
-    <context:component-scan base-package="stanly.server.sample"/> 
+    <context:component-scan base-package="stanly.server"/> 
 	<mvc:annotation-driven /> 
  
 

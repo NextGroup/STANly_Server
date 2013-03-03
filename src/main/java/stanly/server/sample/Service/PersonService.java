@@ -59,6 +59,7 @@ public class PersonService {
 	person.setLastname(lastName);
 	person.setMoney(money);
 
+
 	// Save
 	session.save(person);
 	}
