@@ -9,6 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PROJECT_INFO")
 public class ProjectInfo {
+	private static final long serialVersionUID = -5527566248002296042L;
 	@Id
 	@Column( name = "PROJECT_ID")
 	@GeneratedValue

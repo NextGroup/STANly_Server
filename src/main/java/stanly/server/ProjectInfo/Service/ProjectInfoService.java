@@ -27,8 +27,8 @@ public class ProjectInfoService {
 		try{
 			logger.info("ProjectInfo insert");
 			Session session = sessionFactory.getCurrentSession();
+			
 			ProjectInfo data = new ProjectInfo(uRL,location,name);
-	
 			// Save
 			session.save(data);
 		}catch(Exception e)
@@ -45,7 +45,10 @@ public class ProjectInfoService {
 		try{
 			logger.info("ProjectInfo select");
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("FROM  PROJECT_INFO whare PROJECT_NAME == '"+Name+"'");
+			
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			Query query = session.createQuery("FROM ProjectInfo where name = :code");
+			query.setParameter("code", Name);
 			List<ProjectInfo> list = query.list();
 			if(list.size()!=0)
 				Data = list.get(0);
