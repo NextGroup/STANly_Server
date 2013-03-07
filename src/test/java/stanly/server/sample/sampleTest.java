@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/config/spring/context-root.xml")
+@ContextConfiguration(locations = "classpath:/config/spring/context-test.xml")
 public class sampleTest {
 	//Test할 Context를 넣어야 한다. 
 

@@ -1,15 +1,19 @@
-package stanly.server.ProjectInfo.Model;
+package stanly.server.GitProject.Model;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PROJECT_INFO")
 public class ProjectInfo {
-	private static final long serialVersionUID = -5527566248002296042L;
+
 	@Id
 	@Column( name = "PROJECT_ID")
 	@GeneratedValue
@@ -20,8 +24,13 @@ public class ProjectInfo {
 
 	@Column(name = "Location")
 	private String Location;
+	
 	@Column(name = "PROJECT_NAME")
 	private String name;
+	
+	@OneToMany( mappedBy = "PInfo")
+	private Set<ProjectCommit> commitList = new HashSet<ProjectCommit>();
+
 
 	public ProjectInfo(String uRL, String location, String name) {
 		super();
@@ -64,6 +73,16 @@ public class ProjectInfo {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Set<ProjectCommit> getCommitList() {
+		return commitList;
+	}
+
+	public void addCommit(ProjectCommit commit)
+	{
+		commit.setProjectInfo(this);
+		commitList.add(commit);
+		
 	}
 	
 }

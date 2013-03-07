@@ -1,4 +1,4 @@
-package stanly.server.ProjectInfo.Controller;
+package stanly.server.GitProject.Controller;
 
 import java.io.File;
 
@@ -21,7 +21,7 @@ public class ProjectController {
     			//없다면 생성
     			file.mkdirs(); 
     		}else{
-    
+    			
     		}
     		
     		return "hello";
