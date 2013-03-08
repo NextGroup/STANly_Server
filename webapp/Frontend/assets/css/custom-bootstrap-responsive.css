@@ -94,6 +94,9 @@
 }
 
 /*@media (min-width: 768px) and (max-width: 979px) {*/
+  .container-fluid {
+      min-width: 979px;
+  }
   .row {
     margin-left: -20px;
     *zoom: 1;
@@ -233,7 +236,7 @@
     *width: 82.81973668743387%;
   }
   .row-fluid .span9 {
-    min-width: 1000;
+    min-width: 680px;
     width: 74.30939226519337%;
     *width: 74.25620077583166%;
   }
@@ -258,8 +261,6 @@
     *width: 31.43852121782062%;
   }
   .row-fluid .span3 {
-    min-width: 300px;
-    max-width: 350px;
     width: 22.92817679558011%;
     *width: 22.87498530621841%;
   }
@@ -443,6 +444,7 @@
   }
   .navbar-fixed-top,
   .navbar-fixed-bottom {
+    min-width: 1024px;
     position: static;
   }
   .navbar-fixed-top {
