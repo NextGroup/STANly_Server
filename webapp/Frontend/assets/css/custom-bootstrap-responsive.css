@@ -211,11 +211,7 @@
     float: left;
     width: 100%;
     min-height: 30px;
-    margin-right: 10px;
-    *margin-right: 10px;
-      -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-            box-sizing: border-box;
+
     margin-left: 10px;
     *margin-left: 10px;
     -webkit-box-sizing: border-box;
@@ -241,7 +237,6 @@
     *width: 82.81973668743387%;
   }
   .row-fluid .span9 {
-    min-width: 680px;
     width: 74.30939226519337%;
     *width: 74.25620077583166%;
   }
@@ -272,8 +267,6 @@
     *width: 22.87498530621841%;
   }
   .row-fluid .span2 {
-    min-width: 150px;
-    max-width: 150px;
     width: 14.3646408839779%;
     *width: 14.311449394616199%;
   }
