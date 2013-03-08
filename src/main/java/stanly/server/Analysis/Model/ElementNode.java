@@ -17,7 +17,7 @@ import stanly.server.GitProject.Model.ProjectCommit;
 @Table(name = "ElementNode")
 public class ElementNode {
 	@Id
-	@Column( name = "PROJECT_ID")
+	@Column( name = "ElementID")
 	@GeneratedValue
 	private Integer EID;
 
