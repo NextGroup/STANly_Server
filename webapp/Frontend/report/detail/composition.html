@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="STANly@Software Maestro">
+    <meta name="author" content="Team STANly">
+    <!-- Le styles -->
+    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="../../assets/css/docs.css">
+    <link rel="stylesheet" href="../../assets/jqGrid/css/ui.jqgrid.css">
+    <link rel="stylesheet" href="../../assets/jqGrid/css/jquery-ui-custom.css">
+
+    <script type="text/javascript" src="../../assets/jstree/_lib/jquery.js"></script>
+    <script type="text/javascript" src="../../assets/jstree/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../assets/jstree/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../../assets/jstree/jquery.jstree.js"></script>
+
+
+    <script type="text/javascript" src="../../assets/jqGrid/js/jquery.jqGrid.src.js"></script>
+    <script type="text/javascript" src="../../assets/jqGrid/js/i18n/grid.locale-en.js"></script>
+    <!--<script type="text/javascript" src="../../assets/jqGrid/plugins/ui.multiselect.js"></script>-->
+
+
+    <script type="text/javascript">
+        var footermargin = 300;
+        $(function () {
+            $("#prj_tree")
+                    .jstree({
+                        "json_data" : {
+                            "ajax" : {
+                                //"url" : "../../assets/jstree/_docs/_stanly_data.json",
+                                "url" : "../../assets/jstree/_docs/_simple_data.json",
+                                "data" : function (n) {
+                                    return { id : n.attr ? n.attr("id") : 0 };
+                                }
+                            }
+                        },
+                        "core" : {
+                            "animation" : 50
+                        },
+                        "plugins" : [ "themes", "json_data", "ui", "hotkeys", "types" ],
+                        "types" : {
+                            "types" : {
+                                "PROJECT" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/application.gif'
+                                    }
+                                },
+                                "LIBRARY" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/subsystem.gif'
+                                    }
+                                },
+                                "PACKAGESET" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/tree.gif'
+                                    }
+                                },
+                                "PACKAGE" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/package.gif'
+                                    }
+                                },
+                                "CLASS" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/class.gif'
+                                    }
+                                },
+                                "INTERFACE" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/interface.gif'
+                                    }
+                                },
+                                "ANNOTATION" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/annotation.gif'
+                                    }
+                                },
+                                "ENUM" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/enum.gif'
+                                    }
+                                },
+                                "CONSTRUCTOR" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/constructor.png'
+                                    }
+                                },
+                                "METHOD" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/method.gif'
+                                    }
+                                },
+                                "FIELD" : {
+                                    "icon" : {
+                                        "image" : '../../assets/jstree/img/field.gif'
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .bind("select_node.jstree", function (e, data) {
+                        console.log(data.rslt.obj[0].id);
+                    })
+                    .height($(window).height()-footermargin);
+        });
+        window.onresize = function() { $('#prj_tree').height($(window).height()-footermargin); };
+    </script>
+    <style>
+        #prj_tree {
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container">
+            <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">STANly</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">DashBoard</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="./detail/composition.html">Composition</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="./detail/pollution.html">Pollution</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="./detail/distance.html">Distance</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="./detail/metrics.html">Metrics</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="./detail/about.html">About</a></li>
+                    <li class="divider-vertical"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header class="jumbotron subhead" id="overview">
+    <div class="container">
+        <h1>Composition</h1>
+        <p class="lead">The only choice for your development productivity.</p>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div id="prj_tree"></div>
+        </div>
+
+        <div class="span9">
+            <section id="composition">
+                <h1>Composition</h1>
+                <h3>asdoifjoaisdjfoiasdjfoiasjdflkzcxjvoiajsodfjaoisdfjoa</h3>
+                <h3>asdoifjoaisdjfoiasdjfoiasjdflkzcxjvoiajsodfjaoisdfjoa</h3>
+                <h3>asdoifjoaisdjfoiasdjfoiasjdflkzcxjvoiajsodfjaoisdfjoa</h3>
+                <h3>asdoifjoaisdjfoiasdjfoiasjdflkzcxjvoiajsodfjaoisdfjoa</h3>
+                <h3>asdoifjoaisdjfoiasdjfoiasjdflkzcxjvoiajsodfjaoisdfjoa</h3>
+            </section>
+            <hr>
+            <section id="detail">
+                <h1>Relations</h1>
+                <table id="list2"></table>
+                <div id="pager2"></div>
+                <script>
+                    $(document).ready(function(){
+                        jQuery("#list2").jqGrid({
+                            url:'../../assets/jqGrid/test.json',
+                            datatype: "json",
+                            colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
+                            colModel:[
+                                {name:'id',index:'id', width:55},
+                                {name:'invdate',index:'invdate', width:90},
+                                {name:'name',index:'name asc, invdate', width:100},
+                                {name:'amount',index:'amount', width:80, align:"right"},
+                                {name:'tax',index:'tax', width:80, align:"right"},
+                                {name:'total',index:'total', width:80,align:"right"},
+                                {name:'note',index:'note', width:150, sortable:false}
+                            ],
+                            rowNum:10,
+                            rowList:[10,20,30],
+                            pager: '#pager2',
+                            sortname: 'id',
+                            viewrecords: true,
+                            sortorder: "desc",
+                            caption:"JSON Example"
+                        });
+                        jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+                    });
+
+                </script>
+            </section>
+            <hr>
+            <hr>
+        </div>
+    </div>
+</div>
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../../assets/js/bootstrap.min.js"></script>
+</body>
+</html>
