@@ -7,21 +7,18 @@ import java.util.concurrent.Future;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import stanly.server.Analysis.DAO.ElementDAO;
 import stanly.server.Analysis.Model.ElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
-import stanly.server.GitProject.Model.ProjectInfo;
 
 @Service("analysisService")
 @Transactional
@@ -32,14 +29,32 @@ public class AnalysisService {
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 	
+	@Autowired
+	private ElementDAO nodeDao;
 	
+	public ElementNode insertElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
+	{
+		ElementNode node = new ElementNode(name,paretnName,nSLeft,nSRight,type);
+		nodeDao.insertElement(node);
+	
+		return node;
+	}
+	public ElementNode createElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
+	{
+		ElementNode node = new ElementNode(name,paretnName,nSLeft,nSRight,type);	
+		return node;
+	}
+	public ElementNode InsertElement(ElementNode e)
+	{
+		return nodeDao.insertElement(e);
+	}
 	public boolean AddNode(ProjectCommit commit)
 	{
 		
 		//Test Case 만들기    
 		try{
 
-			Session session = sessionFactory.getCurrentSession();
+
 			ArrayList<ElementNode> list = new ArrayList<ElementNode>();
 			list.add(new ElementNode("stanly.server", "NONE", 1, 6,NodeType.PACKAGE));
 			list.add(new ElementNode("stanly.server.Analysis", "stanly.server", 2, 3,NodeType.PACKAGE));
@@ -48,7 +63,7 @@ public class AnalysisService {
 			for(int i=0;i<list.size();i++)
 			{
 				list.get(i).setCommit(commit);
-				session.save(list.get(i));
+				nodeDao.insertElement(list.get(i));
 			}
 
 		}catch(Exception e)
@@ -58,50 +73,13 @@ public class AnalysisService {
 		}
 		return true;
 	}
-
-	public ProjectCommit getCommit(ProjectInfo ProjectID)
+	public List<ElementNode> getTree(ProjectCommit CommitID)
 	{
-		ProjectCommit data = null;
-		try{
-			Session session = sessionFactory.getCurrentSession();
-		
-			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
-			 Criterion projectEq = Restrictions.eq("PInfo", ProjectID);
-			 Criteria crit = session.createCriteria(ProjectCommit.class);
-			 crit.add(projectEq);
-			 crit.addOrder(Order.desc("UpdateDate"));
-			  data = (ProjectCommit) crit.uniqueResult();
-
-		}
-		catch(Exception e)
-		{
-			logger.error(e.getMessage());
-			
-		}
-		return data;
-		
+		return nodeDao.getNodeTree(CommitID);
 	}
-	public List getTree(ProjectCommit CommitID)
+	public ElementNode getNode(ProjectCommit commitID, String projectName)
 	{
-		List nList = null;
-		try{
-			Session session = sessionFactory.getCurrentSession();
-		
-			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
-			 Criterion projectEq = Restrictions.eq("commit", CommitID);
-			 Criteria crit = session.createCriteria(ElementNode.class);
-			 crit.add(projectEq);
-			 crit.addOrder(Order.asc("NSLeft"));
-			 nList = crit.list();
-		
-
-		}
-		catch(Exception e)
-		{
-			logger.error(e);
-			
-		}
-		return nList;
+		return nodeDao.getNode(commitID, projectName);
 	}
 	@Async
 	public Future<String> analysisNode(ProjectCommit commit)
