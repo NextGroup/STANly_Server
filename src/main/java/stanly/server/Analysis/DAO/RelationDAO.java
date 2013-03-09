@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,5 +68,71 @@ public class RelationDAO {
 		}
 		return NodeRList;
 	}
+	/**
+	 * @param CommitID
+	 * @param TarName
+	 * @return
+	 */
+	public List<NodeRelation> getTarRelation(ProjectCommit CommitID, String TarName)
+	{
+		List<NodeRelation> NodeRList = null;
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			 Criterion commitEq = Restrictions.eq("commit", CommitID);
+			 Criterion  TarEq = Restrictions.eq("TarName", TarName);
+			 Criteria crit = session.createCriteria(NodeRelation.class);
+			 crit.add(commitEq);
+			 crit.add(TarEq);
+			 NodeRList = crit.list();
+		}
+		catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return NodeRList;
+	}
 	
+	public List<NodeRelation> getSrcLikeRelation(ProjectCommit CommitID, String SrcName)
+	{
+		List<NodeRelation> NodeRList = null;
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			 Criterion commitEq = Restrictions.eq("commit", CommitID);
+			 Criterion  Srclike = Restrictions.like("SrcName", SrcName,MatchMode.START);
+			 Criteria crit = session.createCriteria(NodeRelation.class);
+			 crit.add(commitEq);
+			 crit.add(Srclike);
+			 NodeRList = crit.list();
+		}
+		catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return NodeRList;
+	}
+	
+	public List<NodeRelation> getTarLikeRelation(ProjectCommit CommitID, String TarName)
+	{
+		List<NodeRelation> NodeRList = null;
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			 Criterion commitEq = Restrictions.eq("commit", CommitID);
+			 Criterion  Tarlike = Restrictions.like("TarName", TarName,MatchMode.START);
+			 Criteria crit = session.createCriteria(NodeRelation.class);
+			 crit.add(commitEq);
+			 crit.add(Tarlike);
+			 NodeRList = crit.list();
+		}
+		catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return NodeRList;
+	}
 }

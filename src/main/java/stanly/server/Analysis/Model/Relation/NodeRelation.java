@@ -6,9 +6,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
+import stanly.server.GitProject.Model.ProjectCommit;
 
 @Entity
 @Table(name = "NodeRelation")
@@ -21,8 +24,45 @@ public class NodeRelation {
 	private String SrcName;
 	@Column(name = "TARName" , nullable = false)
 	private String TarName;
+
+	@ManyToOne( targetEntity  = stanly.server.GitProject.Model.ProjectCommit.class)
+	@JoinColumn(name = "COMMITID", nullable = false)
+	private ProjectCommit commit;
 	
 	private NodeRelationType type;
+
+
+	public NodeRelation()
+	{
+		
+	}
+	
+	public NodeRelation(String srcName, String tarName, ProjectCommit commit,
+			NodeRelationType type) {
+		super();
+		SrcName = srcName;
+		TarName = tarName;
+		this.commit = commit;
+		this.type = type;
+	}
+
+	public NodeRelation(String srcName, String tarName,
+			 NodeRelationType type)
+	{
+		super();
+		SrcName = srcName;
+		TarName = tarName;
+		this.type = type;
+	}
+	public NodeRelation(Integer nRID, String srcName, String tarName,
+			ProjectCommit commit, NodeRelationType type) {
+		super();
+		NRID = nRID;
+		SrcName = srcName;
+		TarName = tarName;
+		this.commit = commit;
+		this.type = type;
+	}
 
 	public Integer getNRID() {
 		return NRID;
@@ -56,6 +96,14 @@ public class NodeRelation {
 
 	public void setType(NodeRelationType type) {
 		this.type = type;
+	}
+
+	public ProjectCommit getCommit() {
+		return commit;
+	}
+
+	public void setCommit(ProjectCommit commit) {
+		this.commit = commit;
 	}
 	
 	

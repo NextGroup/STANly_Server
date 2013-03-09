@@ -140,12 +140,16 @@ public class ProjectElementNode {
 				this.EMetric = new PackageSetMetric(type);
 				break;
 			case CLASS:
+			case ANNOTATION:
+			case INTERFACE:
+			case ENUM:
 				this.EMetric = new ClassMetric(type);
 				break;
 			case FIELD:
 				this.EMetric = new AttributeMetric(type);
 				break;
 			case METHOD:
+			case CONSTRUCTOR:
 				this.EMetric = new MethodMetric(type);
 				break;
 				
