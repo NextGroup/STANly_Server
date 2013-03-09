@@ -8,8 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import stanly.server.Analysis.Model.Metric.AttributeMetric;
+import stanly.server.Analysis.Model.Metric.ClassMetric;
+import stanly.server.Analysis.Model.Metric.ElementNodeMetric;
+import stanly.server.Analysis.Model.Metric.LibraryMetric;
+import stanly.server.Analysis.Model.Metric.MethodMetric;
+import stanly.server.Analysis.Model.Metric.PackageMetric;
+import stanly.server.Analysis.Model.Metric.PackageSetMetric;
+import stanly.server.Analysis.Model.Metric.ProjectMetric;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -17,25 +26,28 @@ import stanly.server.GitProject.Model.ProjectCommit;
 @Table(name = "ElementNode")
 public class ElementNode {
 	@Id
-	@Column( name = "ElementID")
+	@Column( name = "ElementID" , nullable = false)
 	@GeneratedValue
 	private Integer EID;
 
-	@Column(name = "Name")
+	@Column(name = "Name" , nullable = false)
 	private String Name;
 	
-	@Column(name="ParentName")
+	@Column(name="ParentName", nullable = false)
 	private String ParetnName;
 	
-	@Column(name = "NSLeft")
+	@Column(name = "NSLeft", nullable = false)
 	private int NSLeft;
 	
-	@Column(name = "NSRight")
+	@Column(name = "NSRight", nullable = false)
 	private int NSRight;
 	
 	@ManyToOne( targetEntity  = stanly.server.GitProject.Model.ProjectCommit.class)
 	@JoinColumn(name = "COMMITID", nullable = false)
 	private ProjectCommit commit;
+	
+	@OneToOne(mappedBy="element")
+	private ElementNodeMetric EMetric;
 	
 	private NodeType type;
 
@@ -48,6 +60,7 @@ public class ElementNode {
 		NSLeft = nSLeft;
 		NSRight = nSRight;
 		this.type = type;
+		EMetric = null;
 	}
 
 	public ElementNode()
@@ -108,6 +121,42 @@ public class ElementNode {
 
 	public void setCommit(ProjectCommit commit) {
 		this.commit = commit;
+	}
+
+	public ElementNodeMetric addElementMetric()
+	{
+		switch(this.type)
+		{
+			case PROJECT:
+				this.EMetric = new ProjectMetric(type);
+				break;
+			case LIBRARY:
+				this.EMetric = new LibraryMetric(type);
+				break;
+			case PACKAGE:
+				this.EMetric = new PackageMetric(type);
+				break;
+			case PACKAGESET:
+				this.EMetric = new PackageSetMetric(type);
+				break;
+			case CLASS:
+				this.EMetric = new ClassMetric(type);
+				break;
+			case FIELD:
+				this.EMetric = new AttributeMetric(type);
+				break;
+			case METHOD:
+				this.EMetric = new MethodMetric(type);
+				break;
+				
+		}
+		EMetric.setElement(this);
+		return EMetric;
+	}
+	
+	
+	public ElementNodeMetric getEMetric() {
+		return EMetric;
 	}
 
 	@Override

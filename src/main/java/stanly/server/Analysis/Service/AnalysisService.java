@@ -32,7 +32,22 @@ public class AnalysisService {
 	@Autowired
 	private ElementDAO nodeDao;
 	
+	public ElementNode insertElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
+	{
+		ElementNode node = new ElementNode(name,paretnName,nSLeft,nSRight,type);
+		nodeDao.insertElement(node);
 	
+		return node;
+	}
+	public ElementNode createElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
+	{
+		ElementNode node = new ElementNode(name,paretnName,nSLeft,nSRight,type);	
+		return node;
+	}
+	public ElementNode InsertElement(ElementNode e)
+	{
+		return nodeDao.insertElement(e);
+	}
 	public boolean AddNode(ProjectCommit commit)
 	{
 		
@@ -61,6 +76,10 @@ public class AnalysisService {
 	public List<ElementNode> getTree(ProjectCommit CommitID)
 	{
 		return nodeDao.getNodeTree(CommitID);
+	}
+	public ElementNode getNode(ProjectCommit commitID, String projectName)
+	{
+		return nodeDao.getNode(commitID, projectName);
 	}
 	@Async
 	public Future<String> analysisNode(ProjectCommit commit)
