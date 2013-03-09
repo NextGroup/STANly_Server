@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 /**
@@ -31,7 +31,7 @@ public class AttributeMetric extends ElementNodeMetric{
 		// TODO Auto-generated constructor stub
 	}
 
-	public AttributeMetric(ElementNode node, NodeType type) {
+	public AttributeMetric(ProjectElementNode node, NodeType type) {
 		super(node, type);
 		// TODO Auto-generated constructor stub
 	}
@@ -41,7 +41,7 @@ public class AttributeMetric extends ElementNodeMetric{
 		// TODO Auto-generated constructor stub
 	}
 
-	public AttributeMetric(int instructions, int eLOC, int cC, ElementNode node, NodeType type) {
+	public AttributeMetric(int instructions, int eLOC, int cC, ProjectElementNode node, NodeType type) {
 		super(node, type);
 		Instructions = instructions;
 		ELOC = eLOC;

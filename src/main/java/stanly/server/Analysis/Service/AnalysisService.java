@@ -7,7 +7,6 @@ import java.util.concurrent.Future;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.DAO.ElementDAO;
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.*;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -32,19 +31,19 @@ public class AnalysisService {
 	@Autowired
 	private ElementDAO nodeDao;
 	
-	public ElementNode insertElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
+	public ProjectElementNode insertElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
 	{
-		ElementNode node = new ElementNode(name,paretnName,nSLeft,nSRight,type);
+		ProjectElementNode node = new ProjectElementNode(name,paretnName,nSLeft,nSRight,type);
 		nodeDao.insertElement(node);
 	
 		return node;
 	}
-	public ElementNode createElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
+	public ProjectElementNode createElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
 	{
-		ElementNode node = new ElementNode(name,paretnName,nSLeft,nSRight,type);	
+		ProjectElementNode node = new ProjectElementNode(name,paretnName,nSLeft,nSRight,type);	
 		return node;
 	}
-	public ElementNode InsertElement(ElementNode e)
+	public ProjectElementNode InsertElement(ProjectElementNode e)
 	{
 		return nodeDao.insertElement(e);
 	}
@@ -55,10 +54,10 @@ public class AnalysisService {
 		try{
 
 
-			ArrayList<ElementNode> list = new ArrayList<ElementNode>();
-			list.add(new ElementNode("stanly.server", "NONE", 1, 6,NodeType.PACKAGE));
-			list.add(new ElementNode("stanly.server.Analysis", "stanly.server", 2, 3,NodeType.PACKAGE));
-			list.add(new ElementNode("stanly.server.GitProject", "stanly.server", 4, 5,NodeType.PACKAGE));
+			ArrayList<ProjectElementNode> list = new ArrayList<ProjectElementNode>();
+			list.add(new ProjectElementNode("stanly.server", "NONE", 1, 6,NodeType.PACKAGE));
+			list.add(new ProjectElementNode("stanly.server.Analysis", "stanly.server", 2, 3,NodeType.PACKAGE));
+			list.add(new ProjectElementNode("stanly.server.GitProject", "stanly.server", 4, 5,NodeType.PACKAGE));
 			// Data Save
 			for(int i=0;i<list.size();i++)
 			{
@@ -73,24 +72,24 @@ public class AnalysisService {
 		}
 		return true;
 	}
-	public List<ElementNode> getTree(ProjectCommit CommitID)
+	public List<ProjectElementNode> getTree(ProjectCommit CommitID)
 	{
 		return nodeDao.getNodeTree(CommitID);
 	}
-	public ElementNode getNode(ProjectCommit commitID, String projectName)
+	public ProjectElementNode getNode(ProjectCommit commitID, String projectName)
 	{
 		return nodeDao.getNode(commitID, projectName);
 	}
+	
+	
 	@Async
 	public Future<String> analysisNode(ProjectCommit commit)
 	{
 		try{
 			logger.info("ProjectInfo insert");
-			Session session = sessionFactory.getCurrentSession();
 			
 			
-			// Data Save
-			session.save(null);
+	
 
 		}catch(Exception e)
 		{

@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 
@@ -28,9 +28,9 @@ public abstract class ElementNodeMetric {
 	@GeneratedValue
 	private Integer EMID;
 	
-	@OneToOne( targetEntity  = ElementNode.class)
+	@OneToOne( targetEntity  = ProjectElementNode.class)
 	@JoinColumn(name = "ElementID", nullable = false)
-	private ElementNode element;
+	private ProjectElementNode element;
 	
 	private NodeType type;
 	
@@ -43,7 +43,7 @@ public abstract class ElementNodeMetric {
 		super();
 		this.type = type;
 	}
-	public ElementNodeMetric(ElementNode node, NodeType type) {
+	public ElementNodeMetric(ProjectElementNode node, NodeType type) {
 		super();
 		this.type = type;
 		this.element=node;
@@ -63,11 +63,11 @@ public abstract class ElementNodeMetric {
 		return type;
 	}
 
-	public ElementNode getElement() {
+	public ProjectElementNode getElement() {
 		return element;
 	}
 
-	public void setElement(ElementNode element) {
+	public void setElement(ProjectElementNode element) {
 		this.element = element;
 	}
 

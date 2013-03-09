@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 @Entity
@@ -48,13 +48,13 @@ public class ClassMetric extends ElementNodeMetric {
 	{
 		
 	}
-	public ClassMetric(ElementNode node, NodeType type)
+	public ClassMetric(ProjectElementNode node, NodeType type)
 	{
 		super(node,type);
 	}
 	public ClassMetric(int classes, int methods, int fields, int lOC, int fat,
 			int afferentCoupling, int efferentCoupling, float wMC, int dIT,
-			int nOC, int cBO, float rFC, int lCOM,ElementNode node, NodeType type) {
+			int nOC, int cBO, float rFC, int lCOM,ProjectElementNode node, NodeType type) {
 		super(node,type);
 		Classes = classes;
 		Methods = methods;
