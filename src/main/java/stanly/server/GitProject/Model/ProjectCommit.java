@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 
 @Entity
 @Table(name = "PROJECT_COMMIT")

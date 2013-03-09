@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
@@ -58,7 +58,7 @@ public class AnalysisServiceTest {
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
 		assertTrue(analysis.AddNode(TestCommit));
-		List<ElementNode> Tree = analysis.getTree(TestCommit);
+		List<ProjectElementNode> Tree = analysis.getTree(TestCommit);
 	
 		assertNotNull(Tree);
 		assertTrue(Tree.size()!=0);
@@ -69,7 +69,7 @@ public class AnalysisServiceTest {
 	public void TestMetric()
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
-		ElementNode node = analysis.createElement("TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
+		ProjectElementNode node = analysis.createElement("TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
 		node.setCommit(TestCommit);
 		PackageMetric metric = (PackageMetric)node.addElementMetric();
 		metric.addCBO(10);

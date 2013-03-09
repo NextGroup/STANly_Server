@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 @Entity
@@ -60,7 +60,7 @@ public class PackageMetric extends ElementNodeMetric{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public PackageMetric(ElementNode node, NodeType type) {
+	public PackageMetric(ProjectElementNode node, NodeType type) {
 		super(node, type);
 		// TODO Auto-generated constructor stub
 	}

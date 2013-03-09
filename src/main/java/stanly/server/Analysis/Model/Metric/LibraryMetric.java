@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 @Entity
@@ -49,7 +49,7 @@ public class LibraryMetric extends ElementNodeMetric{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public LibraryMetric(ElementNode node, NodeType type) {
+	public LibraryMetric(ProjectElementNode node, NodeType type) {
 		super(node, type);
 		// TODO Auto-generated constructor stub
 	}
