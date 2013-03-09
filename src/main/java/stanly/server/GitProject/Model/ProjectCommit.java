@@ -34,13 +34,11 @@ public class ProjectCommit {
 	@JoinColumn(name = "PROJECT_ID", nullable = false)
 	private ProjectInfo PInfo;
 	
-	public ProjectCommit(Date updateDate, String message, String author,
-			ProjectInfo projectInfo) {
+	public ProjectCommit(Date updateDate, String message, String author) {
 		super();
 		UpdateDate = updateDate;
 		Message = message;
 		Author = author;
-		PInfo = projectInfo;
 	}
 
 	public ProjectCommit(){
@@ -73,6 +71,25 @@ public class ProjectCommit {
 
 	public void setProjectInfo(ProjectInfo projectInfo) {
 		PInfo = projectInfo;
+	}
+
+	public String getMessage() {
+		return Message;
+	}
+
+	public ProjectInfo getPInfo() {
+		return PInfo;
+	}
+
+	public void setPInfo(ProjectInfo pInfo) {
+		PInfo = pInfo;
+	}
+
+	@Override
+	public String toString() {
+		return "ProjectCommit [Commitid=" + Commitid + ", UpdateDate="
+				+ UpdateDate + ", Message=" + Message + ", Author=" + Author
+				+ ", PInfo=" + PInfo + "]";
 	}
 	
 

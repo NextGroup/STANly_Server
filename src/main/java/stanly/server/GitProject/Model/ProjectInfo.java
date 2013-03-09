@@ -28,8 +28,6 @@ public class ProjectInfo {
 	@Column(name = "PROJECT_NAME")
 	private String name;
 	
-	@OneToMany( mappedBy = "PInfo")
-	private Set<ProjectCommit> commitList = new HashSet<ProjectCommit>();
 
 
 	public ProjectInfo(String uRL, String location, String name) {
@@ -74,15 +72,12 @@ public class ProjectInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<ProjectCommit> getCommitList() {
-		return commitList;
-	}
 
-	public void addCommit(ProjectCommit commit)
-	{
-		commit.setProjectInfo(this);
-		commitList.add(commit);
-		
+	@Override
+	public String toString() {
+		return "ProjectInfo [pid=" + pid + ", URL=" + URL + ", Location="
+				+ Location + ", name=" + name 
+				+ "]";
 	}
 	
 }

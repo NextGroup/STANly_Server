@@ -1,17 +1,18 @@
 package stanly.server.GitProject.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import stanly.server.GitProject.DAO.ProjectDAO;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
 
@@ -23,54 +24,51 @@ public class ProjectInfoService {
 	
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
+
+	@Autowired
+	private ProjectDAO project;
 	
-	public boolean add(String uRL, String location, String name)
+	public ProjectInfo addProject(String uRL, String location, String name)
 	{
+		ProjectInfo PInfo;
 		try{
-			logger.info("ProjectInfo insert");
-			Session session = sessionFactory.getCurrentSession();
+			PInfo = project.getProjectWithGitURL(uRL);
 			
-			ProjectInfo data = new ProjectInfo(uRL,location,name);
-			ProjectCommit Data2 = new ProjectCommit(new Date(),"HHH" ,"Hell",data);
-			data.addCommit(Data2);
-			// Save
-			session.save(data);
+			if(PInfo==null)
+				PInfo = project.addProject(uRL, location, name);
 			
-			session.save(Data2);
+	
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
-			return false;
+			return null;
 		}
-		return true;
+		return PInfo;
 	}
+	
+	public ProjectCommit addCommit(ProjectInfo info,Date updateDate, String message, String author)
+	{
+		ProjectCommit commit=null;
+		try{
+	
+			commit = project.addCommit(info, updateDate, message, author);
+			
+	
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+		return commit;
+	}
+	
 	
 	public ProjectInfo getProjectInfo(String Name)
 	{
 		ProjectInfo Data =null;
 		try{
-			logger.info("ProjectInfo select");
-			Session session = sessionFactory.getCurrentSession();
-			
-			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
-			Query query = session.createQuery("FROM ProjectInfo where name = :code");
-			query.setParameter("code", Name);
-			List<ProjectInfo> list = query.list();
-			logger.error("GetData Size:"+list.size());
-			if(list.size()!=0)
-			{
-				Data = list.get(0);
-				
-				
-				Object Datas[] = Data.getCommitList().toArray();
-				for(int i=0;i<Datas.length;i++)
-				{
-					logger.error("Datas[i]"+((ProjectCommit)Datas[i]).getAuthor());
-					logger.error("TEST ddddd:"+ ((ProjectCommit)Datas[i]).getProjectInfo().getName());
-				}
-			}
-			
-		
+			List<ProjectInfo> PList = project.getProjectInfo(Name);
+			Data = PList.get(0);
 			
 		}catch(Exception e)
 		{
@@ -82,8 +80,39 @@ public class ProjectInfoService {
 		return Data;
 	}
 	
-	public List getCommitList()
+	
+	
+	public List<ProjectCommit> getCommitList(String ProjectName)
 	{
-		return null;
+		List<ProjectCommit> PList =null;
+		try{
+		 PList = project.getCommitList(ProjectName);
+		
+			
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+
+	
+		return PList;
+	}
+	
+	public ProjectCommit getLastCommit(ProjectInfo Project)
+	{
+		ProjectCommit commit =null;
+		try{
+			commit = project.getLastCommit(Project);
+		
+			
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+
+	
+		return commit;
 	}
 }
