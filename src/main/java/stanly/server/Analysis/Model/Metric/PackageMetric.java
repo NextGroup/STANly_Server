@@ -109,6 +109,51 @@ public class PackageMetric extends ElementNodeMetric{
 		return NumberOfClass == 0 ? 0 : (float)NumberOfClasses / (float)NumberOfClass;//ClassesPerClass;
 	}
 	
+	public int getTotalDIT() {
+		return totalDIT;
+	}
+	public void setTotalDIT(int totalDIT) {
+		this.totalDIT = totalDIT;
+	}
+	public int getTotalNOC() {
+		return totalNOC;
+	}
+	public void setTotalNOC(int totalNOC) {
+		this.totalNOC = totalNOC;
+	}
+	public int getTotalLCOM() {
+		return totalLCOM;
+	}
+	public void setTotalLCOM(int totalLCOM) {
+		this.totalLCOM = totalLCOM;
+	}
+	public void setNumberOfMethods(int numberOfMethods) {
+		NumberOfMethods = numberOfMethods;
+	}
+	public void setNumberOfClasses(int numberOfClasses) {
+		NumberOfClasses = numberOfClasses;
+	}
+	public void setNumberOfClass(int numberOfClass) {
+		NumberOfClass = numberOfClass;
+	}
+	public void setNumberOfAbstract(int numberOfAbstract) {
+		NumberOfAbstract = numberOfAbstract;
+	}
+	public void setNumberOfFields(int numberOfFields) {
+		NumberOfFields = numberOfFields;
+	}
+	public void setUnits(int units) {
+		Units = units;
+	}
+	public void setTotalCC(int totalCC) {
+		TotalCC = totalCC;
+	}
+	public void setTotalCBO(int totalCBO) {
+		this.totalCBO = totalCBO;
+	}
+	public void setTotalRFC(int totalRFC) {
+		this.totalRFC = totalRFC;
+	}
 	public float getMethodsPerClass() {
 		return NumberOfClass == 0 ? 0 : (float)NumberOfMethods / (float)NumberOfClass;
 	}
@@ -224,5 +269,8 @@ public class PackageMetric extends ElementNodeMetric{
 	}
 	public void addLCOM(int lCOM) {
 		totalLCOM += lCOM;
+	}
+	public void setLCOM(int lCOM) {
+		totalLCOM = lCOM;
 	}
 }
