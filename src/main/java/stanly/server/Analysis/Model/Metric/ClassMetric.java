@@ -77,6 +77,24 @@ public class ClassMetric extends ElementNodeMetric {
 	public int getClasses() {
 		return Classes;
 	}
+	public void setClasses(int classes) {
+		Classes = classes;
+	}
+	public void setMethods(int methods) {
+		Methods = methods;
+	}
+	public void setFields(int fields) {
+		Fields = fields;
+	}
+	public void setWMC(float wMC) {
+		WMC = wMC;
+	}
+	public void setCBO(int cBO) {
+		CBO = cBO;
+	}
+	public void setLCOM(int lCOM) {
+		LCOM = lCOM;
+	}
 	public int getMethods() {
 		return Methods;
 	}

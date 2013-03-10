@@ -40,5 +40,8 @@ public class MethodMetric extends ElementNodeMetric{
 	public int getCC() {
 		return CC == 0 ? 1 : CC;
 	}
+	public void setCC(int cc){
+		CC = cc;
+	}
 
 }
