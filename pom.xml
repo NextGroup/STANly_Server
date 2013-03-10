@@ -226,14 +226,19 @@
     		
 		<!-- JGIT -->
 		<!-- Core Library -->
- 	<dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit</artifactId>
-      <version>2.3.1.201302201838-r</version>
-    </dependency>
-
-
-		
+	 	<dependency>
+	      <groupId>org.eclipse.jgit</groupId>
+	      <artifactId>org.eclipse.jgit</artifactId>
+	      <version>2.3.1.201302201838-r</version>
+	    </dependency>
+	
+ 	    <!--  Gson: Java to Json conversion -->
+	    <dependency>
+	      <groupId>com.google.code.gson</groupId>
+	      <artifactId>gson</artifactId>
+	      <version>2.2.2</version>
+	      <scope>compile</scope>
+	    </dependency>
 </dependencies>
 
   <build>

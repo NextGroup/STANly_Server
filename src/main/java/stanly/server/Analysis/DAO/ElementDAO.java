@@ -63,12 +63,16 @@ public class ElementDAO {
 						session.save((PackageSetMetric)node.getEMetric());
 						break;
 					case CLASS:
+					case ANNOTATION:
+					case INTERFACE:
+					case ENUM:
 						session.save((ClassMetric)node.getEMetric());
 						break;
 					case FIELD:
 						session.save((AttributeMetric)node.getEMetric());
 						break;
 					case METHOD:
+					case CONSTRUCTOR:
 						session.save((MethodMetric)node.getEMetric());
 						break;
 				}

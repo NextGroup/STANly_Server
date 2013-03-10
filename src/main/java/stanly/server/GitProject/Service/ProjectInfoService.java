@@ -20,7 +20,7 @@ import stanly.server.GitProject.Model.ProjectInfo;
 @Transactional
 public class ProjectInfoService {
 
-	protected static final Logger logger = Logger.getLogger("service");
+	protected static final Logger logger = Logger.getLogger("ProjectInfoservice");
 	
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
@@ -67,8 +67,8 @@ public class ProjectInfoService {
 	{
 		ProjectInfo Data =null;
 		try{
-			List<ProjectInfo> PList = project.getProjectInfo(Name);
-			Data = PList.get(0);
+		
+			Data = project.getProjectInfo(Name);
 			
 		}catch(Exception e)
 		{
@@ -115,4 +115,6 @@ public class ProjectInfoService {
 	
 		return commit;
 	}
+	
+	
 }
