@@ -110,8 +110,15 @@ public class AnalysisServiceTest {
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
 		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.MainClass","Stanly.server.Analysis.SubGraph",TestCommit, NodeRelationType.ACCESSES));
 		Relation.insertRelation(new NodeRelation("Stanly.server.GitProject.Model.MainModel","Stanly.server.Analysis.SubGraph",TestCommit, NodeRelationType.CALLS));
-		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.MainClass","Stanly.server.Analysis.SubGraph",TestCommit,NodeRelationType.EXTENDS));
-		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.MainClass","Stanly.server.Analysis.SubGraph",TestCommit,NodeRelationType.HAS_PARAM));
+		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.Realtion","Stanly.server.Analysis.SubGraph",TestCommit,NodeRelationType.EXTENDS));
+		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.ElementNode","Stanly.server.GitProject.Model.MainModel",TestCommit,NodeRelationType.HAS_PARAM));
+		
+		List<NodeRelation> SrcList = Relation.getSrcLikeRelation(TestCommit, "Stanly.server.Analysis");
+		List<NodeRelation> TarList= Relation.getTarLikeRelation(TestCommit, "Stanly.server.GitProject");
+		assertEquals(3,SrcList.size());
+		assertEquals(1,TarList.size());
+		
+		
 		
 	}
 	
