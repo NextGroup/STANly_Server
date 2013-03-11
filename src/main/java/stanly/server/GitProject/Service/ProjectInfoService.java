@@ -75,7 +75,7 @@ public class ProjectInfoService {
 			logger.error(e.getMessage());
 			return null;
 		}
-		logger.error("Test "+Data.getName());
+		
 	
 		return Data;
 	}

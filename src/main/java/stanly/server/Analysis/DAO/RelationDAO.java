@@ -32,7 +32,7 @@ public class RelationDAO {
 
 			Session session = sessionFactory.getCurrentSession();
 			session.save(relation);
-		
+			session.flush();
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
