@@ -51,7 +51,7 @@ public class StanlyPMDTest {
 	@Before
 	public void BeforeTest()
 	{
-		projectService.addProject("www.sejong.ac.kr", "E:\\자료\\dropbox\\SW마에스트로\\2차\\project\\pmd_STANly", "PMD");
+		projectService.addProject("www.asdf.ac.kr", "E:\\자료\\dropbox\\SW마에스트로\\2차\\project\\pmd_STANly", "PMD");
 		info = projectService.getProjectInfo("PMD");
 		logger.info("Before Setting = "+info.toString());
 		projectService.addCommit(info, new Date(), "init Commit", "Karuana");
@@ -66,25 +66,34 @@ public class StanlyPMDTest {
 		
 		//총 갯수중 10개 뽑아서 확인
 		// 10개 안되면 걍 다돌림
+		System.out.println("들어오나요?");
 		int listSize = elementlist.size();
 		int interbal = 0;
-		
 		if(listSize < 10)
 			interbal = 1;
 		else
 			interbal = listSize / 10;
 		
 		ElementNode clientcompareNode = null;
+		try{
+			
+		
 		for(int i = 0 ; i< listSize; i+= interbal)
 		{
 			ProjectElementNode serverCompareNode = elementlist.get(i);
 			clientcompareNode = rootnode.findNode(serverCompareNode.getName());
+			
 			assertNotNull(clientcompareNode);
 			
 			assertEquals(serverCompareNode.getNSLeft(), clientcompareNode.getLeftSideValue());
 			assertEquals(serverCompareNode.getNSRight(), clientcompareNode.getRightSideValue());
 			
 			assertTrue(CompareMetric(serverCompareNode,clientcompareNode));
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import stanly.server.Analysis.DAO.ElementDAO;
 import stanly.server.Analysis.DAO.RelationDAO;
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
@@ -35,6 +36,9 @@ public class AnalysisServiceTest {
 	private AnalysisService analysis;
 	@Resource(name="projectinfoService")
 	private ProjectInfoService projectService;
+	
+	@Autowired
+	private ElementDAO eDAO;
 	
 	@Autowired
 	private RelationDAO Relation;
@@ -77,8 +81,7 @@ public class AnalysisServiceTest {
 	public void TestMetric()
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
-		ProjectElementNode node = analysis.createElement("TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
-		node.setCommit(TestCommit);
+		ProjectElementNode node = analysis.createElement(TestCommit,"TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
 		PackageMetric metric = (PackageMetric)node.addElementMetric();
 		metric.addCBO(10);
 		metric.addCC(5);
@@ -121,5 +124,9 @@ public class AnalysisServiceTest {
 		
 		
 	}
-	
+	@Test
+	public void TestElementDAO()
+	{
+		eDAO.insertElement(null);
+	}
 }
