@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 @Entity
@@ -31,6 +31,43 @@ public class PackageSetMetric extends ElementNodeMetric{
 	private int TotalCC;
 	@Column(name = "Fat", nullable = false)	
 	private int Fat;
+	public int getNumberOfPackages() {
+		return NumberOfPackages;
+	}
+
+	public void setNumberOfPackages(int numberOfPackages) {
+		NumberOfPackages = numberOfPackages;
+	}
+
+	public void setNumberOfMethods(int numberOfMethods) {
+		NumberOfMethods = numberOfMethods;
+	}
+
+	public void setNumberOfClasses(int numberOfClasses) {
+		NumberOfClasses = numberOfClasses;
+	}
+
+	public void setNumberOfClass(int numberOfClass) {
+		NumberOfClass = numberOfClass;
+	}
+
+	public void setNumberOfFields(int numberOfFields) {
+		NumberOfFields = numberOfFields;
+	}
+
+	public void setTotalELOC(int totalELOC) {
+		this.totalELOC = totalELOC;
+	}
+
+	public void setTotalUnit(int totalUnit) {
+		this.totalUnit = totalUnit;
+	}
+
+	public void setTotalCC(int totalCC) {
+		TotalCC = totalCC;
+	}
+
+
 	@Column(name = "Tangled", nullable = false)	
 	private float Tangled;
 	
@@ -42,7 +79,7 @@ public class PackageSetMetric extends ElementNodeMetric{
 		// TODO Auto-generated constructor stub
 	}
 
-	public PackageSetMetric(ElementNode node, NodeType type) {
+	public PackageSetMetric(ProjectElementNode node, NodeType type) {
 		super(node, type);
 		// TODO Auto-generated constructor stub
 	}

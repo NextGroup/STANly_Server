@@ -45,6 +45,7 @@ public class ProjectDAO {
 			data = new ProjectInfo(uRL,location,name);
 			// Save
 			session.save(data);
+			session.flush();
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
@@ -76,9 +77,9 @@ public class ProjectDAO {
 		return projectList;
 	}
 	
-	public List<ProjectInfo> getProjectInfo(String ProjectName)
+	public ProjectInfo getProjectInfo(String ProjectName)
 	{
-		List<ProjectInfo> projectList = null;
+		ProjectInfo projectList = null;
 		
 		try{
 			Session session = sessionFactory.getCurrentSession();
@@ -89,7 +90,7 @@ public class ProjectDAO {
 			 Criterion projectEq = Restrictions.eq("name", ProjectName ); 
 			 crit.add(projectEq);
 			 crit.addOrder(Order.desc("pid"));
-			 projectList = crit.list();
+			 projectList = (ProjectInfo) crit.uniqueResult();
 
 		}catch(Exception e)
 		{
@@ -106,7 +107,7 @@ public class ProjectDAO {
 	 */
 	public ProjectInfo getProjectWithGitURL(String gitURL)
 	{
-		List<ProjectInfo> projectList = null;
+		ProjectInfo projectList = null;
 		
 		try{
 			Session session = sessionFactory.getCurrentSession();
@@ -116,14 +117,14 @@ public class ProjectDAO {
 			 Criteria crit = session.createCriteria(ProjectInfo.class);
 			 Criterion projectEq = Restrictions.eq("URL", gitURL ); 
 			 crit.add(projectEq);
-			 projectList = crit.list();
+			 projectList = (ProjectInfo) crit.uniqueResult();
 			  
 		}catch(Exception e)
 		{
 			logger.error(e);
 			return null;
 		}
-		return (projectList.size() !=0) ? projectList.get(0): null;
+		return projectList;
 	}
 	//Commit 관련 
 	public ProjectCommit addCommit(ProjectInfo project, Date updateDate, String message, 
@@ -140,7 +141,7 @@ public class ProjectDAO {
 			commit.setProjectInfo(project); 
 			// Save
 			session.save(commit);
-	
+			session.flush();
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
@@ -180,7 +181,7 @@ public class ProjectDAO {
 	 */
 	public List<ProjectCommit> getCommitList(String projectName)
 	{
-		ProjectInfo info = getProjectInfo(projectName).get(0);
+		ProjectInfo info = getProjectInfo(projectName);
 		List<ProjectCommit> commitList=null;
 		try{
 			logger.info("Get Commit List");
@@ -199,6 +200,51 @@ public class ProjectDAO {
 		}
 		
 		return commitList;
+	}
+	
+	public boolean IsProject(String gitURL, String ProjectName)
+	{
+		List<ProjectInfo> projectList = null;
+		
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+		
+			 Criteria crit = session.createCriteria(ProjectInfo.class);
+			 Criterion projectEq = Restrictions.eq("URL", gitURL ); 
+			 Criterion NameEq = Restrictions.eq("name", ProjectName ); 
+			 crit.add(Restrictions.or(projectEq, NameEq));
+			 
+			 projectList = crit.list();
+			  
+		}catch(Exception e)
+		{
+			logger.error(e);
+			return false;
+		}
+		return (projectList.size() == 0) ? true: false;
+	}
+	
+	public List<ProjectInfo> getProjectList()
+	{
+
+		List<ProjectInfo> ProjectList=null;
+		try{
+			logger.info("Get Commit List");
+			Session session = sessionFactory.getCurrentSession();
+			
+			 Criteria crit = session.createCriteria(ProjectInfo.class);
+			 crit.addOrder(Order.desc("pid"));
+			 ProjectList = crit.list();
+			
+		}catch(Exception e)
+		{
+			logger.error(e);
+			return ProjectList;
+		}
+		
+		return ProjectList;
 	}
 	
 }

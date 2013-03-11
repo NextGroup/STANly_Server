@@ -14,7 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.AttributeMetric;
 import stanly.server.Analysis.Model.Metric.ClassMetric;
 import stanly.server.Analysis.Model.Metric.LibraryMetric;
@@ -34,7 +34,7 @@ public class ElementDAO {
 	private SessionFactory sessionFactory;
 	
 	
-	public ElementNode insertElement(ElementNode node)
+	public ProjectElementNode insertElement(ProjectElementNode node)
 	{		
 
 		try{
@@ -44,7 +44,7 @@ public class ElementDAO {
 			NodeType type = node.getType();
 			
 			session.save(node);
-			logger.info("Node is Null ? "+node);
+		
 			if(node.getEMetric()!=null)
 			{
 				logger.info("Node Metric"+node.getEMetric());
@@ -63,16 +63,21 @@ public class ElementDAO {
 						session.save((PackageSetMetric)node.getEMetric());
 						break;
 					case CLASS:
+					case ANNOTATION:
+					case INTERFACE:
+					case ENUM:
 						session.save((ClassMetric)node.getEMetric());
 						break;
 					case FIELD:
 						session.save((AttributeMetric)node.getEMetric());
 						break;
 					case METHOD:
+					case CONSTRUCTOR:
 						session.save((MethodMetric)node.getEMetric());
 						break;
 				}
 			}
+			session.flush();
 
 		}catch(Exception e)
 		{
@@ -83,7 +88,7 @@ public class ElementDAO {
 		return node;
 	}
 	
-	public List<ElementNode> getNodeTree(ProjectCommit CommitID)
+	public List<ProjectElementNode> getNodeTree(ProjectCommit CommitID)
 	{
 		List nList = null;
 		try{
@@ -91,7 +96,7 @@ public class ElementDAO {
 		
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion projectEq = Restrictions.eq("commit", CommitID);
-			 Criteria crit = session.createCriteria(ElementNode.class);
+			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(projectEq);
 			 crit.addOrder(Order.asc("NSLeft"));
 			 nList = crit.list();
@@ -106,19 +111,19 @@ public class ElementDAO {
 		return nList;
 	}
 
-	public ElementNode getNode(ProjectCommit CommitID, String projectName)
+	public ProjectElementNode getNode(ProjectCommit CommitID, String projectName)
 	{
-		ElementNode nList = null;
+		ProjectElementNode nList = null;
 		try{
 			Session session = sessionFactory.getCurrentSession();
 		
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
 			 Criterion  projectEq = Restrictions.eq("Name", projectName);
-			 Criteria crit = session.createCriteria(ElementNode.class);
+			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(commitEq);
 			 crit.add(projectEq);
-			 nList = (ElementNode)crit.uniqueResult();
+			 nList = (ProjectElementNode)crit.uniqueResult();
 		}
 		catch(Exception e)
 		{
@@ -126,7 +131,7 @@ public class ElementDAO {
 		}
 		return nList;
 	}
-	public List<ElementNode> getSubNodeTree(ProjectCommit CommitID,String ParentNode)
+	public List<ProjectElementNode> getSubNodeTree(ProjectCommit CommitID,String ParentNode)
 	{
 		List nList = null;
 		try{
@@ -135,13 +140,13 @@ public class ElementDAO {
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion projectEq = Restrictions.eq("commit", CommitID);
 		
-			 ElementNode MainNode = getNode(CommitID,ParentNode);
+			 ProjectElementNode MainNode = getNode(CommitID,ParentNode);
 			 if(MainNode!=null)
 			 {
 				 
 				 Criterion Left = Restrictions.ge("Name", new Integer(MainNode.getNSLeft()));
 				 Criterion Right = Restrictions.le("Name", new Integer(MainNode.getNSRight()));
-				 Criteria cr = session.createCriteria(ElementNode.class);
+				 Criteria cr = session.createCriteria(ProjectElementNode.class);
 				 cr.add(projectEq);
 				 cr.add(Left);
 				 cr.add(Right);

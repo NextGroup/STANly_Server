@@ -13,11 +13,15 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import stanly.server.Analysis.Model.ElementNode;
+import stanly.server.Analysis.DAO.RelationDAO;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
+import stanly.server.Analysis.Model.Relation.NodeRelation;
+import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
@@ -31,6 +35,10 @@ public class AnalysisServiceTest {
 	private AnalysisService analysis;
 	@Resource(name="projectinfoService")
 	private ProjectInfoService projectService;
+	
+	@Autowired
+	private RelationDAO Relation;
+	
 	
 	private ProjectInfo info; 
 	
@@ -58,7 +66,7 @@ public class AnalysisServiceTest {
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
 		assertTrue(analysis.AddNode(TestCommit));
-		List<ElementNode> Tree = analysis.getTree(TestCommit);
+		List<ProjectElementNode> Tree = analysis.getTree(TestCommit);
 	
 		assertNotNull(Tree);
 		assertTrue(Tree.size()!=0);
@@ -69,7 +77,7 @@ public class AnalysisServiceTest {
 	public void TestMetric()
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
-		ElementNode node = analysis.createElement("TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
+		ProjectElementNode node = analysis.createElement("TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
 		node.setCommit(TestCommit);
 		PackageMetric metric = (PackageMetric)node.addElementMetric();
 		metric.addCBO(10);
@@ -96,6 +104,22 @@ public class AnalysisServiceTest {
 		assertEquals(NodeType.PACKAGE,TestMetric.getType());
 	}
 	
-	
+	@Test
+	public void RelationTest()
+	{
+		ProjectCommit TestCommit = projectService.getLastCommit(info);
+		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.MainClass","Stanly.server.Analysis.SubGraph",TestCommit, NodeRelationType.ACCESSES));
+		Relation.insertRelation(new NodeRelation("Stanly.server.GitProject.Model.MainModel","Stanly.server.Analysis.SubGraph",TestCommit, NodeRelationType.CALLS));
+		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.Realtion","Stanly.server.Analysis.SubGraph",TestCommit,NodeRelationType.EXTENDS));
+		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.ElementNode","Stanly.server.GitProject.Model.MainModel",TestCommit,NodeRelationType.HAS_PARAM));
+		
+		List<NodeRelation> SrcList = Relation.getSrcLikeRelation(TestCommit, "Stanly.server.Analysis");
+		List<NodeRelation> TarList= Relation.getTarLikeRelation(TestCommit, "Stanly.server.GitProject");
+		assertEquals(3,SrcList.size());
+		assertEquals(1,TarList.size());
+		
+		
+		
+	}
 	
 }

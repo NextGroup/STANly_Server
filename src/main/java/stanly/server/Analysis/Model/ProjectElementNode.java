@@ -24,7 +24,7 @@ import stanly.server.GitProject.Model.ProjectCommit;
 
 @Entity
 @Table(name = "ElementNode")
-public class ElementNode {
+public class ProjectElementNode {
 	@Id
 	@Column( name = "ElementID" , nullable = false)
 	@GeneratedValue
@@ -52,7 +52,7 @@ public class ElementNode {
 	private NodeType type;
 
 	
-	public ElementNode(String name, String paretnName, int nSLeft, int nSRight,
+	public ProjectElementNode(String name, String paretnName, int nSLeft, int nSRight,
 			 NodeType type) {
 		super();
 		Name = name;
@@ -63,7 +63,7 @@ public class ElementNode {
 		EMetric = null;
 	}
 
-	public ElementNode()
+	public ProjectElementNode()
 	{
 		
 	}
@@ -140,12 +140,16 @@ public class ElementNode {
 				this.EMetric = new PackageSetMetric(type);
 				break;
 			case CLASS:
+			case ANNOTATION:
+			case INTERFACE:
+			case ENUM:
 				this.EMetric = new ClassMetric(type);
 				break;
 			case FIELD:
 				this.EMetric = new AttributeMetric(type);
 				break;
 			case METHOD:
+			case CONSTRUCTOR:
 				this.EMetric = new MethodMetric(type);
 				break;
 				

@@ -1,28 +1,30 @@
 package stanly.server.GitProject.Controller;
 
-import java.io.File;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import stanly.server.GitProject.Service.GitControlService;
 
 @RequestMapping("/project")
 @Controller(value = "projectController")
 public class ProjectController {
 	protected static Logger logger = Logger.getLogger("controller");
 	
-    @RequestMapping(value = "/hello")
-    public String hello(ModelMap model) throws Exception {
+	@Autowired
+	@Qualifier("gitControlService")
+	private GitControlService gitControlService;
 
-    		File file = new File("../GitData");
+    @RequestMapping(value = "/GitClone", method=RequestMethod.POST)
+    public String GitClone(HttpSession session) throws Exception {
 
-    		if(!file.exists()){
-    			//없다면 생성
-    			file.mkdirs(); 
-    		}else{
-    			
-    		}
+  
     		
     		return "hello";
     }
