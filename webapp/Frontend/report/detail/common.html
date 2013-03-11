@@ -27,9 +27,6 @@
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/css/theme.blue.css">
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
-
-    <link rel="stylesheet" href="../../assets/PackageGraph/css/PackageGraph.css">
-
     <script type="text/javascript">
         $(function () {
             $("#prjtree")
@@ -173,32 +170,7 @@
         <div id="content" style="background-color:#5f9ea0; margin: 10px; float: left">
             <div id="mainview_title">Composition</div>
             <div id="mainview" style="background-color:#b94a48; height: 70%; margin-bottom: 10px">
-                <svg id="MainSVG">
-                    <defs>
-                        <marker id="arrowhead"
-                                viewBox="0 0 10 10"
-                                refX="8"
-                                refY="5"
-                                markerUnits="strokeWidth"
-                                markerWidth="8"
-                                markerHeight="5"
-                                orient="auto"
-                                style="fill: #333">
-                            <path d="M 0 0 L 10 5 L 0 10 z"></path>
-                        </marker>
-                    </defs>
-                </svg>
-                <script src="http://d3js.org/d3.v2.min.js"></script>
-                <script src="../../assets/PackageGraph/js/dagre.js"></script>
-                <script src="../../assets/PackageGraph/js/PackageGraph.js"></script>
-                <script>
 
-                    var Grapdata = document.querySelector("#inputGraph");
-                    var Mainsvg = d3.select("svg");
-                    var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                    var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","MainGraph.json");
-
-                </script>
             </div>
             <div id="subview"  style="background-color:#bdb76b; height: 30%; overflow-y: scroll;">
                 <div id="detail_title">Relations</div>

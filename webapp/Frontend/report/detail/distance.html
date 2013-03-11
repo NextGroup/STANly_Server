@@ -20,15 +20,13 @@
     <script type="text/javascript" src="../../assets/jstree/_lib/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="../../assets/jstree/jquery.jstree.js"></script>
 
-
-
     <script type="text/javascript" src="http://mottie.github.com/tablesorter/js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="http://mottie.github.com/tablesorter/js/jquery.tablesorter.widgets.js"></script>
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/css/theme.blue.css">
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
-
-    <link rel="stylesheet" href="../../assets/PackageGraph/css/PackageGraph.css">
+    <!--<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -38,15 +36,20 @@
                             "ajax" : {
                                 //"url" : "../../assets/jstree/_docs/_stanly_data.json",
                                 "url" : "../../assets/jstree/_docs/_simple_data.json",
-                                //"data" : function (n) {
-                                //    return { id : n.attr ? n.attr("id") : 0 };
-                                //}
+                                "data" : function (n) {
+                                    // the result is fed to the AJAX request `data` option
+                                    return {
+                                        "operation" : "get_children",
+                                        "id" : n.attr ? n.attr("id").replace("node_","") : 1
+                                    };
+                                },
+                                "progressive_render" : true
                             }
                         },
                         "core" : {
                             "animation" : 50
                         },
-                        "plugins" : [ "themes", "json_data", "ui", "hotkeys", "types" ],
+                        "plugins" : [ "themes", "json_data", "ui", "hotkeys", "types", "cookies" ],
                         "types" : {
                             "types" : {
                                 "PROJECT" : {
@@ -152,11 +155,11 @@
             <ul class="nav">
                 <li><a href="../dashboard.html">DashBoard</a></li>
                 <li class="divider-vertical"></li>
-                <li class="active"><a href="./composition.html">Composition</a></li>
+                <li><a href="./composition.html">Composition</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="./pollution.html">Pollution</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="./distance.html">Distance</a></li>
+                <li class="active"><a href="./distance.html">Distance</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="./metrics.html">Metrics</a></li>
                 <li class="divider-vertical"></li>
@@ -171,33 +174,59 @@
             <div id="prjtree" style="background-color:#5f9ea0; height: 100%; overflow: auto;"></div>
         </div>
         <div id="content" style="background-color:#5f9ea0; margin: 10px; float: left">
-            <div id="mainview_title">Composition</div>
+            <div id="mainview_title">Distance</div>
             <div id="mainview" style="background-color:#b94a48; height: 70%; margin-bottom: 10px">
-                <svg id="MainSVG">
-                    <defs>
-                        <marker id="arrowhead"
-                                viewBox="0 0 10 10"
-                                refX="8"
-                                refY="5"
-                                markerUnits="strokeWidth"
-                                markerWidth="8"
-                                markerHeight="5"
-                                orient="auto"
-                                style="fill: #333">
-                            <path d="M 0 0 L 10 5 L 0 10 z"></path>
-                        </marker>
-                    </defs>
-                </svg>
-                <script src="http://d3js.org/d3.v2.min.js"></script>
-                <script src="../../assets/PackageGraph/js/dagre.js"></script>
-                <script src="../../assets/PackageGraph/js/PackageGraph.js"></script>
-                <script>
+                <div id="chart_div" style="height:100%;"></div>
+                <script type="text/javascript">
+                    var data;
+                    var options;
+                    google.load("visualization", "1", {packages:["corechart"]});
+                    google.setOnLoadCallback(drawChart);
+                    function drawChart() {
+                        $.ajax( {
+                            type :'GET'
+                            ,asyn :true
+                            ,url :'test_detail.json'
+                            ,dataType :"json"
+                            //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                            ,beforeSend : function(xhr){
+                            }
+                            ,success : function(jsonData) {
+                                table = JSON.stringify(jsonData);
+                                data = google.visualization.arrayToDataTable([
+                                    ['ID', 'Abstractness', 'Instability', 'Distance','LOC'],
+                                    ['',   1.0,  0.0,      120, 1],
+                                    ['',   0.9,  0.7,      130, 2],
+                                    ['',   0.5,  0.3,      50,  1.5],
+                                    ['',   0.1,  0.2,      230, 2.5],
+                                    ['',   0.3,  0.6,      210, 0.5],
+                                    ['',   0.5,  0.5,      100, 1],
+                                    ['',   0.4,  0.1,      80,  2]
+                                ]);
 
-                    var Grapdata = document.querySelector("#inputGraph");
-                    var Mainsvg = d3.select("svg");
-                    var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                    var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","MainGraph.json");
 
+                                options = {
+                                    title: 'Robert C. Martin Distance',
+                                    hAxis: {title: 'Abstractness', minValue:0, maxValue:1},
+                                    vAxis: {title: 'Instability', minValue:0, maxValue:1},
+                                    bubble: {textStyle: {fontSize: 11}}
+
+                                };
+
+                                var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+                                chart.draw(data, options);
+                            }
+                            ,error : function(xhr, textStatus) {
+                            }
+                            ,complete : function(xhr, textStatus) {
+                            }
+                        });
+                        $(window).resize(function() {
+                            var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+                            $("#chart_div").empty();
+                            chart.draw(data, options);
+                        });
+                    }
                 </script>
             </div>
             <div id="subview"  style="background-color:#bdb76b; height: 30%; overflow-y: scroll;">

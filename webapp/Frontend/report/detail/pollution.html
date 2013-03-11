@@ -27,8 +27,8 @@
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/css/theme.blue.css">
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
-
-    <link rel="stylesheet" href="../../assets/PackageGraph/css/PackageGraph.css">
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -152,9 +152,9 @@
             <ul class="nav">
                 <li><a href="../dashboard.html">DashBoard</a></li>
                 <li class="divider-vertical"></li>
-                <li class="active"><a href="./composition.html">Composition</a></li>
+                <li><a href="./composition.html">Composition</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="./pollution.html">Pollution</a></li>
+                <li class="active"><a href="./pollution.html">Pollution</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="./distance.html">Distance</a></li>
                 <li class="divider-vertical"></li>
@@ -171,37 +171,142 @@
             <div id="prjtree" style="background-color:#5f9ea0; height: 100%; overflow: auto;"></div>
         </div>
         <div id="content" style="background-color:#5f9ea0; margin: 10px; float: left">
-            <div id="mainview_title">Composition</div>
+            <div id="mainview_title">Pollution</div>
             <div id="mainview" style="background-color:#b94a48; height: 70%; margin-bottom: 10px">
-                <svg id="MainSVG">
-                    <defs>
-                        <marker id="arrowhead"
-                                viewBox="0 0 10 10"
-                                refX="8"
-                                refY="5"
-                                markerUnits="strokeWidth"
-                                markerWidth="8"
-                                markerHeight="5"
-                                orient="auto"
-                                style="fill: #333">
-                            <path d="M 0 0 L 10 5 L 0 10 z"></path>
-                        </marker>
-                    </defs>
-                </svg>
-                <script src="http://d3js.org/d3.v2.min.js"></script>
-                <script src="../../assets/PackageGraph/js/dagre.js"></script>
-                <script src="../../assets/PackageGraph/js/PackageGraph.js"></script>
+                <div id="pollution" style="height:100%;"></div>
                 <script>
+                    $(function () {
+                        var chart;
+                        $(document).ready(function() {
 
-                    var Grapdata = document.querySelector("#inputGraph");
-                    var Mainsvg = d3.select("svg");
-                    var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                    var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","MainGraph.json");
+                            var colors = Highcharts.getOptions().colors,
+                                    categories = [
+                                        'Number of Top Level Classes', 'Number of Methods', 'Number of Fields',
+                                        'Estimated Lines of Code ', 'Cyclomatic Complexity', 'Fat',
+                                        'Tangled', 'Component Dependency', 'Distance', 'Average Absolute Distance',
+                                        'Weighted Methods per Class', 'Depth of Inheritance Tree'
+                                    ],
+                                    name = 'Pollutions',
+                                    data = [{
+                                        y: 55.11,
+                                        color: colors[0]
+                                    }, {
+                                        y: 21.63,
+                                        color: colors[1]
+                                    }, {
+                                        y: 11.94,
+                                        color: colors[2]
+                                    }, {
+                                        y: 7.15,
+                                        color: colors[3]
+                                    }, {
+                                        y: 2.14,
+                                        color: colors[4]
+                                    }, {
+                                        y: 2.14,
+                                        color: colors[5]
+                                    }, {
+                                        y: 2.14,
+                                        color: colors[6]
+                                    }, {
+                                        y: 2.14,
+                                        color: colors[7]
+                                    }, {
+                                        y: 2.14,
+                                        color: colors[8]
+                                    }, {
+                                        y: 2.14,
+                                        color: colors[0]
+                                    }, {
+                                        y: 2.14,
+                                        color: colors[1]
+                                    }];
 
+                            function setChart(name, categories, data, color) {
+                                chart.xAxis[0].setCategories(categories, false);
+                                chart.series[0].remove(false);
+                                chart.addSeries({
+                                    name: name,
+                                    data: data,
+                                    color: color || 'white'
+                                }, false);
+                                chart.redraw();
+                            }
+
+                            chart = new Highcharts.Chart({
+                                chart: {
+                                    renderTo: 'pollution',
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Name of Proejct'
+                                },
+                                subtitle: {
+                                    text: 'Name of SubFolder'
+                                },
+                                xAxis: {
+                                    categories: categories
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number of Pollutions'
+                                    }
+                                },
+                                plotOptions: {
+                                    column: {
+                                        cursor: 'pointer',
+                                        point: {
+                                            events: {
+                                                click: function() {
+                                                    /*var drilldown = this.drilldown;
+                                                    if (drilldown) { // drill down
+                                                        setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+                                                    } else { // restore
+                                                        setChart(name, categories, data);
+                                                    }*/
+                                                }
+                                            }
+                                        },
+                                        dataLabels: {
+                                            enabled: true,
+                                            color: colors[0],
+                                            style: {
+                                                fontWeight: 'bold'
+                                            },
+                                            formatter: function() {
+                                                return this.y;
+                                            }
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    formatter: function() {
+                                        var point = this.point,
+                                                s = this.x +':<b>'+ this.y +'</b><br/>';
+                                        /*if (point.drilldown) {
+                                            s += 'Click to view '+ point.category +' versions';
+                                        } else {
+                                            s += 'Click to return to browser brands';
+                                        }*/
+                                        return s;
+                                    }
+                                },
+                                series: [{
+                                    name: name,
+                                    data: data,
+                                    color: 'white'
+                                }],
+                                exporting: {
+                                    enabled: false
+                                }
+                            });
+                        });
+
+                    });
                 </script>
             </div>
             <div id="subview"  style="background-color:#bdb76b; height: 30%; overflow-y: scroll;">
-                <div id="detail_title">Relations</div>
+                <div id="detail_title">Violations</div>
                 <div id="detail_list"></div>
                 <script type="text/javascript">
                     var table;
