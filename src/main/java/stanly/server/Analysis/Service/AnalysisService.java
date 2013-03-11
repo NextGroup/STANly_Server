@@ -73,7 +73,7 @@ public class AnalysisService {
 		ProjectElementNode serverNode = null;
 		try
 		{
-			serverNode = createElement(clientNode.getName(), parentNode == null ? "" : parentNode.getName(),
+			serverNode = createElement(clientNode.getName(), parentNode == null ? "" : parentNode.getFullName(),
 										 				  parentNode.getLeftSideValue(), parentNode.getRightSideValue(), 
 										 				  ConvertElementNodeType(clientNode.getType()));
 			InputMetricDatatoProjectElementNode(clientNode,serverNode);
@@ -302,10 +302,12 @@ public class AnalysisService {
 	 * @param commitID
 	 * @param path
 	 */
-	public void AnalysisElementNode(ProjectCommit commitID, String path)
+	public ElementNode AnalysisElementNode(ProjectCommit commitID, String path)
 	{
 		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
 		InsertIterationElementNode(data.getRootNode());
+		
+		return data.getRootNode();
 	}
 	/**
 	 * RootNode에서 순회하면서 DB 넣기 
