@@ -62,18 +62,19 @@ public class AnalysisService {
 	{
 		return nodeDao.insertElement(e);
 	}
-	public ProjectElementNode createElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
+	public ProjectElementNode createElement(ProjectCommit commitID, String name, String paretnName, int nSLeft, int nSRight, NodeType type)
 	{
 		ProjectElementNode node = new ProjectElementNode(name,paretnName,nSLeft,nSRight,type);	
+		node.setCommit(commitID);
 		return node;
 	}
-	public ProjectElementNode createElement(ElementNode clientNode)
+	public ProjectElementNode createElement(ProjectCommit commitID, ElementNode clientNode)
 	{
 		ElementNode parentNode = clientNode.getParent();
 		ProjectElementNode serverNode = null;
 		try
 		{
-			serverNode = createElement(clientNode.getName(), parentNode == null ? "" : parentNode.getFullName(),
+			serverNode = createElement(commitID, clientNode.getName(), parentNode == null ? "" : parentNode.getFullName(),
 										 				  clientNode.getLeftSideValue(), clientNode.getRightSideValue(), 
 										 				  ConvertElementNodeType(clientNode.getType()));
 			InputMetricDatatoProjectElementNode(clientNode,serverNode);
@@ -81,6 +82,7 @@ public class AnalysisService {
 		catch(Exception e)
 		{
 			logger.error(e.getMessage() + "\n" + e.getStackTrace().toString());
+			logger.error("에러다");
 		}
 		
 		return serverNode;
@@ -305,8 +307,8 @@ public class AnalysisService {
 	public ElementNode AnalysisElementNode(ProjectCommit commitID, String path)
 	{
 		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
-		InsertIterationElementNode(data.getRootNode());
-		logger.info(data);
+		InsertIterationElementNode(commitID,data.getRootNode());
+		
 		return data.getRootNode();
 	}
 	/**
@@ -315,12 +317,12 @@ public class AnalysisService {
 	 * @author JeongSeungsu
 	 * @param clientnode
 	 */
-	private void InsertIterationElementNode(ElementNode clientnode)
+	private void InsertIterationElementNode(ProjectCommit commitID, ElementNode clientnode)
 	{
-		InsertElement(createElement(clientnode));
+		InsertElement(createElement(commitID, clientnode));
 		
 		for(ElementNode childnode : clientnode.getChildren())
-			InsertIterationElementNode(childnode);
+			InsertIterationElementNode(commitID, childnode);
 	}
 	
 	

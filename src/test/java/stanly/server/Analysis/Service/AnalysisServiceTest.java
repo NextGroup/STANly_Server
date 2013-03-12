@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import stanly.server.Analysis.DAO.ElementDAO;
 import stanly.server.Analysis.DAO.RelationDAO;
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
@@ -28,13 +29,16 @@ import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.GitProject.Service.ProjectInfoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/config/spring/context-root.xml")
+@ContextConfiguration(locations = "classpath:/config/spring/context-test.xml")
 public class AnalysisServiceTest {
 	protected static final Logger logger = Logger.getLogger("Test");
 	@Resource(name="analysisService")
 	private AnalysisService analysis;
 	@Resource(name="projectinfoService")
 	private ProjectInfoService projectService;
+	
+	@Autowired
+	private ElementDAO eDAO;
 	
 	@Autowired
 	private RelationDAO Relation;
@@ -45,7 +49,7 @@ public class AnalysisServiceTest {
 	@Before
 	public void TestProjectSetUp()
 	{
-		projectService.addProject("www.sejong.ac.kr/asdasd", "/acra/Type", "Logdog");
+		projectService.addProject("www.sejong.ac.kr", "/acra/Type", "Logdog");
 		info = projectService.getProjectInfo("Logdog");
 		logger.info("Before Setting = "+info.toString());
 		projectService.addCommit(info, new Date(), "init Commit", "Karuana");
@@ -77,9 +81,7 @@ public class AnalysisServiceTest {
 	public void TestMetric()
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
-		logger.info(TestCommit.getPInfo().getName());
-		ProjectElementNode node = analysis.createElement("TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
-		node.setCommit(TestCommit);
+		ProjectElementNode node = analysis.createElement(TestCommit,"TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
 		PackageMetric metric = (PackageMetric)node.addElementMetric();
 		metric.addCBO(10);
 		metric.addCC(5);
@@ -122,5 +124,9 @@ public class AnalysisServiceTest {
 		
 		
 	}
-	
+	@Test
+	public void TestElementDAO()
+	{
+		eDAO.insertElement(null);
+	}
 }
