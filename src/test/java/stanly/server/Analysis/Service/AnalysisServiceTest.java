@@ -28,7 +28,7 @@ import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.GitProject.Service.ProjectInfoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/config/spring/context-test.xml")
+@ContextConfiguration(locations = "classpath:/config/spring/context-root.xml")
 public class AnalysisServiceTest {
 	protected static final Logger logger = Logger.getLogger("Test");
 	@Resource(name="analysisService")
@@ -45,7 +45,7 @@ public class AnalysisServiceTest {
 	@Before
 	public void TestProjectSetUp()
 	{
-		projectService.addProject("www.sejong.ac.kr", "/acra/Type", "Logdog");
+		projectService.addProject("www.sejong.ac.kr/asdasd", "/acra/Type", "Logdog");
 		info = projectService.getProjectInfo("Logdog");
 		logger.info("Before Setting = "+info.toString());
 		projectService.addCommit(info, new Date(), "init Commit", "Karuana");
@@ -77,6 +77,7 @@ public class AnalysisServiceTest {
 	public void TestMetric()
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
+		logger.info(TestCommit.getPInfo().getName());
 		ProjectElementNode node = analysis.createElement("TestStanly.Server", "NONE", 1, 2, NodeType.PACKAGE);
 		node.setCommit(TestCommit);
 		PackageMetric metric = (PackageMetric)node.addElementMetric();
