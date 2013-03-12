@@ -74,15 +74,25 @@ public class AnalysisService {
 		ProjectElementNode serverNode = null;
 		try
 		{
-			serverNode = createElement(commitID, clientNode.getName(), parentNode == null ? "" : parentNode.getFullName(),
-										 				  clientNode.getLeftSideValue(), clientNode.getRightSideValue(), 
-										 				  ConvertElementNodeType(clientNode.getType()));
+		
+			String nodeName = "";
+			if( clientNode.getType() == ElementNodeType.METHOD||
+				clientNode.getType() == ElementNodeType.CONSTRUCTOR)
+				nodeName = ((MethodDomain)clientNode).getMethodFullName();
+			else
+				nodeName = clientNode.getFullName();
+			
+			serverNode = createElement(commitID, nodeName,
+												parentNode == null ? "" : parentNode.getFullName(),
+										 		clientNode.getLeftSideValue(), clientNode.getRightSideValue(), 
+										 		ConvertElementNodeType(clientNode.getType()));
+			
 			InputMetricDatatoProjectElementNode(clientNode,serverNode);
 		}
 		catch(Exception e)
 		{
 			logger.error(e.getMessage() + "\n" + e.getStackTrace().toString());
-			logger.error("에러다");
+			//logger.error("에러다");
 		}
 		
 		return serverNode;

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import net.sourceforge.pmd.lang.java.rule.stanly.element.ClassDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.ElementNode;
+import net.sourceforge.pmd.lang.java.rule.stanly.element.ElementNodeType;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.FieldDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.LibraryDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.MethodDomain;
@@ -81,7 +82,7 @@ public class StanlyPMDTest {
 		for(int i = 0 ; i< listSize; i+= interbal)
 		{
 			ProjectElementNode serverCompareNode = elementlist.get(i);
-			clientcompareNode = rootnode.findNode(serverCompareNode.getName());
+			clientcompareNode = FindNodeToName(serverCompareNode.getName(),rootnode);
 			
 			assertNotNull(clientcompareNode);
 			
@@ -96,7 +97,32 @@ public class StanlyPMDTest {
 			e.printStackTrace();
 		}
 	}
-	
+	private ElementNode FindNodeToName(String NodeName, ElementNode node)
+	{
+		
+		if(node.getType() == ElementNodeType.METHOD ||
+		node.getType() == ElementNodeType.CONSTRUCTOR)
+		{
+			if(((MethodDomain)node).getMethodFullName().equals(NodeName))
+				return node;
+		}
+		else
+		{
+			if(node.getFullName().equals(NodeName))
+				return node;
+		}
+		
+		ElementNode result = null;
+		
+		for(ElementNode childnode : node.getChildren())
+		{
+			result = FindNodeToName(NodeName, childnode);
+			if(result != null)
+				return result;
+		}
+		
+		return result;
+	}
 	public boolean CompareMetric(ProjectElementNode server,ElementNode client)
 	{
 		
