@@ -17,9 +17,6 @@ public class GitControlService {
 
 	protected static final Logger logger = Logger.getLogger("ProjectInfoservice");
 	
-	@Resource(name="sessionFactory")
-	private SessionFactory sessionFactory;
-
 	@Async
 	public Future<GitControl> GitClone(String uRL,String ProjectName)
 	{

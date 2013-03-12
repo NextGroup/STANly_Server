@@ -74,7 +74,7 @@ public class AnalysisService {
 		try
 		{
 			serverNode = createElement(clientNode.getName(), parentNode == null ? "" : parentNode.getFullName(),
-										 				  parentNode.getLeftSideValue(), parentNode.getRightSideValue(), 
+										 				  clientNode.getLeftSideValue(), clientNode.getRightSideValue(), 
 										 				  ConvertElementNodeType(clientNode.getType()));
 			InputMetricDatatoProjectElementNode(clientNode,serverNode);
 		}
@@ -306,7 +306,7 @@ public class AnalysisService {
 	{
 		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
 		InsertIterationElementNode(data.getRootNode());
-		
+		logger.info(data);
 		return data.getRootNode();
 	}
 	/**
