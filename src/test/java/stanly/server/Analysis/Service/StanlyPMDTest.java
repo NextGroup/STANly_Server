@@ -76,26 +76,32 @@ public class StanlyPMDTest {
 			interbal = listSize / 10;
 		
 		ElementNode clientcompareNode = null;
-		try{
+		try {
 			
-		
-		for(int i = 0 ; i< listSize; i+= interbal)
-		{
-			ProjectElementNode serverCompareNode = elementlist.get(i);
-			clientcompareNode = FindNodeToName(serverCompareNode.getNSLeft(),rootnode);
-			
-			assertNotNull(clientcompareNode);
-			
-			assertEquals(serverCompareNode.getNSLeft(), clientcompareNode.getLeftSideValue());
-			assertEquals(serverCompareNode.getNSRight(), clientcompareNode.getRightSideValue());
-			
-			assertTrue(CompareMetric(serverCompareNode,clientcompareNode));
+			for (int i = 0; i < listSize; i += interbal) 
+			{
+				ProjectElementNode serverCompareNode = elementlist.get(i);
+				clientcompareNode = FindNodeToName(serverCompareNode.getNSLeft(), rootnode);
+
+				assertNotNull(clientcompareNode);
+
+				assertEquals(serverCompareNode.getNSLeft(),
+						clientcompareNode.getLeftSideValue());
+				assertEquals(serverCompareNode.getNSRight(),
+						clientcompareNode.getRightSideValue());
+
+				assertTrue(CompareMetric(serverCompareNode, clientcompareNode));
+			}
 		}
-		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+	}
+	@Test
+	public void TestInsertRelation()
+	{
+		
 	}
 	private ElementNode FindNodeToName(int leftid, ElementNode node)
 	{

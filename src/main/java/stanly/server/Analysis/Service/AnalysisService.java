@@ -6,6 +6,8 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
+import net.sourceforge.pmd.lang.java.rule.stanly.DomainRelation;
+import net.sourceforge.pmd.lang.java.rule.stanly.Relations;
 import net.sourceforge.pmd.lang.java.rule.stanly.StanlyAnalysisData;
 import net.sourceforge.pmd.lang.java.rule.stanly.StanlyControler;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.ClassDomain;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.DAO.ElementDAO;
+import stanly.server.Analysis.DAO.RelationDAO;
 import stanly.server.Analysis.Model.*;
 import stanly.server.Analysis.Model.Metric.AttributeMetric;
 import stanly.server.Analysis.Model.Metric.ClassMetric;
@@ -36,6 +39,8 @@ import stanly.server.Analysis.Model.Metric.MethodMetric;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
 import stanly.server.Analysis.Model.Metric.PackageSetMetric;
 import stanly.server.Analysis.Model.Metric.ProjectMetric;
+import stanly.server.Analysis.Model.Relation.NodeRelation;
+import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -50,6 +55,9 @@ public class AnalysisService {
 	
 	@Autowired
 	private ElementDAO nodeDao;
+	
+	@Autowired
+	private RelationDAO relationDao;
 	
 	public ProjectElementNode insertElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
 	{
@@ -88,6 +96,7 @@ public class AnalysisService {
 										 		ConvertElementNodeType(clientNode.getType()));
 			
 			InputMetricDatatoProjectElementNode(clientNode,serverNode);
+			
 		}
 		catch(Exception e)
 		{
@@ -97,6 +106,7 @@ public class AnalysisService {
 		
 		return serverNode;
 	}
+
 	private void InputMetricDatatoProjectElementNode(ElementNode clientNode, ProjectElementNode serverNode) throws Exception
 	{
 		ElementNodeMetric metric = serverNode.addElementMetric();
@@ -318,8 +328,76 @@ public class AnalysisService {
 	{
 		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
 		InsertIterationElementNode(commitID,data.getRootNode());
+		InputRelation(commitID,data.getRelationList());				//이거 테스트 검증이 필요함
 		
 		return data.getRootNode();
+	}
+	
+	private void InputRelation(ProjectCommit commitID,List<DomainRelation> relationList) 
+	{
+		try
+		{
+		for(DomainRelation relation : relationList)
+		{
+			String SourceName = "";
+			String TargetName = "";
+			NodeRelationType type = ConvertClientRelationTypeToServerRelationType(relation.getRelation());
+			
+			if(relation.getSourceNode().getType() == ElementNodeType.METHOD ||
+			   relation.getSourceNode().getType() == ElementNodeType.CONSTRUCTOR)
+				SourceName = ((MethodDomain)relation.getSourceNode()).getMethodFullName();
+			else
+				SourceName = relation.getSourceNode().getFullName();
+			
+			if(relation.getTargetNode().getType() == ElementNodeType.METHOD ||
+					   relation.getTargetNode().getType() == ElementNodeType.CONSTRUCTOR)
+				TargetName = ((MethodDomain)relation.getTargetNode()).getMethodFullName();
+			else
+				TargetName = relation.getTargetNode().getFullName();
+					
+			
+			InsertNodeRelation(SourceName,TargetName,commitID,type);
+		}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage() + "\n" +e.getStackTrace()); 
+		}
+		
+	}
+	private void InsertNodeRelation(String srcName, String tarName, ProjectCommit commit,
+			NodeRelationType type)
+	{
+		relationDao.insertRelation(new NodeRelation(srcName,tarName,commit,type));
+	}
+	private NodeRelationType ConvertClientRelationTypeToServerRelationType(Relations relation) throws Exception
+	{
+		switch(relation)
+		{
+		case EXTENDS:
+		case IMPLEMENTS:
+			return NodeRelationType.EXTENDS;		//요기 문제다 혜성아... 2가지 구분해줘야될듯? 아닌가
+		case CONTAINS:
+			return NodeRelationType.CONTAINS;
+		case RETURNS:
+			return NodeRelationType.RETURNS;
+		case HASPARAM:
+			return NodeRelationType.HAS_PARAM;
+		case THROWS:
+			return NodeRelationType.THROWS;
+		case CALLS:
+			return NodeRelationType.CALLS;
+		case ACCESSES:
+			return NodeRelationType.ACCESSES;
+		case ISOFTYPE:
+			return NodeRelationType.IS_OF_TYPE;
+		case REFERENCES:
+			return NodeRelationType.REFERENCESE;
+		case UNKNOWN:
+			throw new Exception("Unknown Type이 들어왔다.");
+		default:
+			throw new Exception("모르는 타입이 들어왔다.");
+		}
 	}
 	/**
 	 * RootNode에서 순회하면서 DB 넣기 
