@@ -77,7 +77,7 @@ public class ElementDAO {
 						break;
 				}
 			}
-			session.flush();
+			
 
 		}catch(Exception e)
 		{

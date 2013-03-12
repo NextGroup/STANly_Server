@@ -5,6 +5,11 @@
       <id>jgit-repository</id>
       <url>http://download.eclipse.org/jgit/maven</url>
     </repository>
+    <repository>
+		<id>spring-snapshot</id>
+		<name>Spring Maven SNAPSHOT Repository</name>
+		<url>http://repo.springsource.org/libs-snapshot</url>
+	</repository>
   </repositories>
     
     <modelVersion>4.0.0</modelVersion>
@@ -58,6 +63,7 @@
     	    		<groupId>org.springframework</groupId>
        		<artifactId>spring-test</artifactId>
         		<version>${org.springframework-version}</version>
+        		<scope>test</scope>
    	 	</dependency>
    	 	<dependency>
    		 	<groupId>org.springframework</groupId>
@@ -200,6 +206,11 @@
 			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency> 
+		<dependency>
+		    <groupId>org.springframework</groupId>
+			<artifactId>spring-test-mvc</artifactId>
+		    <version>1.0.0.BUILD-SNAPSHOT</version>
+		</dependency>
 		
 		<!-- ORM  -->
 		<dependency>
