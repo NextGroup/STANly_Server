@@ -82,7 +82,7 @@ public class StanlyPMDTest {
 		for(int i = 0 ; i< listSize; i+= interbal)
 		{
 			ProjectElementNode serverCompareNode = elementlist.get(i);
-			clientcompareNode = FindNodeToName(serverCompareNode.getName(),rootnode);
+			clientcompareNode = FindNodeToName(serverCompareNode.getNSLeft(),rootnode);
 			
 			assertNotNull(clientcompareNode);
 			
@@ -97,26 +97,17 @@ public class StanlyPMDTest {
 			e.printStackTrace();
 		}
 	}
-	private ElementNode FindNodeToName(String NodeName, ElementNode node)
+	private ElementNode FindNodeToName(int leftid, ElementNode node)
 	{
 		
-		if(node.getType() == ElementNodeType.METHOD ||
-		node.getType() == ElementNodeType.CONSTRUCTOR)
-		{
-			if(((MethodDomain)node).getMethodFullName().equals(NodeName))
-				return node;
-		}
-		else
-		{
-			if(node.getFullName().equals(NodeName))
-				return node;
-		}
+		if(node.getLeftSideValue() == leftid)
+			return node;
 		
 		ElementNode result = null;
 		
 		for(ElementNode childnode : node.getChildren())
 		{
-			result = FindNodeToName(NodeName, childnode);
+			result = FindNodeToName(leftid, childnode);
 			if(result != null)
 				return result;
 		}

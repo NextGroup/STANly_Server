@@ -83,7 +83,7 @@ public class AnalysisService {
 				nodeName = clientNode.getFullName();
 			
 			serverNode = createElement(commitID, nodeName,
-												parentNode == null ? "" : parentNode.getFullName(),
+												parentNode == null ? "RootNode" : parentNode.getFullName(),
 										 		clientNode.getLeftSideValue(), clientNode.getRightSideValue(), 
 										 		ConvertElementNodeType(clientNode.getType()));
 			
