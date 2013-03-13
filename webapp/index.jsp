@@ -35,7 +35,7 @@
         </div>
         <hr>
         <div class="footer">
-            <p class="text-center">© Software Maestro 3rd</p>
+            <p class="text-center">(c) Software Maestro 3rd</p>
         </div>
 
     </div>

@@ -50,9 +50,30 @@
         $(document).ready(function(){
             $('.spin').spin(opts);
 
-            setTimeout(function(){
-                window.location = "./analyzing.html";
-            },3000);
+            setInterval(function(){
+                $.ajax({
+                    type: "GET",
+                    //dataType: "json",
+                    url: "/Stanly/project/GitClone/IsDone.json",
+                    data: {},
+                    success: function (data) {
+                        console.log(data);
+                        var Test = eval(data);
+                        if(Test.result) {
+                        alert("Good Job!!");
+                        }
+                    },
+                    error: function (data) {
+                        alert(data + "Error!!");
+                    }
+                });    
+            },5000);
+            function reqGetResponse(data) {
+                var Test = eval(data);
+                if(Test.result) {
+                    alert("Good Job!!");
+                }
+            }
         });
     </script>
 </head>
@@ -68,7 +89,7 @@
     </div>
     <hr>
     <div class="footer">
-        <p class="text-center">© Software Maestro 3rd</p>
+        <p class="text-center">(c) Software Maestro 3rd</p>
     </div>
 
 </div>
