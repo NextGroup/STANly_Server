@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import net.sourceforge.pmd.lang.java.rule.stanly.element.ClassDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.ElementNode;
+import net.sourceforge.pmd.lang.java.rule.stanly.element.ElementNodeType;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.FieldDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.LibraryDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.MethodDomain;
@@ -75,28 +76,50 @@ public class StanlyPMDTest {
 			interbal = listSize / 10;
 		
 		ElementNode clientcompareNode = null;
-		try{
+		try {
 			
-		
-		for(int i = 0 ; i< listSize; i+= interbal)
-		{
-			ProjectElementNode serverCompareNode = elementlist.get(i);
-			clientcompareNode = rootnode.findNode(serverCompareNode.getName());
-			
-			assertNotNull(clientcompareNode);
-			
-			assertEquals(serverCompareNode.getNSLeft(), clientcompareNode.getLeftSideValue());
-			assertEquals(serverCompareNode.getNSRight(), clientcompareNode.getRightSideValue());
-			
-			assertTrue(CompareMetric(serverCompareNode,clientcompareNode));
+			for (int i = 0; i < listSize; i += interbal) 
+			{
+				ProjectElementNode serverCompareNode = elementlist.get(i);
+				clientcompareNode = FindNodeToName(serverCompareNode.getNSLeft(), rootnode);
+
+				assertNotNull(clientcompareNode);
+
+				assertEquals(serverCompareNode.getNSLeft(),
+						clientcompareNode.getLeftSideValue());
+				assertEquals(serverCompareNode.getNSRight(),
+						clientcompareNode.getRightSideValue());
+
+				assertTrue(CompareMetric(serverCompareNode, clientcompareNode));
+			}
 		}
-		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+	@Test
+	public void TestInsertRelation()
+	{
+		
+	}
+	private ElementNode FindNodeToName(int leftid, ElementNode node)
+	{
+		
+		if(node.getLeftSideValue() == leftid)
+			return node;
+		
+		ElementNode result = null;
+		
+		for(ElementNode childnode : node.getChildren())
+		{
+			result = FindNodeToName(leftid, childnode);
+			if(result != null)
+				return result;
+		}
+		
+		return result;
+	}
 	public boolean CompareMetric(ProjectElementNode server,ElementNode client)
 	{
 		
