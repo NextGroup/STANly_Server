@@ -15,8 +15,8 @@ import stanly.server.GitProject.Git.GitControl;
 @Service("gitControlService")
 public class GitControlService {
 
-	protected static final Logger logger = Logger.getLogger("ProjectInfoservice");
-	
+	protected static final Logger logger = Logger.getLogger("GitService");
+
 	@Async
 	public Future<GitControl> GitClone(String uRL,String ProjectName)
 	{
@@ -26,6 +26,8 @@ public class GitControlService {
 			 Git= new GitControl(uRL,ProjectName);
 			logger.info("Test");
 			Git.Clone();
+			
+			
 			
 		}catch(Exception e)
 		{
