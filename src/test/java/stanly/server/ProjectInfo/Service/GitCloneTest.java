@@ -51,12 +51,7 @@ public class GitCloneTest {
 		   }
 	}
 	
-	@Test
-	public void TestController()
-	{
 
-
-	}
 	
 	
 	@After
