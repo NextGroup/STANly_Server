@@ -41,6 +41,7 @@ public class ProjectController {
     public String IsGitGloneDone(HttpSession session, HttpServletResponse response)
     {
     		
+    		logger.info("IsDone Access");
     		response.setContentType("application/json");
     		Gson gson = new Gson();
     		ResultData result = new ResultData(false);

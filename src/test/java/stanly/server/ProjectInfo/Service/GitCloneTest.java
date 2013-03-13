@@ -1,5 +1,7 @@
 package stanly.server.ProjectInfo.Service;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.concurrent.Future;
 
@@ -51,7 +53,12 @@ public class GitCloneTest {
 		   }
 	}
 	
+	@Test
+	public void TestController()
+	{
+		assertTrue(true);
 
+	}
 	
 	
 	@After

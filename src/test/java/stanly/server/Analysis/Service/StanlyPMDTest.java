@@ -61,7 +61,7 @@ public class StanlyPMDTest {
 	@Test
 	public void TestInsertElementNode()
 	{
-		ProjectCommit commit= projectService.getLastCommit(info);
+		/*ProjectCommit commit= projectService.getLastCommit(info);
 		ElementNode rootnode = analysis.AnalysisElementNode(commit, info.getLocation());
 		List<ProjectElementNode> elementlist =  analysis.getTree(commit);
 		
@@ -96,7 +96,7 @@ public class StanlyPMDTest {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}
+		}*/
 	}
 	@Test
 	public void TestInsertRelation()
