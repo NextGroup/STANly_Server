@@ -419,9 +419,10 @@ public class AnalysisService {
 	@Async
 	public Future<String> analysisNode(ProjectCommit commit)
 	{
+		String RootName=null;
 		try{
 			logger.info("ProjectInfo insert");
-			
+			RootName = AnalysisElementNode(commit, commit.getPInfo().getLocation()).getFullName();
 			
 	
 
@@ -429,6 +430,6 @@ public class AnalysisService {
 		{
 			logger.error(e.getMessage());
 		}
-		return new AsyncResult<String>("완료 ㅎㅎ");
+		return new AsyncResult<String>(RootName);
 	}
 }

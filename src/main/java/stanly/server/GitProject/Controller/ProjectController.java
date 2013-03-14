@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 @RequestMapping("/project")
 @Controller(value = "projectController")
 public class ProjectController {
-	protected static Logger logger = Logger.getLogger("controller");
+	protected static Logger logger = Logger.getLogger("projectcontroller");
 	
 	private String getProjectName(String URL)
 	{
@@ -47,7 +47,8 @@ public class ProjectController {
     	
     		String ProjectName = (name!=null) ? name: getProjectName(url);
     		Future<GitControl> git = gitControlService.GitClone(url,ProjectName );
-    		session.setAttribute("Git", git);   		
+    		session.setAttribute("Git", git);
+    		session.setAttribute("ProjectName", ProjectName);
     		return "analysis/cloning";
     }
     
@@ -68,15 +69,17 @@ public class ProjectController {
     public String IsGitGloneDone(HttpSession session, HttpServletResponse response)
     {
     		
-    		logger.info("IsDone Access");
     		response.setContentType("application/json");
     		Gson gson = new Gson();
-    		ResultData result = new ResultData(false);
+    		String pName = (String)session.getAttribute("ProjectName");
+    		ResultData result = new ResultData(false,pName);
     		try{
-    		Future<GitControl> git = (Future<GitControl>) session.getAttribute("Git");
+    			
+    			Future<GitControl> git = (Future<GitControl>) session.getAttribute("Git");
     		
     		if(git.isDone()){
     			result.setResult(true);
+    			session.removeAttribute("Git");
     		}
     		
     		}catch(Exception e){
