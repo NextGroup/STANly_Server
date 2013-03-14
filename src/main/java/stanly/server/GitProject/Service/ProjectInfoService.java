@@ -1,6 +1,5 @@
 package stanly.server.GitProject.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.GitProject.DAO.ProjectDAO;
+import stanly.server.GitProject.DAO.ProjectState;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
 
@@ -116,5 +116,9 @@ public class ProjectInfoService {
 		return commit;
 	}
 	
+	public ProjectState getProjectState(String Url, String name)
+	{
+		return project.getProjectState(Url, name);
+	}
 	
 }

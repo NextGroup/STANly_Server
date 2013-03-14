@@ -200,10 +200,10 @@ public class ProjectDAO {
 		return commitList;
 	}
 	
-	public boolean IsProject(String gitURL, String ProjectName)
+	public ProjectState getProjectState(String gitURL, String ProjectName)
 	{
 		List<ProjectInfo> projectList = null;
-		
+		ProjectState state = ProjectState.NONE_PROJECT;
 		try{
 			Session session = sessionFactory.getCurrentSession();
 			
@@ -215,13 +215,19 @@ public class ProjectDAO {
 			 crit.add(Restrictions.or(projectEq, NameEq));
 			 
 			 projectList = crit.list();
+			 if(projectList.size() == 0)
+				 state = ProjectState.NONE_PROJECT;
+			 else if(projectList.get(0).getURL() ==gitURL)
+				 state = ProjectState.IS_GITURL;
+			 else
+				 state = ProjectState.IS_GITNAME;
 			  
 		}catch(Exception e)
 		{
 			logger.error(e);
-			return false;
+			return ProjectState.GIT_ERROR;
 		}
-		return (projectList.size() == 0) ? true: false;
+		return state;
 	}
 	
 	public List<ProjectInfo> getProjectList()

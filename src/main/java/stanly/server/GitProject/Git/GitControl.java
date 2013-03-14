@@ -2,6 +2,9 @@ package stanly.server.GitProject.Git;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.jgit.api.Git;
@@ -16,7 +19,11 @@ import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepository;
+
+import stanly.server.GitProject.Model.ProjectCommit;
+import stanly.server.GitProject.Model.ProjectInfo;
 
 public class GitControl {
 	private static final String DefaultPath = "../GitProject/Project_";
@@ -37,12 +44,13 @@ public class GitControl {
     	        
     }
     
-    public void Clone() throws InvalidRemoteException, TransportException, GitAPIException
+    public String Clone() throws InvalidRemoteException, TransportException, GitAPIException
     {
         Git.cloneRepository() 
         .setURI(remotePath)
         .setDirectory(new File(localPath))
         .call();  
+        return localPath;
        
     }
     
@@ -55,5 +63,6 @@ public class GitControl {
 		return git.log(); 
     }
     
+
     
 }

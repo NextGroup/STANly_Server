@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import stanly.server.GitProject.Git.GitControl;
 import stanly.server.GitProject.Service.GitControlService;
+import stanly.server.GitProject.Service.ProjectInfoService;
+import stanly.server.GitProject.json.ProjectStateJSON;
 import stanly.server.GitProject.json.ResultData;
 
 import com.google.gson.Gson;
@@ -25,17 +27,42 @@ import com.google.gson.Gson;
 public class ProjectController {
 	protected static Logger logger = Logger.getLogger("controller");
 	
+	private String getProjectName(String URL)
+	{
+		  String[]  arr =  URL.split("/");
+		  String[] Name =   arr[arr.length-1].split("\\.");
+		  
+		return Name[0];
+	}
 	@Autowired
 	@Qualifier("gitControlService")
 	private GitControlService gitControlService;
+	
+	@Autowired
+	@Qualifier("projectinfoService")
+	private ProjectInfoService projectService;
 
     @RequestMapping(value = "/GitClone", method=RequestMethod.POST)
-    public String GitClone(@RequestParam("URL") String url, @RequestParam("Name") String name, HttpSession session) throws Exception {
+    public String GitClone(@RequestParam("URL") String url,@RequestParam(value="Name" , required=false) String name, HttpSession session) throws Exception {
     	
-    		Future<GitControl> git = gitControlService.GitClone(url, name);
+    		String ProjectName = (name!=null) ? name: getProjectName(url);
+    		Future<GitControl> git = gitControlService.GitClone(url,ProjectName );
     		session.setAttribute("Git", git);   		
     		return "analysis/cloning";
     }
+    
+    @RequestMapping(value = "/IsProject", method=RequestMethod.GET)
+    @ResponseBody
+    public String IsProject(@RequestParam("URL") String url,@RequestParam(value="Name" , required=false) String name)
+    	{
+    		String ProjectName = (name!=null) ? name: getProjectName(url);
+    		System.out.println(url);
+    		ProjectStateJSON	 state = new ProjectStateJSON(projectService.getProjectState(url, ProjectName).name());
+    		Gson gson = new Gson();
+    		
+    		return gson.toJson(state);
+    	}
+    
     @RequestMapping(value = "/GitClone/IsDone.json", method=RequestMethod.GET)
     @ResponseBody 
     public String IsGitGloneDone(HttpSession session, HttpServletResponse response)
