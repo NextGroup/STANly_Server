@@ -45,6 +45,7 @@ public class ProjectDAO {
 			data = new ProjectInfo(uRL,location,name);
 			// Save
 			session.save(data);
+			session.flush();
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
@@ -140,6 +141,7 @@ public class ProjectDAO {
 			commit.setProjectInfo(project); 
 			// Save
 			session.save(commit);
+			session.flush();
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());

@@ -29,7 +29,7 @@ import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.GitProject.Service.ProjectInfoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/config/spring/context-test.xml")
+@ContextConfiguration(locations = "classpath:/config/spring/context-root.xml")
 public class AnalysisServiceTest {
 	protected static final Logger logger = Logger.getLogger("Test");
 	@Resource(name="analysisService")

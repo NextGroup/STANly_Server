@@ -53,13 +53,6 @@ public class GitCloneTest {
 		   }
 	}
 	
-	@Test
-	public void TestController()
-	{
-		assertTrue(true);
-
-	}
-	
 	
 	@After
 	public void FolderReset()

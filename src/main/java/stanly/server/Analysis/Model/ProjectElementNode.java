@@ -49,6 +49,8 @@ public class ProjectElementNode {
 	@OneToOne(mappedBy="element")
 	private ElementNodeMetric EMetric;
 	
+	@Column(name="TYPE") 
+	@Enumerated(EnumType.STRING)
 	private NodeType type;
 
 	
@@ -100,8 +102,7 @@ public class ProjectElementNode {
 		NSRight = nSRight;
 	}
 
-	@Column(name="TYPE") 
-	@Enumerated(EnumType.STRING)
+	
 	public NodeType getType() {
 		return type;
 	}

@@ -15,7 +15,7 @@ import stanly.server.MetricView.Json.RelationList;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/config/spring/context-test.xml")
+@ContextConfiguration(locations = "classpath:/config/spring/context-root.xml")
 public class RelationTest {
 	private Gson gson;
 	protected static final Logger logger = Logger.getLogger("RelationTest");
