@@ -54,7 +54,7 @@
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: "/Stanly/project/GitClone/IsDone.json",
+                    url: "/Stanly/project/Analysis/IsDone.json",
                     //분석완료 URL로 수정해야함
                     data: {},
                     success: reqGetResponse,

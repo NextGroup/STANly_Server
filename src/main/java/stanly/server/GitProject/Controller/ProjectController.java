@@ -31,7 +31,7 @@ public class ProjectController {
 	{
 		  String[]  arr =  URL.split("/");
 		  String[] Name =   arr[arr.length-1].split("\\.");
-		  
+		  logger.info(Name[0]);
 		return Name[0];
 	}
 	@Autowired
@@ -44,7 +44,7 @@ public class ProjectController {
 
     @RequestMapping(value = "/GitClone", method=RequestMethod.POST)
     public String GitClone(@RequestParam("URL") String url,@RequestParam(value="Name" , required=false) String name, HttpSession session) throws Exception {
-    	
+    		logger.info(url);
     		String ProjectName = (name!=null) ? name: getProjectName(url);
     		Future<GitControl> git = gitControlService.GitClone(url,ProjectName );
     		session.setAttribute("Git", git);
@@ -54,10 +54,12 @@ public class ProjectController {
     
     @RequestMapping(value = "/IsProject", method=RequestMethod.GET)
     @ResponseBody
-    public String IsProject(@RequestParam("URL") String url,@RequestParam(value="Name" , required=false) String name)
+    public String IsProject(@RequestParam("URL") String url,@RequestParam(value="Name" , required=false) String name,HttpServletResponse response)
     	{
+    			response.setContentType("application/json");
+    		logger.info("input url = " + url);
     		String ProjectName = (name!=null) ? name: getProjectName(url);
-    		System.out.println(url);
+
     		ProjectStateJSON	 state = new ProjectStateJSON(projectService.getProjectState(url, ProjectName).name());
     		Gson gson = new Gson();
     		

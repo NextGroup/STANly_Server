@@ -8,44 +8,45 @@
     <meta name="author" content="Team STANly">
     <!-- Le styles -->
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <!--<link rel="stylesheet" href="../assets/css/dashboard.css">-->
+    <!--<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">-->
     <link rel="stylesheet" href="../assets/css/custom-bootstrap-responsive.css">
     <!--<link rel="stylesheet" href="../assets/css/docs.css">-->
 
     <script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />-->
     <link rel="stylesheet" href="/assets/PackageGraph/css/PackageGraph.css">
 
     <style>
-    /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
+        /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
 
-    #codesize rect {
-    fill: none;
-    stroke: #fff;
-    }
+        #codesize rect {
+        fill: none;
+        stroke: #fff;
+        }
 
-    #codesize rect.parent,
-    .grandparent rect {
-    stroke-width: 2px;
-    }
+        #codesize rect.parent,
+        .grandparent rect {
+        stroke-width: 2px;
+        }
 
-    #codesize .grandparent rect {
-    fill: #fff;
-    }
+        #codesize .grandparent rect {
+        fill: #fff;
+        }
 
-    #codesize .children rect.parent,
-    #codesize .grandparent rect {
-    cursor: pointer;
-    }
+        #codesize .children rect.parent,
+        #codesize .grandparent rect {
+        cursor: pointer;
+        }
 
-    #codesize rect.parent {
-        pointer-events: all;
-    }
+        #codesize rect.parent {
+            pointer-events: all;
+        }
 
-    #codesize .children:hover rect.child,
-    #codesize .grandparent:hover rect {
-        fill: #123412;
-    }
+        #codesize .children:hover rect.child,
+        #codesize .grandparent:hover rect {
+            fill: #777777;
+        }
 
     </style>
 </head>
@@ -106,7 +107,7 @@
 
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Pollution</div>
+                <div style="height: 30px;background-color: #149bdf;">Pollution</div>
                 <div id="pollution" style="height: 300px; border:1px;"></div>
                 <!--오염도 그래프 그리-->
                 <script type="text/javascript" src="./js/RanderPollution.js"></script>
@@ -114,7 +115,7 @@
 
 
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Composition</div>
+                <div style="height: 30px;background-color: #149bdf;">Composition</div>
                 <div id="composition" style="margin: 0px;height: 300px;padding-right: 2px;">
                     <svg id="MainSVG">
                         <defs>
@@ -145,7 +146,7 @@
                 </div>
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
+                <div style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 300px;"></div>
                 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
                 <script type="text/javascript" src="./js/RanderDistance.js"></script>
@@ -156,11 +157,11 @@
 
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Metrics</div>
+                <div style="height: 30px;background-color: #149bdf;">Metrics</div>
                 <div id="metric" style="min-height: 200px;"></div>
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Size of Component</div>
+                <div style="height: 30px;background-color: #149bdf;">Size of Component</div>
                 <div id="codesize" style="background-color: #e1e1e8;height: 300px;"></div>
                 <script>
                     //codesize div
@@ -386,7 +387,6 @@
                                 : d.name;
                     }
                 </script>
-
             </div>
         </div>
 </div>
@@ -398,8 +398,8 @@
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
-<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-<script>
+<!--<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>-->
+<!--<script>
     $(window).resize(MakeResizable);
     $(MakeResizable);
     function MakeResizable(){
@@ -414,6 +414,6 @@
         $( "#composition" ).resizable(option);
         //$( "#distance" ).resizable(option);
     }
-</script>
+</script>-->
 </body>
 </html>
