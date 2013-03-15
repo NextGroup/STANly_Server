@@ -83,15 +83,14 @@ public class AnalysisService {
 		try
 		{
 		
-			String nodeName = "";
-			if( clientNode.getType() == ElementNodeType.METHOD||
-				clientNode.getType() == ElementNodeType.CONSTRUCTOR)
-				nodeName = ((MethodDomain)clientNode).getMethodFullName();
-			else
-				nodeName = clientNode.getFullName();
+			String nodeName = ConvertServerNodeName(clientNode);
+			String ParentName = "";
+			if(parentNode != null)
+				ParentName = ConvertServerNodeName(parentNode);
 			
+	
 			serverNode = createElement(commitID, nodeName,
-												parentNode == null ? "RootNode" : parentNode.getFullName(),
+												parentNode == null ? "RootNode" : ParentName,
 										 		clientNode.getLeftSideValue(), clientNode.getRightSideValue(), 
 										 		ConvertElementNodeType(clientNode.getType()));
 			
@@ -343,18 +342,8 @@ public class AnalysisService {
 			String TargetName = "";
 			NodeRelationType type = ConvertClientRelationTypeToServerRelationType(relation.getRelation());
 			
-			if(relation.getSourceNode().getType() == ElementNodeType.METHOD ||
-			   relation.getSourceNode().getType() == ElementNodeType.CONSTRUCTOR)
-				SourceName = ((MethodDomain)relation.getSourceNode()).getMethodFullName();
-			else
-				SourceName = relation.getSourceNode().getFullName();
-			
-			if(relation.getTargetNode().getType() == ElementNodeType.METHOD ||
-					   relation.getTargetNode().getType() == ElementNodeType.CONSTRUCTOR)
-				TargetName = ((MethodDomain)relation.getTargetNode()).getMethodFullName();
-			else
-				TargetName = relation.getTargetNode().getFullName();
-					
+			SourceName = ConvertServerNodeName(relation.getSourceNode());
+			TargetName = ConvertServerNodeName(relation.getTargetNode());
 			
 			InsertNodeRelation(SourceName,TargetName,commitID,type);
 		}
@@ -412,7 +401,19 @@ public class AnalysisService {
 		for(ElementNode childnode : clientnode.getChildren())
 			InsertIterationElementNode(commitID, childnode);
 	}
-	
+	private String ConvertServerNodeName(ElementNode clientNode)
+	{
+		String serverName = "";
+		if(clientNode.getType() == ElementNodeType.METHOD ||
+			clientNode.getType() == ElementNodeType.CONSTRUCTOR)
+			serverName = ((MethodDomain)clientNode).getMethodFullName();
+		else if(clientNode.getType() == ElementNodeType.LIBRARY)
+			serverName = clientNode.getName();
+		else
+			serverName = clientNode.getFullName();
+		
+		return serverName;
+	}
 	
 	
 	
