@@ -17,6 +17,9 @@ import com.google.gson.Gson;
 
 import stanly.server.Analysis.Service.AnalysisService;
 import stanly.server.GitProject.Git.GitControl;
+import stanly.server.GitProject.Model.ProjectCommit;
+import stanly.server.GitProject.Model.ProjectInfo;
+import stanly.server.GitProject.Service.ProjectInfoService;
 import stanly.server.GitProject.json.ResultData;
 
 @RequestMapping("/project")
@@ -27,12 +30,56 @@ public class AnalysisController {
 	@Autowired
 	@Qualifier("analysisService")
 	private AnalysisService analysis;
-	
-    @RequestMapping(value = "/Analysis", method=RequestMethod.POST)
+
+	@Autowired
+	@Qualifier("projectinfoService")
+	private ProjectInfoService projectService;
+    
+	/**
+	 * 	LastCommit을 기반으로 분석한다.
+	 * @param session
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/Analysis", method=RequestMethod.POST)
     public String AnalysisProject(HttpSession session, HttpServletResponse response)
     {
+		try{
+			String projectName = (String) session.getAttribute("ProjectName");
+    			ProjectInfo info =projectService.getProjectInfo(projectName) ;
+    			ProjectCommit commitId = projectService.getLastCommit(info);
+    			Future<String> RootName = analysis.analysisNode(commitId);
+    			session.setAttribute("Analysis", RootName);
     		
-    		
-    		return null;
+		}catch(Exception e)
+		{
+			logger.error(e);
+			response.setStatus(400);
+		}
+		
+		return "analysis/analyzing";
     }
+	@RequestMapping(value = "/Analysis/IsDone.json", method=RequestMethod.GET)
+	@ResponseBody 
+	public String IsGitGloneDone(HttpSession session, HttpServletResponse response)
+	{
+	    		
+	    		response.setContentType("application/json");
+	    		Gson gson = new Gson();
+	    		String pName = (String)session.getAttribute("ProjectName");
+	    		ResultData result = new ResultData(false,pName);
+	    		try{
+	    			
+	    			Future<String> rootName = (Future<String>) session.getAttribute("Analysis");
+	    		
+	    		if(rootName.isDone()){
+	    			result.setResult(true);
+	    			session.removeAttribute("Analysis");
+	    		}
+	    		
+	    		}catch(Exception e){
+	    			return gson.toJson(result);
+	    		}
+	    		return gson.toJson(result);
+	 }
 }
