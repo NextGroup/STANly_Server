@@ -33,12 +33,15 @@ public class ElementSearchDAO {
 			
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion CommitEq = Restrictions.eq("commit", commit);
-			 Criterion projectEq = Restrictions.eq("NSLeft", 1); //NSLeft == 1 이면 프로젝트 노
+			 Criterion projectEq = Restrictions.eq("NSLeft", new Integer(1)); //NSLeft == 1 이면 프로젝트 노
 			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(CommitEq);
+			 logger.info(commit.getMessage()+commit.getCommitid());
+			 logger.info(crit.list().size());
+			
 			 crit.add(projectEq);
 			 rootNode = (ProjectElementNode) crit.uniqueResult();
-		
+			 
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());

@@ -12,13 +12,13 @@ import stanly.server.Analysis.Model.Type.NodeType;
 @Table(name = "ProjectMetric")
 @PrimaryKeyJoinColumn(name="EMID")
 public class ProjectMetric extends ElementNodeMetric{
-	@Column(name = "Libraries", nullable = false)	
+	@Column(name = "Libraries")	
 	private int Libraries;
-	@Column(name = "Fat", nullable = false)	
+	@Column(name = "Fat")	
 	private float Fat;
-	@Column(name = "Tangled", nullable = false)	
+	@Column(name = "Tangled")	
 	private float Tangled;
-	@Column(name = "ACDLibrary", nullable = false)	
+	@Column(name = "ACDLibrary")	
 	private float ACDLibrary;
 	
 	

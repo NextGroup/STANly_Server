@@ -32,7 +32,7 @@ public class RelationDAO {
 
 			Session session = sessionFactory.getCurrentSession();
 			session.save(relation);
-			session.flush();
+		
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
@@ -134,5 +134,11 @@ public class RelationDAO {
 			logger.error(e);
 		}
 		return NodeRList;
+	}
+	
+	public void DataFlush()
+	{
+		Session session = sessionFactory.getCurrentSession();
+		session.flush();
 	}
 }

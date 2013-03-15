@@ -14,9 +14,9 @@ import stanly.server.Analysis.Model.Type.NodeType;
 @Table(name = "MethodMetric")
 @PrimaryKeyJoinColumn(name="EMID")
 public class MethodMetric extends ElementNodeMetric{
-	@Column(name = "LOC", nullable = false)	
+	@Column(name = "LOC")	
 	private int LOC;
-	@Column(name = "CC", nullable = false)
+	@Column(name = "CC")
 	private int CC;
 	
 	public MethodMetric() {

@@ -44,7 +44,7 @@ public class ElementDAO {
 			NodeType type = node.getType();
 			
 			session.save(node);
-		
+			
 			if(node.getEMetric()!=null)
 			{
 				logger.info("Node Metric"+node.getEMetric());
@@ -77,7 +77,7 @@ public class ElementDAO {
 						break;
 				}
 			}
-			session.flush();
+			
 
 		}catch(Exception e)
 		{
@@ -163,5 +163,9 @@ public class ElementDAO {
 		}
 		return nList;
 	}
-	
+	public void DataFlush()
+	{
+		Session session = sessionFactory.getCurrentSession();
+		session.flush();
+	}
 }

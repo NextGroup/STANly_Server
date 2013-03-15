@@ -18,11 +18,11 @@ import stanly.server.Analysis.Model.Type.NodeType;
 @PrimaryKeyJoinColumn(name="EMID")
 public class AttributeMetric extends ElementNodeMetric{
 	
-	@Column(name = "Instructions", nullable = false)
+	@Column(name = "Instructions")
 	private int Instructions;
-	@Column(name = "ELOC", nullable = false)
+	@Column(name = "ELOC")
 	private int ELOC;
-	@Column(name = "CC", nullable = false)
+	@Column(name = "CC")
 	private int CC;
 	
 

@@ -12,13 +12,13 @@ import stanly.server.Analysis.Model.Type.NodeType;
 @Table(name = "LibraryMetric")
 @PrimaryKeyJoinColumn(name="EMID")
 public class LibraryMetric extends ElementNodeMetric{
-	@Column(name = "Unit", nullable = false)
+	@Column(name = "Unit")
 	private int Unit;
-	@Column(name = "Packages", nullable = false)
+	@Column(name = "Packages")
 	private int Packages;
-	@Column(name = "NumberOfClass", nullable = false)
+	@Column(name = "NumberOfClass")
 	private int NumberOfClass;	// unit class + inner class
-	@Column(name = "FatPackages", nullable = false)
+	@Column(name = "FatPackages")
 	private int FatPackages;
 	public int getUnit() {
 		return Unit;

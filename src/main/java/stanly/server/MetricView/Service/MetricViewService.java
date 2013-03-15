@@ -83,12 +83,15 @@ public class MetricViewService {
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
 		ProjectCommit commit = projectDAO.getLastCommit(info);
 		ArrayList<TreeElement> Elements = new ArrayList<TreeElement>();
-		
+		logger.info("Tree Init");
 		if(nodeID == 0)
 		{
 			ProjectElementNode node = EsearchDAO.getProjectNode(commit);
+			if(node==null)
+				logger.info("Null Log");
 			TreeElement projectNode = new TreeElement(info.getName());
 			projectNode.setAttrID(Integer.toString(1));
+	
 			projectNode.setRel(node.getType().name());
 			Elements.add(projectNode);
 		}
