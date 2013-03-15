@@ -26,126 +26,99 @@
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
     <!--<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
     <script type="text/javascript">
         $(function () {
             $("#prjtree")
-                    .jstree({
-                        "json_data" : {
-                            "ajax" : {
-                                //"url" : "../../assets/jstree/_docs/_stanly_data.json",
-                                "url" : "../../assets/jstree/_docs/_simple_data.json",
-                                "data" : function (n) {
-                                    // the result is fed to the AJAX request `data` option
-                                    return {
-                                        "operation" : "get_children",
-                                        "id" : n.attr ? n.attr("id").replace("node_","") : 1
-                                    };
-                                },
-                                "progressive_render" : true
-                            }
-                        },
-                        "core" : {
-                            "animation" : 50
-                        },
-                        "plugins" : [ "themes", "json_data", "ui", "hotkeys", "types", "cookies" ],
+                .jstree({
+                    "json_data" : {
+                        "ajax" : {
+                            //"url" : "../../assets/jstree/_docs/_stanly_data.json",
+                            "url" : "../../assets/jstree/_docs/_simple_data.json",
+                            "data" : function (n) {
+                                // the result is fed to the AJAX request `data` option
+                                return {
+                                    "operation" : "get_children",
+                                    "id" : n.attr ? n.attr("id").replace("node_","") : 1
+                                };
+                            },
+                            "progressive_render" : true
+                        }
+                    },
+                    "core" : {
+                        "animation" : 50
+                    },
+                    "plugins" : [ "themes", "json_data", "ui", "hotkeys", "types", "cookies" ],
+                    "types" : {
                         "types" : {
-                            "types" : {
-                                "PROJECT" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/application.gif'
-                                    }
-                                },
-                                "LIBRARY" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/subsystem.gif'
-                                    }
-                                },
-                                "PACKAGESET" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/tree.gif'
-                                    }
-                                },
-                                "PACKAGE" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/package.gif'
-                                    }
-                                },
-                                "CLASS" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/class.gif'
-                                    }
-                                },
-                                "INTERFACE" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/interface.gif'
-                                    }
-                                },
-                                "ANNOTATION" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/annotation.gif'
-                                    }
-                                },
-                                "ENUM" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/enum.gif'
-                                    }
-                                },
-                                "CONSTRUCTOR" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/constructor.png'
-                                    }
-                                },
-                                "METHOD" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/method.gif'
-                                    }
-                                },
-                                "FIELD" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/field.gif'
-                                    }
+                            "PROJECT" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/application.gif'
+                                }
+                            },
+                            "LIBRARY" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/subsystem.gif'
+                                }
+                            },
+                            "PACKAGESET" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/tree.gif'
+                                }
+                            },
+                            "PACKAGE" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/package.gif'
+                                }
+                            },
+                            "CLASS" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/class.gif'
+                                }
+                            },
+                            "INTERFACE" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/interface.gif'
+                                }
+                            },
+                            "ANNOTATION" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/annotation.gif'
+                                }
+                            },
+                            "ENUM" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/enum.gif'
+                                }
+                            },
+                            "CONSTRUCTOR" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/constructor.png'
+                                }
+                            },
+                            "METHOD" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/method.gif'
+                                }
+                            },
+                            "FIELD" : {
+                                "icon" : {
+                                    "image" : '../../assets/jstree/img/field.gif'
                                 }
                             }
                         }
-                    })
-                    .bind("select_node.jstree", function (e, data) {
-                        console.log(data.rslt.obj[0].id);
-                        BuildDetailList();
-                    })
+                    }
+                })
+                .bind("select_node.jstree", function (e, data) {
+                    //console.log(data.rslt.obj[0].id);
+                    console.log(data.rslt.obj.attr("id"));
+                    BuildDetailList();
+                })
 
         });
 
-        var min_content_height = 668;
-        var min_content_width = 650;
-        var side_margin;
-        var bottom_margin;
-        var navbar_height;
-        var sidebar_width;
-        var min_content_height;
-        var title_margin;
-        $(function () {
-            navbar_height = $(".navbar").height();
-            side_margin = parseInt($("#sidebar").css("margin")) * 5;
-            bottom_margin = parseInt($("#sidebar").css("margin")) * 2;
-            sidebar_width = $("#sidebar").width();
-            min_content_height = min_content_height - navbar_height;
-            title_margin = $("#sidebar_title").height();
-            resize();
-        });
-        window.onresize = resize;
-        function resize(){
-            var cur_content_height = $(window).height()-navbar_height - bottom_margin - title_margin;
-            var calHeight = min_content_height > cur_content_height ? min_content_height : cur_content_height;
-            $("#sidebar").height(calHeight);
-
-            var cur_content_width = $(window).width()-sidebar_width - side_margin;
-            var calWidth = min_content_width > cur_content_width ? min_content_width : cur_content_width;
-            $("#content").height(calHeight-10).width(calWidth);
-            $("#body").width(calWidth + side_margin + sidebar_width).height($(window).height()-navbar_height);
-        }
     </script>
+    <!-- 내용 위치&비율 조정-->
+    <script type="text/javascript" src="./js/sizealign.js"></script>
 </head>
 <body>
 
@@ -176,58 +149,9 @@
         <div id="content" style="background-color:#5f9ea0; margin: 10px; float: left">
             <div id="mainview_title">Distance</div>
             <div id="mainview" style="background-color:#b94a48; height: 70%; margin-bottom: 10px">
-                <div id="chart_div" style="height:100%;"></div>
-                <script type="text/javascript">
-                    var data;
-                    var options;
-                    google.load("visualization", "1", {packages:["corechart"]});
-                    google.setOnLoadCallback(drawChart);
-                    function drawChart() {
-                        $.ajax( {
-                            type :'GET'
-                            ,asyn :true
-                            ,url :'test_detail.json'
-                            ,dataType :"json"
-                            //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
-                            ,beforeSend : function(xhr){
-                            }
-                            ,success : function(jsonData) {
-                                table = JSON.stringify(jsonData);
-                                data = google.visualization.arrayToDataTable([
-                                    ['ID', 'Abstractness', 'Instability', 'Distance','LOC'],
-                                    ['',   1.0,  0.0,      120, 1],
-                                    ['',   0.9,  0.7,      130, 2],
-                                    ['',   0.5,  0.3,      50,  1.5],
-                                    ['',   0.1,  0.2,      230, 2.5],
-                                    ['',   0.3,  0.6,      210, 0.5],
-                                    ['',   0.5,  0.5,      100, 1],
-                                    ['',   0.4,  0.1,      80,  2]
-                                ]);
-
-
-                                options = {
-                                    title: 'Robert C. Martin Distance',
-                                    hAxis: {title: 'Abstractness', minValue:0, maxValue:1},
-                                    vAxis: {title: 'Instability', minValue:0, maxValue:1},
-                                    bubble: {textStyle: {fontSize: 11}}
-
-                                };
-
-                                var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
-                                chart.draw(data, options);
-                            }
-                            ,error : function(xhr, textStatus) {
-                            }
-                            ,complete : function(xhr, textStatus) {
-                            }
-                        });
-                        $(window).resize(function() {
-                            var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
-                            $("#chart_div").empty();
-                            chart.draw(data, options);
-                        });
-                    }
-                </script>
+                <div id="distance" style="height:100%;"></div>
+                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                <script type="text/javascript" src="../js/RanderDistance.js"></script>
             </div>
             <div id="subview"  style="background-color:#bdb76b; height: 30%; overflow-y: scroll;">
                 <div id="detail_title">Relations</div>

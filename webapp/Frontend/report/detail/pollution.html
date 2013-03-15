@@ -108,41 +108,15 @@
                         }
                     })
                     .bind("select_node.jstree", function (e, data) {
-                        console.log(data.rslt.obj[0].id);
+                        //console.log(data.rslt.obj[0].id);
+                        console.log(data.rslt.obj.attr("id"));
                         BuildDetailList();
                     })
 
         });
-
-        var min_content_height = 668;
-        var min_content_width = 650;
-        var side_margin;
-        var bottom_margin;
-        var navbar_height;
-        var sidebar_width;
-        var min_content_height;
-        var title_margin;
-        $(function () {
-            navbar_height = $(".navbar").height();
-            side_margin = parseInt($("#sidebar").css("margin")) * 5;
-            bottom_margin = parseInt($("#sidebar").css("margin")) * 2;
-            sidebar_width = $("#sidebar").width();
-            min_content_height = min_content_height - navbar_height;
-            title_margin = $("#sidebar_title").height();
-            resize();
-        });
-        window.onresize = resize;
-        function resize(){
-            var cur_content_height = $(window).height()-navbar_height - bottom_margin - title_margin;
-            var calHeight = min_content_height > cur_content_height ? min_content_height : cur_content_height;
-            $("#sidebar").height(calHeight);
-
-            var cur_content_width = $(window).width()-sidebar_width - side_margin;
-            var calWidth = min_content_width > cur_content_width ? min_content_width : cur_content_width;
-            $("#content").height(calHeight-10).width(calWidth);
-            $("#body").width(calWidth + side_margin + sidebar_width).height($(window).height()-navbar_height);
-        }
     </script>
+    <!-- 내용 위치&비율 조정-->
+    <script type="text/javascript" src="./js/sizealign.js"></script>
 </head>
 <body>
 
@@ -174,136 +148,8 @@
             <div id="mainview_title">Pollution</div>
             <div id="mainview" style="background-color:#b94a48; height: 70%; margin-bottom: 10px">
                 <div id="pollution" style="height:100%;"></div>
-                <script>
-                    //$(function () {
-                        var chart;
-                        $(document).ready(function() {
-
-                            var colors = Highcharts.getOptions().colors,
-                                    categories = [
-                                        'Number of Top Level Classes', 'Number of Methods', 'Number of Fields',
-                                        'Estimated Lines of Code ', 'Cyclomatic Complexity', 'Fat',
-                                        'Tangled', 'Component Dependency', 'Distance', 'Average Absolute Distance',
-                                        'Weighted Methods per Class', 'Depth of Inheritance Tree'
-                                    ],
-                                    name = 'Pollutions',
-                                    data = [{
-                                        y: 55.11,
-                                        color: colors[0]
-                                    }, {
-                                        y: 21.63,
-                                        color: colors[1]
-                                    }, {
-                                        y: 11.94,
-                                        color: colors[2]
-                                    }, {
-                                        y: 7.15,
-                                        color: colors[3]
-                                    }, {
-                                        y: 2.14,
-                                        color: colors[4]
-                                    }, {
-                                        y: 2.14,
-                                        color: colors[5]
-                                    }, {
-                                        y: 2.14,
-                                        color: colors[6]
-                                    }, {
-                                        y: 2.14,
-                                        color: colors[7]
-                                    }, {
-                                        y: 2.14,
-                                        color: colors[8]
-                                    }, {
-                                        y: 2.14,
-                                        color: colors[0]
-                                    }, {
-                                        y: 2.14,
-                                        color: colors[1]
-                                    }];
-
-                            function setChart(name, categories, data, color) {
-                                chart.xAxis[0].setCategories(categories, false);
-                                chart.series[0].remove(false);
-                                chart.addSeries({
-                                    name: name,
-                                    data: data,
-                                    color: color || 'white'
-                                }, false);
-                                chart.redraw();
-                            }
-
-                            chart = new Highcharts.Chart({
-                                chart: {
-                                    renderTo: 'pollution',
-                                    type: 'column'
-                                },
-                                title: {
-                                    text: 'Name of Proejct'
-                                },
-                                subtitle: {
-                                    text: 'Name of SubFolder'
-                                },
-                                xAxis: {
-                                    categories: categories
-                                },
-                                yAxis: {
-                                    title: {
-                                        text: 'Number of Pollutions'
-                                    }
-                                },
-                                plotOptions: {
-                                    column: {
-                                        cursor: 'pointer',
-                                        point: {
-                                            events: {
-                                                click: function() {
-                                                    /*var drilldown = this.drilldown;
-                                                    if (drilldown) { // drill down
-                                                        setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
-                                                    } else { // restore
-                                                        setChart(name, categories, data);
-                                                    }*/
-                                                }
-                                            }
-                                        },
-                                        dataLabels: {
-                                            enabled: true,
-                                            color: colors[0],
-                                            style: {
-                                                fontWeight: 'bold'
-                                            },
-                                            formatter: function() {
-                                                return this.y;
-                                            }
-                                        }
-                                    }
-                                },
-                                tooltip: {
-                                    formatter: function() {
-                                        var point = this.point,
-                                                s = this.x +':<b>'+ this.y +'</b><br/>';
-                                        /*if (point.drilldown) {
-                                            s += 'Click to view '+ point.category +' versions';
-                                        } else {
-                                            s += 'Click to return to browser brands';
-                                        }*/
-                                        return s;
-                                    }
-                                },
-                                series: [{
-                                    name: name,
-                                    data: data,
-                                    color: 'white'
-                                }],
-                                exporting: {
-                                    enabled: false
-                                }
-                            });
-                        });
-
-                    //});
-                </script>
+                <!--오염도 그래프 그리-->
+                <script type="text/javascript" src="../js/RanderPollution.js"></script>
             </div>
             <div id="subview"  style="background-color:#bdb76b; height: 30%; overflow-y: scroll;">
                 <div id="detail_title">Violations</div>

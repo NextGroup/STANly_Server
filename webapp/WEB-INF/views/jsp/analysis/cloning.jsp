@@ -53,25 +53,25 @@
             setInterval(function(){
                 $.ajax({
                     type: "GET",
-                    //dataType: "json",
+                    dataType: "json",
                     url: "/Stanly/project/GitClone/IsDone.json",
                     data: {},
-                    success: function (data) {
-                        console.log(data);
-                        var Test = eval(data);
-                        if(Test.result) {
-                        alert("Good Job!!");
-                        }
-                    },
+                    success: reqGetResponse,
                     error: function (data) {
-                        alert(data + "Error!!");
+                    	console.log("Error IsDone "+data);
                     }
                 });    
-            },5000);
+            },3000);
             function reqGetResponse(data) {
-                var Test = eval(data);
-                if(Test.result) {
-                    alert("Good Job!!");
+                //data = JSON.parse(data);
+                if(data.result)
+                {
+                    //클론이 성공했을때 여기에 넣으면 됨
+                    console.log("true" + data);
+                }
+                else
+                {
+                    console.log("false" + data);
                 }
             }
         });

@@ -49,6 +49,33 @@
 
         $(document).ready(function(){
             $('.spin').spin(opts);
+
+            setInterval(function(){
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "/Stanly/project/GitClone/IsDone.json",
+                    //분석완료 URL로 수정해야함
+                    data: {},
+                    success: reqGetResponse,
+                    error: function (data) {
+                    console.log("Error IsDone "+data);
+                }
+                });
+            },3000);
+            function reqGetResponse(data) {
+                //data = JSON.parse(data);
+                if(data.result)
+                {
+                    //분석이 완료 됬을때 여기에 넣으면 됨
+                    console.log("true" + data);
+                }
+                else
+                {
+                    console.log("false" + data);
+                }
+            }
+
         });
     </script>
 </head>
