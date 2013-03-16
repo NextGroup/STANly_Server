@@ -9,12 +9,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -43,7 +42,7 @@ public class RelationDAO {
 	}
 	
 	/**
-	 * 주어진 커밋 아이디와 Src이름에 해당하는 릴레이션 객체들을 가져온다.
+	 * 주어진 커밋 아이디와 Src이름에 해당하는 릴레이션 객체들을 가져온다. 20개 단위로 가져온다.
 	 * @param CommitID
 	 * @param SrcName
 	 * @return
@@ -60,6 +59,8 @@ public class RelationDAO {
 			 Criteria crit = session.createCriteria(NodeRelation.class);
 			 crit.add(commitEq);
 			 crit.add(SrcEq);
+			 crit.setMaxResults(20);
+			
 			 NodeRList = crit.list();
 		}
 		catch(Exception e)
@@ -102,11 +103,12 @@ public class RelationDAO {
 		
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
-			 Criterion  Srclike = Restrictions.like("SrcName", SrcName,MatchMode.START);
+			 Criterion  Srclike = Restrictions.like("SrcName", SrcName+"%");
 			 Criteria crit = session.createCriteria(NodeRelation.class);
 			 crit.add(commitEq);
 			 crit.add(Srclike);
 			 NodeRList = crit.list();
+			logger.info("Count List  "+NodeRList.size());
 		}
 		catch(Exception e)
 		{
@@ -123,7 +125,7 @@ public class RelationDAO {
 		
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
-			 Criterion  Tarlike = Restrictions.like("TarName", TarName,MatchMode.START);
+			 Criterion  Tarlike = Restrictions.like("TarName", TarName+"%");
 			 Criteria crit = session.createCriteria(NodeRelation.class);
 			 crit.add(commitEq);
 			 crit.add(Tarlike);
@@ -134,6 +136,61 @@ public class RelationDAO {
 			logger.error(e);
 		}
 		return NodeRList;
+	}
+	
+	public List<NodeRelation> getLikeRelation(ProjectCommit CommitID, String SrcName,String TarName)
+	{
+		List<NodeRelation> NodeRList = null;
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			 Criterion commitEq = Restrictions.eq("commit", CommitID);
+			 Criterion  Tarlike = Restrictions.like("TarName", TarName+"%");
+			 Criterion  Srclike = Restrictions.like("SrcName", SrcName+"%");
+			 Criteria crit = session.createCriteria(NodeRelation.class);
+			 crit.add(commitEq);
+			 crit.add(Tarlike);
+			 crit.add(Srclike);
+			 NodeRList = crit.list();
+		}
+		catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return NodeRList;
+	}
+	
+	
+	/**
+	 *  갯수를 리턴한다. 해당하는 릴레이션의 
+	 * @param CommitID
+	 * @param SrcName
+	 * @param TarName
+	 * @return
+	 */
+	public int getCountRelation(ProjectCommit CommitID, String SrcName,String TarName)
+	{
+		Integer CountR = null;
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			 Criterion commitEq = Restrictions.eq("commit", CommitID);
+			 Criterion  Tarlike = Restrictions.like("TarName", TarName+"%");
+			 Criterion  Srclike = Restrictions.like("SrcName", SrcName+"%");
+			 Criteria crit = session.createCriteria(NodeRelation.class);
+			 crit.setProjection( Projections.rowCount() );
+			 crit.add(commitEq);
+			 crit.add(Tarlike);
+			 crit.add(Srclike);
+			 CountR = (Integer) crit.uniqueResult();
+		}
+		catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return CountR;
 	}
 	
 	public void DataFlush()

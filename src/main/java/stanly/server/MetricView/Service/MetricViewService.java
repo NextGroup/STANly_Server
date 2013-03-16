@@ -34,7 +34,7 @@ public class MetricViewService {
 	@Autowired
 	private ElementSearchDAO EsearchDAO;
 	/**
-	 * Relation 처리 부
+	 * Relation , 페이징 처리가 필요할 것 같다. 너무 데이터가 많이 오는 것 아닌가? 
 	 * @param projectName
 	 * @param SrcName
 	 * @return
@@ -51,7 +51,7 @@ public class MetricViewService {
 		{
 			NodeRelation node = nodeR.get(i);
 			Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name());
-			
+			rList.addRelation(rel);
 		}
 		return gson.toJson(rList);
 	}
@@ -67,7 +67,24 @@ public class MetricViewService {
 		{
 			NodeRelation node = nodeR.get(i);
 			Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name());
-			
+			rList.addRelation(rel);
+		}
+		return gson.toJson(rList);
+	}
+	
+	public String getRelation(String projectName, String SrcName, String TarName)
+	{
+		
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		List<NodeRelation> nodeR = relationDao.getLikeRelation(commit,SrcName, TarName);
+		Gson gson = new Gson();
+		RelationList rList = new RelationList();
+	
+		for(int i=0;i<nodeR.size();i++)
+		{
+			NodeRelation node = nodeR.get(i);
+			Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name());
+			rList.addRelation(rel);
 		}
 		return gson.toJson(rList);
 	}
@@ -89,6 +106,7 @@ public class MetricViewService {
 			ProjectElementNode node = EsearchDAO.getProjectNode(commit);
 			if(node==null)
 				logger.info("Null Log");
+			
 			TreeElement projectNode = new TreeElement(info.getName());
 			projectNode.setAttrID(Integer.toString(1));
 	

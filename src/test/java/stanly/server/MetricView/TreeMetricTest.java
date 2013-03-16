@@ -26,8 +26,16 @@ public class TreeMetricTest {
 		String val = service.getTreeNode("PMD", 0);
 		assertNotNull(val);
 		logger.info(val);
-		val = service.getTreeNode("PMD", 1);
+		val = service.getTreeNode("PMD", 3);
 		logger.info(val);
+	}
+	@Test 
+	public void nodeRelation()
+	{
+		String relation = service.getRelation("PMD", "net.sourceforge.pmd.lang","net.sourceforge.pmd.lang.ast.Node");
+		assertNotNull(relation);
+		logger.info(relation);
+		
 	}
 
 }
