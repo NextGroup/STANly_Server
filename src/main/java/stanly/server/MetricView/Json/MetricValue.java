@@ -2,11 +2,11 @@ package stanly.server.MetricView.Json;
 
 public class MetricValue {
 	private String Metric;
-	private int value;
+	private float value;
 	
 	
 	
-	public MetricValue(String metric, int value) {
+	public MetricValue(String metric, float value) {
 		super();
 		Metric = metric;
 		this.value = value;
@@ -14,10 +14,10 @@ public class MetricValue {
 	public String getMetric() {
 		return Metric;
 	}
-	public int getValue() {
+	public float getValue() {
 		return value;
 	}
-	public void setValue(int value) {
+	public void setValue(float value) {
 		this.value = value;
 	}
 	

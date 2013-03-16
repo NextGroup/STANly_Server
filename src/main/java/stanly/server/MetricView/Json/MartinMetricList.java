@@ -9,36 +9,24 @@ public class MartinMetricList {
 	{
 		metricList = new ArrayList<MetricValue>();
 	}
-
-	public boolean 	addDistance(MetricValue e) {
-		if(e.getMetric()=="Distance")
-			return metricList.add(e);
-		else
-			return false;
+	//Package Metric
+	public boolean 	addDistance(float e) {
+			return metricList.add(new MetricValue("Distance",e));
 	}
-	public boolean 	addAbstractness(MetricValue e) {
-		if(e.getMetric()=="Abstractness")
-			return metricList.add(e);
-		else
-			return false;
+	public boolean 	addAbstractness(float e) {
+			return metricList.add(new MetricValue("Abstractness",e));
 	}
-	public boolean 	addInstability(MetricValue e) {
-		if(e.getMetric()=="Instability")
-			return metricList.add(e);
-		else
-			return false;
+	public boolean 	addInstability(float e) {
+		
+			return metricList.add(new MetricValue("Instability",e));
 	}
-	public boolean 	addEfferentCoupling(MetricValue e) {
-		if(e.getMetric()=="EfferentCoupling")
-			return metricList.add(e);
-		else
-			return false;
+		
+	public boolean 	addEfferentCoupling(float e) {
+		
+			return metricList.add(new MetricValue("EfferentCoupling",e));
 	}
-	public boolean 	addAfferentCoupling(MetricValue e) {
-		if(e.getMetric()=="AfferentCoupling")
-			return metricList.add(e);
-		else
-			return false;
+	public boolean 	addAfferentCoupling(float e) {
+			return metricList.add(new MetricValue("AfferentCoupling",e));
 	}
 	
 	public ArrayList<MetricValue> getMetricList() {
