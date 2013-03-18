@@ -14,6 +14,7 @@ import stanly.server.GitProject.DAO.ProjectDAO;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.MetricView.DAO.ElementSearchDAO;
+import stanly.server.MetricView.DAO.MetricSearchDAO;
 import stanly.server.MetricView.Json.Relation;
 import stanly.server.MetricView.Json.RelationList;
 import stanly.server.MetricView.Json.TreeElement;
@@ -33,7 +34,8 @@ public class MetricViewService {
 	private RelationDAO relationDao;
 	@Autowired
 	private ElementSearchDAO EsearchDAO;
-	
+	@Autowired
+	private MetricSearchDAO MSearchDAO;
 	private String sprite(String path)
 	{
 		String[]  arr =  path.split("\\.");
@@ -51,8 +53,7 @@ public class MetricViewService {
 	{
 		logger.info("Relation Calc");
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
-		logger.info((commit==null) ? "commit Null error": "commit no error");
-		logger.info(SrcID);
+
 		ProjectElementNode srcnode = EsearchDAO.getElementNode(commit, SrcID);
 		logger.info((srcnode==null) ? "Null error": "no error");
 		List<NodeRelation> nodeR = relationDao.getSrcLikeRelation(commit, srcnode.getName());
@@ -145,6 +146,16 @@ public class MetricViewService {
 		return gosn.toJson(Elements);
 	}
 	
+	
+	public String getMartinList(String projectName, int nodeID)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		
+		Gson gosn = new Gson();
+
+		return gosn.toJson(MSearchDAO.getMertinValue(commit, nodeID));
+	}
 	
 
 }
