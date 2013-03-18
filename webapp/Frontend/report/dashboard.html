@@ -148,6 +148,14 @@
                         var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
                         var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","./detail/MainGraph.json");
 
+                        var option={
+                            minWidth: $('.subtitle').width(),
+                            maxWidth: $('.subtitle').width(),
+                            minHeight: 300,
+                            resize: function(){}
+                        }
+
+                        $( "#composition" ).resizable(option);
                     </script>
                 </div>
             </div>
@@ -370,7 +378,7 @@
                             var duration;
                             if(event != -1) duration = 750;
                             else            duration = 0;
-                            console.log(duration);
+
                             var t1 = g1.transition().duration(duration);
                             var t2 = g2.transition().duration(duration);
 

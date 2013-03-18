@@ -71,14 +71,18 @@ function drawChart() {
         jg.paint();
 
 
-        $("#distance").append(resizable);
-        var option={
-            minWidth: $('.subtitle').width()-1,
-            maxWidth: $('.subtitle').width()-1,
-            minHeight: 300,
-            resize: function(event, ui){}
+        if($( "#distance" ).resizable)
+        {
+            $("#distance").append(resizable);
+            var option={
+                minWidth: $('.subtitle').width()-1,
+                maxWidth: $('.subtitle').width()-1,
+                minHeight: 300,
+                resize: function(event, ui){}
+            }
+            $("#distance").resizable(option);
         }
-        $( "#distance" ).resizable(option);
+        //$($( "#distance" ).find("svg")[0]).attr("currentScale","1");
        /* $("#distance").append("<div class=\"ui-resizable-handle ui-resizable-e\" style=\"z-index: 90;\"></div>");
         $("#distance").append("<div class=\"ui-resizable-handle ui-resizable-s\" style=\"z-index: 90;\"></div>");
         $("#distance").append("<div class=\"ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se\" style=\"z-index: 90;\"></div>");*/
