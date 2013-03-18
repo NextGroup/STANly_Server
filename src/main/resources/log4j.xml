@@ -31,10 +31,11 @@
         <level value="ERROR" />
     </logger>
     
-     <logger name="net.sourceforge.pmd">
-        <level value="INFO" />
-    </logger>
     
+     <logger name="net.sourceforge.pmd">
+        <level value="ERROR" />
+    </logger>
+ 	
  
     <!-- Root Logger -->
     <root>
