@@ -11,7 +11,7 @@ function getProjectName(){
         var str = location.search.split("?")[1];
         ProjectName = str.split("Name=")[1].split("&")[0];
     }
-    console.log(ProjectName);
+    //console.log(ProjectName);
     return ProjectName;
 }
 
@@ -40,3 +40,13 @@ function requestURL(mothod,url,arg){
     document.body.appendChild(oForm);
     oForm.submit();
 }
+//$(function(){
+$('.nav > li > a').click(function(){
+    if(this.parentNode.getAttribute("class"))   return false;
+    var url="/Stanly/report/detail/";
+    if(this.text.toLowerCase() == "dashboard")
+        url="/Stanly/report/";
+    requestURL('get',url + this.text.toLowerCase() + '.html','Name=' + getProjectName());
+    return false;
+});
+//});

@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
 
-    <script type="text/javascript" src="/Stanly/js/utilities.js"></script>
-
     <style>
         /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
 
@@ -82,20 +80,20 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
         <a class="brand" href="#">STANly</a>
-            <ul class="nav">
-                <li class="active"><a href="javascript:void(0);">DashBoard</a></li>
-                <li class="divider-vertical"></li>
-                <li><a href="javascript:void(0);" onClick="requestURL('get','./detail/composition.html','Name=' + getProjectName()); return false;">Composition</a></li>
-                <li class="divider-vertical"></li>
-                <li><a href="javascript:void(0);" onClick="requestURL('get','./detail/pollution.html','Name=' + getProjectName()); return false;">Pollution</a></li>
-                <li class="divider-vertical"></li>
-                <li><a href="javascript:void(0);" onClick="requestURL('get','./detail/distance.html','Name=' + getProjectName()); return false;">Distance</a></li>
-                <li class="divider-vertical"></li>
-                <li><a href="javascript:void(0);" onClick="requestURL('get','./detail/metrics.html','Name=' + getProjectName()); return false;">Metrics</a></li>
-                <li class="divider-vertical"></li>
-                <li><a href="./detail/about.html">About</a></li>
-                <li class="divider-vertical"></li>
-            </ul>
+        <ul class="nav">
+            <li class="active"><a href="javascript:void(0);" >DashBoard</a></li>
+            <li class="divider-vertical"></li>
+            <li><a href="javascript:void(0);">Composition</a></li>
+            <li class="divider-vertical"></li>
+            <li><a href="javascript:void(0);" >Pollution</a></li>
+            <li class="divider-vertical"></li>
+            <li><a href="javascript:void(0);" >Distance</a></li>
+            <li class="divider-vertical"></li>
+            <li><a href="javascript:void(0);" >Metrics</a></li>
+            <li class="divider-vertical"></li>
+            <li><a href="./about.html">About</a></li>
+            <li class="divider-vertical"></li>
+        </ul>
     </div>
 </div>
 
@@ -440,9 +438,10 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/Stanly/assets/js/bootstrap.min.js"></script>
-<script src="/Stanly/assets/highcharts/js/highcharts.js"></script>
-<script src="/Stanly/assets/highcharts/js/modules/exporting.js"></script>
+<script type="text/javascript" src="/Stanly/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Stanly/assets/highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="/Stanly/assets/highcharts/js/modules/exporting.js"></script>
+<script type="text/javascript" src="/Stanly/js/utilities.js"></script>
 <!--<script>
     $(window).resize(MakeResizable);
     $(MakeResizable);
