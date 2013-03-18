@@ -52,7 +52,9 @@ function drawChart() {
 
     function drawDistance(){
         var chart = new google.visualization.BubbleChart(document.getElementById('distance'));
+        var resizable = $($("#distance").find(".ui-resizable-handle"));
         $("#distance").empty();
+        $("#distance").width($('.subtitle').width()-1);
         chart.draw(data, options);
 
         var rect = $($("#distance").find('svg').find('g rect')[2]);
@@ -68,6 +70,8 @@ function drawChart() {
         jg.drawLine(sx,sy,ex,ey);
         jg.paint();
 
+
+        $("#distance").append(resizable);
         var option={
             minWidth: $('.subtitle').width()-1,
             maxWidth: $('.subtitle').width()-1,
@@ -75,5 +79,9 @@ function drawChart() {
             resize: function(event, ui){}
         }
         $( "#distance" ).resizable(option);
+       /* $("#distance").append("<div class=\"ui-resizable-handle ui-resizable-e\" style=\"z-index: 90;\"></div>");
+        $("#distance").append("<div class=\"ui-resizable-handle ui-resizable-s\" style=\"z-index: 90;\"></div>");
+        $("#distance").append("<div class=\"ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se\" style=\"z-index: 90;\"></div>");*/
+
     }
 }
