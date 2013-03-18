@@ -22,7 +22,7 @@ public class MetricListController {
 	@Qualifier("metricViewService")
 	private MetricViewService metricView;
 	
-	@RequestMapping(value = "/Relation", method=RequestMethod.GET)
+	@RequestMapping(value = "/RelationList", method=RequestMethod.GET)
 	@ResponseBody
 	public String getRelationSrc(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
 			logger.info("Get Project Relation node ID- "+ SrcID );

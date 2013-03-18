@@ -51,16 +51,21 @@ public class MetricViewService {
 	{
 		logger.info("Relation Calc");
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		logger.info((commit==null) ? "commit Null error": "commit no error");
+		logger.info(SrcID);
 		ProjectElementNode srcnode = EsearchDAO.getElementNode(commit, SrcID);
+		logger.info((srcnode==null) ? "Null error": "no error");
 		List<NodeRelation> nodeR = relationDao.getSrcLikeRelation(commit, srcnode.getName());
 		Gson gson = new Gson();
 		RelationList rList = new RelationList();
-	
-		for(int i=0;i<nodeR.size();i++)
-		{
-			NodeRelation node = nodeR.get(i);
-			Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name());
-			rList.addRelation(rel);
+		if(nodeR != null)
+		{	
+			for(int i=0;i<nodeR.size();i++)
+			{
+				NodeRelation node = nodeR.get(i);
+				Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name());
+				rList.addRelation(rel);
+			}
 		}
 		return gson.toJson(rList);
 	}
