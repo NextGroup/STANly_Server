@@ -30,6 +30,11 @@
     <logger name="org.springframework.web">
         <level value="ERROR" />
     </logger>
+    
+     <logger name="net.sourceforge.pmd">
+        <level value="INFO" />
+    </logger>
+    
  
     <!-- Root Logger -->
     <root>
