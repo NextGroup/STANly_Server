@@ -50,7 +50,7 @@ function drawChart() {
     });
     $(window).resize(drawDistance);
 
-        function drawDistance(){
+    function drawDistance(){
         var chart = new google.visualization.BubbleChart(document.getElementById('distance'));
         $("#distance").empty();
         chart.draw(data, options);
@@ -67,5 +67,13 @@ function drawChart() {
         jg.setColor("#CCCCCC");
         jg.drawLine(sx,sy,ex,ey);
         jg.paint();
+
+        var option={
+            minWidth: $('.subtitle').width()-1,
+            maxWidth: $('.subtitle').width()-1,
+            minHeight: 300,
+            resize: function(event, ui){}
+        }
+        $( "#distance" ).resizable(option);
     }
 }
