@@ -33,6 +33,14 @@ public class MetricViewService {
 	private RelationDAO relationDao;
 	@Autowired
 	private ElementSearchDAO EsearchDAO;
+	
+	private String sprite(String path)
+	{
+		String[]  arr =  path.split(".");
+		
+		return arr[arr.length-1];
+	}
+	
 	/**
 	 * Relation , 페이징 처리가 필요할 것 같다. 너무 데이터가 많이 오는 것 아닌가? 
 	 * @param projectName
@@ -107,7 +115,7 @@ public class MetricViewService {
 			if(node==null)
 				logger.info("Null Log");
 			
-			TreeElement projectNode = new TreeElement(info.getName());
+			TreeElement projectNode = new TreeElement(info.getName(),node.getNSLeft() ,node.getNSRight());
 			projectNode.setAttrID(Integer.toString(1));
 	
 			projectNode.setRel(node.getType().name());
@@ -120,7 +128,7 @@ public class MetricViewService {
 			List<ProjectElementNode> nodelist = EsearchDAO.getChildNode(node.getName(), commit);
 			for(int i=0;i<nodelist.size();i++)
 			{
-				TreeElement projectNode = new TreeElement(nodelist.get(i).getName());
+				TreeElement projectNode = new TreeElement(sprite(nodelist.get(i).getName()),nodelist.get(i).getNSLeft() ,nodelist.get(i).getNSRight());
 				projectNode.setAttrID(Integer.toString(nodelist.get(i).getNSLeft()));
 				projectNode.setRel(nodelist.get(i).getType().name());
 				Elements.add(projectNode);

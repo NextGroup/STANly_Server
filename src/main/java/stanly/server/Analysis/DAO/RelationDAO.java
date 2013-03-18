@@ -56,10 +56,13 @@ public class RelationDAO {
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
 			 Criterion  SrcEq = Restrictions.eq("SrcName", SrcName);
+			 //같은 패키지 안에 있는 내옹은 제외한다.
+			 Criterion tarEq = Restrictions.not( Restrictions.like("TarName", SrcName+"%"));
 			 Criteria crit = session.createCriteria(NodeRelation.class);
 			 crit.add(commitEq);
 			 crit.add(SrcEq);
-			 crit.setMaxResults(20);
+			 crit.add(tarEq);
+		
 			
 			 NodeRList = crit.list();
 		}

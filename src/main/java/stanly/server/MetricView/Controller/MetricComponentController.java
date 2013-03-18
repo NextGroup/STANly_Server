@@ -33,7 +33,6 @@ public class MetricComponentController {
 			logger.info("Get Project Tree node ID- "+ nsLeft );
 			return metricView.getTreeNode(name, nsLeft);
 	}
-	
-	
+
 
 }

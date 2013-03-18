@@ -13,10 +13,10 @@ public class TreeElement {
 		this.state = state;
 		attr = new HashMap<String,String>();
 	}
-	public TreeElement(String data) {
+	public TreeElement(String data,int NSleft,int NSRight) {
 		super();
 		this.data = data;
-		this.state = "closed";
+		this.state = (NSRight-NSleft >1) ? "closed" : "";
 		attr = new HashMap<String,String>();
 	}
 	public String getData() {
