@@ -14,7 +14,7 @@
     <!--<link rel="stylesheet" href="../assets/css/docs.css">-->
 
     <script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
-    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />-->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="/assets/PackageGraph/css/PackageGraph.css">
 
     <style>
@@ -47,9 +47,10 @@
             pointer-events: all;
         }
 
-        #codesize .children:hover rect.child,
+        #codesize .children:hover rect.parent,
         #codesize .grandparent:hover rect {
             fill: #777777;/*마우스 오버 되었을때 색*/
+            opacity: 0.5;
         }
 
     </style>
@@ -249,11 +250,11 @@
                                 .attr("dy", ".75em");
 
                         d3.json("/report/detail/codesizesample.json", function(root) {
+                            csd_root = csd_last_d = root;
                             initialize(root);
                             accumulate(root);
                             layout(root);
                             display(root);
-                            csd_root = csd_last_d = root;
                         });
                     }
                     function initialize(root) {
@@ -315,7 +316,14 @@
                                 .data(function(d) { return d.children || [d]; })
                                 .enter().append("rect")
                                 .attr("class", "child")
-                                .style("fill","#e1e1e1")
+                                .style("fill",function(d) {
+                                    //d.
+                                    //return "#" + d.value.toString();
+                                    if(Math.round((255 * d.value / d.parent.value)).toString(16).length == 1)
+                                        return "#0" + Math.round((255 * d.value / d.parent.value)).toString(16) + "FF00";
+                                    return "#" + Math.round((255 * d.value / d.parent.value)).toString(16) + "FF00";
+                                    return "#e1e1e1";
+                                })
                                 .call(rect);
 
                         g.append("rect")
@@ -405,8 +413,8 @@
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/highcharts/js/highcharts.js"></script>
 <script src="../assets/highcharts/js/modules/exporting.js"></script>
-<!--<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>-->
-<!--<script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script>
     $(window).resize(MakeResizable);
     $(MakeResizable);
     function MakeResizable(){
@@ -418,9 +426,9 @@
         //$( "#metric" ).resizable(option);
         //$( "#codesize" ).resizable(option);
         //$( "#pollution" ).resizable(option);
-        $( "#composition" ).resizable(option);
-        //$( "#distance" ).resizable(option);
+        //$( "#composition" ).resizable(option);
+        $( "#distance" ).resizable(option);
     }
-</script>-->
+</script>
 </body>
 </html>
