@@ -8,12 +8,12 @@
     <meta name="author" content="Team STANly">
 
     <!-- Le styles -->
-    <link href="./assets/css/bootstrap.css" rel="stylesheet">
-    <link href="./assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/Stanly/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/Stanly/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
-    <link href="./assets/css/index.css" rel="stylesheet">
+    <link href="/Stanly/assets/css/index.css" rel="stylesheet">
 
-    <script src="./assets/js/jquery-1.7.1.min.js"></script>
+    <script src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>
 </head>
 
 <body>
@@ -105,5 +105,5 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="./assets/js/bootstrap.min.js"></script>
+<script src="/Stanly/assets/js/bootstrap.min.js"></script>
 </body></html>

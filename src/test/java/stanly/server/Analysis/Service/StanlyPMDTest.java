@@ -1,6 +1,8 @@
 package stanly.server.Analysis.Service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +11,6 @@ import javax.annotation.Resource;
 
 import net.sourceforge.pmd.lang.java.rule.stanly.element.ClassDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.ElementNode;
-import net.sourceforge.pmd.lang.java.rule.stanly.element.ElementNodeType;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.FieldDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.LibraryDomain;
 import net.sourceforge.pmd.lang.java.rule.stanly.element.MethodDomain;
@@ -21,15 +22,12 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import stanly.server.Analysis.DAO.RelationDAO;
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.AttributeMetric;
 import stanly.server.Analysis.Model.Metric.ClassMetric;
-import stanly.server.Analysis.Model.Metric.ElementNodeMetric;
 import stanly.server.Analysis.Model.Metric.LibraryMetric;
 import stanly.server.Analysis.Model.Metric.MethodMetric;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
@@ -40,7 +38,7 @@ import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.GitProject.Service.ProjectInfoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/config/spring/context-test.xml")
+@ContextConfiguration(locations = "classpath:/config/spring/context-root.xml")
 public class StanlyPMDTest {
 	protected static final Logger logger = Logger.getLogger("StanlyPMD");
 	@Resource(name="analysisService")
@@ -52,7 +50,7 @@ public class StanlyPMDTest {
 	@Before
 	public void BeforeTest()
 	{
-		projectService.addProject("www.asdf.ac.kr", "E:\\자료\\dropbox\\SW마에스트로\\2차\\project\\pmd_STANly", "PMD");
+		projectService.addProject("www.asdf.ac.kr", "/Users/Karuana/Documents/STANly/pmd_STANly", "PMD");
 		info = projectService.getProjectInfo("PMD");
 		logger.info("Before Setting = "+info.toString());
 		projectService.addCommit(info, new Date(), "init Commit", "Karuana");
@@ -64,10 +62,10 @@ public class StanlyPMDTest {
 		ProjectCommit commit= projectService.getLastCommit(info);
 		ElementNode rootnode = analysis.AnalysisElementNode(commit, info.getLocation());
 		List<ProjectElementNode> elementlist =  analysis.getTree(commit);
-		
+		assertNotNull(elementlist);
+		assertNotNull(rootnode);
 		//총 갯수중 10개 뽑아서 확인
 		// 10개 안되면 걍 다돌림
-		System.out.println("들어오나요?");
 		int listSize = elementlist.size();
 		int interbal = 0;
 		if(listSize < 10)

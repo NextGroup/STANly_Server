@@ -16,31 +16,31 @@ import stanly.server.Analysis.Model.Type.NodeType;
 public class ClassMetric extends ElementNodeMetric {
 
 	
-	@Column(name = "Classes", nullable = false)
+	@Column(name = "Classes")
 	private int Classes;
-	@Column(name = "Methods", nullable = false)
+	@Column(name = "Methods")
 	private int Methods;
-	@Column(name = "Fields", nullable = false)
+	@Column(name = "Fields")
 	private int Fields;
-	@Column(name = "LOC", nullable = false)
+	@Column(name = "LOC")
 	private int LOC;
-	@Column(name = "Fat", nullable = false)
+	@Column(name = "Fat")
 	private int Fat;
-	@Column(name = "AfferentCoupling", nullable = false)
+	@Column(name = "AfferentCoupling")
 	private int AfferentCoupling;
-	@Column(name = "EfferentCoupling", nullable = false)
+	@Column(name = "EfferentCoupling")
 	private int EfferentCoupling;
-	@Column(name = "WMC", nullable = false)
+	@Column(name = "WMC")
 	private float WMC;
-	@Column(name = "DIT", nullable = false)
+	@Column(name = "DIT")
 	private int DIT;
-	@Column(name = "NOC", nullable = false)
+	@Column(name = "NOC")
 	private int NOC;
-	@Column(name = "CBO", nullable = false)
+	@Column(name = "CBO")
 	private int CBO;
-	@Column(name = "RFC", nullable = false)
+	@Column(name = "RFC")
 	private float RFC;
-	@Column(name = "LCOM", nullable = false)
+	@Column(name = "LCOM")
 	private int LCOM;
 	
 	

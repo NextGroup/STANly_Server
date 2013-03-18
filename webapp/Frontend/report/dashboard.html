@@ -14,38 +14,44 @@
     <!--<link rel="stylesheet" href="../assets/css/docs.css">-->
 
     <script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
-    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />-->
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="/assets/PackageGraph/css/PackageGraph.css">
 
     <style>
         /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
 
         #codesize rect {
-        fill: none;
-        stroke: #fff;
+            /*fill: none;*/
+            stroke: #fff;
+            /*fill: #e1e1e8;*//*Children Rect Color*/
         }
 
         #codesize rect.parent,
-        .grandparent rect {
-        stroke-width: 2px;
+            .grandparent rect {
+            stroke-width: 1px;
+            stroke: #000;
+            fill: none;
         }
 
         #codesize .grandparent rect {
-        fill: #fff;
+            fill: #e1e1e8;
+            stroke: #000;
         }
 
         #codesize .children rect.parent,
         #codesize .grandparent rect {
-        cursor: pointer;
+            cursor: pointer;
         }
 
         #codesize rect.parent {
             pointer-events: all;
         }
 
-        #codesize .children:hover rect.child,
+        #codesize .children:hover rect.parent,
         #codesize .grandparent:hover rect {
-            fill: #777777;
+            fill: #777777;/*마우스 오버 되었을때 색*/
+            opacity: 0.5;
         }
 
     </style>
@@ -107,7 +113,7 @@
 
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div style="height: 30px;background-color: #149bdf;">Pollution</div>
+                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Pollution</div>
                 <div id="pollution" style="height: 300px; border:1px;"></div>
                 <!--오염도 그래프 그리-->
                 <script type="text/javascript" src="./js/RanderPollution.js"></script>
@@ -115,7 +121,7 @@
 
 
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div style="height: 30px;background-color: #149bdf;">Composition</div>
+                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Composition</div>
                 <div id="composition" style="margin: 0px;height: 300px;padding-right: 2px;">
                     <svg id="MainSVG">
                         <defs>
@@ -142,27 +148,36 @@
                         var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
                         var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","./detail/MainGraph.json");
 
+                        var option={
+                            minWidth: $('.subtitle').width(),
+                            maxWidth: $('.subtitle').width(),
+                            minHeight: 300,
+                            resize: function(){}
+                        }
+
+                        $( "#composition" ).resizable(option);
                     </script>
                 </div>
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div style="height: 30px;background-color: #149bdf;">Distance</div>
+                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 300px;"></div>
-                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                <script type="text/javascript" src="./js/google_jsapi.js"></script>
+                <script type="text/javascript" src="./js/wz_jsgraphics.js"></script>
                 <script type="text/javascript" src="./js/RanderDistance.js"></script>
             </div>
-            <div id="dummy" style="height: 30px";></div>
+            <div id="dummy" style="height: 300px;"></div>
         </div>
 
 
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div style="height: 30px;background-color: #149bdf;">Metrics</div>
+                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Metrics</div>
                 <div id="metric" style="min-height: 200px;"></div>
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div style="height: 30px;background-color: #149bdf;">Size of Component</div>
-                <div id="codesize" style="background-color: #e1e1e8;height: 300px;"></div>
+                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Size of Component</div>
+                <div id="codesize" style="background-color: #e1e1e8;height: 300px;"></div><!-- 코드사이즈 배경 -->
                 <script>
                     //codesize div
                     var csd_root;
@@ -179,10 +194,17 @@
                     $(function(){
                         DrawCodeSize($("#codesize").width(),$("#codesize").height());
                     });
-                    $(window).resize(function(){
-                        csd_width = $("#codesize").width();
+                    $(window).resize(codeSizeResizeFunc);
+                    function codeSizeResizeFunc(){
+                        var option={
+                            minWidth: $('.subtitle').width()-0.5,
+                            maxWidth: $('.subtitle').width()-0.5
+                        }
+                        $( "#codesize" ).resizable(option);
+                        $("#codesize").width($('.subtitle').width()-0.5);
+                        csd_width = $('.subtitle').width()-0.5;
                         csd_height = $("#codesize").height()-csd_margin.top;
-                        if(csd_width == csd_root.dx)
+                        if(csd_width == csd_root.dx && csd_width == csd_root.dy)
                             return;
                         csd_x = d3.scale.linear()
                                 .domain([0, csd_width])
@@ -193,15 +215,25 @@
                                 .range([0, csd_height]);
                         //csd_svg
                         d3.select("#codesize").select("svg")
-                               .attr("width", csd_width + csd_margin.left + csd_margin.right)
-                               .attr("height", csd_height + csd_margin.bottom + csd_margin.top);
+                                .attr("width", csd_width + csd_margin.left + csd_margin.right)
+                                .attr("height", csd_height + csd_margin.bottom + csd_margin.top);
 
                         csd_root.dx = csd_width;
                         csd_root.dy = csd_height;
-                        layout(csd_last_d);
+                        //layout(csd_last_d);
+                        layout(csd_root);
                         csd_transition(csd_last_d,-1);
-                    });
+                    }
                     function DrawCodeSize(pallet_width,pallet_height) {
+
+                        var option={
+                            minWidth: $('.subtitle').width()-0.5,
+                            maxWidth: $('.subtitle').width()-0.5,
+                            minHeight: 300,
+                            resize: function(event, ui){codeSizeResizeFunc();}
+                        }
+                        $( "#codesize" ).resizable(option);
+
                         csd_margin = {top: 20, right: 0, bottom: 0, left: 0};
                         csd_width = pallet_width;
                         csd_height = pallet_height - csd_margin.top - csd_margin.bottom;
@@ -244,12 +276,14 @@
                                 .attr("dy", ".75em");
 
                         d3.json("/report/detail/codesizesample.json", function(root) {
+                            csd_root = csd_last_d = root;
                             initialize(root);
                             accumulate(root);
                             layout(root);
                             display(root);
-                            csd_root = csd_last_d = root;
                         });
+
+
                     }
                     function initialize(root) {
                         root.x = root.y = 0;
@@ -310,12 +344,21 @@
                                 .data(function(d) { return d.children || [d]; })
                                 .enter().append("rect")
                                 .attr("class", "child")
+                                .style("fill",function(d) {
+                                    //d.
+                                    //return "#" + d.value.toString();
+                                    if(Math.round((255 * d.value / d.parent.value)).toString(16).length == 1)
+                                        return "#0" + Math.round((255 * d.value / d.parent.value)).toString(16) + "FF00";
+                                    return "#" + Math.round((255 * d.value / d.parent.value)).toString(16) + "FF00";
+                                    return "#e1e1e1";
+                                })
                                 .call(rect);
 
                         g.append("rect")
                                 .attr("class", "parent")
                                 .call(rect)
                                 .append("title")
+                                //.style("fill","#FFFFFF")
                                 .text(function(d) { return csd_formatNumber(d.value); });
 
                         g.append("text")
@@ -335,7 +378,7 @@
                             var duration;
                             if(event != -1) duration = 750;
                             else            duration = 0;
-                            console.log(duration);
+
                             var t1 = g1.transition().duration(duration);
                             var t2 = g2.transition().duration(duration);
 
@@ -396,9 +439,8 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../assets/js/bootstrap.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
-<!--<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>-->
+<script src="../assets/highcharts/js/highcharts.js"></script>
+<script src="../assets/highcharts/js/modules/exporting.js"></script>
 <!--<script>
     $(window).resize(MakeResizable);
     $(MakeResizable);
@@ -406,12 +448,14 @@
         var option={
             minWidth: $('.subtitle').width(),
             maxWidth: $('.subtitle').width(),
-            minHeight: 300
+            minHeight: 300,
+            resize: function(){codeSizeResizeFunc();console.log("hello");}
         }
+
         //$( "#metric" ).resizable(option);
-        //$( "#codesize" ).resizable(option);
-        //$( "#pollution" ).resizable(option);
-        $( "#composition" ).resizable(option);
+        $( "#codesize" ).resizable(option);
+        $( "#pollution" ).resizable(option);
+        //$( "#composition" ).resizable(option);
         //$( "#distance" ).resizable(option);
     }
 </script>-->

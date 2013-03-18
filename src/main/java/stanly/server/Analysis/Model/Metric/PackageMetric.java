@@ -13,19 +13,19 @@ import stanly.server.Analysis.Model.Type.NodeType;
 @PrimaryKeyJoinColumn(name="EMID")
 public class PackageMetric extends ElementNodeMetric{
 
-	@Column(name = "NumberOfMethods", nullable = false)	
+	@Column(name = "NumberOfMethods")	
 	private int NumberOfMethods;//Number of Method
-	@Column(name = "NumberOfClasses", nullable = false)	
+	@Column(name = "NumberOfClasses")	
 	private int NumberOfClasses;// inner class
-	@Column(name = "NumberOfClass", nullable = false)	
+	@Column(name = "NumberOfClass")	
 	private int NumberOfClass;	// unit class + inner class
-	@Column(name = "NumberOfAbstract", nullable = false)	
+	@Column(name = "NumberOfAbstract")	
 	private int NumberOfAbstract;//abstract class
-	@Column(name = "NumberOfFields", nullable = false)	
+	@Column(name = "NumberOfFields")	
 	private int NumberOfFields;
-	@Column(name = "Units", nullable = false)	
+	@Column(name = "Units")	
 	private int	Units;//Num Of Class
-	@Column(name = "TotalCC", nullable = false)	
+	@Column(name = "TotalCC")	
 	private int TotalCC;
 	@Column(name = "LOC", nullable = false)	
 	private int LOC;

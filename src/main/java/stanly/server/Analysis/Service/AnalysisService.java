@@ -398,8 +398,16 @@ public class AnalysisService {
 	{
 		InsertElement(createElement(commitID, clientnode));
 		
+		int i=0;
 		for(ElementNode childnode : clientnode.getChildren())
+		{	
 			InsertIterationElementNode(commitID, childnode);
+			if(i++==50)
+			{
+				nodeDao.DataFlush();
+				i=0;
+			}
+		}
 	}
 	private String ConvertServerNodeName(ElementNode clientNode)
 	{
