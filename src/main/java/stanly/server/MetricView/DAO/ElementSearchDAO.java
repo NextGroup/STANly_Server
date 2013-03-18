@@ -1,6 +1,5 @@
 package stanly.server.MetricView.DAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
 @Repository
@@ -51,7 +51,7 @@ public class ElementSearchDAO {
 		return rootNode;
 	}
 	
-	public List<ProjectElementNode> getChildNode(String ParentName,int NSleft,ProjectCommit commit)
+	public List<ProjectElementNode> getChildNode(String ParentName,int NSleft, int NSRight, NodeType type, ProjectCommit commit)
 	{
 		List<ProjectElementNode> nodeList = null;
 		try{
@@ -60,11 +60,19 @@ public class ElementSearchDAO {
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion CommitEq = Restrictions.eq("commit", commit);
 			 Criterion parentEq = Restrictions.eq("ParetnName", ParentName);
+			 Criterion nodeEq= null;
+			 if(type == NodeType.PACKAGESET)
+				 nodeEq= Restrictions.or(Restrictions.eq("type", NodeType.PACKAGESET), Restrictions.eq("type", NodeType.PACKAGE));
+
 			 Criterion Left = Restrictions.ge("NSLeft", new Integer(NSleft+1));
+			 Criterion Right = Restrictions.le("NSRight", new Integer(NSRight));
 			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(CommitEq);
 			 crit.add(parentEq);
 			 crit.add(Left);
+			 crit.add(Right);
+			 if(nodeEq != null)
+				 crit.add(nodeEq);
 			 nodeList =  crit.list();
 		
 		}catch(Exception e)
