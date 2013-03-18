@@ -7,16 +7,18 @@
     <meta name="description" content="STANly@Software Maestro">
     <meta name="author" content="Team STANly">
     <!-- Le styles -->
-    <link rel="stylesheet" href="../Frontend/assets/css/bootstrap.css">
-    <!--<link rel="stylesheet" href="../assets/css/dashboard.css">-->
+    <link rel="stylesheet" href="/Stanly/assets/css/bootstrap.css">
+    <!--<link rel="stylesheet" href="/Stanly/assets/css/dashboard.css">-->
     <!--<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">-->
-    <link rel="stylesheet" href="../Frontend/assets/css/custom-bootstrap-responsive.css">
+    <link rel="stylesheet" href="/Stanly/assets/css/custom-bootstrap-responsive.css">
     <!--<link rel="stylesheet" href="../assets/css/docs.css">-->
 
-    <script type="text/javascript" src="../Frontend/assets/js/jquery-1.7.1.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" href="/assets/PackageGraph/css/PackageGraph.css">
+    <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
+
+    <script type="text/javascript" src="/Stanly/js/utilities.js"></script>
 
     <style>
         /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
@@ -85,9 +87,9 @@
                 <li class="divider-vertical"></li>
                 <li><a href="./detail/composition.html">Composition</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="../Frontend/report/detail/pollution.html">Pollution</a></li>
+                <li><a href="./detail/pollution.html">Pollution</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="../Frontend/report/detail/distance.html">Distance</a></li>
+                <li><a href="./detail/distance.html">Distance</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="./detail/metrics.html">Metrics</a></li>
                 <li class="divider-vertical"></li>
@@ -139,15 +141,15 @@
                         </defs>
                     </svg>
                     <script src="http://d3js.org/d3.v2.min.js"></script>
-                    <script src="/assets/PackageGraph/js/dagre.js"></script>
-                    <script src="/assets/PackageGraph/js/PackageGraph.js"></script>
+                    <script src="/Stanly/assets/PackageGraph/js/dagre.js"></script>
+                    <script src="/Stanly/assets/PackageGraph/js/PackageGraph.js"></script>
                     <script>
 
                         var Grapdata = document.querySelector("#inputGraph");
                         var Mainsvg = d3.select("svg");
                         var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
                         var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","./detail/MainGraph.json");
-
+                        /*
                         var option={
                             minWidth: $('.subtitle').width(),
                             maxWidth: $('.subtitle').width(),
@@ -155,16 +157,16 @@
                             resize: function(){}
                         }
 
-                        $( "#composition" ).resizable(option);
+                        $( "#composition" ).resizable(option);*/
                     </script>
                 </div>
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 300px;"></div>
-                <script type="text/javascript" src="../Frontend/report/js/google_jsapi.js"></script>
-                <script type="text/javascript" src="../Frontend/report/js/wz_jsgraphics.js"></script>
-                <script type="text/javascript" src="../Frontend/report/js/RanderDistance.js"></script>
+                <script type="text/javascript" src="./js/google_jsapi.js"></script>
+                <script type="text/javascript" src="./js/wz_jsgraphics.js"></script>
+                <script type="text/javascript" src="./js/RanderDistance.js"></script>
             </div>
             <div id="dummy" style="height: 300px;"></div>
         </div>
@@ -275,7 +277,7 @@
                                 .attr("y", 6 - csd_margin.top)
                                 .attr("dy", ".75em");
 
-                        d3.json("/report/detail/codesizesample.json", function(root) {
+                        d3.json("./codesizesample.json", function(root) {
                             csd_root = csd_last_d = root;
                             initialize(root);
                             accumulate(root);
@@ -438,9 +440,9 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../Frontend/assets/js/bootstrap.min.js"></script>
-<script src="../Frontend/assets/highcharts/js/highcharts.js"></script>
-<script src="../Frontend/assets/highcharts/js/modules/exporting.js"></script>
+<script src="/Stanly/assets/js/bootstrap.min.js"></script>
+<script src="/Stanly/assets/highcharts/js/highcharts.js"></script>
+<script src="/Stanly/assets/highcharts/js/modules/exporting.js"></script>
 <!--<script>
     $(window).resize(MakeResizable);
     $(MakeResizable);

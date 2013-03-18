@@ -60,7 +60,7 @@ public class ElementSearchDAO {
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion CommitEq = Restrictions.eq("commit", commit);
 			 Criterion parentEq = Restrictions.eq("ParetnName", ParentName);
-			 Criterion Left = Restrictions.ge("NSLeft", new Integer(NSleft));
+			 Criterion Left = Restrictions.ge("NSLeft", new Integer(NSleft+1));
 			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(CommitEq);
 			 crit.add(parentEq);
