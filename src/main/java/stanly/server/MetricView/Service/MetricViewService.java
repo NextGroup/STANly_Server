@@ -38,7 +38,7 @@ public class MetricViewService {
 	{
 		String[]  arr =  path.split(".");
 		
-		return arr[arr.length-1];
+		return (arr.length>1) ?  arr[arr.length-1]:path;
 	}
 	
 	/**

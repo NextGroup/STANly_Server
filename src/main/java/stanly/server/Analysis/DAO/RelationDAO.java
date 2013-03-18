@@ -62,7 +62,7 @@ public class RelationDAO {
 			 crit.add(commitEq);
 			 crit.add(SrcEq);
 			 crit.add(tarEq);
-		
+			 crit.setMaxResults(20);
 			
 			 NodeRList = crit.list();
 		}
