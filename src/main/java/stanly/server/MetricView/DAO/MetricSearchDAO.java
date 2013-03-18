@@ -16,8 +16,7 @@ import stanly.server.Analysis.Model.Metric.PackageMetric;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.MetricView.Json.MartinMetricList;
-
-import com.google.gson.Gson;
+import stanly.server.MetricView.Json.PollutionList;
 
 @Repository
 @Transactional
@@ -100,6 +99,52 @@ public class MetricSearchDAO {
 		return mertin;
 	}
 	
+	
+	public PollutionList getPollutionList(ProjectCommit commit, int NSLeft,int NSRight)
+	{
+		PollutionList pollution = new PollutionList();
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			Criterion CommitEq = Restrictions.eq("commit", commit);
+			Criterion Left = Restrictions.ge("NSLeft", new Integer(NSLeft+1));
+			Criterion Right = Restrictions.le("NSRight", new Integer(NSRight));
+			
+			Criteria crit = session.createCriteria(ProjectElementNode.class);
+
+			crit.add(CommitEq);
+			crit.add(Left);
+			crit.add(Right);
+			ProjectElementNode targetNode = (ProjectElementNode) crit.uniqueResult();
+			NodeType type = targetNode.getType();
+			
+			switch(type)
+			{
+				case LIBRARY:
+				case PACKAGESET:
+				case PACKAGE:
+				case CLASS:
+				case ENUM:
+				case METHOD:
+				case INTERFACE:
+				case CONSTRUCTOR:
+				case ANNOTATION:
+				case FIELD:
+					break;
+				default:
+					throw new Exception("Type Error");
+			}	
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return pollution;
+		}
+		
+		
+		return pollution;
+		
+	}
 	
 	
 }
