@@ -126,7 +126,7 @@ public class MetricViewService {
 		{
 			ProjectElementNode node= EsearchDAO.getElementNode(commit, nodeID);
 			
-			List<ProjectElementNode> nodelist = EsearchDAO.getChildNode(node.getName(), node.getNSLeft(),node.getNSRight(), commit);
+			List<ProjectElementNode> nodelist = EsearchDAO.getChildNode(node.getName(), node.getNSLeft(),node.getNSRight(), node.getType(),commit);
 			for(int i=0;i<nodelist.size();i++)
 			{
 				TreeElement projectNode = new TreeElement(sprite(nodelist.get(i).getName()),nodelist.get(i).getNSLeft() ,nodelist.get(i).getNSRight());
