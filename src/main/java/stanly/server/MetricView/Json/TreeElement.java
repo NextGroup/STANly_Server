@@ -16,7 +16,7 @@ public class TreeElement {
 	public TreeElement(String data,int NSleft,int NSRight) {
 		super();
 		this.data = data;
-		this.state = (NSRight-NSleft >1) ? "closed" : "";
+		this.state = (NSRight-NSleft != 1) ? "closed" : "";
 		attr = new HashMap<String,String>();
 	}
 	public String getData() {

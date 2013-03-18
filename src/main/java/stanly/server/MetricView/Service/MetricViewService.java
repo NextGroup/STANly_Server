@@ -36,8 +36,8 @@ public class MetricViewService {
 	
 	private String sprite(String path)
 	{
-		String[]  arr =  path.split(".");
-		
+		String[]  arr =  path.split("\\.");
+		logger.info((arr.length>1) ?  arr[arr.length-1]:path);
 		return (arr.length>1) ?  arr[arr.length-1]:path;
 	}
 	
@@ -135,7 +135,7 @@ public class MetricViewService {
 			}
 		}
 		Gson gosn = new Gson();
-		
+
 		return gosn.toJson(Elements);
 	}
 	
