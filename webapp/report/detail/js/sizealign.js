@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var min_content_height = 668;
-var min_content_width = 650;
+var min_content_height = 568;
+var min_content_width = 550;
 var side_margin;
 var bottom_margin;
 var navbar_height;

@@ -9,11 +9,6 @@
     <!-- Le styles -->
     <link rel="stylesheet" href="/Stanly/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/Stanly/assets/css/custom-bootstrap-responsive.css">
-    <!--<link rel="stylesheet" href="/Stanly/assets/css/docs.css">-->
-    <!--<link rel="stylesheet" href="/Stanly/assets/jqGrid/css/ui.jqgrid.css">-->
-    <!--<link rel="stylesheet" href="/Stanly/assets/jqGrid/css/jquery-ui-custom.css">-->
-    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css">-->
-    <!--<link rel="stylesheet" href="/Stanly/assets/css/detail-layout.css">-->
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jstree/_lib/jquery.cookie.js"></script>
@@ -30,9 +25,11 @@
 
     <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
 
-    <script type="text/javascript" src="/Stanly/js/utilities.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/Stanly/assets/css/jquery-ui.css">
 
     <script type="text/javascript" src="/Stanly/report/detail/js/ProjectTree.js"></script>
+    <link rel="stylesheet" href="/Stanly/report/detail/css/DetailList.css">
     <!-- 내용 위치&비율 조정-->
     <script type="text/javascript" src="./js/sizealign.js"></script>
 </head>
@@ -42,15 +39,15 @@
         <div class="navbar-inner">
             <a class="brand" href="#">STANly</a>
             <ul class="nav">
-                <li><a href="../../../../../Frontend/report/dashboard.html">DashBoard</a></li>
+                <li><a href="javascript:void(0);" >DashBoard</a></li>
                 <li class="divider-vertical"></li>
-                <li class="active"><a href="./composition.html">Composition</a></li>
+                <li class="active"><a href="javascript:void(0);">Composition</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="../../../../../Frontend/report/detail/pollution.html">Pollution</a></li>
+                <li><a href="javascript:void(0);" >Pollution</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="../../../../../Frontend/report/detail/distance.html">Distance</a></li>
+                <li><a href="javascript:void(0);" >Distance</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="./metrics.html">Metrics</a></li>
+                <li><a href="javascript:void(0);" >Metrics</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="./about.html">About</a></li>
                 <li class="divider-vertical"></li>
@@ -58,7 +55,7 @@
         </div>
     </div>
     <div id="body">
-        <div id="sidebar" style="width: 300px; margin: 10px; float: left">
+        <div id="sidebar" style="width: 400px; margin: 10px; float: left">
             <div id="sidebar_title">Project Explorer</div>
             <div id="prjtree" style="height: 100%; overflow: auto;"></div>
         </div>
@@ -98,17 +95,18 @@
                 <script type="text/javascript">
                     var table;
                     //$(function() {
-                    function BuildDetailList(){
+                    function BuildDetailList(id){
                         $.ajax( {
                             type :'GET'
                             ,asyn :true
-                            ,url :'test_detail.json'
+                            ,url :'/Stanly/component/RelationList'
                             ,dataType :"json"
+                            ,data:{Name:getProjectName(),SrcID:id}
                             //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
                             ,beforeSend : function(xhr){
                             }
                             ,success : function(jsonData) {
-                                table = JSON.stringify(jsonData);
+                                table = jsonData.relation;
 
                                 BuildTable();
                                 AdjustStyle();
@@ -121,7 +119,7 @@
                     }
                     //});
                     function BuildTable() {
-                        table = eval('' + table + '');
+                        //table = eval('' + table + '');
                         var tableObject = function (json) {
                             var headerCount = new Object();
                             var createTHEAD = function (id) {
@@ -194,12 +192,13 @@
                             return pTable;
 
                         };
-
-                        var d = document.getElementById("detail_list").getElementsByClassName("tablesorter");
+                        var list = document.getElementById("detail_list");
+                        var d = list.getElementsByClassName("tablesorter");
                         while(d.length)
-                            document.getElementById("detail_list").removeChild(d[d.length-1]);
+                            list.removeChild(d[d.length-1]);
                         var c = new tableObject(table);
-                        document.getElementById("detail_list").appendChild(c);
+                        if(c.getAttribute)
+                            list.appendChild(c);
                     }
                     function AdjustStyle(){
                         //$(function() {
@@ -272,5 +271,6 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="/Stanly/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Stanly/js/utilities.js"></script>
 </body>
 </html>

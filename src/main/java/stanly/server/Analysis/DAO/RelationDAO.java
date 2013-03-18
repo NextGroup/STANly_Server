@@ -107,9 +107,11 @@ public class RelationDAO {
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
 			 Criterion  Srclike = Restrictions.like("SrcName", SrcName+"%");
+			 Criterion tarEq = Restrictions.not( Restrictions.like("TarName", SrcName+"%"));
 			 Criteria crit = session.createCriteria(NodeRelation.class);
 			 crit.add(commitEq);
 			 crit.add(Srclike);
+			 crit.add(tarEq);
 			 NodeRList = crit.list();
 			logger.info("Count List  "+NodeRList.size());
 		}

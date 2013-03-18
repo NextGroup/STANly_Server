@@ -78,15 +78,15 @@ public class MetricSearchDAO {
 		
 				case PACKAGE:
 					PackageMetric metric  =(PackageMetric) targetNode.getEMetric();
-					if(mertin.addAbstractness(metric.getAbstractness()))
+					if(!mertin.addAbstractness(metric.getAbstractness()))
 						throw new Exception("Abstractness Get Error");
-					if(mertin.addAfferentCoupling(metric.getAfferentCoupling()))
+					if(!mertin.addAfferentCoupling(metric.getAfferentCoupling()))
 						throw new Exception("AffeterntCoupling Get Error");
-					if(mertin.addDistance(metric.getDistance()))
+					if(!mertin.addDistance(metric.getDistance()))
 						throw new Exception("Distance Get Error");
-					if(mertin.addEfferentCoupling(metric.getEfferentCoupling()))
+					if(!mertin.addEfferentCoupling(metric.getEfferentCoupling()))
 						throw new Exception("EfferentCoupling Get Error");
-					if(mertin.addInstability(metric.getInstability()))
+					if(!mertin.addInstability(metric.getInstability()))
 						throw new Exception("Instability Get Error");
 					break;
 				default:
@@ -95,7 +95,7 @@ public class MetricSearchDAO {
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
-			return null;
+			return mertin;
 		}
 		return mertin;
 	}

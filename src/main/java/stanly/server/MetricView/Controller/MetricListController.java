@@ -22,12 +22,18 @@ public class MetricListController {
 	@Qualifier("metricViewService")
 	private MetricViewService metricView;
 	
-	@RequestMapping(value = "/Relation", method=RequestMethod.GET)
+	@RequestMapping(value = "/RelationList", method=RequestMethod.GET)
 	@ResponseBody
-	public String getRelationSrc(@RequestParam("Name") String name,@RequestParam("SrcName") String SrcName,HttpServletResponse response) throws Exception {
-			logger.info("Get Project Relation node ID- "+ SrcName );
-			
-			return metricView.getRelationWithSrc(name, SrcName);
+	public String getRelationSrc(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
+			logger.info("Get Project Relation node ID- "+ SrcID );
+			return metricView.getRelationWithSrc(name, SrcID);
+	}
+	
+	@RequestMapping(value = "/MartinList", method=RequestMethod.GET)
+	@ResponseBody
+	public String get(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
+			logger.info("Get Project MartinList node ID- "+ SrcID );
+			return metricView.getMartinList (name, SrcID);
 	}
 	
 }
