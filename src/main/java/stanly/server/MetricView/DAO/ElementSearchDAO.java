@@ -51,7 +51,7 @@ public class ElementSearchDAO {
 		return rootNode;
 	}
 	
-	public List<ProjectElementNode> getChildNode(String ParentName, ProjectCommit commit)
+	public List<ProjectElementNode> getChildNode(String ParentName,int NSleft,ProjectCommit commit)
 	{
 		List<ProjectElementNode> nodeList = null;
 		try{
@@ -59,10 +59,12 @@ public class ElementSearchDAO {
 			
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion CommitEq = Restrictions.eq("commit", commit);
-			 Criterion parentEq = Restrictions.eq("ParetnName", ParentName); 
+			 Criterion parentEq = Restrictions.eq("ParetnName", ParentName);
+			 Criterion Left = Restrictions.ge("NSLeft", new Integer(NSleft));
 			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(CommitEq);
 			 crit.add(parentEq);
+			 crit.add(Left);
 			 nodeList =  crit.list();
 		
 		}catch(Exception e)

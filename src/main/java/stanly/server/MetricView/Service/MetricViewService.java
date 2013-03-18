@@ -47,11 +47,12 @@ public class MetricViewService {
 	 * @param SrcName
 	 * @return
 	 */
-	public String getRelationWithSrc(String projectName, String SrcName)
+	public String getRelationWithSrc(String projectName, int SrcID)
 	{
 		logger.info("Relation Calc");
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
-		List<NodeRelation> nodeR = relationDao.getSrcLikeRelation(commit, SrcName);
+		ProjectElementNode srcnode = EsearchDAO.getElementNode(commit, SrcID);
+		List<NodeRelation> nodeR = relationDao.getSrcLikeRelation(commit, srcnode.getName());
 		Gson gson = new Gson();
 		RelationList rList = new RelationList();
 	
@@ -125,7 +126,7 @@ public class MetricViewService {
 		{
 			ProjectElementNode node= EsearchDAO.getElementNode(commit, nodeID);
 			
-			List<ProjectElementNode> nodelist = EsearchDAO.getChildNode(node.getName(), commit);
+			List<ProjectElementNode> nodelist = EsearchDAO.getChildNode(node.getName(),nodeID, commit);
 			for(int i=0;i<nodelist.size();i++)
 			{
 				TreeElement projectNode = new TreeElement(sprite(nodelist.get(i).getName()),nodelist.get(i).getNSLeft() ,nodelist.get(i).getNSRight());

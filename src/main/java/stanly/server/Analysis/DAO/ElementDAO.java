@@ -144,8 +144,8 @@ public class ElementDAO {
 			 if(MainNode!=null)
 			 {
 				 
-				 Criterion Left = Restrictions.ge("Name", new Integer(MainNode.getNSLeft()));
-				 Criterion Right = Restrictions.le("Name", new Integer(MainNode.getNSRight()));
+				 Criterion Left = Restrictions.ge("NSLeft", new Integer(MainNode.getNSLeft()));
+				 Criterion Right = Restrictions.le("NSRight", new Integer(MainNode.getNSRight()));
 				 Criteria cr = session.createCriteria(ProjectElementNode.class);
 				 cr.add(projectEq);
 				 cr.add(Left);
