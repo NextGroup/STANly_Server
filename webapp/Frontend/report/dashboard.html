@@ -21,22 +21,26 @@
         /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
 
         #codesize rect {
-        fill: none;
-        stroke: #fff;
+            /*fill: none;*/
+            stroke: #fff;
+            /*fill: #e1e1e8;*//*Children Rect Color*/
         }
 
         #codesize rect.parent,
-        .grandparent rect {
-        stroke-width: 2px;
+            .grandparent rect {
+            stroke-width: 1px;
+            stroke: #000;
+            fill: none;
         }
 
         #codesize .grandparent rect {
-        fill: #fff;
+            fill: #e1e1e8;
+            stroke: #000;
         }
 
         #codesize .children rect.parent,
         #codesize .grandparent rect {
-        cursor: pointer;
+            cursor: pointer;
         }
 
         #codesize rect.parent {
@@ -45,7 +49,7 @@
 
         #codesize .children:hover rect.child,
         #codesize .grandparent:hover rect {
-            fill: #777777;
+            fill: #777777;/*마우스 오버 되었을때 색*/
         }
 
     </style>
@@ -148,10 +152,11 @@
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 300px;"></div>
-                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                <script type="text/javascript" src="./js/google_jsapi.js"></script>
+                <script type="text/javascript" src="./js/wz_jsgraphics.js"></script>
                 <script type="text/javascript" src="./js/RanderDistance.js"></script>
             </div>
-            <div id="dummy" style="height: 30px";></div>
+            <div id="dummy" style="height: 30px;"></div>
         </div>
 
 
@@ -162,7 +167,7 @@
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div style="height: 30px;background-color: #149bdf;">Size of Component</div>
-                <div id="codesize" style="background-color: #e1e1e8;height: 300px;"></div>
+                <div id="codesize" style="background-color: #e1e1e8;height: 300px;"></div><!-- 코드사이즈 배경 -->
                 <script>
                     //codesize div
                     var csd_root;
@@ -310,12 +315,14 @@
                                 .data(function(d) { return d.children || [d]; })
                                 .enter().append("rect")
                                 .attr("class", "child")
+                                .style("fill","#e1e1e1")
                                 .call(rect);
 
                         g.append("rect")
                                 .attr("class", "parent")
                                 .call(rect)
                                 .append("title")
+                                //.style("fill","#FFFFFF")
                                 .text(function(d) { return csd_formatNumber(d.value); });
 
                         g.append("text")
@@ -396,8 +403,8 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../assets/js/bootstrap.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="../assets/highcharts/js/highcharts.js"></script>
+<script src="../assets/highcharts/js/modules/exporting.js"></script>
 <!--<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>-->
 <!--<script>
     $(window).resize(MakeResizable);

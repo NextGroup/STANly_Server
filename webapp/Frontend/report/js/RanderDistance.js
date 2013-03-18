@@ -34,24 +34,38 @@ function drawChart() {
 
             options = {
                 title: 'Robert C. Martin Distance',
-                hAxis: {title: 'Abstractness', minValue:0, maxValue:1},
-                vAxis: {title: 'Instability', minValue:0, maxValue:1},
+                hAxis: {title: 'Abstractness', minValue:0, maxValue:1.0, gridlines:{count:11}},
+                vAxis: {title: 'Instability', minValue:0, maxValue:1.0, gridlines:{count:11}},
                 bubble: {textStyle: {fontSize: 11}},
                 colorAxis: {colors: ['yellow', 'red']}
 
             };
 
-            var chart = new google.visualization.BubbleChart(document.getElementById('distance'));
-            chart.draw(data, options);
+            drawDistance();
         }
         ,error : function(xhr, textStatus) {
         }
         ,complete : function(xhr, textStatus) {
         }
     });
-    $(window).resize(function() {
+    $(window).resize(drawDistance);
+
+        function drawDistance(){
         var chart = new google.visualization.BubbleChart(document.getElementById('distance'));
         $("#distance").empty();
         chart.draw(data, options);
-    });
+
+        var rect = $($("#distance").find('svg').find('g rect')[2]);
+
+        var jg = new jsGraphics(document.getElementById("distance"));
+
+        var sx = Number(rect.attr('x'));
+        var sy = Number(rect.attr('y'));
+        var ex = Number(rect.attr('x')) + Number(rect.attr('width'));
+        var ey = Number(rect.attr('y')) + Number(rect.attr('height'));
+
+        jg.setColor("#CCCCCC");
+        jg.drawLine(sx,sy,ex,ey);
+        jg.paint();
+    }
 }
