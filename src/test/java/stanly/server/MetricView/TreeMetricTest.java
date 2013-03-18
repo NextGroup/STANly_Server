@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import stanly.server.MetricView.DAO.MetricSearchDAO;
 import stanly.server.MetricView.Service.MetricViewService;
 
 
@@ -19,6 +20,9 @@ public class TreeMetricTest {
 	protected static final Logger logger = Logger.getLogger("StanlyPMD");
 	@Autowired
 	private MetricViewService service;
+	
+	@Autowired
+	private MetricSearchDAO dao;
 	
 	@Test
 	public void TreeNodeTest()
@@ -37,5 +41,8 @@ public class TreeMetricTest {
 		logger.info(relation);
 		
 	}
-
+	@Test
+	public void MetricMertricTest(){
+		//TestCase 만들
+	}
 }
