@@ -34,6 +34,7 @@ public class MetricListController {
 			logger.info("Get Project PollutionList node ID- "+ SrcID );
 			return metricView.getPollutionList(name, SrcID);
 	}
+	
 	@RequestMapping(value = "/MartinList", method=RequestMethod.GET)
 	@ResponseBody
 	public String getMartinList(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
