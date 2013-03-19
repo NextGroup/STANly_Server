@@ -17,7 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.ClassMetric;
+import stanly.server.Analysis.Model.Metric.LibraryMetric;
+import stanly.server.Analysis.Model.Metric.MethodMetric;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
+import stanly.server.Analysis.Model.Metric.PackageSetMetric;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
@@ -262,33 +265,46 @@ public class MetricSearchDAO {
 		
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			Criterion CommitEq = Restrictions.eq("commit", commit);
-			Criterion Left = Restrictions.ge("NSLeft", new Integer(NSLeft+1));
+			Criterion Left = Restrictions.ge("NSLeft", new Integer(NSLeft));
 			Criterion Right = Restrictions.le("NSRight", new Integer(NSRight));
-			
+			Criterion NotField = Restrictions.not(Restrictions.eq("type", NodeType.FIELD));
 			Criteria crit = session.createCriteria(ProjectElementNode.class);
 
 			crit.add(CommitEq);
 			crit.add(Left);
 			crit.add(Right);
-			ProjectElementNode targetNode = (ProjectElementNode) crit.uniqueResult();
-			NodeType type = targetNode.getType();
-			
-			switch(type)
+			crit.add(NotField);
+			ArrayList<ProjectElementNode> treeList = (ArrayList<ProjectElementNode>) crit.list();
+			logger.info("Tree 계산ㅇㅇ"+treeList.size());
+			for(int i=0;i<treeList.size();i++)
 			{
-				case LIBRARY:
-				case PACKAGESET:
-				case PACKAGE:
-				case CLASS:
-				case ENUM:
-				case METHOD:
-				case INTERFACE:
-				case CONSTRUCTOR:
-				case ANNOTATION:
-				case FIELD:
-					break;
-				default:
-					throw new Exception("Type Error");
-			}	
+					NodeType type = treeList.get(i).getType();
+					switch(type)
+					{
+						case LIBRARY:
+							calcPollution(pollution,(LibraryMetric)treeList.get(i).getEMetric());
+							break;
+						case PACKAGESET:
+							calcPollution(pollution,(PackageSetMetric)treeList.get(i).getEMetric());
+							break;
+						case PACKAGE:
+							calcPollution(pollution,(PackageMetric)treeList.get(i).getEMetric());
+							break;
+						case CLASS:
+						case ENUM:
+						case INTERFACE:
+						case ANNOTATION:
+							calcPollution(pollution,(ClassMetric)treeList.get(i).getEMetric());
+							break;
+						case METHOD:
+						case CONSTRUCTOR:
+							calcPollution(pollution,(MethodMetric)treeList.get(i).getEMetric());
+							break;
+		
+					}
+			}
+
+			
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
@@ -300,5 +316,72 @@ public class MetricSearchDAO {
 		
 	}
 	
-	
+	private PollutionList calcPollution(PollutionList pollution, LibraryMetric lib)
+	{
+		
+		if(lib.getDistanceAbsolute() > 4)
+			pollution.addPollution("Average Absolute Distance", lib.getElement().getName(), (int)lib.getDistanceAbsolute());
+		if(lib.getDIT()>1)
+			pollution.addPollution("Depth of Inheritance Tree", lib.getElement().getName(), (int)lib.getDIT());
+		
+		return pollution;
+	}
+	private PollutionList calcPollution(PollutionList pollution, PackageSetMetric packageset)
+	{
+		
+		if(packageset.getFat()>60)
+			pollution.addPollution("Fat", packageset.getElement().getName(), (int)packageset.getFat());
+		if(packageset.getTangled()>1)
+			pollution.addPollution("Tangled", packageset.getElement().getName(), (int)packageset.getTangled());
+		
+		return pollution;
+	}
+	private PollutionList calcPollution(PollutionList pollution, PackageMetric packageM)
+	{
+		
+		if(packageM.getFat()>60)
+			pollution.addPollution("Tangled", packageM.getElement().getName(), (int)packageM.getFat());
+		if(packageM.getUnits()>40)
+			pollution.addPollution("Number of Top Level Classes", packageM.getElement().getName(), (int)packageM.getUnits());
+		if(packageM.getDistance()>0.5f || packageM.getDistance()<-0.5f )
+			pollution.addPollution("Distance (D)", packageM.getElement().getName(), (int)packageM.getDistance());
+		
+		return pollution;
+	}
+	private PollutionList calcPollution(PollutionList pollution, ClassMetric classM)
+	{
+		
+		if(classM.getMethods()>50)
+			pollution.addPollution("Number of Methods", classM.getElement().getName(), (int)classM.getMethods());
+		if(classM.getFields()>20)
+			pollution.addPollution("Number of Fields", classM.getElement().getName(), (int)classM.getFields());
+		if(classM.getLOC()>300)
+			pollution.addPollution("Estimated Lines of Code (ELOC)", classM.getElement().getName(), (int)classM.getLOC());
+		if(classM.getFat()>60)
+			pollution.addPollution("Fat", classM.getElement().getName(), (int)classM.getFat());
+		if(classM.getWMC()>100)
+			pollution.addPollution("Weighted Methods per Class", classM.getElement().getName(), (int)classM.getWMC());
+		if(classM.getDIT()>6)
+			pollution.addPollution("Depth of Inheritance Tree", classM.getElement().getName(), (int)classM.getDIT());
+		if(classM.getCBO()>100)
+			pollution.addPollution("Coupling between Objects ", classM.getElement().getName(), (int)classM.getCBO());
+		if(classM.getRFC()>100)
+			pollution.addPollution("Response for a Class ", classM.getElement().getName(), (int)classM.getRFC());
+		
+		
+		return pollution;
+	}
+	private PollutionList calcPollution(PollutionList pollution, MethodMetric MethodM)
+	{
+		
+
+		if(MethodM.getLOC()>60)
+			pollution.addPollution("Estimated Lines of Code (ELOC)", MethodM.getElement().getName(), (int)MethodM.getLOC());
+		if(MethodM.getCC()>15)
+			pollution.addPollution("Cyclomatic Complexity", MethodM.getElement().getName(), (int)MethodM.getCC());
+		
+		
+		
+		return pollution;
+	}
 }

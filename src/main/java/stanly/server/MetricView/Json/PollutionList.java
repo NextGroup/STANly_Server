@@ -10,10 +10,10 @@ public class PollutionList {
 		super();
 		pollution = new ArrayList<PollutionValue>();
 	}
-	
-	public void addPollution(PollutionValue p)
+
+	public void addPollution(String artifact,String metric, int value)
 	{
-		pollution.add(p);
+		pollution.add(new PollutionValue(artifact,metric,value));
 	}
 
 	public ArrayList<PollutionValue> getPollution() {

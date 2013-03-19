@@ -49,4 +49,12 @@ public class TreeMetricTest {
 		assertNotNull(Data);
 		logger.info(Data);
 	}
+	@Test
+	public void PollutionListTest()
+	{
+		String Data = service.getPollutionList("PMD", 2);
+		
+		assertNotNull(Data);
+		logger.info(Data);
+	}
 }
