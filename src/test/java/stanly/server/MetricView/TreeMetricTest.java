@@ -52,7 +52,7 @@ public class TreeMetricTest {
 	@Test
 	public void PollutionListTest()
 	{
-		String Data = service.getPollutionList("PMD", 2);
+		String Data = service.getPollutionChart("PMD", 2);
 		
 		assertNotNull(Data);
 		logger.info(Data);

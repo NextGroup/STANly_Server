@@ -26,6 +26,7 @@ import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.MetricView.Json.CodeSizeValue;
 import stanly.server.MetricView.Json.MartinMetricList;
+import stanly.server.MetricView.Json.PollutionChart;
 import stanly.server.MetricView.Json.PollutionList;
 
 @Repository
@@ -212,13 +213,14 @@ public class MetricSearchDAO {
 			Criterion Right = Restrictions.le("NSRight", new Integer(NSRight));
 			Criterion NotField = Restrictions.not(Restrictions.eq("type", NodeType.FIELD));
 			Criteria crit = session.createCriteria(ProjectElementNode.class);
-
+		
 			crit.add(CommitEq);
 			crit.add(Left);
 			crit.add(Right);
 			crit.add(NotField);
+			
 			ArrayList<ProjectElementNode> treeList = (ArrayList<ProjectElementNode>) crit.list();
-			logger.info("Tree 계산ㅇㅇ"+treeList.size());
+
 			for(int i=0;i<treeList.size();i++)
 			{
 					NodeType type = treeList.get(i).getType();
@@ -246,8 +248,7 @@ public class MetricSearchDAO {
 		
 					}
 			}
-
-			
+		
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
@@ -262,20 +263,22 @@ public class MetricSearchDAO {
 	private PollutionList calcPollution(PollutionList pollution, LibraryMetric lib)
 	{
 		
-		if(lib.getDistanceAbsolute() > 4)
-			pollution.addPollution("Average Absolute Distance", lib.getElement().getName(), (int)lib.getDistanceAbsolute());
+		if(lib.getDistanceAbsolute() > 0.4)
+			pollution.addPollution("Average Absolute Distance", lib.getElement().getName(), lib.getDistanceAbsolute(),(lib.getDistanceAbsolute()>0.5) ? 1:0);
 		if(lib.getDIT()>1)
-			pollution.addPollution("Depth of Inheritance Tree", lib.getElement().getName(), (int)lib.getDIT());
-		
+			pollution.addPollution("Depth of Inheritance Tree", lib.getElement().getName(), lib.getDIT(),(lib.getDIT()>0) ? 1:0);
+		if(lib.getACDPackage()>0.5)
+			pollution.addPollution("Average Component Dependency between Packages", lib.getElement().getName(), lib.getACDPackage(),(lib.getACDPackage()>1) ? 1:0);
 		return pollution;
 	}
 	private PollutionList calcPollution(PollutionList pollution, PackageSetMetric packageset)
 	{
 		
+		
 		if(packageset.getFat()>60)
-			pollution.addPollution("Fat", packageset.getElement().getName(), (int)packageset.getFat());
+			pollution.addPollution("Fat", packageset.getElement().getName(), packageset.getFat(),(packageset.getFat()>120)? 1:0);
 		if(packageset.getTangled()>1)
-			pollution.addPollution("Tangled", packageset.getElement().getName(), (int)packageset.getTangled());
+			pollution.addPollution("Tangled", packageset.getElement().getName(), packageset.getTangled(),1);
 		
 		return pollution;
 	}
@@ -283,48 +286,57 @@ public class MetricSearchDAO {
 	{
 		
 		if(packageM.getFat()>60)
-			pollution.addPollution("Tangled", packageM.getElement().getName(), (int)packageM.getFat());
+			pollution.addPollution("Fat", packageM.getElement().getName(), packageM.getFat(),(packageM.getFat()>120) ? 1:0);
 		if(packageM.getUnits()>40)
-			pollution.addPollution("Number of Top Level Classes", packageM.getElement().getName(), (int)packageM.getUnits());
+			pollution.addPollution("Number of Top Level Classes", packageM.getElement().getName(), packageM.getUnits(),(packageM.getUnits()>60)? 1:0);
 		if(packageM.getDistance()>0.5f || packageM.getDistance()<-0.5f )
-			pollution.addPollution("Distance (D)", packageM.getElement().getName(), (int)packageM.getDistance());
+			pollution.addPollution("Distance (D)", packageM.getElement().getName(), packageM.getDistance(),0);
 		
 		return pollution;
 	}
+	
 	private PollutionList calcPollution(PollutionList pollution, ClassMetric classM)
 	{
 		
 		if(classM.getMethods()>50)
-			pollution.addPollution("Number of Methods", classM.getElement().getName(), (int)classM.getMethods());
+			pollution.addPollution("Number of Methods", classM.getElement().getName(), classM.getMethods(),(classM.getMethods()>100) ? 1:0);
 		if(classM.getFields()>20)
-			pollution.addPollution("Number of Fields", classM.getElement().getName(), (int)classM.getFields());
+			pollution.addPollution("Number of Fields", classM.getElement().getName(), classM.getFields(),(classM.getFields()>40)? 1:0);
 		if(classM.getLOC()>300)
-			pollution.addPollution("Estimated Lines of Code (ELOC)", classM.getElement().getName(), (int)classM.getLOC());
+			pollution.addPollution("Estimated Lines of Code (ELOC)", classM.getElement().getName(), classM.getLOC(),(classM.getLOC()>400)? 1:0);
 		if(classM.getFat()>60)
-			pollution.addPollution("Fat", classM.getElement().getName(), (int)classM.getFat());
+			pollution.addPollution("Fat", classM.getElement().getName(), classM.getFat(),(classM.getFat()>120)?1:0);
 		if(classM.getWMC()>100)
-			pollution.addPollution("Weighted Methods per Class", classM.getElement().getName(), (int)classM.getWMC());
+			pollution.addPollution("Weighted Methods per Class", classM.getElement().getName(), classM.getWMC(),(classM.getWMC()>200)?1:0);
 		if(classM.getDIT()>6)
-			pollution.addPollution("Depth of Inheritance Tree", classM.getElement().getName(), (int)classM.getDIT());
+			pollution.addPollution("Depth of Inheritance Tree", classM.getElement().getName(), classM.getDIT(),(classM.getDIT()>8)?1:0);
 		if(classM.getCBO()>100)
-			pollution.addPollution("Coupling between Objects ", classM.getElement().getName(), (int)classM.getCBO());
+			pollution.addPollution("Coupling between Objects", classM.getElement().getName(), classM.getCBO(),(classM.getCBO()>250)?1:0);
 		if(classM.getRFC()>100)
-			pollution.addPollution("Response for a Class ", classM.getElement().getName(), (int)classM.getRFC());
+			pollution.addPollution("Response for a Class", classM.getElement().getName(), classM.getRFC(),(classM.getRFC()>1000)?1:0);
 		
 		
 		return pollution;
 	}
+	
 	private PollutionList calcPollution(PollutionList pollution, MethodMetric MethodM)
 	{
-		
 
 		if(MethodM.getLOC()>60)
-			pollution.addPollution("Estimated Lines of Code (ELOC)", MethodM.getElement().getName(), (int)MethodM.getLOC());
+			pollution.addPollution("Estimated Lines of Code (ELOC)", MethodM.getElement().getName(), MethodM.getLOC(),(MethodM.getLOC()>120)?1:0);
 		if(MethodM.getCC()>15)
-			pollution.addPollution("Cyclomatic Complexity", MethodM.getElement().getName(), (int)MethodM.getCC());
-		
-		
-		
+			pollution.addPollution("Cyclomatic Complexity", MethodM.getElement().getName(), MethodM.getCC(),(MethodM.getCC()>20)?1:0);
+
 		return pollution;
 	}
+	
+	public PollutionChart getPollutionChart(ProjectCommit commit, int NSLeft,int NSRight)
+	{
+		PollutionChart chart = getPollutionList(commit,NSLeft,NSRight).getCountPollution();
+		
+		return chart;
+	}
+	
+	
+	
 }

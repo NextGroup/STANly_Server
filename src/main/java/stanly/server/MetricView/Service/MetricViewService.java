@@ -167,6 +167,17 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getMertinValue(commit, nodeID));
 	}
 	
+	public String getPollutionChart(String projectName, int NSleft)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
+		
+		Gson gosn = new Gson();
+		
+		return gosn.toJson(MSearchDAO.getPollutionChart(commit, NSleft,NSRight));
+	}
+	
 	public String getCodeSize(String projectName, int NSleft)
 	{	
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
