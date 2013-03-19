@@ -16,7 +16,7 @@ var min_content_height;
 var title_margin;
 $(function () {
     navbar_height = $(".navbar").height();
-    side_margin = parseInt($("#sidebar").css("margin")) * 5;
+    side_margin = parseInt($("#sidebar").css("margin")) * 10;
     bottom_margin = parseInt($("#sidebar").css("margin")) * 2;
     sidebar_width = $("#sidebar").width();
     min_content_height = min_content_height - navbar_height;

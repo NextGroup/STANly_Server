@@ -26,7 +26,8 @@
     <script type="text/javascript" src="/Stanly/assets/highcharts/js/modules/exporting.js"></script>
 
     <script type="text/javascript" src="/Stanly/report/detail/js/ProjectTree.js"></script>
-    <link rel="stylesheet" href="/Stanly/report/detail/css/DetailList.css">
+    <link rel="stylesheet" href="/Stanly/report/detail/css/layout.css">
+
     <!-- 내용 위치&비율 조정-->
     <script type="text/javascript" src="./js/sizealign.js"></script>
 </head>
@@ -38,9 +39,9 @@
             <ul class="nav">
                 <li><a href="javascript:void(0);" >DashBoard</a></li>
                 <li class="divider-vertical"></li>
-                <li class="active"><a href="javascript:void(0);">Composition</a></li>
+                <li><a href="javascript:void(0);">Composition</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="javascript:void(0);" >Pollution</a></li>
+                <li class="active"><a href="javascript:void(0);" >Pollution</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="javascript:void(0);" >Distance</a></li>
                 <li class="divider-vertical"></li>
@@ -51,35 +52,36 @@
             </ul>
         </div>
     </div>
-    <div id="body" style="background-color:#cd5c5c; ">
-        <div id="sidebar" style="width: 300px; margin: 10px; float: left">
+    <div id="body">
+        <div id="sidebar">
             <div id="sidebar_title">Project Explorer</div>
-            <div id="prjtree" style="background-color:#5f9ea0; height: 100%; overflow: auto;"></div>
+            <div id="prjtree"></div>
         </div>
-        <div id="content" style="background-color:#5f9ea0; margin: 10px; float: left">
+        <div id="content">
             <div id="mainview_title">Pollution</div>
-            <div id="mainview" style="background-color:#b94a48; height: 70%; margin-bottom: 10px">
+            <div id="mainview">
                 <div id="pollution" style="height:100%;"></div>
                 <!--오염도 그래프 그리-->
                 <script type="text/javascript" src="../../Frontend/report/js/RanderPollution.js"></script>
             </div>
-            <div id="subview"  style="background-color:#bdb76b; height: 30%; overflow-y: scroll;">
-                <div id="detail_title">Violations</div>
+            <div id="detail_title">Violations</div>
+            <div id="subview">
                 <div id="detail_list"></div>
                 <script type="text/javascript">
                     var table;
                     //$(function() {
-                    function BuildDetailList(){
+                    function BuildDetailList(id){
                         $.ajax( {
                             type :'GET'
                             ,asyn :true
-                            ,url :'test_detail.json'
+                            ,url :'/Stanly/component/RelationList'
                             ,dataType :"json"
+                            ,data:{Name:getProjectName(),SrcID:id}
                             //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
                             ,beforeSend : function(xhr){
                             }
                             ,success : function(jsonData) {
-                                table = JSON.stringify(jsonData);
+                                table = jsonData.relation;
 
                                 BuildTable();
                                 AdjustStyle();
@@ -90,135 +92,6 @@
                             }
                         });
                     }
-                    //});
-                    function BuildTable() {
-                        table = eval('' + table + '');
-                        var tableObject = function (json) {
-                            var headerCount = new Object();
-                            var createTHEAD = function (id) {
-                                var tr = document.createElement("thead");
-                                tr.ID = id;
-                                return tr;
-                            };
-                            var createTBODY = function (id) {
-                                var tr = document.createElement("tbody");
-                                tr.ID = id;
-                                return tr;
-                            };
-                            var createTR = function (id) {
-                                var tr = document.createElement("tr");
-                                tr.ID = id;
-                                return tr;
-                            };
-                            var createTH = function (html) {
-                                var th = document.createElement("th");
-                                th.innerHTML = html;
-                                return th;
-                            };
-                            var createTD = function (html) {
-                                var td = document.createElement("td");
-                                td.innerHTML = html;
-                                return td;
-                            };
-                            var getName = function (id) {
-                                for (var name in headerCount) {
-                                    if (eval("headerCount." + name) == id) {
-                                        return name;
-                                    }
-                                }
-                            };
-                            var pTable;
-                            if (json.length > 0) {
-                                var index = 0;
-                                var theadFlag = false;
-                                pTable = document.createElement("table");
-                                pTable.setAttribute("class","tablesorter tablesorter-blue");
-                                pTable.setAttribute("style","margin:0px;");
-                                var thead = createTHEAD();
-                                var head = createTR();
-                                for (var i = 0; i < json.length; i++)
-                                    for (var item in json[i]) {
-                                        if (!headerCount.hasOwnProperty(item)) {
-                                            head.appendChild(createTH(item));
-                                            eval('headerCount.' + item + "=" + index);
-                                            index++;
-                                        }
-                                    }
-                                thead.appendChild(head);
-                                pTable.appendChild(thead);
-
-                                var tbody = createTBODY();
-                                for (var i = 0; i < json.length; i++) {
-                                    var row = new createTR(i);
-                                    for (var j = 0; j < index; j++) {
-                                        var name = getName(j);
-                                        if (eval("json[" + i + "].hasOwnProperty('" + name + "')")) {
-                                            row.appendChild(createTD(eval('json[' + i + '].' + name)));
-                                        }
-                                        else
-                                            row.appendChild(createTD(''));
-                                    }
-                                    tbody.appendChild(row);
-                                }
-                                pTable.appendChild(tbody);
-                            }
-                            return pTable;
-
-                        };
-
-                        var d = document.getElementById("detail_list").getElementsByClassName("tablesorter");
-                        while(d.length)
-                            document.getElementById("detail_list").removeChild(d[d.length-1]);
-                        var c = new tableObject(table);
-                        document.getElementById("detail_list").appendChild(c);
-                    }
-                    function AdjustStyle(){
-                        //$(function() {
-
-                        // Extend the themes to change any of the default class names ** NEW **
-                        $.extend($.tablesorter.themes.jui, {
-                            // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
-                            table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
-                            header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
-                            footerRow  : '',
-                            footerCells: '',
-                            icons      : 'ui-icon', // icon class added to the <i> in the header
-                            sortNone   : 'ui-icon-carat-2-n-s',
-                            sortAsc    : 'ui-icon-carat-1-n',
-                            sortDesc   : 'ui-icon-carat-1-s',
-                            active     : 'ui-state-active', // applied when column is sorted
-                            hover      : 'ui-state-hover',  // hover class
-                            filterRow  : '',
-                            even       : 'ui-widget-content', // odd row zebra striping
-                            odd        : 'ui-state-default'   // even row zebra striping
-                        });
-
-                        // call the tablesorter plugin and apply the ui theme widget
-                        $("table").tablesorter({
-
-                            theme : 'blue', // theme "jui" and "bootstrap" override the uitheme widget option in v2.7+
-
-                            headerTemplate : '{content} {icon}', // needed to add icon for jui theme
-
-                            // widget code now contained in the jquery.tablesorter.widgets.js file
-                            widgets : ['uitheme', 'zebra' , 'resizable', 'stickyHeaders'],
-
-                            widgetOptions : {
-                                // zebra striping class names - the uitheme widget adds the class names defined in
-                                // $.tablesorter.themes to the zebra widget class names
-                                zebra   : ["even", "odd"],
-                                // set the uitheme widget to use the jQuery UI theme class names
-                                // ** this is now optional, and will be overridden if the theme name exists in $.tablesorter.themes **
-                                // uitheme : 'jui'
-                                // css class name applied to the sticky header
-                                resizable : false,
-                                // css class name applied to the sticky header
-                                stickyHeaders : "tablesorter-stickyHeader"
-                            }
-
-                        });
-                    }
-                    //});
                 </script>
             </div>
         </div>
@@ -242,7 +115,8 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/Stanly/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Stanly/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/Stanly/js/utilities.js"></script>
+<script type="text/javascript" src="/Stanly/report/detail/js/DetailList.js"></script>
 </body>
 </html>
