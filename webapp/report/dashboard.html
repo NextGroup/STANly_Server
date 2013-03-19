@@ -21,6 +21,9 @@
 
     <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.jqplot.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.bubbleRenderer.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.cursor.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
     <link rel="stylesheet" href="/Stanly/assets/jqplot/jquery.jqplot.min.css">
 
     <style>
@@ -77,6 +80,9 @@
 
         $('.span5').css("width", halfgrid5width + "px");
         $('.row').css("width", $('.navbar').width + "px");
+        $('#codesize').css("height", halfgrid5width + "px");
+        $('#composition').css("height", halfgrid5width + "px");
+        $('#distance').css("height", halfgrid5width + "px");
     }
 </script>
 <!-- 하이차트 -->
@@ -121,7 +127,7 @@
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Pollution</div>
                 <div id="pollution" style="height: 300px; border:1px;"></div>
                 <!--오염도 그래프 그리-->
-                <script type="text/javascript" src="../Frontend/report/js/RanderPollution.js"></script>
+                <script type="text/javascript" src="/Stanly/report/js/RanderPollution.js"></script>
             </div>
 
 
@@ -167,6 +173,7 @@
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 300px;"></div>
+                <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
                 <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
             </div>
             <div id="dummy" style="height: 300px;"></div>

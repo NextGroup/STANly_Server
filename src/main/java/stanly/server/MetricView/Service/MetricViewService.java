@@ -185,9 +185,9 @@ public class MetricViewService {
 		ProjectCommit commit = projectDAO.getLastCommit(info);
 		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
 		
-		MSearchDAO.getMartinDistance(commit, NSleft,NSRight);
+		
 		Gson gson = new Gson();
-		return "";
+		return gson.toJson(MSearchDAO.getMartinDistance(commit, NSleft,NSRight));
 	}
 
 }

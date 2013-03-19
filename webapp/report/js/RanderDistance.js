@@ -26,6 +26,11 @@ var option = {
         shadow: true,
         shadowAlpha: 0.05
     },
+    cursor: {
+        show: true,            //커서 기능 사용 유무
+        zoom: true,           //줌 기능 사용 유무
+        showTooltip: true   //화면 하단에 tooltip 기능 사용 유무
+    },
     axesDefaults:{
         numberTicks:13,
         min: -0.1,
@@ -34,12 +39,14 @@ var option = {
     },
     axes:{
         xaxis: {
-            label:"Abstractness",
-            formatString: '%0.2f'
+            label:"Abstractness"
         },
         yaxis: {
             label:"Instability",
-            formatString: '%0.2f'
+            labelOptions:{
+                angle:-90
+            },
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         }
     }
 };
@@ -60,7 +67,9 @@ $(document).ready(function(){
         }
         ,success : function(jsonData) {
             arr = jsonData;
-
+            arr= new Array();
+            for(var i=0;i<jsonData.metricDistance.length;i++)
+                arr.push([jsonData.metricDistance[i].abstractness,jsonData.metricDistance[i].instability,jsonData.metricDistance[i].size,jsonData.metricDistance[i].name]);
             DrowDistanceChart();
         }
         ,error : function(xhr, textStatus) {
@@ -75,9 +84,9 @@ function DrowDistanceChart(){
 
     // Legend is a simple table in the html.
     // Dynamically populate it with the labels from each data value.
-    $.each(arr, function(index, val) {
-        $('#legend1b').append('<tr><td>'+val[3]+'</td><td>'+val[2]+'</td></tr>');
-    });
+    //$.each(arr, function(index, val) {
+    //    $('#legend1b').append('<tr><td>'+val[3]+'</td><td>'+val[2]+'</td></tr>');
+    //});
 
     // Now bind function to the highlight event to show the tooltip
     // and highlight the row in the legend.
@@ -93,8 +102,8 @@ function DrowDistanceChart(){
                 color + ';">' + data[3] + '</span><br />' + 'Abstractness: ' + data[0] +
                 '<br />' + 'Instability: ' + data[1] + '<br />' + 'Line of Code: ' + data[2]);
             $('#tooltip').show();
-            $('#legend1b tr').css('background-color', '#ffffff');
-            $('#legend1b tr').eq(pointIndex+1).css('background-color', color);
+            //$('#legend1b tr').css('background-color', '#ffffff');
+            //$('#legend1b tr').eq(pointIndex+1).css('background-color', color);
         });
 
     // Bind a function to the unhighlight event to clean up after highlighting.
@@ -102,7 +111,7 @@ function DrowDistanceChart(){
         function (ev, seriesIndex, pointIndex, data) {
             $('#tooltip').empty();
             $('#tooltip').hide();
-            $('#legend1b tr').css('background-color', '#ffffff');
+            //$('#legend1b tr').css('background-color', '#ffffff');
         });
 
     var canvas = $('#distance>.jqplot-series-shadowCanvas');
