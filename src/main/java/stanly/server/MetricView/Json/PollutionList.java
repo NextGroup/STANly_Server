@@ -2,11 +2,11 @@ package stanly.server.MetricView.Json;
 
 import java.util.ArrayList;
 
-public class PoliutionList {
+public class PollutionList {
 
 	private ArrayList<PollutionValue> pollution;
 
-	public PoliutionList() {
+	public PollutionList() {
 		super();
 		pollution = new ArrayList<PollutionValue>();
 	}

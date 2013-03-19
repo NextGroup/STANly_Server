@@ -33,6 +33,21 @@ public class MetricComponentController {
 			logger.info("Get Project Tree node ID- "+ nsLeft );
 			return metricView.getTreeNode(name, nsLeft);
 	}
+	
+	/**
+	 * 노드 아이디는 패키지 이상을 넘겨줘야 한다.
+	 * @param name
+	 * @param nsLeft
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/CodeSize", method=RequestMethod.GET)
+	@ResponseBody
+	public String getCodeSize(@RequestParam("Name") String name,@RequestParam("nodeID") int nsLeft,HttpServletResponse response) throws Exception {
+			logger.info("Get Project CodeSize node ID- "+ nsLeft );
+			return metricView.getCodeSize(name, nsLeft);
+	}
 
 	@RequestMapping(value = "/MartinDistance", method=RequestMethod.GET)
 	@ResponseBody
