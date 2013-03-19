@@ -26,7 +26,7 @@ table > tbody > tr > td{
     height: 27%; overflow-y: scroll;
 }
 
-#subview > #detail_list{
+#subview {
     border: 1px solid;
 }
 

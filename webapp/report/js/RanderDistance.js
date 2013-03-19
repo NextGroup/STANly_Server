@@ -5,15 +5,7 @@
  * Time: 오후 4:21
  * To change this template use File | Settings | File Templates.
  */
-var arr = [
-    [0.5, 0.9, 1236, "com.sourceforge.pmd"],
-    [0.1, 0.3, 1067, "com.sourceforge.pmd.stanly"],
-    [0.9, 0.4, 1176, "AM General"],
-    [0.32, 0.56, 610, "Aston Martin Lagonda"],
-    [0.75, 0.12, 539, "Audi"],
-    [0.33, 0.51, 864, "BMW"],
-    [0.56, 0.56, 1026, "Bugatti"]];
-
+var arr;
 var option = {
     title: 'Martin.C Distance',
     seriesDefaults:{
@@ -29,6 +21,8 @@ var option = {
     cursor: {
         show: true,            //커서 기능 사용 유무
         zoom: true,           //줌 기능 사용 유무
+        looseZoom: true,
+        constrainZoomTo: 'y',
         showTooltip: true   //화면 하단에 tooltip 기능 사용 유무
     },
     axesDefaults:{

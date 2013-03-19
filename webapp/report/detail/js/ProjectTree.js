@@ -5,6 +5,7 @@
  * Time: 오후 10:22
  * To change this template use File | Settings | File Templates.
  */
+var lastID=0;
 $(function () {
     $("#prjtree")
         .jstree({
@@ -85,8 +86,13 @@ $(function () {
         })
         .bind("select_node.jstree", function (e, data) {
             //console.log(data.rslt.obj[0].id);
-            console.log(data.rslt.obj.attr("id"));
-            BuildDetailList(data.rslt.obj.attr("id"));
+            if(lastID != data.rslt.obj.attr("id")){
+                console.log(data.rslt.obj.attr("id"));
+                BuildDetailList(data.rslt.obj.attr("id"));
+                if(BuildMainView)
+                    BuildMainView(data.rslt.obj.attr("id"),data.rslt.obj.find('a')[0].text);
+                lastID = data.rslt.obj.attr("id");
+            }
         });
     //$("#sidebar").resizable();
 });

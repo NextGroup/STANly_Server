@@ -1,50 +1,48 @@
+var colors = ["#4572A7", "#AA4643", "#89A54E", "#80699B", "#3D96AE", "#DB843D", "#92A8CD", "#A47D7C", "#B5CA92", "#4572A7", "#AA4643", "#89A54E", "#80699B", "#3D96AE", "#DB843D", "#92A8CD", "#A47D7C", "#B5CA92"];
 var chart;
-$(document).ready(function() {
+var categories;
+var name;
+var data;
+var subName;
+function BuildMainView(id,name){
+    subName = name;
+    $.ajax( {
+        type :'GET'
+        ,asyn :true
+        ,url :'/Stanly/component/PollutionView'
+        ,dataType :"json"
+        ,data:{Name:getProjectName(),nodeID:id}
+        //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+        ,beforeSend : function(xhr){
+        }
+        ,success : function(jsonData) {
+            categories = new Array();;
+            data = new Array();
+            for(var i=0;i<jsonData.PollutionScore.length;i++)
+            {
+                if(Number(jsonData.PollutionScore[i]) != 0)
+                {
+                    categories.push(jsonData.PollutionName[i]);
+                    data.push({y:Number(jsonData.PollutionScore[i]),color:colors[i]});
+                }
+            }
+            //console.log(jsonData.PollutionScore);
 
-    var colors = Highcharts.getOptions().colors,
-        categories = [
-            'Number of Top Level Classes', 'Number of Methods', 'Number of Fields',
-            'Estimated Lines of Code ', 'Cyclomatic Complexity', 'Fat',
-            'Tangled', 'Component Dependency', 'Distance', 'Average Absolute Distance',
-            'Weighted Methods per Class', 'Depth of Inheritance Tree'
-        ],
-        name = 'Pollutions',
-        data = [{
-            y: 55.11,
-            color: colors[0]
-        }, {
-            y: 21.63,
-            color: colors[1]
-        }, {
-            y: 11.94,
-            color: colors[2]
-        }, {
-            y: 7.15,
-            color: colors[3]
-        }, {
-            y: 2.14,
-            color: colors[4]
-        }, {
-            y: 2.14,
-            color: colors[5]
-        }, {
-            y: 2.14,
-            color: colors[6]
-        }, {
-            y: 2.14,
-            color: colors[7]
-        }, {
-            y: 2.14,
-            color: colors[8]
-        }, {
-            y: 2.14,
-            color: colors[0]
-        }, {
-            y: 2.14,
-            color: colors[1]
-        }];
+            //BuildTable();
+            //AdjustStyle();
+            DrawPollutionChart();
+        }
+        ,error : function(xhr, textStatus) {
+        }
+        ,complete : function(xhr, textStatus) {
+        }
+    });
+}
 
-    function setChart(name, categories, data, color) {
+function DrawPollutionChart()
+{
+    $('pollution').empty();
+    /*function setChart(name, categories, data, color) {
         chart.xAxis[0].setCategories(categories, false);
         chart.series[0].remove(false);
         chart.addSeries({
@@ -53,7 +51,7 @@ $(document).ready(function() {
             color: color || 'white'
         }, false);
         chart.redraw();
-    }
+    }*/
 
     chart = new Highcharts.Chart({
         chart: {
@@ -61,10 +59,10 @@ $(document).ready(function() {
             type: 'column'
         },
         title: {
-            text: 'Name of Proejct'
+            text: getProjectName()
         },
         subtitle: {
-            text: 'Name of SubFolder'
+            text: subName
         },
         xAxis: {
             categories: categories
@@ -114,12 +112,52 @@ $(document).ready(function() {
             }
         },
         series: [{
-            name: name,
-            data: data,
-            color: 'white'
-        }],
+         name: name,
+         data: data,
+         color: 'white'
+         }],
         exporting: {
             enabled: false
         }
     });
+}
+$(document).ready(function() {
+    BuildMainView(1,getProjectName());
+/*
+    var name = 'Pollutions';
+    var data = [{
+            y: 55.11,
+            color: colors[0]
+        }, {
+            y: 21.63,
+            color: colors[1]
+        }, {
+            y: 11.94,
+            color: colors[2]
+        }, {
+            y: 7.15,
+            color: colors[3]
+        }, {
+            y: 2.14,
+            color: colors[4]
+        }, {
+            y: 2.14,
+            color: colors[5]
+        }, {
+            y: 2.14,
+            color: colors[6]
+        }, {
+            y: 2.14,
+            color: colors[7]
+        }, {
+            y: 2.14,
+            color: colors[8]
+        }, {
+            y: 2.14,
+            color: colors[0]
+        }, {
+            y: 2.14,
+            color: colors[1]
+        }];
+*/
 });
