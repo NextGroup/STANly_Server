@@ -20,6 +20,7 @@ import stanly.server.MetricView.Json.RelationList;
 import stanly.server.MetricView.Json.TreeElement;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author Karuana
@@ -157,5 +158,15 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getMertinValue(commit, nodeID));
 	}
 	
+	public String getCodeSize(String projectName, int NSleft)
+	{	
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
+		
+		Gson gosn = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		
+		return gosn.toJson(MSearchDAO.getCodeSize(commit, NSleft,NSRight));
+	}
 
 }
