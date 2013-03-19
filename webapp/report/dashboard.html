@@ -13,10 +13,15 @@
     <link rel="stylesheet" href="/Stanly/assets/css/custom-bootstrap-responsive.css">
     <!--<link rel="stylesheet" href="../assets/css/docs.css">-->
 
-    <script type="text/javascript" src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.js"></script>
+    <!--<script type="text/javascript" src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>-->
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
+
+    <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.bubbleRenderer.min.js"></script>
+    <link rel="stylesheet" href="/Stanly/assets/jqplot/jquery.jqplot.min.css">
 
     <style>
         /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
@@ -200,7 +205,7 @@
                             minWidth: $('.subtitle').width()-0.5,
                             maxWidth: $('.subtitle').width()-0.5
                         }
-                        $( "#codesize" ).resizable(option);
+                        $("#codesize" ).resizable(option);
                         $("#codesize").width($('.subtitle').width()-0.5);
                         csd_width = $('.subtitle').width()-0.5;
                         csd_height = $("#codesize").height()-csd_margin.top;
@@ -275,7 +280,8 @@
                                 .attr("y", 6 - csd_margin.top)
                                 .attr("dy", ".75em");
 
-                        d3.json("./codesizesample.json", function(root) {
+                        d3.json("/Stanly/component/CodeSize?Name="+getProjectName()+"&nodeID=1", function(root) {
+                            root = root.children[0];
                             csd_root = csd_last_d = root;
                             initialize(root);
                             accumulate(root);
