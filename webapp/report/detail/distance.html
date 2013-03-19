@@ -22,8 +22,11 @@
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/css/theme.blue.css">
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
-    <script type="text/javascript" src="/Stanly/assets/highcharts/js/highcharts.js"></script>
-    <script type="text/javascript" src="/Stanly/assets/highcharts/js/modules/exporting.js"></script>
+
+    <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
+
+    <!--<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>-->
+    <!--<link rel="stylesheet" href="/Stanly/assets/css/jquery-ui.css">-->
 
     <script type="text/javascript" src="/Stanly/report/detail/js/ProjectTree.js"></script>
     <link rel="stylesheet" href="/Stanly/report/detail/css/layout.css">
@@ -41,9 +44,9 @@
                 <li class="divider-vertical"></li>
                 <li><a href="javascript:void(0);">Composition</a></li>
                 <li class="divider-vertical"></li>
-                <li class="active"><a href="javascript:void(0);" >Pollution</a></li>
+                <li><a href="javascript:void(0);" >Pollution</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="javascript:void(0);" >Distance</a></li>
+                <li class="active"><a href="javascript:void(0);" >Distance</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="javascript:void(0);" >Metrics</a></li>
                 <li class="divider-vertical"></li>
@@ -58,30 +61,30 @@
             <div id="prjtree"></div>
         </div>
         <div id="content">
-            <div id="mainview_title">Pollution</div>
+            <div id="mainview_title" class="subtitle">Distance</div>
             <div id="mainview">
-                <div id="pollution" style="height:100%;"></div>
-                <!--오염도 그래프 그리-->
-                <script type="text/javascript" src="/Stanly/report/js/RanderPollution.js"></script>
+                <div id="distance" style="height:100%;"></div>
+                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                <script type="text/javascript" src="/Stanly/report/js/wz_jsgraphics.js"></script>
+                <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
             </div>
-            <div id="detail_title">Violations</div>
+            <div id="detail_title">Relations</div>
             <div id="subview">
                 <div id="detail_list"></div>
                 <script type="text/javascript">
                     var table;
-                    //$(function() {
                     function BuildDetailList(id){
                         $.ajax( {
                             type :'GET'
                             ,asyn :true
-                            ,url :'/Stanly/component/RelationList'
+                            ,url :'/Stanly/component/MartinList'
                             ,dataType :"json"
                             ,data:{Name:getProjectName(),SrcID:id}
                             //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
                             ,beforeSend : function(xhr){
                             }
                             ,success : function(jsonData) {
-                                table = jsonData.relation;
+                                table = jsonData.metricList;
 
                                 BuildTable();
                                 AdjustStyle();
@@ -115,8 +118,8 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" src="/Stanly/assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/Stanly/js/utilities.js"></script>
-<script type="text/javascript" src="/Stanly/report/detail/js/DetailList.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Stanly/js/utilities.js"></script>
+    <script type="text/javascript" src="/Stanly/report/detail/js/DetailList.js"></script>
 </body>
 </html>

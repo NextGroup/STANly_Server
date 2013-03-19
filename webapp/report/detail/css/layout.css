@@ -23,7 +23,7 @@ table > tbody > tr > td{
 }
 
 #subview{
-    height: 30%; overflow-y: scroll;
+    height: 27%; overflow-y: scroll;
 }
 
 #subview > #detail_list{
