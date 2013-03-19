@@ -50,12 +50,16 @@ public class StanlyPMDTest {
 	@Before
 	public void BeforeTest()
 	{
-		projectService.addProject("www.asdf.ac.kr", "/Users/Karuana/Documents/STANly/pmd_STANly", "PMD");
+		projectService.addProject("www.asdf.ac.kr", "C:\\workspace1\\logdog2\\Project\\LogdogClient", "PMD");
 		info = projectService.getProjectInfo("PMD");
 		logger.info("Before Setting = "+info.toString());
 		projectService.addCommit(info, new Date(), "init Commit", "Karuana");
 	}
-	
+	@Test
+	public void TestInsertRelation()
+	{
+		assertTrue(true);
+	}
 	@Test
 	public void TestInsertElementNode()
 	{
@@ -64,6 +68,7 @@ public class StanlyPMDTest {
 		List<ProjectElementNode> elementlist =  analysis.getTree(commit);
 		assertNotNull(elementlist);
 		assertNotNull(rootnode);
+		
 		//총 갯수중 10개 뽑아서 확인
 		// 10개 안되면 걍 다돌림
 		int listSize = elementlist.size();
@@ -95,12 +100,9 @@ public class StanlyPMDTest {
 		{
 			e.printStackTrace();
 		}
-	}
-	@Test
-	public void TestInsertRelation()
-	{
 		
 	}
+
 	private ElementNode FindNodeToName(int leftid, ElementNode node)
 	{
 		
