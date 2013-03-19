@@ -146,7 +146,15 @@ public class MetricViewService {
 
 		return gosn.toJson(Elements);
 	}
-	
+	public String getPollutionList(String projectName, int nodeID)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, nodeID).getNSRight();
+		Gson gosn = new Gson();
+
+		return gosn.toJson(MSearchDAO.getPollutionList(commit, nodeID,NSRight));
+	}
 	
 	public String getMartinList(String projectName, int nodeID)
 	{
@@ -169,13 +177,5 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getCodeSize(commit, NSleft,NSRight));
 	}
 
-	public String getPollutionList(String projectName, int NSleft)
-	{
-		ProjectInfo info = projectDAO.getProjectInfo(projectName);
-		ProjectCommit commit = projectDAO.getLastCommit(info);
-		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
-		Gson gosn = new Gson();
 
-		return gosn.toJson(MSearchDAO.getPollutionList(commit, NSleft,NSRight));
-	}
 }
