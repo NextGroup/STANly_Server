@@ -7,18 +7,13 @@
     <meta name="description" content="STANly@Software Maestro">
     <meta name="author" content="Team STANly">
     <!-- Le styles -->
-    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
-    <link rel="stylesheet" href="../../assets/css/custom-bootstrap-responsive.css">
-    <!--<link rel="stylesheet" href="../../assets/css/docs.css">-->
-    <!--<link rel="stylesheet" href="../../assets/jqGrid/css/ui.jqgrid.css">-->
-    <!--<link rel="stylesheet" href="../../assets/jqGrid/css/jquery-ui-custom.css">-->
-    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css">-->
-    <!--<link rel="stylesheet" href="../../assets/css/detail-layout.css">-->
+    <link rel="stylesheet" href="/Stanly/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/Stanly/assets/css/custom-bootstrap-responsive.css">
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script type="text/javascript" src="../../assets/jstree/_lib/jquery.cookie.js"></script>
-    <script type="text/javascript" src="../../assets/jstree/_lib/jquery.hotkeys.js"></script>
-    <script type="text/javascript" src="../../assets/jstree/jquery.jstree.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jstree/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jstree/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jstree/jquery.jstree.js"></script>
 
 
 
@@ -27,94 +22,11 @@
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/css/theme.blue.css">
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
-    <script src="../../assets/highcharts/js/highcharts.js"></script>
-    <script src="../../assets/highcharts/js/modules/exporting.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/highcharts/js/highcharts.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/highcharts/js/modules/exporting.js"></script>
 
-    <script type="text/javascript">
-        $(function () {
-            $("#prjtree")
-                    .jstree({
-                        "json_data" : {
-                            "ajax" : {
-                                //"url" : "../../assets/jstree/_docs/_stanly_data.json",
-                                "url" : "../../assets/jstree/_docs/_simple_data.json",
-                                //"data" : function (n) {
-                                //    return { id : n.attr ? n.attr("id") : 0 };
-                                //}
-                            }
-                        },
-                        "core" : {
-                            "animation" : 50
-                        },
-                        "plugins" : [ "themes", "json_data", "ui", "hotkeys", "types" ],
-                        "types" : {
-                            "types" : {
-                                "PROJECT" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/application.gif'
-                                    }
-                                },
-                                "LIBRARY" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/subsystem.gif'
-                                    }
-                                },
-                                "PACKAGESET" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/tree.gif'
-                                    }
-                                },
-                                "PACKAGE" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/package.gif'
-                                    }
-                                },
-                                "CLASS" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/class.gif'
-                                    }
-                                },
-                                "INTERFACE" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/interface.gif'
-                                    }
-                                },
-                                "ANNOTATION" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/annotation.gif'
-                                    }
-                                },
-                                "ENUM" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/enum.gif'
-                                    }
-                                },
-                                "CONSTRUCTOR" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/constructor.png'
-                                    }
-                                },
-                                "METHOD" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/method.gif'
-                                    }
-                                },
-                                "FIELD" : {
-                                    "icon" : {
-                                        "image" : '../../assets/jstree/img/field.gif'
-                                    }
-                                }
-                            }
-                        }
-                    })
-                    .bind("select_node.jstree", function (e, data) {
-                        //console.log(data.rslt.obj[0].id);
-                        console.log(data.rslt.obj.attr("id"));
-                        BuildDetailList();
-                    })
-
-        });
-    </script>
+    <script type="text/javascript" src="/Stanly/report/detail/js/ProjectTree.js"></script>
+    <link rel="stylesheet" href="/Stanly/report/detail/css/DetailList.css">
     <!-- 내용 위치&비율 조정-->
     <script type="text/javascript" src="./js/sizealign.js"></script>
 </head>
@@ -124,15 +36,15 @@
         <div class="navbar-inner">
             <a class="brand" href="#">STANly</a>
             <ul class="nav">
-                <li><a href="../dashboard.html">DashBoard</a></li>
+                <li><a href="javascript:void(0);" >DashBoard</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="./composition.html">Composition</a></li>
+                <li class="active"><a href="javascript:void(0);">Composition</a></li>
                 <li class="divider-vertical"></li>
-                <li class="active"><a href="./pollution.html">Pollution</a></li>
+                <li><a href="javascript:void(0);" >Pollution</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="./distance.html">Distance</a></li>
+                <li><a href="javascript:void(0);" >Distance</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="./metrics.html">Metrics</a></li>
+                <li><a href="javascript:void(0);" >Metrics</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="./about.html">About</a></li>
                 <li class="divider-vertical"></li>
@@ -149,7 +61,7 @@
             <div id="mainview" style="background-color:#b94a48; height: 70%; margin-bottom: 10px">
                 <div id="pollution" style="height:100%;"></div>
                 <!--오염도 그래프 그리-->
-                <script type="text/javascript" src="../js/RanderPollution.js"></script>
+                <script type="text/javascript" src="../../Frontend/report/js/RanderPollution.js"></script>
             </div>
             <div id="subview"  style="background-color:#bdb76b; height: 30%; overflow-y: scroll;">
                 <div id="detail_title">Violations</div>
@@ -330,6 +242,7 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../../assets/js/bootstrap.min.js"></script>
+<script src="/Stanly/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Stanly/js/utilities.js"></script>
 </body>
 </html>
