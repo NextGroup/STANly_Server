@@ -157,5 +157,14 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getMertinValue(commit, nodeID));
 	}
 	
+	public String getMartinDistance(String projectName, int nodeID)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		
+		Gson gosn = new Gson();
+		MSearchDAO.getMertinDistance(commit, nodeID);
+		return "";
+	}
 
 }

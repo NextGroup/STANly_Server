@@ -31,7 +31,7 @@ public class MetricListController {
 	
 	@RequestMapping(value = "/MartinList", method=RequestMethod.GET)
 	@ResponseBody
-	public String get(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
+	public String getMartinList(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
 			logger.info("Get Project MartinList node ID- "+ SrcID );
 			return metricView.getMartinList (name, SrcID);
 	}

@@ -19,16 +19,16 @@ function drawChart() {
         ,beforeSend : function(xhr){
         }
         ,success : function(jsonData) {
-            table = JSON.stringify(jsonData);
+            table = jsonData;
             data = google.visualization.arrayToDataTable([
                 ['ID', 'Abstractness', 'Instability', 'Distance','LOC'],
-                ['',   1.0,  0.0,      120, 1],
-                ['',   0.9,  0.7,      130, 2],
-                ['',   0.5,  0.3,      50,  1.5],
-                ['',   0.1,  0.2,      230, 2.5],
-                ['',   0.3,  0.6,      210, 0.5],
-                ['',   0.5,  0.5,      100, 1],
-                ['',   0.4,  0.1,      80,  2]
+                ['com.sourceforge.pmd',   1.0,  0.0,      120, 1],
+                ['com.sourceforge.pmd.name',   0.9,  0.7,      130, 2],
+                ['com.sourceforge.pmd.name.com.sourceforge.pmd.name',   0.5,  0.3,      50,  1.5],
+                ['ASDF',   0.1,  0.2,      230, 2.5],
+                ['SGS',   0.3,  0.6,      210, 0.5],
+                ['QTW',   0.5,  0.5,      100, 1],
+                ['OIJ',   0.4,  0.1,      80,  2]
             ]);
 
 
@@ -36,9 +36,8 @@ function drawChart() {
                 title: 'Robert C. Martin Distance',
                 hAxis: {title: 'Abstractness', minValue:0, maxValue:1.0, gridlines:{count:11}},
                 vAxis: {title: 'Instability', minValue:0, maxValue:1.0, gridlines:{count:11}},
-                bubble: {textStyle: {fontSize: 11}},
+                bubble: {textStyle: {fontSize: 30}},
                 colorAxis: {colors: ['yellow', 'red']}
-
             };
 
             drawDistance();
