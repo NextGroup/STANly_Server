@@ -22,6 +22,7 @@ import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.MetricView.Json.CodeSizeValue;
+import stanly.server.MetricView.Json.MartinDistanceChart;
 import stanly.server.MetricView.Json.MartinMetricList;
 import stanly.server.MetricView.Json.PollutionList;
 
@@ -196,6 +197,62 @@ public class MetricSearchDAO {
 		return codesize;
 	}
 	
+	/**
+	 * Martin 벨류를 계산하는 로직 ㅇ
+	 * @param commit
+	 * @param NSLeft
+	 * @return
+	 */
+	public MartinDistanceChart getMartinDistance(ProjectCommit commit, int NSLeft,int NSRight)
+	{
+		MartinDistanceChart martin = new MartinDistanceChart();
+		
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			Criterion CommitEq = Restrictions.eq("commit", commit);
+			Criterion Left = Restrictions.ge("NSLeft", new Integer(NSLeft));
+			Criterion Right = Restrictions.le("NSRight", new Integer(NSRight));
+			
+			Criterion NType = Restrictions.eq("type", NodeType.PACKAGE);
+			Criteria crit = session.createCriteria(ProjectElementNode.class);
+			crit.add(CommitEq);
+			crit.add(Left);
+			crit.add(Right);
+			crit.add(NType);
+			
+			ArrayList<ProjectElementNode> packageNodes = (ArrayList<ProjectElementNode>) crit.list();
+			for(ProjectElementNode node:packageNodes)
+			{
+				PackageMetric metric  =(PackageMetric) node.getEMetric();				
+				martin.addPackage(node.getName(), metric.getAbstractness(), metric.getInstability(), metric.getLOC());
+			}
+			
+			//ProjectElementNode targetNode = (ProjectElementNode) crit.uniqueResult();
+			//NodeType type = targetNode.getType();
+			/*
+			switch(type)
+			{		
+				case PACKAGE:
+					PackageMetric metric  =(PackageMetric) targetNode.getEMetric();
+					if(!mertin.addAbstractness(metric.getAbstractness()))
+						throw new Exception("Abstractness Get Error");					
+					if(!mertin.addDistance(metric.getDistance()))
+						throw new Exception("Distance Get Error");					
+					if(!mertin.addInstability(metric.getInstability()))
+						throw new Exception("Instability Get Error");
+					break;
+				default:
+					throw new Exception("Type Error");
+			}	*/
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return martin;
+		}
+		return martin;
+	}
 	
 	public PollutionList getPollutionList(ProjectCommit commit, int NSLeft,int NSRight)
 	{

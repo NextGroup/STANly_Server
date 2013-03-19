@@ -3,30 +3,14 @@ package stanly.server.MetricView.Json;
 import java.util.ArrayList;
 
 public class MartinDistanceChart {
-	private ArrayList<MetricValue> metricDistance;
+	private ArrayList<MartinDistanceValue> metricDistance;
 	
 	public MartinDistanceChart()
 	{
-		metricDistance = new ArrayList<MetricValue>();
+		metricDistance = new ArrayList<MartinDistanceValue>();
 	}
 	//Package Metric
-	public boolean 	addAbstractness(float e) {
-			return metricDistance.add(new MetricValue("Abstractness",e));
-	}
-	public boolean 	addInstability(float e) {
-		
-			return metricDistance.add(new MetricValue("Instability",e));
-	}
-		
-	public boolean 	addDistance(float e) {
-		
-			return metricDistance.add(new MetricValue("Distance",e));
-	}
-	public boolean 	addLOC(float e) {
-			return metricDistance.add(new MetricValue("LOC",e));
-	}
-	
-	public ArrayList<MetricValue> getMetricDistance() {
-		return metricDistance;
+	public boolean addPackage(String packageName,float abstractness,float instability,int size) {
+		return metricDistance.add(new MartinDistanceValue(packageName,abstractness,instability,size));		
 	}
 }

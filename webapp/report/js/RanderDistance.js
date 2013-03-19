@@ -49,7 +49,26 @@ $(window).resize(function(){
     DrowDistanceChart();
 });
 $(document).ready(function(){
-    DrowDistanceChart();
+    $.ajax( {
+        type :'GET'
+        ,asyn :true
+        ,url :'/Stanly/component/MartinDistance'
+        ,dataType :"json"
+        ,data:{Name:getProjectName(),nodeID:1}
+        //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+        ,beforeSend : function(xhr){
+        }
+        ,success : function(jsonData) {
+            arr = jsonData;
+
+            DrowDistanceChart();
+        }
+        ,error : function(xhr, textStatus) {
+        }
+        ,complete : function(xhr, textStatus) {
+        }
+    });
+
 });
 function DrowDistanceChart(){
     var plot1b = $.jqplot('distance',[arr],option);
