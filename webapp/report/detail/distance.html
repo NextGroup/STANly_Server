@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="/Stanly/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/Stanly/assets/css/custom-bootstrap-responsive.css">
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.js"></script>
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>-->
     <script type="text/javascript" src="/Stanly/assets/jstree/_lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jstree/_lib/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jstree/jquery.jstree.js"></script>
@@ -22,6 +23,10 @@
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/css/theme.blue.css">
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
+
+    <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.bubbleRenderer.min.js"></script>
+    <link rel="stylesheet" href="/Stanly/assets/jqplot/jquery.jqplot.min.css">
 
     <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
 
@@ -64,8 +69,9 @@
             <div id="mainview_title" class="subtitle">Distance</div>
             <div id="mainview">
                 <div id="distance" style="height:100%;"></div>
-                <script type="text/javascript" src="/Stanly/report/js/google_jsapi.js"></script>
-                <script type="text/javascript" src="/Stanly/report/js/wz_jsgraphics.js"></script>
+                <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
+                <!--<script type="text/javascript" src="/Stanly/report/js/google_jsapi.js"></script>
+                <script type="text/javascript" src="/Stanly/report/js/wz_jsgraphics.js"></script>-->
                 <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
             </div>
             <div id="detail_title">Relations</div>

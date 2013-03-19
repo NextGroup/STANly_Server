@@ -168,5 +168,10 @@ public class MetricViewService {
 		
 		return gosn.toJson(MSearchDAO.getCodeSize(commit, NSleft,NSRight));
 	}
-
+	
+	public String getMartinDistance(String projectName, int NSleft)
+	{
+		Gson gson = new Gson();
+		return "";
+	}
 }
