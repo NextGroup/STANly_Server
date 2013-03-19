@@ -20,7 +20,9 @@ public class PollutionChart {
 		PollutionName.add("Distance");						
 		PollutionName.add("Average Absolute Distance");		
 		PollutionName.add("Weighted Methods per Class");		
-		PollutionName.add("Depth of Inheritance Tree");		
+		PollutionName.add("Depth of Inheritance Tree");
+		PollutionName.add("Coupling between Objects");		
+		PollutionName.add("Response for a Class");
 	}
 	
 	public void add(int Count)
