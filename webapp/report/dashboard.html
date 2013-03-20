@@ -38,7 +38,7 @@
 
         #codesize rect.parent,
             .grandparent rect {
-            stroke-width: 1px;
+            stroke-width: 2px;
             stroke: #000;
             fill: none;
         }
@@ -185,6 +185,33 @@
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Metrics</div>
                 <div id="metric" style="min-height: 200px;"></div>
+                <script>
+                    $(function(){
+                        $.ajax( {
+                            type :'GET'
+                            ,asyn :true
+                            ,url :'/Stanly/component/Metrics'
+                            ,dataType :"json"
+                            ,data:{Name:getProjectName(),nodeID:1}
+                            //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                            ,beforeSend : function(xhr){
+                            }
+                            ,success : function(jsonData) {
+                                for(var i=0;i<jsonData.metricList.length;i++)
+                                {
+                                    var title = document.createElement('h3');
+                                    $(title).text(jsonData.metricList[i].Metric+": "+jsonData.metricList[i].value)
+                                            .css("margin-left","10px");
+                                    $('#metric').append(title)
+                                }
+                            }
+                            ,error : function(xhr, textStatus) {
+                            }
+                            ,complete : function(xhr, textStatus) {
+                            }
+                        });
+                    });
+                </script>
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Size of Component</div>
