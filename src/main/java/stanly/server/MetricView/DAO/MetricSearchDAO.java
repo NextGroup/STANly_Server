@@ -360,6 +360,7 @@ public class MetricSearchDAO {
 					val.addValue("LCOM",classMetric.getLCOM());
 					
 					break;
+				case CONSTRUCTOR:
 				case METHOD:
 					MethodMetric methodMetric = (MethodMetric) targetNode.getEMetric();
 					val.addValue("ELOC",methodMetric.getLOC());
