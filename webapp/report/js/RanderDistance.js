@@ -20,16 +20,17 @@ var option = {
     },
     cursor: {
         show: true,            //커서 기능 사용 유무
-        zoom: true,           //줌 기능 사용 유무
-        looseZoom: true,
-        constrainZoomTo: 'y',
+        //zoom: true,           //줌 기능 사용 유무
+        //looseZoom: true,
         showTooltip: true   //화면 하단에 tooltip 기능 사용 유무
     },
     axesDefaults:{
-        numberTicks:13,
-        min: -0.1,
-        max: 1.1,
-        ticks:[-0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1]
+        //numberTicks:13,
+        //min: -0.1,
+        //max: 1.1
+        //autoscale:true,
+        ticks:[-0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1],
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer
     },
     axes:{
         xaxis: {
@@ -107,6 +108,9 @@ function DrowDistanceChart(){
             $('#tooltip').hide();
             //$('#legend1b tr').css('background-color', '#ffffff');
         });
+    $('.button-reset').click(function() {
+        plot1b.resetZoom()
+    });
 
     var canvas = $('#distance>.jqplot-series-shadowCanvas');
     var canvas_height = canvas.height();

@@ -24,6 +24,7 @@
     <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
     <link rel="stylesheet" href="/Stanly/assets/jqplot/jquery.jqplot.min.css">
 
     <style>
@@ -206,11 +207,11 @@
                     });
                     $(window).resize(codeSizeResizeFunc);
                     function codeSizeResizeFunc(){
-                        var option={
-                            minWidth: $('.subtitle').width()-0.5,
-                            maxWidth: $('.subtitle').width()-0.5
-                        }
-                        $("#codesize" ).resizable(option);
+                        //var option={
+                        //    minWidth: $('.subtitle').width()-0.5,
+                        //    maxWidth: $('.subtitle').width()-0.5
+                        //}
+                        //$("#codesize" ).resizable(option);
                         $("#codesize").width($('.subtitle').width()-0.5);
                         csd_width = $('.subtitle').width()-0.5;
                         csd_height = $("#codesize").height()-csd_margin.top;
@@ -236,13 +237,13 @@
                     }
                     function DrawCodeSize(pallet_width,pallet_height) {
 
-                        var option={
-                            minWidth: $('.subtitle').width()-0.5,
-                            maxWidth: $('.subtitle').width()-0.5,
-                            minHeight: 300,
-                            resize: function(event, ui){codeSizeResizeFunc();}
-                        }
-                        $( "#codesize" ).resizable(option);
+                        //var option={
+                        //    minWidth: $('.subtitle').width()-0.5,
+                        //    maxWidth: $('.subtitle').width()-0.5,
+                        //    minHeight: 300,
+                        //    resize: function(event, ui){codeSizeResizeFunc();}
+                        //}
+                        //$( "#codesize" ).resizable(option);
 
                         csd_margin = {top: 20, right: 0, bottom: 0, left: 0};
                         csd_width = pallet_width;
