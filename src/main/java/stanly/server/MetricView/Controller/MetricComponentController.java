@@ -64,6 +64,13 @@ public class MetricComponentController {
 			return metricView.getMartinDistance(name, nsLeft);
 	}
 	
+	@RequestMapping(value = "/Metrics", method=RequestMethod.GET)
+	@ResponseBody
+	public String getMetrics(@RequestParam("Name") String name,@RequestParam("nodeID") int nsLeft,HttpServletResponse response) throws Exception {
+			logger.info("Get Project Tree node ID- "+ nsLeft );
+			return metricView.getMetrics(name, nsLeft);
+	}
+	
 	@RequestMapping(value = "/PollutionView", method=RequestMethod.GET)
 	@ResponseBody
 	public String getPollutionView(@RequestParam("Name") String name,@RequestParam("nodeID") int nsLeft,HttpServletResponse response) throws Exception {

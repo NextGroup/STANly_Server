@@ -192,8 +192,20 @@ public class MetricViewService {
 	
 	public String getMartinDistance(String projectName, int NSleft)
 	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
+		
+		
 		Gson gson = new Gson();
-		return "";
+		return gson.toJson(MSearchDAO.getMartinDistance(commit, NSleft,NSRight));
 	}
-
+	public String getMetrics(String projectName, int NSleft)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		
+		Gson gson = new Gson();
+		return gson.toJson(MSearchDAO.getMetrics(commit, NSleft));
+	}
 }

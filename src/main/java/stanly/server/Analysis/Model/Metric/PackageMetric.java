@@ -171,7 +171,7 @@ public class PackageMetric extends ElementNodeMetric{
 		LOC += lOC;
 	}
 	public float getELOCPerUnit() {
-		return (float)LOC / (float)Units;
+		return Units == 0 ? 0 : (float)LOC / (float)Units;
 	}	
 	public float getAverageCC() {
 		return NumberOfMethods == 0 ? 0 : (float)TotalCC / (float)NumberOfMethods;

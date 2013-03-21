@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="/Stanly/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/Stanly/assets/css/custom-bootstrap-responsive.css">
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.js"></script>
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>-->
     <script type="text/javascript" src="/Stanly/assets/jstree/_lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jstree/_lib/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="/Stanly/assets/jstree/jquery.jstree.js"></script>
@@ -22,8 +23,11 @@
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/css/theme.blue.css">
     <link rel="stylesheet" href="http://mottie.github.com/tablesorter/docs/css/prettify.css">
 
-    <script type="text/javascript" src="/Stanly/assets/highcharts/js/highcharts.js"></script>
-    <script type="text/javascript" src="/Stanly/assets/highcharts/js/modules/exporting.js"></script>
+
+    <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
+
+    <!--<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>-->
+    <!--<link rel="stylesheet" href="/Stanly/assets/css/jquery-ui.css">-->
 
     <script type="text/javascript" src="/Stanly/report/detail/js/ProjectTree.js"></script>
     <link rel="stylesheet" href="/Stanly/report/detail/css/layout.css">
@@ -41,11 +45,11 @@
                 <li class="divider-vertical"></li>
                 <li><a href="javascript:void(0);">Composition</a></li>
                 <li class="divider-vertical"></li>
-                <li class="active"><a href="javascript:void(0);" >Pollution</a></li>
+                <li><a href="javascript:void(0);" >Pollution</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="javascript:void(0);" >Distance</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="javascript:void(0);" >Metrics</a></li>
+                <li class="active"><a href="javascript:void(0);" >Metrics</a></li>
                 <li class="divider-vertical"></li>
                 <li><a href="./about.html">About</a></li>
                 <li class="divider-vertical"></li>
@@ -58,33 +62,30 @@
             <div id="prjtree"></div>
         </div>
         <div id="content">
-            <div id="mainview_title">Pollution</div>
+            <div id="mainview_title" class="subtitle">Metrics</div>
             <div id="mainview">
-                <div id="pollution" style="height:100%;"></div>
-                <!--오염도 그래프 그리-->
-                <script type="text/javascript" src="/Stanly/report/js/RanderPollution.js"></script>
-            </div>
-            <div id="detail_title">Violations</div>
-            <div id="subview">
-                <div id="detail_list"></div>
+                <div id="metric" style="height:100%;"></div>
                 <script type="text/javascript">
                     var table;
-                    //$(function() {
                     function BuildDetailList(id){
+                        $('#metric').empty();
                         $.ajax( {
                             type :'GET'
                             ,asyn :true
-                            ,url :'/Stanly/component/PollutionList'
+                            ,url :'/Stanly/component/Metrics'
                             ,dataType :"json"
-                            ,data:{Name:getProjectName(),SrcID:id}
+                            ,data:{Name:getProjectName(),nodeID:id}
                             //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
                             ,beforeSend : function(xhr){
                             }
                             ,success : function(jsonData) {
-                                table = jsonData.pollution;
-
-                                BuildTable();
-                                AdjustStyle();
+                                for(var i=0;i<jsonData.metricList.length;i++)
+                                {
+                                    var title = document.createElement('h5');
+                                    $(title).text(jsonData.metricList[i].Metric+": "+jsonData.metricList[i].value)
+                                            .css("margin-left","10px");
+                                    $('#metric').append(title);
+                                }
                             }
                             ,error : function(xhr, textStatus) {
                             }
@@ -92,11 +93,11 @@
                             }
                         });
                     }
-
-                    $(function(){
-                        BuildDetailList(1);
-                    });
                 </script>
+            </div>
+            <div id="detail_title">Relations</div>
+            <div id="subview">
+
             </div>
         </div>
     </div>
@@ -119,8 +120,8 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" src="/Stanly/assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/Stanly/js/utilities.js"></script>
-<script type="text/javascript" src="/Stanly/report/detail/js/DetailList.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Stanly/js/utilities.js"></script>
+    <script type="text/javascript" src="/Stanly/report/detail/js/DetailList.js"></script>
 </body>
 </html>

@@ -41,6 +41,4 @@ public class MetricListController {
 			logger.info("Get Project MartinList node ID- "+ SrcID );
 			return metricView.getMartinList (name, SrcID);
 	}
-	
-
 }

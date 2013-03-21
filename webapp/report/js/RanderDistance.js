@@ -5,15 +5,7 @@
  * Time: 오후 4:21
  * To change this template use File | Settings | File Templates.
  */
-var arr = [
-    [0.5, 0.9, 1236, "com.sourceforge.pmd"],
-    [0.1, 0.3, 1067, "com.sourceforge.pmd.stanly"],
-    [0.9, 0.4, 1176, "AM General"],
-    [0.32, 0.56, 610, "Aston Martin Lagonda"],
-    [0.75, 0.12, 539, "Audi"],
-    [0.33, 0.51, 864, "BMW"],
-    [0.56, 0.56, 1026, "Bugatti"]];
-
+var arr;
 var option = {
     title: 'Martin.C Distance',
     seriesDefaults:{
@@ -26,20 +18,30 @@ var option = {
         shadow: true,
         shadowAlpha: 0.05
     },
+    cursor: {
+        show: true,            //커서 기능 사용 유무
+        //zoom: true,           //줌 기능 사용 유무
+        //looseZoom: true,
+        showTooltip: true   //화면 하단에 tooltip 기능 사용 유무
+    },
     axesDefaults:{
-        numberTicks:13,
-        min: -0.1,
-        max: 1.1,
-        ticks:[-0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1]
+        //numberTicks:13,
+        //min: -0.1,
+        //max: 1.1
+        //autoscale:true,
+        ticks:[-0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1],
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer
     },
     axes:{
         xaxis: {
-            label:"Abstractness",
-            formatString: '%0.2f'
+            label:"Abstractness"
         },
         yaxis: {
             label:"Instability",
-            formatString: '%0.2f'
+            labelOptions:{
+                angle:-90
+            },
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         }
     }
 };
@@ -49,16 +51,37 @@ $(window).resize(function(){
     DrowDistanceChart();
 });
 $(document).ready(function(){
-    DrowDistanceChart();
+    $.ajax( {
+        type :'GET'
+        ,asyn :true
+        ,url :'/Stanly/component/MartinDistance'
+        ,dataType :"json"
+        ,data:{Name:getProjectName(),nodeID:1}
+        //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+        ,beforeSend : function(xhr){
+        }
+        ,success : function(jsonData) {
+            arr = jsonData;
+            arr= new Array();
+            for(var i=0;i<jsonData.metricDistance.length;i++)
+                arr.push([jsonData.metricDistance[i].abstractness,jsonData.metricDistance[i].instability,jsonData.metricDistance[i].size,jsonData.metricDistance[i].name]);
+            DrowDistanceChart();
+        }
+        ,error : function(xhr, textStatus) {
+        }
+        ,complete : function(xhr, textStatus) {
+        }
+    });
+
 });
 function DrowDistanceChart(){
     var plot1b = $.jqplot('distance',[arr],option);
 
     // Legend is a simple table in the html.
     // Dynamically populate it with the labels from each data value.
-    $.each(arr, function(index, val) {
-        $('#legend1b').append('<tr><td>'+val[3]+'</td><td>'+val[2]+'</td></tr>');
-    });
+    //$.each(arr, function(index, val) {
+    //    $('#legend1b').append('<tr><td>'+val[3]+'</td><td>'+val[2]+'</td></tr>');
+    //});
 
     // Now bind function to the highlight event to show the tooltip
     // and highlight the row in the legend.
@@ -74,8 +97,8 @@ function DrowDistanceChart(){
                 color + ';">' + data[3] + '</span><br />' + 'Abstractness: ' + data[0] +
                 '<br />' + 'Instability: ' + data[1] + '<br />' + 'Line of Code: ' + data[2]);
             $('#tooltip').show();
-            $('#legend1b tr').css('background-color', '#ffffff');
-            $('#legend1b tr').eq(pointIndex+1).css('background-color', color);
+            //$('#legend1b tr').css('background-color', '#ffffff');
+            //$('#legend1b tr').eq(pointIndex+1).css('background-color', color);
         });
 
     // Bind a function to the unhighlight event to clean up after highlighting.
@@ -83,8 +106,11 @@ function DrowDistanceChart(){
         function (ev, seriesIndex, pointIndex, data) {
             $('#tooltip').empty();
             $('#tooltip').hide();
-            $('#legend1b tr').css('background-color', '#ffffff');
+            //$('#legend1b tr').css('background-color', '#ffffff');
         });
+    $('.button-reset').click(function() {
+        plot1b.resetZoom()
+    });
 
     var canvas = $('#distance>.jqplot-series-shadowCanvas');
     var canvas_height = canvas.height();

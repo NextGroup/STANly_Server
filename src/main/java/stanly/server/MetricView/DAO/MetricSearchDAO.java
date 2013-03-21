@@ -21,11 +21,14 @@ import stanly.server.Analysis.Model.Metric.LibraryMetric;
 import stanly.server.Analysis.Model.Metric.MethodMetric;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
 import stanly.server.Analysis.Model.Metric.PackageSetMetric;
+import stanly.server.Analysis.Model.Metric.ProjectMetric;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.MetricView.Json.CodeSizeValue;
+import stanly.server.MetricView.Json.MartinDistanceChart;
 import stanly.server.MetricView.Json.MartinMetricList;
+import stanly.server.MetricView.Json.Metrics;
 import stanly.server.MetricView.Json.PollutionChart;
 import stanly.server.MetricView.Json.PollutionList;
 
@@ -200,6 +203,190 @@ public class MetricSearchDAO {
 		return codesize;
 	}
 	
+	/**
+	 * Martin 벨류를 계산하는 로직 ㅇ
+	 * @param commit
+	 * @param NSLeft
+	 * @return
+	 */
+	public MartinDistanceChart getMartinDistance(ProjectCommit commit, int NSLeft,int NSRight)
+	{
+		MartinDistanceChart martin = new MartinDistanceChart();
+		
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			Criterion CommitEq = Restrictions.eq("commit", commit);
+			Criterion Left = Restrictions.ge("NSLeft", new Integer(NSLeft));
+			Criterion Right = Restrictions.le("NSRight", new Integer(NSRight));
+			
+			Criterion NType = Restrictions.eq("type", NodeType.PACKAGE);
+			Criteria crit = session.createCriteria(ProjectElementNode.class);
+			crit.add(CommitEq);
+			crit.add(Left);
+			crit.add(Right);
+			crit.add(NType);
+			
+			ArrayList<ProjectElementNode> packageNodes = (ArrayList<ProjectElementNode>) crit.list();
+			for(ProjectElementNode node:packageNodes)
+			{
+				PackageMetric metric  =(PackageMetric) node.getEMetric();				
+				martin.addPackage(node.getName(), metric.getAbstractness(), metric.getInstability(), metric.getLOC());
+			}
+			
+			//ProjectElementNode targetNode = (ProjectElementNode) crit.uniqueResult();
+			//NodeType type = targetNode.getType();
+			/*
+			switch(type)
+			{		
+				case PACKAGE:
+					PackageMetric metric  =(PackageMetric) targetNode.getEMetric();
+					if(!mertin.addAbstractness(metric.getAbstractness()))
+						throw new Exception("Abstractness Get Error");					
+					if(!mertin.addDistance(metric.getDistance()))
+						throw new Exception("Distance Get Error");					
+					if(!mertin.addInstability(metric.getInstability()))
+						throw new Exception("Instability Get Error");
+					break;
+				default:
+					throw new Exception("Type Error");
+			}	*/
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return martin;
+		}
+		return martin;
+	}
+	
+	public Metrics getMetrics(ProjectCommit commit, int NSLeft)
+	{
+		Metrics val = new Metrics();
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			Criterion CommitEq = Restrictions.eq("commit", commit);
+			Criterion projectEq = Restrictions.eq("NSLeft", NSLeft); //NSLeft == 1 이면 프로젝트 노
+			Criteria crit = session.createCriteria(ProjectElementNode.class);
+			crit.add(CommitEq);
+			crit.add(projectEq);
+			ProjectElementNode targetNode = (ProjectElementNode) crit.uniqueResult();
+			NodeType type = targetNode.getType();
+			
+			switch(type)
+			{
+		
+				case PROJECT:
+					ProjectMetric projectMetric = (ProjectMetric) targetNode.getEMetric();
+					val.addValue("Libraries", projectMetric.getLibraries());
+					val.addValue("Fat - Library", projectMetric.getFat());
+					val.addValue("Tangled - Library", projectMetric.getTangled());
+					val.addValue("ACD - Libraries", projectMetric.getACDLibrary());
+					break;
+				case LIBRARY:
+					LibraryMetric libraryMetric = (LibraryMetric) targetNode.getEMetric();
+					val.addValue("Packages", libraryMetric.getPackages());
+					val.addValue("Classes / Package", libraryMetric.getUnitPerPackage());
+					val.addValue("Fat - Packages", libraryMetric.getFatPackages());
+					val.addValue("Fat - Unit", libraryMetric.getFatUnits());
+					val.addValue("Tangled", libraryMetric.getTangled());
+					val.addValue("ACD - Packages", libraryMetric.getACDPackage());
+					val.addValue("ACD - Unit", libraryMetric.getACDUnit());
+					val.addValue("Distance", libraryMetric.getDistance());
+					val.addValue("|Distance|", libraryMetric.getDistanceAbsolute());
+					val.addValue("Average WMC",libraryMetric.getWMC());
+					val.addValue("Average DIT",libraryMetric.getDIT());
+					val.addValue("Average NOC",libraryMetric.getNOC());
+					val.addValue("Average CBO",libraryMetric.getAverageCBO());
+					val.addValue("Average RFC",libraryMetric.getAverageRFC());
+					val.addValue("Average LCOM",libraryMetric.getAverageLCOM());
+					break;
+				case PACKAGESET:
+					PackageSetMetric packageSetMetric = (PackageSetMetric) targetNode.getEMetric();
+					val.addValue("Units", packageSetMetric.getTotalUnit());
+					val.addValue("Classes / Class", packageSetMetric.getClassesPerClass());
+					val.addValue("Methods / Class", packageSetMetric.getMethodsPerClass());
+					val.addValue("Fields / Class", packageSetMetric.getFieldsPerClass());
+					val.addValue("ELOC", packageSetMetric.getTotalELOC());
+					val.addValue("ELOC / Unit", packageSetMetric.getAverageELOC());
+					val.addValue("Average CC", packageSetMetric.getAverageCC());
+					val.addValue("Fat", packageSetMetric.getFat());
+					val.addValue("Tangled", packageSetMetric.getTangled());
+					break;
+				case PACKAGE:
+					PackageMetric packageMetric = (PackageMetric) targetNode.getEMetric();
+					val.addValue("Units", packageMetric.getUnits());
+					val.addValue("Classes / Class", packageMetric.getClassesPerClass());
+					val.addValue("Methods / Class", packageMetric.getMethodsPerClass());
+					val.addValue("Fields / Class", packageMetric.getFieldsPerClass());
+					val.addValue("ELOC", packageMetric.getLOC());
+					val.addValue("ELOC / Unit", packageMetric.getELOCPerUnit());
+					val.addValue("Average CC", packageMetric.getAverageCC());
+					val.addValue("Fat", packageMetric.getFat());
+					val.addValue("ACD - Unit", packageMetric.getACDPerUnit());
+					
+					val.addValue("Afferent Coupling", packageMetric.getAfferentCoupling());
+					val.addValue("Efferent Coupling", packageMetric.getEfferentCoupling());
+					val.addValue("Abstractness", packageMetric.getAbstractness());
+					val.addValue("Instability", packageMetric.getInstability());
+					val.addValue("Distance", packageMetric.getDistance());
+					
+					val.addValue("Average WMC",packageMetric.getWMC());
+					val.addValue("Average DIT",packageMetric.getDIT());
+					val.addValue("Average NOC",packageMetric.getNOC());
+					val.addValue("Average CBO",packageMetric.getAverageCBO());
+					val.addValue("Average RFC",packageMetric.getAverageRFC());
+					val.addValue("Average LCOM",packageMetric.getAverageLCOM());
+					
+					break;
+				case CLASS:
+					ClassMetric classMetric = (ClassMetric) targetNode.getEMetric();
+					val.addValue("Classes", classMetric.getClasses());
+					val.addValue("Methods", classMetric.getMethods());
+					val.addValue("Fields", classMetric.getFields());
+					val.addValue("ELOC", classMetric.getLOC());
+					val.addValue("Fat", classMetric.getFat());
+					
+					val.addValue("Afferent Coupling", classMetric.getAfferentCoupling());
+					val.addValue("Efferent Coupling", classMetric.getEfferentCoupling());
+					
+					val.addValue("WMC",classMetric.getWMC());
+					val.addValue("DIT",classMetric.getDIT());
+					val.addValue("NOC",classMetric.getNOC());
+					val.addValue("CBO",classMetric.getCBO());
+					val.addValue("RFC",classMetric.getRFC());
+					val.addValue("LCOM",classMetric.getLCOM());
+					
+					break;
+				case CONSTRUCTOR:
+				case METHOD:
+					MethodMetric methodMetric = (MethodMetric) targetNode.getEMetric();
+					val.addValue("ELOC",methodMetric.getLOC());
+					val.addValue("CC", methodMetric.getCC());
+					break;
+					//val.addValue(name, e)
+					/*if(!mertin.addAbstractness(metric.getAbstractness()))
+						throw new Exception("Abstractness Get Error");
+					if(!mertin.addAfferentCoupling(metric.getAfferentCoupling()))
+						throw new Exception("AffeterntCoupling Get Error");
+					if(!mertin.addDistance(metric.getDistance()))
+						throw new Exception("Distance Get Error");
+					if(!mertin.addEfferentCoupling(metric.getEfferentCoupling()))
+						throw new Exception("EfferentCoupling Get Error");
+					if(!mertin.addInstability(metric.getInstability()))
+						throw new Exception("Instability Get Error");*/
+				default:
+					throw new Exception("Type Error");
+			}	
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return val;
+		}
+		return val;
+	}
 	
 	public PollutionList getPollutionList(ProjectCommit commit, int NSLeft,int NSRight)
 	{
@@ -265,8 +452,8 @@ public class MetricSearchDAO {
 		
 		if(lib.getDistanceAbsolute() > 0.4)
 			pollution.addPollution("Average Absolute Distance", lib.getElement().getName(), lib.getDistanceAbsolute(),(lib.getDistanceAbsolute()>0.5) ? 1:0);
-		if(lib.getDIT()>1)
-			pollution.addPollution("Depth of Inheritance Tree", lib.getElement().getName(), lib.getDIT(),(lib.getDIT()>0) ? 1:0);
+		if(lib.getDIT()<1)
+			pollution.addPollution("Depth of Inheritance Tree", lib.getElement().getName(), lib.getDIT(),0);
 		if(lib.getACDPackage()>0.5)
 			pollution.addPollution("Average Component Dependency between Packages", lib.getElement().getName(), lib.getACDPackage(),(lib.getACDPackage()>1) ? 1:0);
 		return pollution;
