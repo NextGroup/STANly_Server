@@ -84,6 +84,7 @@ public class ElementSearchDAO {
 		return nodeList;
 		
 	}
+	
 	public ProjectElementNode getElementNode(ProjectCommit commit, int NSLeft)
 	{
 		ProjectElementNode  SeletedNode =null;

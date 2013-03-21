@@ -13,10 +13,19 @@
     <link rel="stylesheet" href="/Stanly/assets/css/custom-bootstrap-responsive.css">
     <!--<link rel="stylesheet" href="../assets/css/docs.css">-->
 
-    <script type="text/javascript" src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.js"></script>
+    <!--<script type="text/javascript" src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>-->
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
+
+    <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.bubbleRenderer.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.cursor.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+    <script type="text/javascript" src="/Stanly/assets/jqplot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+    <link rel="stylesheet" href="/Stanly/assets/jqplot/jquery.jqplot.min.css">
 
     <style>
         /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
@@ -29,7 +38,7 @@
 
         #codesize rect.parent,
             .grandparent rect {
-            stroke-width: 1px;
+            stroke-width: 2px;
             stroke: #000;
             fill: none;
         }
@@ -72,6 +81,9 @@
 
         $('.span5').css("width", halfgrid5width + "px");
         $('.row').css("width", $('.navbar').width + "px");
+        $('#codesize').css("height", halfgrid5width + "px");
+        $('#composition').css("height", halfgrid5width + "px");
+        $('#distance').css("height", halfgrid5width + "px");
     }
 </script>
 <!-- 하이차트 -->
@@ -116,7 +128,7 @@
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Pollution</div>
                 <div id="pollution" style="height: 300px; border:1px;"></div>
                 <!--오염도 그래프 그리-->
-                <script type="text/javascript" src="../Frontend/report/js/RanderPollution.js"></script>
+                <script type="text/javascript" src="/Stanly/report/js/RanderPollution.js"></script>
             </div>
 
 
@@ -162,9 +174,8 @@
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 300px;"></div>
-                <script type="text/javascript" src="./js/google_jsapi.js"></script>
-                <script type="text/javascript" src="./js/wz_jsgraphics.js"></script>
-                <script type="text/javascript" src="./js/RanderDistance.js"></script>
+                <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
+                <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
             </div>
             <div id="dummy" style="height: 300px;"></div>
         </div>
@@ -174,6 +185,33 @@
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Metrics</div>
                 <div id="metric" style="min-height: 200px;"></div>
+                <script>
+                    $(function(){
+                        $.ajax( {
+                            type :'GET'
+                            ,asyn :true
+                            ,url :'/Stanly/component/Metrics'
+                            ,dataType :"json"
+                            ,data:{Name:getProjectName(),nodeID:1}
+                            //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                            ,beforeSend : function(xhr){
+                            }
+                            ,success : function(jsonData) {
+                                for(var i=0;i<jsonData.metricList.length;i++)
+                                {
+                                    var title = document.createElement('h3');
+                                    $(title).text(jsonData.metricList[i].Metric+": "+jsonData.metricList[i].value)
+                                            .css("margin-left","10px");
+                                    $('#metric').append(title)
+                                }
+                            }
+                            ,error : function(xhr, textStatus) {
+                            }
+                            ,complete : function(xhr, textStatus) {
+                            }
+                        });
+                    });
+                </script>
             </div>
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Size of Component</div>
@@ -196,11 +234,11 @@
                     });
                     $(window).resize(codeSizeResizeFunc);
                     function codeSizeResizeFunc(){
-                        var option={
-                            minWidth: $('.subtitle').width()-0.5,
-                            maxWidth: $('.subtitle').width()-0.5
-                        }
-                        $( "#codesize" ).resizable(option);
+                        //var option={
+                        //    minWidth: $('.subtitle').width()-0.5,
+                        //    maxWidth: $('.subtitle').width()-0.5
+                        //}
+                        //$("#codesize" ).resizable(option);
                         $("#codesize").width($('.subtitle').width()-0.5);
                         csd_width = $('.subtitle').width()-0.5;
                         csd_height = $("#codesize").height()-csd_margin.top;
@@ -226,13 +264,13 @@
                     }
                     function DrawCodeSize(pallet_width,pallet_height) {
 
-                        var option={
-                            minWidth: $('.subtitle').width()-0.5,
-                            maxWidth: $('.subtitle').width()-0.5,
-                            minHeight: 300,
-                            resize: function(event, ui){codeSizeResizeFunc();}
-                        }
-                        $( "#codesize" ).resizable(option);
+                        //var option={
+                        //    minWidth: $('.subtitle').width()-0.5,
+                        //    maxWidth: $('.subtitle').width()-0.5,
+                        //    minHeight: 300,
+                        //    resize: function(event, ui){codeSizeResizeFunc();}
+                        //}
+                        //$( "#codesize" ).resizable(option);
 
                         csd_margin = {top: 20, right: 0, bottom: 0, left: 0};
                         csd_width = pallet_width;
@@ -275,7 +313,8 @@
                                 .attr("y", 6 - csd_margin.top)
                                 .attr("dy", ".75em");
 
-                        d3.json("./codesizesample.json", function(root) {
+                        d3.json("/Stanly/component/CodeSize?Name="+getProjectName()+"&nodeID=1", function(root) {
+                            root = root.children[0];
                             csd_root = csd_last_d = root;
                             initialize(root);
                             accumulate(root);

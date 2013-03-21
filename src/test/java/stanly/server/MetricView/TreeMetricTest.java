@@ -42,7 +42,19 @@ public class TreeMetricTest {
 		
 	}
 	@Test
-	public void MetricMertricTest(){
+	public void CodeSizeTest(){
 		//TestCase 만들
+		String Data = service.getCodeSize("PMD", 2);
+		
+		assertNotNull(Data);
+		logger.info(Data);
+	}
+	@Test
+	public void PollutionListTest()
+	{
+		String Data = service.getPollutionChart("PMD", 2);
+		
+		assertNotNull(Data);
+		logger.info(Data);
 	}
 }

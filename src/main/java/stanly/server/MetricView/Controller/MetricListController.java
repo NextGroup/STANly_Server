@@ -28,12 +28,17 @@ public class MetricListController {
 			logger.info("Get Project Relation node ID- "+ SrcID );
 			return metricView.getRelationWithSrc(name, SrcID);
 	}
+	@RequestMapping(value = "/PollutionList", method=RequestMethod.GET)
+	@ResponseBody
+	public String getPollutionList(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
+			logger.info("Get Project PollutionList node ID- "+ SrcID );
+			return metricView.getPollutionList(name, SrcID);
+	}
 	
 	@RequestMapping(value = "/MartinList", method=RequestMethod.GET)
 	@ResponseBody
-	public String get(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
+	public String getMartinList(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
 			logger.info("Get Project MartinList node ID- "+ SrcID );
 			return metricView.getMartinList (name, SrcID);
 	}
-	
 }

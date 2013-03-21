@@ -20,6 +20,7 @@ import stanly.server.MetricView.Json.RelationList;
 import stanly.server.MetricView.Json.TreeElement;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author Karuana
@@ -145,7 +146,16 @@ public class MetricViewService {
 
 		return gosn.toJson(Elements);
 	}
-	
+    
+	public String getPollutionList(String projectName, int nodeID)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, nodeID).getNSRight();
+		Gson gosn = new Gson();
+
+		return gosn.toJson(MSearchDAO.getPollutionList(commit, nodeID,NSRight));
+	}
 	
 	public String getMartinList(String projectName, int nodeID)
 	{
@@ -157,5 +167,45 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getMertinValue(commit, nodeID));
 	}
 	
+	public String getPollutionChart(String projectName, int NSleft)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
+		
+		Gson gosn = new Gson();
+		
+		return gosn.toJson(MSearchDAO.getPollutionChart(commit, NSleft,NSRight));
+	}
+	
+	public String getCodeSize(String projectName, int NSleft)
+	{	
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
+		
+		Gson gosn = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		
+		return gosn.toJson(MSearchDAO.getCodeSize(commit, NSleft,NSRight));
+	}
 
+	
+	public String getMartinDistance(String projectName, int NSleft)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		int NSRight = EsearchDAO.getElementNode(commit, NSleft).getNSRight();
+		
+		
+		Gson gson = new Gson();
+		return gson.toJson(MSearchDAO.getMartinDistance(commit, NSleft,NSRight));
+	}
+	public String getMetrics(String projectName, int NSleft)
+	{
+		ProjectInfo info = projectDAO.getProjectInfo(projectName);
+		ProjectCommit commit = projectDAO.getLastCommit(info);
+		
+		Gson gson = new Gson();
+		return gson.toJson(MSearchDAO.getMetrics(commit, NSleft));
+	}
 }

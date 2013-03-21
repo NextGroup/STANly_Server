@@ -1,0 +1,35 @@
+table > thead > tr > th,
+table > tbody > tr > td{
+    line-height: 13px;
+}
+
+
+
+
+#sidebar {
+    width: 400px; margin: 10px; float: left;
+}
+
+#prjtree{
+    height: 100%; overflow: auto; border: 1px solid;
+}
+
+#content{
+    margin: 10px; float: left;
+}
+
+#mainview{
+    height: 70%; margin-bottom: 10px
+}
+
+#subview{
+    height: 27%; overflow-y: scroll;
+}
+
+#subview {
+    border: 1px solid;
+}
+
+#content > #mainview{
+    border: 1px solid;
+}
