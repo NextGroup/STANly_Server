@@ -203,6 +203,7 @@ public class AnalysisService {
 	{
 		net.sourceforge.pmd.lang.java.rule.stanly.metrics.PackageMetric clientMetric = node.metric;
 		
+		metric.setUnits(clientMetric.getUnits());
 		metric.setAbstractness(clientMetric.getAbstractness());
 		metric.setACDPerUnit(clientMetric.getACDPerUnit());
 		metric.setAfferentCoupling(clientMetric.getAfferentCoupling());
