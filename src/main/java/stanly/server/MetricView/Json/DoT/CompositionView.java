@@ -26,13 +26,13 @@ public class CompositionView {
 	
 	@Override
 	public String toString() {
-		String Data = "digraph { ";
+		String Data = "{\"dot\": \"digraph { ";
 		for(int i=0;i<node.size();i++)
 			Data+=node.get(i).toString();
 		for(int i=0;i<relation.size();i++)
 			Data+=relation.get(i).toString();
 		
-		Data+="}";
+		Data+="}\" }";
 		return Data;
 	}
 }

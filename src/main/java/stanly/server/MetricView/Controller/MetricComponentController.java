@@ -78,6 +78,12 @@ public class MetricComponentController {
 		return metricView.getPollutionChart(name, nsLeft);
 	}
 	
+	@RequestMapping(value = "/CompositionView", method=RequestMethod.GET)
+	@ResponseBody
+	public String getCompositionView(@RequestParam("Name") String name,@RequestParam("nodeID") int nsLeft,HttpServletResponse response) throws Exception {
+		logger.info("Get CompositionView node ID- "+ nsLeft );
+		return metricView.getCompositionView(name, nsLeft);
+	}
 	
 	
 }

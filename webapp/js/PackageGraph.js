@@ -168,6 +168,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
     .append("path")
       .attr("marker-end", "url(#arrowhead)");
 
+
   this.addLabels(edgeEnter);
   
 
@@ -366,7 +367,10 @@ Graph.prototype.update = function() {
        	 .y(function(e) { return e.y; })
        	 .interpolate("linear")
        	 (points);
-        });
+        }).attr("stroke",function(d) {  
+      	console.log("Path");
+      	console.log(d.tangled);
+      return (d.tangled) ? "#f00":"#000" });
 
     this.svgGroup
  	   .selectAll("g."+this.id+"-label rect")

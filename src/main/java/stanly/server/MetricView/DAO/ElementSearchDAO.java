@@ -100,7 +100,7 @@ public class ElementSearchDAO {
 			 crit.add(CommitEq);
 			
 			 SeletedNode = (ProjectElementNode) crit.uniqueResult();
-			 logger.info(SeletedNode.getName());
+			
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
