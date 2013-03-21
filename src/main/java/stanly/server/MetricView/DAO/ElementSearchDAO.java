@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
+import stanly.server.MetricView.Json.DoT.CompositionView;
 
 @Repository
 @Transactional
@@ -109,5 +110,6 @@ public class ElementSearchDAO {
 		return SeletedNode;
 	}
 	
+
 	
 }

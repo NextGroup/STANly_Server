@@ -23,7 +23,7 @@ public class PollutionList {
 
 	public PollutionChart getCountPollution()
 	{
-		int[] arr = new int[12];
+		int[] arr = new int[13];
 		  Arrays.fill(arr, 0);    
 		for(int i=0;i<pollution.size();i++)
 		{
@@ -75,6 +75,14 @@ public class PollutionList {
 			else if(obj.getMetric().contentEquals("Depth of Inheritance Tree"))
 			{
 				arr[11]++;
+			}
+			else if(obj.getMetric().contentEquals("Coupling between Objects"))
+			{
+				arr[12]++;
+			}
+			else if(obj.getMetric().contentEquals("Response for a Class"))
+			{
+				arr[13]++;
 			}
 			
 		}
