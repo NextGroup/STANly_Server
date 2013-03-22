@@ -9,26 +9,13 @@ public class PollutionChart {
 		super();
 		PollutionName = new ArrayList<String>();
 		PollutionScore = new ArrayList<Integer>();
-		PollutionName.add("Number of Top Level Classes");	
-		PollutionName.add("Number of Methods");			
-		PollutionName.add("Number of Fields");			
-		PollutionName.add("Estimated Lines of Code");		
-		PollutionName.add("Cyclomatic Complexity'");			
-		PollutionName.add("Fat");							
-		PollutionName.add("Tangled");						
-		PollutionName.add("Component Dependency");			
-		PollutionName.add("Distance");						
-		PollutionName.add("Average Absolute Distance");		
-		PollutionName.add("Weighted Methods per Class");		
-		PollutionName.add("Depth of Inheritance Tree");
-		PollutionName.add("Coupling between Objects");		
-		PollutionName.add("Response for a Class");
+
 	}
 	
-	public void add(int Count)
+	public void add(String name, int Count)
 	{
-		
-		 PollutionScore.add(Count);
+		PollutionName.add(name);
+		PollutionScore.add(Count);
 		
 	}
 	public ArrayList<String> getPollutionName() {

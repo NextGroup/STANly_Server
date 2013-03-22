@@ -2,6 +2,10 @@ package stanly.server.MetricView.Json;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.TreeMap;
+
+import stanly.server.MetricView.Json.SortComparator.PollutionChartComp;
 
 public class PollutionList {
 
@@ -24,7 +28,10 @@ public class PollutionList {
 	public PollutionChart getCountPollution()
 	{
 		int[] arr = new int[14];
-		  Arrays.fill(arr, 0);    
+		HashMap<String, Integer> PollutionName = new HashMap<String,Integer>();
+
+		
+		 Arrays.fill(arr, 0);    
 		for(int i=0;i<pollution.size();i++)
 		{
 			PollutionValue obj = pollution.get(i);
@@ -86,9 +93,32 @@ public class PollutionList {
 			}
 			
 		}
+		PollutionName.put("Number of Top Level Classes",arr[0]);	
+		PollutionName.put("Number of Methods",arr[1]);			
+		PollutionName.put("Number of Fields",arr[2]);			
+		PollutionName.put("Estimated Lines of Code",arr[3]);		
+		PollutionName.put("Cyclomatic Complexity",arr[4]);			
+		PollutionName.put("Fat",arr[5]);							
+		PollutionName.put("Tangled",arr[6]);						
+		PollutionName.put("Component Dependency",arr[7]);			
+		PollutionName.put("Distance",arr[8]);						
+		PollutionName.put("Average Absolute Distance",arr[9]);		
+		PollutionName.put("Weighted Methods per Class",arr[10]);		
+		PollutionName.put("Depth of Inheritance Tree",arr[11]);
+		PollutionName.put("Coupling between Objects",arr[12]);		
+		PollutionName.put("Response for a Class",arr[13]);
+		
+		PollutionChartComp sortPollution = new PollutionChartComp(PollutionName);
+		 TreeMap< String , Integer > sorted_map = new TreeMap< String , Integer >( sortPollution );
+
+		 sorted_map.putAll(PollutionName);
+
+		
 		PollutionChart chart = new PollutionChart();
-		for(int i=0;i<arr.length;i++)
-			chart.add(arr[i]);
+	      for ( String key : sorted_map.keySet( ) )
+	      {
+	    	  	chart.add(key, sorted_map.get(key));
+	      }
 		
 		return chart;
 	}
