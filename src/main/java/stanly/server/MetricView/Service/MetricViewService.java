@@ -30,7 +30,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * @author Karuana
- *
+ * 매트릭과 관련된 처리를 하는 서비스 객체이다. 
  */
 @Service("metricViewService")
 public class MetricViewService {
@@ -78,6 +78,12 @@ public class MetricViewService {
 		return gson.toJson(rList);
 	}
 	
+	/**
+	 *	타켓을 핵심으로 릴레이션을 가져온다. 
+	 * @param projectName
+	 * @param TarName
+	 * @return
+	 */
 	public String gatRelationWithTar(String projectName,String TarName)
 	{
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
@@ -94,6 +100,13 @@ public class MetricViewService {
 		return gson.toJson(rList);
 	}
 	
+	/**
+	 * SRC와 TAR을 중심으로 릴레이션 정보를 가져온다.
+	 * @param projectName
+	 * @param SrcName
+	 * @param TarName
+	 * @return
+	 */
 	public String getRelation(String projectName, String SrcName, String TarName)
 	{
 		
@@ -112,6 +125,7 @@ public class MetricViewService {
 	}
 	
 	/**
+	 * 트리 그래프를 리턴한다. 
 	 *  NSLeft  == nodeID 로 사용할 예
 	 *  ID의 자식을 반환한다. 
 	 * @param projectName
@@ -153,6 +167,12 @@ public class MetricViewService {
 		return gosn.toJson(Elements);
 	}
     
+	/**
+	 * 오염도 리스트를 리턴한다.
+	 * @param projectName
+	 * @param nodeID
+	 * @return
+	 */
 	public String getPollutionList(String projectName, int nodeID)
 	{
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
@@ -163,6 +183,12 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getPollutionList(commit, nodeID,NSRight));
 	}
 	
+	/**
+	 * 마틴 지표 리스트를 반환한다. 
+	 * @param projectName
+	 * @param nodeID
+	 * @return
+	 */
 	public String getMartinList(String projectName, int nodeID)
 	{
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
@@ -173,6 +199,12 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getMertinValue(commit, nodeID));
 	}
 	
+	/**
+	 * 오염도 차트를 리턴한다. 
+	 * @param projectName
+	 * @param NSleft
+	 * @return
+	 */
 	public String getPollutionChart(String projectName, int NSleft)
 	{
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
@@ -184,6 +216,12 @@ public class MetricViewService {
 		return gosn.toJson(MSearchDAO.getPollutionChart(commit, NSleft,NSRight));
 	}
 	
+	/**
+	 * Code Size View 를 리턴한다. 
+	 * @param projectName
+	 * @param NSleft
+	 * @return
+	 */
 	public String getCodeSize(String projectName, int NSleft)
 	{	
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
@@ -196,6 +234,12 @@ public class MetricViewService {
 	}
 
 	
+	/**
+	 * 마틴 디스턴스를 리턴한다.
+	 * @param projectName
+	 * @param NSleft
+	 * @return
+	 */
 	public String getMartinDistance(String projectName, int NSleft)
 	{
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
@@ -206,6 +250,12 @@ public class MetricViewService {
 		Gson gson = new Gson();
 		return gson.toJson(MSearchDAO.getMartinDistance(commit, NSleft,NSRight));
 	}
+	/**
+	 * 메트릭 정보를 리턴한다. 
+	 * @param projectName
+	 * @param NSleft
+	 * @return
+	 */
 	public String getMetrics(String projectName, int NSleft)
 	{
 		ProjectInfo info = projectDAO.getProjectInfo(projectName);
@@ -246,6 +296,7 @@ public class MetricViewService {
 				case LIBRARY:
 				case PACKAGESET:
 				case PACKAGE:
+					//자기 자신을 제외한 다른 요소는 예외 처리용으로 등록 
 					if(node.getName().contentEquals(parent.getName()))
 					{
 						ignore = new ArrayList<ProjectElementNode>();

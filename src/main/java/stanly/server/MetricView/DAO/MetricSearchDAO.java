@@ -32,6 +32,10 @@ import stanly.server.MetricView.Json.Metrics;
 import stanly.server.MetricView.Json.PollutionChart;
 import stanly.server.MetricView.Json.PollutionList;
 
+/**
+ * @author Karuana
+ *	메트릭 검색을 위한 DAO 객체이다. 
+ */
 @Repository
 @Transactional
 public class MetricSearchDAO {
@@ -40,6 +44,11 @@ public class MetricSearchDAO {
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 	
+	/**
+	 * 노드의 이름에서 가장 마지막 데이터를 가져오기 위한 함수 
+	 * @param path
+	 * @return
+	 */
 	private String sprite(String path)
 	{
 		String[]  arr =  path.split("\\.");
@@ -47,6 +56,12 @@ public class MetricSearchDAO {
 		return (arr.length>1) ?  arr[arr.length-1]:path;
 	}
 	
+	/**
+	 * 해당하는 Type의 노드를 전부 가져온다.
+	 * @param commit
+	 * @param type
+	 * @return
+	 */
 	private ProjectElementNode getElementNodeByType(ProjectCommit commit, NodeType type)
 	{		
 		ProjectElementNode  rootNode =null;
@@ -72,7 +87,7 @@ public class MetricSearchDAO {
 	
 	
 	/**
-	 * Martin 벨류를 계산하는 로직 ㅇ
+	 * Martin 벨류를 계산하여 가져온다. 
 	 * @param commit
 	 * @param NSLeft
 	 * @return
@@ -123,7 +138,8 @@ public class MetricSearchDAO {
 	
 	
 	/**
-	 * 선택한 라이브러리의 NSleft를 넘겨준다.
+	 * codeSize View 를 위한 객체를 리턴한다. 
+	 * 선택한 라이브러리의 NSleft를 넘겨주어야 한다 .
 	 * @param commit
 	 * @param NSleft
 	 * @param NSRight
@@ -204,7 +220,7 @@ public class MetricSearchDAO {
 	}
 	
 	/**
-	 * Martin 벨류를 계산하는 로직 ㅇ
+	 * Martin Chart를 그리기 위한 객체를 리턴한다.
 	 * @param commit
 	 * @param NSLeft
 	 * @return
@@ -260,6 +276,12 @@ public class MetricSearchDAO {
 		return martin;
 	}
 	
+	/**
+	 * 입력에 해당하는 노드의 매트릭 정보를 가져온다.
+	 * @param commit
+	 * @param NSLeft
+	 * @return
+	 */
 	public Metrics getMetrics(ProjectCommit commit, int NSLeft)
 	{
 		Metrics val = new Metrics();
@@ -275,6 +297,7 @@ public class MetricSearchDAO {
 			ProjectElementNode targetNode = (ProjectElementNode) crit.uniqueResult();
 			NodeType type = targetNode.getType();
 			
+			//노드의 타입에 해당하게 Metric 정보를 초기화한다. 
 			switch(type)
 			{
 		
@@ -389,6 +412,13 @@ public class MetricSearchDAO {
 		return val;
 	}
 	
+	/**
+	 * 오염도 리스트를 그리기 위한 객체를 리턴한다. 
+	 * @param commit
+	 * @param NSLeft
+	 * @param NSRight
+	 * @return
+	 */
 	public PollutionList getPollutionList(ProjectCommit commit, int NSLeft,int NSRight)
 	{
 		PollutionList pollution = new PollutionList();
@@ -448,6 +478,12 @@ public class MetricSearchDAO {
 		
 	}
 	
+	/**
+	 * 라이브러리 매트릭을 계산한다. 
+	 * @param pollution
+	 * @param lib
+	 * @return
+	 */
 	private PollutionList calcPollution(PollutionList pollution, LibraryMetric lib)
 	{
 		
@@ -459,6 +495,12 @@ public class MetricSearchDAO {
 			pollution.addPollution("Average Component Dependency between Packages", lib.getElement().getName(), lib.getACDPackage(),(lib.getACDPackage()>1) ? 1:0);
 		return pollution;
 	}
+	/**
+	 * 패키지 셋에 해당하는 메트릭 정보를 체크한다. 
+	 * @param pollution
+	 * @param packageset
+	 * @return
+	 */
 	private PollutionList calcPollution(PollutionList pollution, PackageSetMetric packageset)
 	{
 		
@@ -470,6 +512,12 @@ public class MetricSearchDAO {
 		
 		return pollution;
 	}
+	/**
+	 * 패키지에 해당하는 메트릭 정보를 체크한다. 
+	 * @param pollution
+	 * @param packageM
+	 * @return
+	 */
 	private PollutionList calcPollution(PollutionList pollution, PackageMetric packageM)
 	{
 		
@@ -483,6 +531,12 @@ public class MetricSearchDAO {
 		return pollution;
 	}
 	
+	/**
+	 * 클래스에 해당하는 메트릭 정보들을 체크한다. 
+	 * @param pollution
+	 * @param classM
+	 * @return
+	 */
 	private PollutionList calcPollution(PollutionList pollution, ClassMetric classM)
 	{
 		
@@ -507,6 +561,12 @@ public class MetricSearchDAO {
 		return pollution;
 	}
 	
+	/**
+	 * 메소드에 해당하는 메트릭 정보들을 체크한다. 
+	 * @param pollution
+	 * @param MethodM
+	 * @return
+	 */
 	private PollutionList calcPollution(PollutionList pollution, MethodMetric MethodM)
 	{
 
@@ -518,6 +578,13 @@ public class MetricSearchDAO {
 		return pollution;
 	}
 	
+	/**
+	 * 오염도차트를 그리기 위한 객체를 리턴한다. 
+	 * @param commit
+	 * @param NSLeft
+	 * @param NSRight
+	 * @return
+	 */
 	public PollutionChart getPollutionChart(ProjectCommit commit, int NSLeft,int NSRight)
 	{
 		PollutionChart chart = getPollutionList(commit,NSLeft,NSRight).getCountPollution();

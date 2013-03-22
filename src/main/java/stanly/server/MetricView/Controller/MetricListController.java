@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import stanly.server.MetricView.Service.MetricViewService;
+/**
+ * @author Karuana
+ * Metric 정보를 표시하기 위한 List Componet 정보를 가져온다, 
+ */
 @RequestMapping("/component")
 @Controller(value = "metricListController")
 public class MetricListController {
@@ -22,12 +26,28 @@ public class MetricListController {
 	@Qualifier("metricViewService")
 	private MetricViewService metricView;
 	
+	/**
+	 * 릴레이션 정보들을 가져온다. 
+	 * @param name
+	 * @param SrcID
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/RelationList", method=RequestMethod.GET)
 	@ResponseBody
 	public String getRelationSrc(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
 			logger.info("Get Project Relation node ID- "+ SrcID );
 			return metricView.getRelationWithSrc(name, SrcID);
 	}
+	/**
+	 * 오염도 정보를 가져온다.
+	 * @param name
+	 * @param SrcID
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/PollutionList", method=RequestMethod.GET)
 	@ResponseBody
 	public String getPollutionList(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {
@@ -35,6 +55,14 @@ public class MetricListController {
 			return metricView.getPollutionList(name, SrcID);
 	}
 	
+	/**
+	 * 마틴 정보를 표시하기 위한 JSON을 가져온다. 
+	 * @param name
+	 * @param SrcID
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/MartinList", method=RequestMethod.GET)
 	@ResponseBody
 	public String getMartinList(@RequestParam("Name") String name,@RequestParam("SrcID") int SrcID,HttpServletResponse response) throws Exception {

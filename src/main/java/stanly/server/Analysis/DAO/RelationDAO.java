@@ -114,6 +114,12 @@ public class RelationDAO {
 		return NodeRList;
 	}
 	
+	/**
+	 * 주어진 SrcName이 포함된 릴레이션을 추출한다.
+	 * @param CommitID
+	 * @param SrcName
+	 * @return
+	 */
 	public List<NodeRelation> getSrcLikeRelation(ProjectCommit CommitID, String SrcName)
 	{
 		List<NodeRelation> NodeRList = null;
@@ -138,6 +144,12 @@ public class RelationDAO {
 		return NodeRList;
 	}
 	
+	/**
+	 *  타켓을 기준으로 릴레이션을 추출한다. 
+	 * @param CommitID
+	 * @param TarName
+	 * @return
+	 */
 	public List<NodeRelation> getTarLikeRelation(ProjectCommit CommitID, String TarName)
 	{
 		List<NodeRelation> NodeRList = null;
@@ -159,6 +171,12 @@ public class RelationDAO {
 		return NodeRList;
 	}
 	
+	/**
+	 * @param CommitID
+	 * @param SrcName
+	 * @param TarName
+	 * @return
+	 */
 	public List<NodeRelation> getLikeRelation(ProjectCommit CommitID, String SrcName,String TarName)
 	{
 		List<NodeRelation> NodeRList = null;
@@ -184,7 +202,7 @@ public class RelationDAO {
 	
 	
 	/**
-	 *  갯수를 리턴한다. 해당하는 릴레이션의 
+	 *  해당하는 릴레이션의 갯수를 리턴한다. 
 	 * @param CommitID
 	 * @param SrcName
 	 * @param TarName
@@ -215,6 +233,15 @@ public class RelationDAO {
 		return CountR;
 	}
 	
+	/**
+	 * 해당하는 릴레이션의 갯수를 리턴한다. 단 예외를 둬서 추출한다.
+	 * @param CommitID
+	 * @param SrcName
+	 * @param TarName
+	 * @param ignore
+	 * @param srcable
+	 * @return
+	 */
 	public long getCountRelation(ProjectCommit CommitID, String SrcName,String TarName,List<ProjectElementNode> ignore,boolean srcable)
 	{
 		Long CountR = null;
@@ -255,6 +282,9 @@ public class RelationDAO {
 		return CountR;
 	}
 	
+	/**
+	 *	변경된 데이터를 반영한다.  
+	 */
 	public void DataFlush()
 	{
 		Session session = sessionFactory.getCurrentSession();

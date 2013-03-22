@@ -18,6 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
 
+/**
+ * @author Karuana
+ * Git 프로젝트와 Commit을 관리하는 DAO 객체이다. 
+ */
 @Repository
 @Transactional
 public class ProjectDAO {
@@ -54,6 +58,10 @@ public class ProjectDAO {
 		return data;
 	}
 	
+	/**
+	 * 전체 프로젝트 리스트를 받아온다. 
+	 * @return 프로젝트 리스트 
+	 */
 	public List<ProjectInfo> getPrjectList()
 	{
 		List<ProjectInfo> projectList = null;
@@ -77,6 +85,11 @@ public class ProjectDAO {
 		return projectList;
 	}
 	
+	/**
+	 *  프로젝트 정보를 가져온다. 
+	 * @param ProjectName
+	 * @return
+	 */
 	public ProjectInfo getProjectInfo(String ProjectName)
 	{
 		ProjectInfo projectList = null;
@@ -101,9 +114,9 @@ public class ProjectDAO {
 	}
 	
 	/**
-	 * 해당하는 GitURL에 해당하는 프로젝트가 있는지 확인 
-	 * @param gitURL
-	 * @return boolean
+	 * 해당하는 GitURL을 가지는 프로젝트를 가져온다.
+	 * @param gitURL 
+	 * @return boolean 
 	 */
 	public ProjectInfo getProjectWithGitURL(String gitURL)
 	{
@@ -127,6 +140,14 @@ public class ProjectDAO {
 		return projectList;
 	}
 	//Commit 관련 
+	/**
+	 *  Git Commit을 추가한다. 
+	 * @param project
+	 * @param updateDate
+	 * @param message
+	 * @param author
+	 * @return
+	 */
 	public ProjectCommit addCommit(ProjectInfo project, Date updateDate, String message, 
 			String author)
 	{
@@ -202,6 +223,12 @@ public class ProjectDAO {
 		return commitList;
 	}
 	
+	/**
+	 *  gitURL과 프로젝트 명을 받아서 현재 DB 안에 관련된 정보가 있는지 리턴한다. 
+	 * @param gitURL
+	 * @param ProjectName
+	 * @return
+	 */
 	public ProjectState getProjectState(String gitURL, String ProjectName)
 	{
 		List<ProjectInfo> projectList = null;
@@ -232,6 +259,10 @@ public class ProjectDAO {
 		return state;
 	}
 	
+	/**
+	 *  저장된 프로젝트 리스트를 리턴한다. 
+	 * @return
+	 */
 	public List<ProjectInfo> getProjectList()
 	{
 

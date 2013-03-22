@@ -22,33 +22,66 @@ import stanly.server.Analysis.Model.Metric.ProjectMetric;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
+/**
+ * @author Karuana
+ * 분석에 가장 핵심적인 ElementNode를 저장하는 클래스이다. 
+ */
 @Entity
 @Table(name = "ElementNode")
 public class ProjectElementNode {
+	/**
+	 * 기본적인 아이디 값이다.
+	 * 하이버네이트가 자동으로 생성한다. 
+	 */
 	@Id
 	@Column( name = "ElementID" , nullable = false)
 	@GeneratedValue
 	private Integer EID;
 
+	/**
+	 *  노드의 이름
+	 *  자바의 패키지 타입 형태로 저장된다.
+	 *  ex) com.sejong.AppStore
+	 */
 	@Column(name = "Name" , nullable = false)
 	private String Name;
 	
+	/**
+	 * 부모 노드의 이름이다.
+	 * 부모가 없을 경우 기본적으로 Project라는 값이 들어간다. 
+	 */
 	@Column(name="ParentName", nullable = false)
 	private String ParetnName;
 	
+	/**
+	 * Nested Set Model로 디비에 트리 구조를 저장하기 위한 값  
+	 *  
+	 */
 	@Column(name = "NSLeft", nullable = false)
 	private int NSLeft;
-	
+	/**
+	 * Nested Set Model로 디비에 트리 구조를 저장하기 위한 값  
+	 *  
+	 */
 	@Column(name = "NSRight", nullable = false)
 	private int NSRight;
 	
+	/**
+	 *  Commit 시점을 저장하는 객체 
+	 */
 	@ManyToOne( targetEntity  = stanly.server.GitProject.Model.ProjectCommit.class)
 	@JoinColumn(name = "COMMITID", nullable = false)
 	private ProjectCommit commit;
 	
+	/**
+	 * 노드에 해당하는 Metric 정보이다.
+	 */
 	@OneToOne(mappedBy="element")
 	private ElementNodeMetric EMetric;
 	
+	/**
+	 * 노드의 타입을 나타낸다. 
+	 */
 	@Column(name="TYPE") 
 	@Enumerated(EnumType.STRING)
 	private NodeType type;

@@ -44,6 +44,10 @@ import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
+/**
+ * @author Karuana
+ *	Analysis와 관련된 기능들을 모아둔 서비스 객체이다. pmd_STANly를 통해 분석된 정보를 디비에 실제적으로 삽입하는 일을 진행한다. 
+ */
 @Service("analysisService")
 @Transactional
 public class AnalysisService {
@@ -53,12 +57,27 @@ public class AnalysisService {
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 	
+	/**
+	 * 엘리먼트 노드를 DB에서 컨트롤하기 위한 DAO 객체 
+	 */
 	@Autowired
 	private ElementDAO nodeDao;
 	
+	/**
+	 * 관계를 컨트롤하기 위한 DAO 객체 
+	 */
 	@Autowired
 	private RelationDAO relationDao;
 	
+	/**
+	 * 노드를 생성해 추가한다.
+	 * @param name 노드 명 
+	 * @param paretnName 부모의 이름 
+	 * @param nSLeft 
+	 * @param nSRight
+	 * @param type 노드 타입 
+	 * @return 생성된 노
+	 */
 	public ProjectElementNode insertElement(String name, String paretnName, int nSLeft, int nSRight, NodeType type)
 	{
 		ProjectElementNode node = new ProjectElementNode(name,paretnName,nSLeft,nSRight,type);
@@ -66,16 +85,37 @@ public class AnalysisService {
 	
 		return node;
 	}
+	/**
+	 *  주어진 노드를 삽입한다. 
+	 * @param e
+	 * @return
+	 */
 	public ProjectElementNode InsertElement(ProjectElementNode e)
 	{
 		return nodeDao.insertElement(e);
 	}
+	/**
+	 * 노드 객체를 생성한다. 
+	 * @param commitID
+	 * @param name
+	 * @param paretnName
+	 * @param nSLeft
+	 * @param nSRight
+	 * @param type
+	 * @return
+	 */
 	public ProjectElementNode createElement(ProjectCommit commitID, String name, String paretnName, int nSLeft, int nSRight, NodeType type)
 	{
 		ProjectElementNode node = new ProjectElementNode(name,paretnName,nSLeft,nSRight,type);	
 		node.setCommit(commitID);
 		return node;
 	}
+	/**
+	 * 노드 객체를 생성한다. 
+	 * @param commitID
+	 * @param clientNode
+	 * @return
+	 */
 	public ProjectElementNode createElement(ProjectCommit commitID, ElementNode clientNode)
 	{
 		ElementNode parentNode = clientNode.getParent();
@@ -106,6 +146,12 @@ public class AnalysisService {
 		return serverNode;
 	}
 
+	/**
+	 * 
+	 * @param clientNode
+	 * @param serverNode
+	 * @throws Exception
+	 */
 	private void InputMetricDatatoProjectElementNode(ElementNode clientNode, ProjectElementNode serverNode) throws Exception
 	{
 		ElementNodeMetric metric = serverNode.addElementMetric();

@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 import stanly.server.GitProject.Git.GitControl;
 import stanly.server.GitProject.Model.ProjectInfo;
 
+/**
+ * @author Karuana
+ *	Git을 제어하는 서비스이다. 
+ */
 @Service("gitControlService")
 public class GitControlService {
 
@@ -21,6 +25,12 @@ public class GitControlService {
 	@Autowired
 	private ProjectInfoService projectService;
 	
+	/**
+	 * 비동기 처리를 하는 부분 Git 클론을 받는다. 
+	 * @param uRL
+	 * @param ProjectName
+	 * @return Future<GitControl> Clone이 다되면 프로젝트 정보를 리턴한다.
+	 */
 	@Async
 	public Future<GitControl> GitClone(String uRL,String ProjectName)
 	{

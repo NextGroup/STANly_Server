@@ -13,22 +13,49 @@ import javax.persistence.Table;
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
+/**
+ * @author Karuana
+ * 노드간의 관계를 저장하기 위한 객체 
+ */
 @Entity
 @Table(name = "NodeRelation")
 public class NodeRelation {
+	/**
+	 * 테이블을 관리하기 위한 ID 값 
+	 */
 	@Id
 	@Column( name = "NRID" , nullable = false)
 	@GeneratedValue
 	private Integer NRID;
+	
+	/**
+	 *	시작 노드의 이름 
+	 *  자바의 패키지 형태로 저장된다.
+	 *  example) com.swmaestro.3rd
+	 *   
+	 */
 	@Column(name = "SRCName" , nullable = false)
 	private String SrcName;
+	/**
+	 *	끝 노드의 이름 
+	 *  자바의 패키지 형태로 저장된다.
+	 *  example) com.swmaestro.3rd
+	 *   
+	 */
 	@Column(name = "TARName" , nullable = false)
 	private String TarName;
 
+	/**
+	 *  어떠한 시점의 정보인지 나타내는 정보
+	 *  우리는 기본적으로 Git의 커밋을 바탕으로 관리하기 때문에 ProjectCommit을 가르킨다. 
+	 */
 	@ManyToOne( targetEntity  = stanly.server.GitProject.Model.ProjectCommit.class)
 	@JoinColumn(name = "COMMITID", nullable = false)
 	private ProjectCommit commit;
 	
+	/**
+	 * 노드의 참조 관계가 어떠한 형태인지 나타내는 값이다. 
+	 */
 	private NodeRelationType type;
 
 

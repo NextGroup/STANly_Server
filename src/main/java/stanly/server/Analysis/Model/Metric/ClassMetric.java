@@ -9,37 +9,94 @@ import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
-
+/**
+ * 클래스와 관련된 매트릭 정보를 정하는 클래스이다.
+ * ElementNodeMetric을 상속받아 구현하고 있다.
+ * 하이버네이트의 기본적인 상속 맵핑 방식중 Table per subclass를 이용하였다.
+ * @author Karuana
+ *
+ */
 @Entity
 @Table(name = "ClassMetric")
 @PrimaryKeyJoinColumn(name="EMID")
 public class ClassMetric extends ElementNodeMetric {
 
 	
+	/**
+	 * Count Metrics
+	 */
 	@Column(name = "Classes")
 	private int Classes;
+	/**
+	 * 메소드의 수
+	 * Count Metrics
+	 */
 	@Column(name = "Methods")
 	private int Methods;
+	/**
+	 * 필드의 수 
+	 * Count Metrics
+	 */
 	@Column(name = "Fields")
 	private int Fields;
+	/**
+	 *  라인 오브 코드 (Line Of Code)
+	 *  Count Metrics
+	 */
 	@Column(name = "LOC")
 	private int LOC;
+	/**
+	 * 
+	 * 	Complexity Metrics
+	 */
 	@Column(name = "Fat")
 	private int Fat;
+	/**
+	 * 
+	 * Robert C. Martin Metrics
+	 */
 	@Column(name = "AfferentCoupling")
 	private int AfferentCoupling;
+	/**
+	 * 
+	 * Robert C. Martin Metrics
+	 */
 	@Column(name = "EfferentCoupling")
 	private int EfferentCoupling;
+	/**
+	 * 
+	 * Chidamber & Kemerer Metrics
+	 */
 	@Column(name = "WMC")
 	private float WMC;
+	/**
+	 * Weighted Methods per Class 
+	 * Chidamber & Kemerer Metrics
+	 */
 	@Column(name = "DIT")
 	private int DIT;
+	/**
+	 * 
+	 * Chidamber & Kemerer Metrics
+	 */
 	@Column(name = "NOC")
 	private int NOC;
+	/**
+	 * 
+	 * Chidamber & Kemerer Metrics
+	 */
 	@Column(name = "CBO")
 	private int CBO;
+	/**
+	 * 
+	 * Chidamber & Kemerer Metrics
+	 */
 	@Column(name = "RFC")
 	private float RFC;
+	/**
+	 * 
+	 * Chidamber & Kemerer Metrics
+	 */
 	@Column(name = "LCOM")
 	private int LCOM;
 	

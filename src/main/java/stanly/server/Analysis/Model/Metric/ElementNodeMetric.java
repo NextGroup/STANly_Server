@@ -18,20 +18,34 @@ import stanly.server.Analysis.Model.Type.NodeType;
 
 
 
+/**
+ * @author Karuana
+ *	Metric정보들을 컨트롤하는 최상위 클래스이다. 여기에서는 매트릭 정보를 가지고 있지 않고
+ *  어떠한 노드와 연결되는지 노드의 타입이 무엇인지만 정의되어있다. 
+ */
 @Entity
 @Table(name="ElementNodeMetric")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ElementNodeMetric {
 	
+	/**
+	 * id 값으로 자동으로 하이버네이트가 지정하게 된다.
+	 */
 	@Id
 	@Column( name = "EMID" , nullable = false)
 	@GeneratedValue
 	private Integer EMID;
 	
+	/**
+	 *  어떠한 노드가 가지고 있는지 나타낸다.
+	 */
 	@OneToOne( targetEntity  = ProjectElementNode.class)
 	@JoinColumn(name = "ElementID", nullable = false)
 	private ProjectElementNode element;
 	
+	/**
+	 * 어떠한 타입에 매트릭인지 나타낸다.
+	 */
 	private NodeType type;
 	
 	public ElementNodeMetric()

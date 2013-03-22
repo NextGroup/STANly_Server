@@ -18,6 +18,10 @@ import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.MetricView.Json.DoT.CompositionView;
 
+/**
+ * @author Karuana
+ *	노드를 검색하기 위한 DAO이다. 
+ */
 @Repository
 @Transactional
 public class ElementSearchDAO {
@@ -26,6 +30,11 @@ public class ElementSearchDAO {
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 	
+	/**
+	 * 커밋에 노드들 중 최상단 노드인 프로젝트 노드를 가져온다. 
+	 * @param commit
+	 * @return
+	 */
 	public ProjectElementNode getProjectNode(ProjectCommit commit)
 	{
 		ProjectElementNode  rootNode =null;
@@ -37,9 +46,6 @@ public class ElementSearchDAO {
 			 Criterion projectEq = Restrictions.eq("NSLeft", new Integer(1)); //NSLeft == 1 이면 프로젝트 노
 			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(CommitEq);
-			 logger.info(commit.getMessage()+commit.getCommitid());
-			 logger.info(crit.list().size());
-			
 			 crit.add(projectEq);
 			 rootNode = (ProjectElementNode) crit.uniqueResult();
 			 
@@ -52,6 +58,15 @@ public class ElementSearchDAO {
 		return rootNode;
 	}
 	
+	/**
+	 * 주어진 부모에 해당하는 자식노드들을 가져온다. 
+	 * @param ParentName
+	 * @param NSleft
+	 * @param NSRight
+	 * @param type
+	 * @param commit
+	 * @return
+	 */
 	public List<ProjectElementNode> getChildNode(String ParentName,int NSleft, int NSRight, NodeType type, ProjectCommit commit)
 	{
 		List<ProjectElementNode> nodeList = null;
@@ -86,6 +101,12 @@ public class ElementSearchDAO {
 		
 	}
 	
+	/**
+	 *	NSLeft 값에 해당하는 노드를 가져온다.
+	 * @param commit
+	 * @param NSLeft
+	 * @return
+	 */
 	public ProjectElementNode getElementNode(ProjectCommit commit, int NSLeft)
 	{
 		ProjectElementNode  SeletedNode =null;

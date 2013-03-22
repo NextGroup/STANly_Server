@@ -7,7 +7,13 @@ import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
-
+/**
+ * 라이브러리와 관련된 매트릭 정보를 정하는 클래스이다.
+ * ElementNodeMetric을 상속받아 구현하고 있다.
+ * 하이버네이트의 기본적인 상속 맵핑 방식중 Table per subclass를 이용하였다.
+ * @author Karuana
+ *
+ */
 @Entity
 @Table(name = "LibraryMetric")
 @PrimaryKeyJoinColumn(name="EMID")

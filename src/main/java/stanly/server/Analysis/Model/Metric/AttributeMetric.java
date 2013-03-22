@@ -9,7 +9,9 @@ import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 /**
- * Metric 부분은 나중에 전부 손봐야할 가능성이 있음, 확장이 힘들다.
+ * 클래스의 필드와 관련된 매트릭 정보를 정하는 클래스이다.
+ * ElementNodeMetric을 상속받아 구현하고 있다.
+ * 하이버네이트의 기본적인 상속 맵핑 방식중 Table per subclass를 이용하였다.
  * @author Karuana
  *
  */
@@ -18,10 +20,22 @@ import stanly.server.Analysis.Model.Type.NodeType;
 @PrimaryKeyJoinColumn(name="EMID")
 public class AttributeMetric extends ElementNodeMetric{
 	
+	/**
+	 * 인스트럭션 수
+	 * Count Metrics
+	 */
 	@Column(name = "Instructions")
 	private int Instructions;
+	/**
+	 * 예상 줄 수 ELOC = Estimated Lines of Code
+	 * Count Metrics
+	 */
 	@Column(name = "ELOC")
 	private int ELOC;
+	/**
+	 * Cyclomatic Complexity 
+	 * Complexity Metrics
+	 */
 	@Column(name = "CC")
 	private int CC;
 	
