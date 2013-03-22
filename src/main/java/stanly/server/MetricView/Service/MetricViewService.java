@@ -2,6 +2,7 @@ package stanly.server.MetricView.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -228,6 +229,7 @@ public class MetricViewService {
 		CompositionView composition = new CompositionView(Integer.toString(NSLeft));
 		String SubGraphPath="/Stanly/component/CompositionView?Name="+commit.getPInfo().getName()+"&nodeID=";
 		HashMap<String,Integer> childMap = new HashMap<String,Integer>();
+		HashSet<Integer> IsClass = new HashSet<Integer>();
 		try{
 			List<ProjectElementNode> ignore=null;
 			List<ProjectElementNode> Child = EsearchDAO.getChildNode(parent.getName(), parent.getNSLeft(), parent.getNSRight(), parent.getType(), commit);
@@ -261,11 +263,14 @@ public class MetricViewService {
 					if(node.getNSRight()-node.getNSLeft()>1)
 						subGraph=true;
 					Type = "JavaClass";
+					IsClass.add(node.getNSLeft());
+					
 					break;
 				case INTERFACE:
 					if(node.getNSRight()-node.getNSLeft()>1)
 						subGraph=true;
 					Type = "Interface";
+					IsClass.add(node.getNSLeft());
 					break;
 				default:
 					Create=false;
@@ -315,7 +320,8 @@ public class MetricViewService {
 						
 						if(arr[j][i]!=0 && arr[i][j]<arr[j][i])
 						{
-							relation.setTangled(true);
+							if(!IsClass.contains(childMap.get(keySet[i])))
+								relation.setTangled(true);
 						}
 						composition.addRelation(relation);
 					}
