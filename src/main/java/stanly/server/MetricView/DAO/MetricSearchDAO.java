@@ -342,6 +342,7 @@ public class MetricSearchDAO {
 					
 					break;
 				case CLASS:
+				case INTERFACE:
 					ClassMetric classMetric = (ClassMetric) targetNode.getEMetric();
 					val.addValue("Classes", classMetric.getClasses());
 					val.addValue("Methods", classMetric.getMethods());

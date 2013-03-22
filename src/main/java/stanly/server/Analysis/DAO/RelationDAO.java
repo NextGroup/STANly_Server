@@ -14,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -86,6 +87,7 @@ public class RelationDAO {
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
 			 Criterion  TarEq = Restrictions.eq("TarName", TarName);
+			 
 			 Criteria crit = session.createCriteria(NodeRelation.class);
 			 crit.add(commitEq);
 			 crit.add(TarEq);
@@ -174,9 +176,9 @@ public class RelationDAO {
 	 * @param TarName
 	 * @return
 	 */
-	public int getCountRelation(ProjectCommit CommitID, String SrcName,String TarName)
+	public long getCountRelation(ProjectCommit CommitID, String SrcName,String TarName)
 	{
-		Integer CountR = null;
+		Long CountR = null;
 		try{
 			Session session = sessionFactory.getCurrentSession();
 		
@@ -189,11 +191,52 @@ public class RelationDAO {
 			 crit.add(commitEq);
 			 crit.add(Tarlike);
 			 crit.add(Srclike);
-			 CountR = (Integer) crit.uniqueResult();
+			 CountR = (Long) crit.uniqueResult();
+	
 		}
 		catch(Exception e)
 		{
-			logger.error(e);
+			logger.error(e.getMessage());
+		}
+		return CountR;
+	}
+	
+	public long getCountRelation(ProjectCommit CommitID, String SrcName,String TarName,List<ProjectElementNode> ignore,boolean srcable)
+	{
+		Long CountR = null;
+		try{
+			Session session = sessionFactory.getCurrentSession();
+		
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			 Criterion commitEq = Restrictions.eq("commit", CommitID);
+			 Criterion  Tarlike = Restrictions.like("TarName", TarName+"%");
+			 Criterion  Srclike = Restrictions.like("SrcName", SrcName+"%");
+			 Criteria crit = session.createCriteria(NodeRelation.class);
+			 crit.setProjection( Projections.rowCount() );
+			 crit.add(commitEq);
+			 crit.add(Tarlike);
+			 crit.add(Srclike);
+			 for(int i=0;i<ignore.size();i++)
+			 {
+				 if(srcable)
+				 {
+					 Criterion  unSrclike = Restrictions.not(Restrictions.like("SrcName", ignore.get(i).getName()+"%"));
+					 crit.add(unSrclike);
+				 }
+				 else
+				 {
+					 Criterion  unTarlike = Restrictions.not(Restrictions.like("TarName", ignore.get(i).getName()+"%"));
+					 crit.add(unTarlike);
+				 }
+				
+			 }
+	
+			 CountR = (Long) crit.uniqueResult();
+	
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage());
 		}
 		return CountR;
 	}
