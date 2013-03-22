@@ -25,15 +25,35 @@ import stanly.server.Analysis.Model.Metric.ProjectMetric;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
+/**
+ * @author Karuana
+ * 실제적으로 DB에 접근하는 DAO 객체로 ProjectElement에 접근한다.
+ */
+/**
+ * @author Karuana
+ *
+ */
+/**
+ * @author Karuana
+ *
+ */
 @Repository
 @Transactional
 public class ElementDAO {
 	protected static final Logger logger = Logger.getLogger("ElementDAO");
 	
+	/**
+	 *  하이버네이트 연결을 위한 세션을 생성해주는 팩토리 객체 
+	 */
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 	
 	
+	/**
+	 * 입력받은 객체를 저장한다. 
+	 * @param node 저장할 객체 
+	 * @return 저장한 객체를 리턴한다.
+	 */
 	public ProjectElementNode insertElement(ProjectElementNode node)
 	{		
 
@@ -42,14 +62,15 @@ public class ElementDAO {
 			Session session = sessionFactory.getCurrentSession();
 			
 			NodeType type = node.getType();
-			
+			//일단 노드 객체를 저장한다.
 			session.save(node);
 			
 			if(node.getEMetric()!=null)
 			{
 				logger.info("Node Metric"+node.getEMetric());
+				//노드에 해당하는 Metric 객체를 저장한다.
 				switch(type)
-				{
+				{	
 					case PROJECT:
 						session.save((ProjectMetric)node.getEMetric());
 						break;
@@ -88,6 +109,11 @@ public class ElementDAO {
 		return node;
 	}
 	
+	/**
+	 * 프로젝트 커밋에 해당하는 전체 ElementNode의 트리를 리턴한다.
+	 * @param CommitID
+	 * @return 프로젝트 트리를 리턴한다.
+	 */
 	public List<ProjectElementNode> getNodeTree(ProjectCommit CommitID)
 	{
 		List nList = null;
@@ -98,6 +124,7 @@ public class ElementDAO {
 			 Criterion projectEq = Restrictions.eq("commit", CommitID);
 			 Criteria crit = session.createCriteria(ProjectElementNode.class);
 			 crit.add(projectEq);
+			 //Nested Set Model 방식으로 DB를 저장하기 때문에 Left에 따라서 정리하면 트리가 나온다.
 			 crit.addOrder(Order.asc("NSLeft"));
 			 nList = crit.list();
 		
@@ -110,7 +137,13 @@ public class ElementDAO {
 		}
 		return nList;
 	}
-
+	
+	/**
+	 *  주어진 커밋 시점에서 주어진 아이디와 매칭되는 노드를 검색한다.
+	 * @param CommitID < 커밋 시점 
+	 * @param projectName < 찾을 노드의 명
+	 * @return 결과 노드 못찾으면 Null
+	 */
 	public ProjectElementNode getNode(ProjectCommit CommitID, String projectName)
 	{
 		ProjectElementNode nList = null;
@@ -131,6 +164,13 @@ public class ElementDAO {
 		}
 		return nList;
 	}
+	
+	/**
+	 * 주어진 부모 정보를 바탕으로 차일드, 자식 노드를 구한다.
+	 * @param CommitID 커밋 시점 
+	 * @param ParentNode 부모의 이름 
+	 * @return 자식 리스트 
+	 */
 	public List<ProjectElementNode> getSubNodeTree(ProjectCommit CommitID,String ParentNode)
 	{
 		List nList = null;
@@ -163,6 +203,10 @@ public class ElementDAO {
 		}
 		return nList;
 	}
+	
+	/**
+	 *	지금까지 변경 내용을 DB에 반영한다.  
+	 */
 	public void DataFlush()
 	{
 		Session session = sessionFactory.getCurrentSession();

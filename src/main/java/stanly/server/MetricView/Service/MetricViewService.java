@@ -299,7 +299,7 @@ public class MetricViewService {
 					if(ignore!=null && (((String)keySet[i]).contentEquals(parent.getName())))
 						count= relationDao.getCountRelation(commit, (String)keySet[i], (String)keySet[j],ignore,true);
 					else if(ignore!=null && (((String)keySet[j]).contentEquals(parent.getName())))
-						count= relationDao.getCountRelation(commit, (String)keySet[i], (String)keySet[j],ignore,true);
+						count= relationDao.getCountRelation(commit, (String)keySet[i], (String)keySet[j],ignore,false);
 					else
 						count= relationDao.getCountRelation(commit, (String)keySet[i], (String)keySet[j]);
 					if(count == 0)
