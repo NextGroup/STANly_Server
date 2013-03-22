@@ -232,7 +232,7 @@ public class MetricSearchDAO {
 			for(ProjectElementNode node:packageNodes)
 			{
 				PackageMetric metric  =(PackageMetric) node.getEMetric();				
-				martin.addPackage(node.getName(), metric.getAbstractness(), metric.getInstability(), metric.getLOC());
+				martin.addPackage(node.getName(), metric.getAbstractness(), metric.getInstability(),metric.getDistance(), metric.getLOC());
 			}
 			
 			//ProjectElementNode targetNode = (ProjectElementNode) crit.uniqueResult();

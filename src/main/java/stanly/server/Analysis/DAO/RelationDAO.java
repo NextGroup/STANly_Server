@@ -18,14 +18,26 @@ import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.GitProject.Model.ProjectCommit;
 
+/**
+ * @author Karuana
+ * 릴레이션에 대한 정보를 DB에 접근하여 처리하는 DAO
+ */
 @Repository
 @Transactional
 public class RelationDAO {
 	protected static final Logger logger = Logger.getLogger("RelationDAO");
 	
+	/**
+	 * 하이버네이트 연결을 위한 세션을 만들어주는 팩토리 객체 
+	 */
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 	
+	/**
+	 * 주어진 릴레이션 객체를 DB에 등록한다.
+	 * @param relation 등록할 객
+	 * @return 등록된 객체를 반환한다.
+	 */
 	public NodeRelation insertRelation(NodeRelation relation)
 	{
 		try{
@@ -57,7 +69,8 @@ public class RelationDAO {
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
 			 Criterion  SrcEq = Restrictions.eq("SrcName", SrcName);
-			 //같은 패키지 안에 있는 내옹은 제외한다.
+			 //같은 패키지 안에 있는 내옹은 제외한다. 
+			 //이거 수정해야할 필요가 있음 
 			 Criterion tarEq = Restrictions.not( Restrictions.like("TarName", SrcName+"%"));
 			 Criteria crit = session.createCriteria(NodeRelation.class);
 			 crit.add(commitEq);
@@ -74,6 +87,7 @@ public class RelationDAO {
 		return NodeRList;
 	}
 	/**
+	 * Tar Realti
 	 * @param CommitID
 	 * @param TarName
 	 * @return

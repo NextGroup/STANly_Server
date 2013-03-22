@@ -10,7 +10,7 @@ public class MartinDistanceChart {
 		metricDistance = new ArrayList<MartinDistanceValue>();
 	}
 	//Package Metric
-	public boolean addPackage(String packageName,float abstractness,float instability,int size) {
-		return metricDistance.add(new MartinDistanceValue(packageName,abstractness,instability,size));		
+	public boolean addPackage(String packageName,float abstractness,float instability,float Distance, int size) {
+		return metricDistance.add(new MartinDistanceValue(packageName,abstractness,instability,Distance,size));		
 	}
 }
