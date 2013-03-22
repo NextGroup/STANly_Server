@@ -1,4 +1,4 @@
-var colors = ["#4572A7", "#AA4643", "#89A54E", "#80699B", "#3D96AE", "#DB843D", "#92A8CD", "#A47D7C", "#B5CA92", "#4572A7", "#AA4643", "#89A54E", "#80699B", "#3D96AE", "#DB843D", "#92A8CD", "#A47D7C", "#B5CA92"];
+var colors = ["#59B859", "#2B8E2A", "#236123", "#0000FF", "#972D96", "#600060", "#FF0000", "#A47D7C", "#F7710D", "#92A8CD", "#FF00FF", "#89A54E", "#80699B", "#3D96AE", "#B5CA92", "#4572A7", "#AA4643", "#B5CA92"];
 var chart;
 var categories;
 var name;
@@ -16,14 +16,15 @@ function BuildMainView(id,name){
         ,beforeSend : function(xhr){
         }
         ,success : function(jsonData) {
-            categories = new Array();;
+            categories = new Array();
             data = new Array();
             for(var i=0;i<jsonData.PollutionScore.length;i++)
             {
-                if(Number(jsonData.PollutionScore[i]) != 0)
+                //if(Number(jsonData.PollutionScore[i]) != 0)
                 {
                     categories.push(jsonData.PollutionName[i]);
                     data.push({y:Number(jsonData.PollutionScore[i]),color:colors[i]});
+                    //data.push({y:Number(10),color:colors[i]});
                 }
             }
             //console.log(jsonData.PollutionScore);
@@ -42,16 +43,6 @@ function BuildMainView(id,name){
 function DrawPollutionChart()
 {
     $('pollution').empty();
-    /*function setChart(name, categories, data, color) {
-        chart.xAxis[0].setCategories(categories, false);
-        chart.series[0].remove(false);
-        chart.addSeries({
-            name: name,
-            data: data,
-            color: color || 'white'
-        }, false);
-        chart.redraw();
-    }*/
 
     chart = new Highcharts.Chart({
         chart: {
@@ -72,21 +63,24 @@ function DrawPollutionChart()
                 text: 'Number of Pollutions'
             }
         },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            formatter: function() {
+                var point = this.point,
+                    s = this.x +':<b>'+ this.y +'</b><br/>';
+                return s;
+            }
+        },
+        series: [{
+            name: name,
+            data: data,
+            color: 'white'
+        }],
+
         plotOptions: {
             column: {
-                cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function() {
-                            /*var drilldown = this.drilldown;
-                             if (drilldown) { // drill down
-                             setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
-                             } else { // restore
-                             setChart(name, categories, data);
-                             }*/
-                        }
-                    }
-                },
                 dataLabels: {
                     enabled: true,
                     color: colors[0],
@@ -98,26 +92,6 @@ function DrawPollutionChart()
                     }
                 }
             }
-        },
-        tooltip: {
-            formatter: function() {
-                var point = this.point,
-                    s = this.x +':<b>'+ this.y +'</b><br/>';
-                /*if (point.drilldown) {
-                 s += 'Click to view '+ point.category +' versions';
-                 } else {
-                 s += 'Click to return to browser brands';
-                 }*/
-                return s;
-            }
-        },
-        series: [{
-         name: name,
-         data: data,
-         color: 'white'
-         }],
-        exporting: {
-            enabled: false
         }
     });
 }

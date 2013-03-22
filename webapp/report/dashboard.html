@@ -81,9 +81,9 @@
 
         $('.span5').css("width", halfgrid5width + "px");
         $('.row').css("width", $('.navbar').width + "px");
-        $('#codesize').css("height", halfgrid5width + "px");
-        $('#composition').css("height", halfgrid5width + "px");
-        $('#distance').css("height", halfgrid5width + "px");
+        //$('#codesize').css("height", halfgrid5width + "px");
+        //$('#composition').css("height", halfgrid5width + "px");
+        //$('#distance').css("height", halfgrid5width + "px");
     }
 </script>
 <!-- 하이차트 -->
@@ -101,10 +101,10 @@
             <li class="divider-vertical"></li>
             <li><a href="javascript:void(0);" >Distance</a></li>
             <li class="divider-vertical"></li>
-            <li><a href="javascript:void(0);" >Metrics</a></li>
+            <!--<li><a href="javascript:void(0);" >Metrics</a></li>
             <li class="divider-vertical"></li>
             <li><a href="./about.html">About</a></li>
-            <li class="divider-vertical"></li>
+            <li class="divider-vertical"></li>-->
         </ul>
     </div>
 </div>
@@ -118,7 +118,7 @@
                 <li><a href="#composition"><i class="icon-chevron-right"></i>Composition</a></li>
                 <li><a href="#pollution"><i class="icon-chevron-right"></i>Pollution</a></li>
                 <li><a href="#distance"><i class="icon-chevron-right"></i>Distance</a></li>
-                <li><a href="#metrics"><i class="icon-chevron-right"></i>Metrics</a></li>
+                <!--<li><a href="#metrics"><i class="icon-chevron-right"></i>Metrics</a></li>-->
             </ul>
         </div>
 
@@ -126,7 +126,7 @@
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Pollution</div>
-                <div id="pollution" style="height: 300px; border:1px;"></div>
+                <div id="pollution" style="height: 350px; border:1px;"></div>
                 <!--오염도 그래프 그리-->
                 <script type="text/javascript" src="/Stanly/report/js/RanderPollution.js"></script>
             </div>
@@ -134,7 +134,7 @@
 
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Composition</div>
-                <div id="composition" style="margin: 0px;height: 300px;padding-right: 2px;">
+                <div id="composition" style="margin: 0px;height: 350px;padding-right: 2px;">
                     <svg id="MainSVG">
                         <defs>
                             <marker id="arrowhead"
@@ -171,18 +171,19 @@
                     </script>
                 </div>
             </div>
-            <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
-                <div id="distance" style="height: 300px;"></div>
-                <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
-                <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
-            </div>
+
             <div id="dummy" style="height: 300px;"></div>
         </div>
 
 
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
+                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
+                <div id="distance" style="height: 350px;"></div>
+                <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
+                <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
+            </div>
+            <!--<div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Metrics</div>
                 <div id="metric" style="min-height: 200px;"></div>
                 <script>
@@ -212,10 +213,10 @@
                         });
                     });
                 </script>
-            </div>
+            </div>-->
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Size of Component</div>
-                <div id="codesize" style="background-color: #e1e1e8;height: 300px;"></div><!-- 코드사이즈 배경 -->
+                <div id="codesize" style="background-color: #e1e1e8;height: 350px;"></div><!-- 코드사이즈 배경 -->
                 <script>
                     //codesize div
                     var csd_root;
