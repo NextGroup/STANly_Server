@@ -23,7 +23,7 @@ public class PollutionList {
 
 	public PollutionChart getCountPollution()
 	{
-		int[] arr = new int[13];
+		int[] arr = new int[14];
 		  Arrays.fill(arr, 0);    
 		for(int i=0;i<pollution.size();i++)
 		{

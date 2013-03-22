@@ -82,10 +82,55 @@
                 <script src="/Stanly/assets/PackageGraph/js/dagre.js"></script>
                 <script src="/Stanly/assets/PackageGraph/js/PackageGraph.js"></script>
                 <script>
-                    var Grapdata = document.querySelector("#inputGraph");
-                    var Mainsvg = d3.select("svg");
-                    var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                    var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","MainGraph.json");
+                    function BuildMainView(id,name){
+                        var backup = $('#MainSVG').find('defs');
+                        $('#MainSVG').empty();
+                        $('#MainSVG').append(backup);
+                        var Grapdata = document.querySelector("#inputGraph");
+                        var Mainsvg = d3.select("svg");
+                        var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
+                        var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getProjectName()+"&nodeID="+id);
+
+
+                        /*subName = name;
+                         $.ajax( {
+                         type :'GET'
+                         ,asyn :true
+                         ,url :'/Stanly/component/CompositionView'
+                         ,dataType :"json"
+                         ,data:{Name:getProjectName(),nodeID:id}
+                         //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                         ,beforeSend : function(xhr){
+                         }
+                         ,success : function(jsonData) {
+                         categories = new Array();
+                         data = new Array();
+                         for(var i=0;i<jsonData.PollutionScore.length;i++)
+                         {
+                         //if(Number(jsonData.PollutionScore[i]) != 0)
+                         {
+                         categories.push(jsonData.PollutionName[i]);
+                         data.push({y:Number(jsonData.PollutionScore[i]),color:colors[i]});
+                         //data.push({y:Number(10),color:colors[i]});
+                         }
+                         }
+                         //console.log(jsonData.PollutionScore);
+
+                         //BuildTable();
+                         //AdjustStyle();
+                         DrawPollutionChart();
+                         }
+                         ,error : function(xhr, textStatus) {
+                         }
+                         ,complete : function(xhr, textStatus) {
+                         }
+                         });*/
+                    }
+
+                    $(function(){
+                        BuildMainView(1);
+                    });
+
                 </script>
             </div>
             <div id="detail_title">Relations</div>

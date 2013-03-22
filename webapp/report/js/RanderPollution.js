@@ -97,41 +97,4 @@ function DrawPollutionChart()
 }
 $(document).ready(function() {
     BuildMainView(1,getProjectName());
-/*
-    var name = 'Pollutions';
-    var data = [{
-            y: 55.11,
-            color: colors[0]
-        }, {
-            y: 21.63,
-            color: colors[1]
-        }, {
-            y: 11.94,
-            color: colors[2]
-        }, {
-            y: 7.15,
-            color: colors[3]
-        }, {
-            y: 2.14,
-            color: colors[4]
-        }, {
-            y: 2.14,
-            color: colors[5]
-        }, {
-            y: 2.14,
-            color: colors[6]
-        }, {
-            y: 2.14,
-            color: colors[7]
-        }, {
-            y: 2.14,
-            color: colors[8]
-        }, {
-            y: 2.14,
-            color: colors[0]
-        }, {
-            y: 2.14,
-            color: colors[1]
-        }];
-*/
 });

@@ -154,20 +154,21 @@
                     <script src="/Stanly/assets/PackageGraph/js/dagre.js"></script>
                     <script src="/Stanly/assets/PackageGraph/js/PackageGraph.js"></script>
                     <script>
+                        $(function(){
+                            var Grapdata = document.querySelector("#inputGraph");
+                            var Mainsvg = d3.select("svg");
+                            var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
+                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getProjectName()+"&nodeID=1");
+                            /*
+                            var option={
+                                minWidth: $('.subtitle').width(),
+                                maxWidth: $('.subtitle').width(),
+                                minHeight: 300,
+                                resize: function(){}
+                            }
 
-                        var Grapdata = document.querySelector("#inputGraph");
-                        var Mainsvg = d3.select("svg");
-                        var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                        var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","./detail/MainGraph.json");
-                        /*
-                        var option={
-                            minWidth: $('.subtitle').width(),
-                            maxWidth: $('.subtitle').width(),
-                            minHeight: 300,
-                            resize: function(){}
-                        }
-
-                        $( "#composition" ).resizable(option);*/
+                            $( "#composition" ).resizable(option);*/
+                        });
                     </script>
                 </div>
             </div>

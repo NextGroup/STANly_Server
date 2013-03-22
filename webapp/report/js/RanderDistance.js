@@ -8,12 +8,14 @@
 var arr;
 var option = {
     title: 'Martin.C Distance',
+    seriesColors: $.jqplot.config.defaultColors,
     seriesDefaults:{
         renderer: $.jqplot.BubbleRenderer,
         rendererOptions: {
             bubbleAlpha: 0.6,
             highlightAlpha: 0.8,
-            showLabels: false
+            showLabels: false,
+            varyBubbleColors: true
         },
         shadow: true,
         shadowAlpha: 0.05
@@ -63,8 +65,12 @@ $(document).ready(function(){
         ,success : function(jsonData) {
             arr = jsonData;
             arr= new Array();
+            option.seriesColors = new Array();
             for(var i=0;i<jsonData.metricDistance.length;i++)
+            {
                 arr.push([jsonData.metricDistance[i].abstractness,jsonData.metricDistance[i].instability,jsonData.metricDistance[i].size,jsonData.metricDistance[i].name]);
+                option.seriesColors.push('#FF00FF');
+            }
             DrowDistanceChart();
         }
         ,error : function(xhr, textStatus) {
