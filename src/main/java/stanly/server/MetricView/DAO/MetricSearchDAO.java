@@ -465,7 +465,7 @@ public class MetricSearchDAO {
 		
 		if(packageset.getFat()>60)
 			pollution.addPollution("Fat", packageset.getElement().getName(), packageset.getFat(),(packageset.getFat()>120)? 1:0);
-		if(packageset.getTangled()>1)
+		if(packageset.getTangled()>0)
 			pollution.addPollution("Tangled", packageset.getElement().getName(), packageset.getTangled(),1);
 		
 		return pollution;
