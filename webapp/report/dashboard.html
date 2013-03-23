@@ -15,8 +15,11 @@
 
     <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.js"></script>
     <!--<script type="text/javascript" src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>-->
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+
+
     <link rel="stylesheet" href="/Stanly/assets/PackageGraph/css/PackageGraph.css">
 
     <script type="text/javascript" src="/Stanly/assets/jqplot/jquery.jqplot.js"></script>
@@ -86,6 +89,12 @@
         //$('#distance').css("height", halfgrid5width + "px");
     }
 </script>
+<!--Tooltips 변경 코드-->
+<script>
+    $(function(){
+        $(document).tooltip();
+    });
+</script>
 <!-- 하이차트 -->
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 
@@ -125,7 +134,7 @@
 
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Pollution</div>
+                <div class="subtitle" title="The  Pollution View shows all metric violations for the current node and descendants as a bar chart. The bar's length corresponds to the artifact's pollution." style="height: 30px;background-color: #149bdf;">Pollution</div>
                 <div id="pollution" style="height: 350px; border:1px;"></div>
                 <!--오염도 그래프 그리-->
                 <script type="text/javascript" src="/Stanly/report/js/RanderPollution.js"></script>
@@ -133,7 +142,7 @@
 
 
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Composition</div>
+                <div class="subtitle" title="The Composition View allows to look into an artifact, to see all its contained children and the dependencies between them. You may investigate dependencies between members of a class, classes of a package, packages, children of a package tree and between libraries." style="height: 30px;background-color: #149bdf;">Composition</div>
                 <div id="composition" style="margin: 0px;height: 350px;padding-right: 2px;">
                     <svg id="MainSVG">
                         <defs>
@@ -179,7 +188,7 @@
 
         <div class = "span5" style=" min-width: 390px;">
             <div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
-                <div class="subtitle" style="height: 30px;background-color: #149bdf;">Distance</div>
+                <div class="subtitle" title='The  Distance View displays the Main Sequence diagram for the packages of the "enclosing" subsystem.' style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 350px;"></div>
                 <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
                 <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
@@ -388,9 +397,7 @@
                                 .style("fill",function(d) {
                                     //d.
                                     //return "#" + d.value.toString();
-                                    if(Math.round((255 * d.value / d.parent.value)).toString(16).length == 1)
-                                        return "#0" + Math.round((255 * d.value / d.parent.value)).toString(16) + "FF00";
-                                    return "#" + Math.round((255 * d.value / d.parent.value)).toString(16) + "FF00";
+                                    return "#" + Math.round((16 * d.value / d.parent.value)).toString(16) + "F0";
                                     return "#e1e1e1";
                                 })
                                 .call(rect);

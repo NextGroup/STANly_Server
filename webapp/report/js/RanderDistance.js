@@ -68,8 +68,13 @@ $(document).ready(function(){
             option.seriesColors = new Array();
             for(var i=0;i<jsonData.metricDistance.length;i++)
             {
-                arr.push([jsonData.metricDistance[i].abstractness,jsonData.metricDistance[i].instability,jsonData.metricDistance[i].size,jsonData.metricDistance[i].name]);
-                option.seriesColors.push('#FF00FF');
+                var element = jsonData.metricDistance[i];
+                arr.push([element.abstractness,element.instability,element.size,element.name,element.Distance]);
+                //option.seriesColors.push('#' + Math.round(16*Math.abs(element.Distance)).toString(16) + 'D0');
+                if(element.Distance < 0.5 && element.Distance>-0.5)
+                    option.seriesColors.push('#00DD00');
+                else
+                    option.seriesColors.push('#DDDD00');
             }
             DrowDistanceChart();
         }
@@ -101,7 +106,7 @@ function DrowDistanceChart(){
             $('#tooltip').css({left:chart_left+x+radius+5, top:chart_top+y});
             $('#tooltip').html('<span style="font-size:14px;font-weight:bold;color:' +
                 color + ';">' + data[3] + '</span><br />' + 'Abstractness: ' + data[0] +
-                '<br />' + 'Instability: ' + data[1] + '<br />' + 'Line of Code: ' + data[2]);
+                '<br />' + 'Instability: ' + data[1] + '<br />' + 'Distance: ' + data[4] + '<br />' + 'Line of Code: ' + data[2]);
             $('#tooltip').show();
             //$('#legend1b tr').css('background-color', '#ffffff');
             //$('#legend1b tr').eq(pointIndex+1).css('background-color', color);
