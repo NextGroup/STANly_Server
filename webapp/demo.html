@@ -8,13 +8,11 @@ text {
   font: 300 16px "Helvetica Neue";
 }
 
-rect {
-  fill: #fff;
-}
+
 
 
 #package  {
-  stroke-width: 3px;
+  stroke-width: 0px;
 
   stroke: #f7d27d;
   fill: none;
@@ -120,7 +118,7 @@ rect {
 
 
 #node > rect {
-  stroke-width: 3px;
+  stroke-width: 0px;
   stroke: #333;
   fill: none;
 }
@@ -175,14 +173,14 @@ rect {
 </svg>
 
 <script src="http://d3js.org/d3.v2.min.js"></script>
-<script src="js/dagre.js"></script>
-<script src="js/PackageGraph.js"></script>
+<script src="assets/PackageGraph/js/dagre.js"></script>
+<script src="assets/PackageGraph/js/PackageGraph.js"></script>
 <script>
 
 var Grapdata = document.querySelector("#inputGraph");
 var Mainsvg = d3.select("svg");
 var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name=pmd_STANly&nodeID=1");
+var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","assets/PackageGraph/testjson/MainGraph.json");
 
 </script>
 

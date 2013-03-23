@@ -207,7 +207,7 @@ Graph.prototype.addLabels = function(selection) {
    labelGroup.append("rect").attr("id",function(d){return d.type;});
       	//foLabel이 안나오는 경우 값이 정상 출력됨
   var foLabel = labelGroup
-    .filter(function(d) { return d.label[0] === "<"; })
+    .filter(function(d) { return (d.label[0] === "<")&&(!clickNodeList[d.id]); })
     .append("foreignObject")
     .attr("class", "htmllabel").attr('requiredFeatures','http://www.w3.org/TR/SVG11/feature#Extensibility').append("xhtml:div")
     .style("float", "left");
@@ -223,18 +223,25 @@ Graph.prototype.addLabels = function(selection) {
    //SubGraphLabel 추가 
    	var SubArray = new Array();
  
-    var LabelData = labelGroup
+   labelGroup
     .filter(function(d) { 
-        return (d.subgraph)&&(clickNodeList[d.id]); })
+        return (d.label[0] !== "<")&&(d.subgraph)&&(clickNodeList[d.id]); })
     .append("text")
     .attr("id",function(d) {return "subgraph-"+d.id;}).on("click",function(d){
-		 			
-		 			console.log("Event Loading  "+d.id);
 		 			clickNodeList[d.id]= false;
-		 			console.log(clickNodeList[d.id]);
 					MainGraph.tryDraw();
 	 			});
-	 			
+	labelGroup
+    .filter(function(d) { 
+        return (d.label[0] === "<")&&(d.subgraph)&&(clickNodeList[d.id]); })
+     .append("foreignObject")
+     .attr("id",function(d) {return "subgraph-"+d.id;})
+     .attr("class", "htmllabel").attr('requiredFeatures','http://www.w3.org/TR/SVG11/feature#Extensibility').attr("y",-10)
+     .append("xhtml:div").style("float", "left")
+     .on("click",function(d){
+		 			clickNodeList[d.id]= false;
+					MainGraph.tryDraw();
+	 			});		
 
     labelGroup
     .filter(function(d) { 
@@ -243,7 +250,7 @@ Graph.prototype.addLabels = function(selection) {
     .attr("class",function(d) { 
     	SubArray.push("subgraph-"+d.id);
     return "subgraph-"+d.id; })
-    .attr("y",30);
+    .attr("y",40);
   
      //있는 놈들 서브 그래프 수집
 
@@ -259,7 +266,7 @@ Graph.prototype.addLabels = function(selection) {
 	 	
 	 	subSvg.attr("width",subGroup.node().getBBox().width+10);	//svg 테그가 자동적으로 크기를 리사이징 해주는줄 알았는데 그게 아님 이거 없으면 에러 남
 	 	subSvg.attr("height",subGroup.node().getBBox().height+10);
-	 	console.log(SubArray[i] + ":"+subGroup.node().getBBox().width+" ----- "+subGroup.node().getBBox().height);
+
 	 	
 	}
   
@@ -302,12 +309,30 @@ Graph.prototype.recalcLabels = function() {
   // 서브 그래프 라벨
     for(var i=0;i<this.subGraphList.length;i++)
   	{	  	  
-	 	this.nodes.select("#"+this.subGraphList[i].id)
+	 	this.nodes.select("#"+this.subGraphList[i].id).filter(function(d) { return d.label[0] !== "<"; })
 	 	.attr("text-anchor", "left")
         .append("tspan")
         .attr("dy", "1em")
         .text(function(d) { return d.label || " "; }); 	
         
+          var subfoLabel = this.nodes.select("#"+this.subGraphList[i].id).filter(function(d) { return d.label[0] === "<"; })
+          .attr("width", "10000");
+           
+            subfoLabel
+            .select("div")
+            .html(function(d) { 
+	            return d.label; })
+	        .each(function(d) {
+		        d.width = this.clientWidth;
+		        d.height = this.clientHeight;
+		        d.nodePadding = 10;
+		        
+		      });
+		      
+            subfoLabel
+            .attr("width", function(d) {  return d.width; })
+            .attr("height", function(d) { return d.height; })
+            .style("margin-bottom","10px");
     }	 
 
   labelGroup
