@@ -162,6 +162,7 @@
                     <script src="http://d3js.org/d3.v2.min.js"></script>
                     <script src="/Stanly/assets/PackageGraph/js/dagre.js"></script>
                     <script src="/Stanly/assets/PackageGraph/js/PackageGraph.js"></script>
+                    <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
                     <script>
                         $(function(){
                                  window.lastClick  = 2;
@@ -169,7 +170,8 @@
 				                       	window.lastClick = id;
 				                       	$("#codesize").empty();
 				                       	DrawCodeSize($("#codesize").width(),$("#codesize").height(),window.lastClick);
-				                       	 BuildMainView(window.lastClick,getProjectName());
+				                       	 BuildPollutionMainView(window.lastClick,getProjectName());
+				                       	 BuildDistanceChar(window.lastClick);
 				                       	console.log(window.lastClick );
 			                       	};
                             var Grapdata = document.querySelector("#inputGraph");
@@ -199,7 +201,7 @@
                 <div class="subtitle" title='The  Distance View displays the Main Sequence diagram for the packages of the "enclosing" subsystem.' style="height: 30px;background-color: #149bdf;">Distance</div>
                 <div id="distance" style="height: 350px;"></div>
                 <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
-                <script type="text/javascript" src="/Stanly/report/js/RanderDistance.js"></script>
+                
             </div>
             <!--<div style="margin-top: 10px;border:1px solid;border-color: #AAAAAA;">
                 <div class="subtitle" style="height: 30px;background-color: #149bdf;">Metrics</div>

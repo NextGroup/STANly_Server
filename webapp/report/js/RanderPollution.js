@@ -4,7 +4,7 @@ var categories;
 var name;
 var data;
 var subName;
-function BuildMainView(id,name){
+function BuildPollutionMainView(id,name){
     subName = name;
     $.ajax( {
         type :'GET'
@@ -96,5 +96,5 @@ function DrawPollutionChart()
     });
 }
 $(document).ready(function() {
-    BuildMainView(1,getProjectName());
+    BuildPollutionMainView(1,getProjectName());
 });

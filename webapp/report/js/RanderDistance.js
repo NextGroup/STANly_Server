@@ -53,12 +53,19 @@ $(window).resize(function(){
     DrowDistanceChart();
 });
 $(document).ready(function(){
+	
+	BuildDistanceChar(1);
+});
+function BuildDistanceChar(id)
+{
+    $('#distance').empty();
+    $('#tooltip').empty();
     $.ajax( {
         type :'GET'
         ,asyn :true
         ,url :'/Stanly/component/MartinDistance'
         ,dataType :"json"
-        ,data:{Name:getProjectName(),nodeID:1}
+        ,data:{Name:getProjectName(),nodeID:id}
         //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
         ,beforeSend : function(xhr){
         }
@@ -83,8 +90,7 @@ $(document).ready(function(){
         ,complete : function(xhr, textStatus) {
         }
     });
-
-});
+}
 function DrowDistanceChart(){
     var plot1b = $.jqplot('distance',[arr],option);
 
