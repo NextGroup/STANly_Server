@@ -34,7 +34,7 @@ Graph = function(svg, svgGroup, GraphId, graphML){
 	this.request.send(null);
 	
 
-		console.log(graphML);
+
 
 		self.GMLData = eval('('+this.request.responseText+')').dot;
 
@@ -71,7 +71,7 @@ Graph.prototype.tryDraw = function() {
         node.inEdges = [];
         node.outEdges = [];
       });
-      console.log(result.edges);
+
       result.edges.forEach(function(edge) {
         edge.source.outEdges.push(edge);
         edge.target.inEdges.push(edge);
@@ -107,7 +107,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   nodeEnter.append("rect").attr("id",function(d){return d.id+"rect";});
   this.addLabels(nodeEnter);
   	
-   console.log(edgeData); 
+
   this.nodes
    		.filter(function(d) { 
    		     var chk=true;
@@ -128,7 +128,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
 		 		
 		 		if(!clickNodeList[d.id])
 		 		{
-			 		console.log("AAAAAAA...");
+			
 					clickNodeList[d.id]= true;
 					self.nodes.filter(function(data){return data.id == d.id;})
 						.on("click",function(d){});
@@ -262,9 +262,10 @@ Graph.prototype.addLabels = function(selection) {
 		var subGroup = subSvg.append("g").attr("id",SubArray[i]).each(function(d){
 				subgraphData = d.subgraph;
 		});
-	 			self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData));	
+	 self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData));	
 	 	
-	 	subSvg.attr("width",subGroup.node().getBBox().width+10);	//svg 테그가 자동적으로 크기를 리사이징 해주는줄 알았는데 그게 아님 이거 없으면 에러 남
+	 	subSvg.attr("width",subGroup.node().getBBox().width+10);	
+	 	//svg 테그가 자동적으로 크기를 리사이징 해주는줄 알았는데 그게 아님 이거 없으면 에러 남
 	 	subSvg.attr("height",subGroup.node().getBBox().height+10);
 
 	 	
@@ -283,7 +284,7 @@ Graph.prototype.recalcLabels = function() {
     .attr("width", "10000");	//Web 객체의 사이즈를 알지 못하므로 width를 크게 설정
 
   foLabel
-    .select("div")
+    .select("div").filter(function(d) { return (!clickNodeList[d.id]); })
       .html(function(d) { 
       return d.label; })
       .each(function(d) {
@@ -314,8 +315,8 @@ Graph.prototype.recalcLabels = function() {
         .append("tspan")
         .attr("dy", "1em")
         .text(function(d) { return d.label || " "; }); 	
-        
-          var subfoLabel = this.nodes.select("#"+this.subGraphList[i].id).filter(function(d) { return d.label[0] === "<"; })
+     
+      var subfoLabel = this.nodes.select("#"+this.subGraphList[i].id).filter(function(d) { return d.label[0] === "<"; })
           .attr("width", "10000");
            
             subfoLabel
@@ -326,6 +327,7 @@ Graph.prototype.recalcLabels = function() {
 		        d.width = this.clientWidth;
 		        d.height = this.clientHeight;
 		        d.nodePadding = 10;
+		        console.log("Hello");
 		        
 		      });
 		      
@@ -333,7 +335,9 @@ Graph.prototype.recalcLabels = function() {
             .attr("width", function(d) {  return d.width; })
             .attr("height", function(d) { return d.height; })
             .style("margin-bottom","10px");
-    }	 
+   
+         
+     }	 
 
   labelGroup
     .each(function(d) {
@@ -393,8 +397,7 @@ Graph.prototype.update = function() {
        	 .interpolate("linear")
        	 (points);
         }).attr("stroke",function(d) {  
-      	console.log("Path");
-      	console.log(d.tangled);
+
       return (d.tangled) ? "#f00":"#000" });
 
     this.svgGroup

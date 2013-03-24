@@ -280,6 +280,7 @@ public class MetricViewService {
 		String SubGraphPath="/Stanly/component/CompositionView?Name="+commit.getPInfo().getName()+"&nodeID=";
 		HashMap<String,Integer> childMap = new HashMap<String,Integer>();
 		HashSet<Integer> IsClass = new HashSet<Integer>();
+		
 		try{
 			List<ProjectElementNode> ignore=null;
 			List<ProjectElementNode> Child = EsearchDAO.getChildNode(parent.getName(), parent.getNSLeft(), parent.getNSRight(), parent.getType(), commit);
@@ -289,12 +290,16 @@ public class MetricViewService {
 				String Type=null;
 				boolean subGraph;
 				boolean Create=true;
-				
+				String imgSrc =null;
 				switch(node.getType())
 				{
 				case PROJECT:
 				case LIBRARY:
+					
+					imgSrc="'/Stanly/assets/PackageGraph/img/subsystem.gif'";
 				case PACKAGESET:
+					if(imgSrc==null)
+					imgSrc="'/Stanly/assets/PackageGraph/img/tree.gif'";
 				case PACKAGE:
 					//자기 자신을 제외한 다른 요소는 예외 처리용으로 등록 
 					if(node.getName().contentEquals(parent.getName()))
@@ -307,7 +312,8 @@ public class MetricViewService {
 					if(node.getNSRight()-node.getNSLeft()>1)
 						subGraph=true;
 					Type = "package";
-				
+					if(imgSrc==null)
+					imgSrc="'/Stanly/assets/PackageGraph/img/package.gif'";
 					
 					break;
 				case CLASS:
@@ -315,13 +321,16 @@ public class MetricViewService {
 						subGraph=true;
 					Type = "JavaClass";
 					IsClass.add(node.getNSLeft());
-					
+					if(imgSrc==null)
+					imgSrc="'/Stanly/assets/PackageGraph/img/class.gif'";
 					break;
 				case INTERFACE:
 					if(node.getNSRight()-node.getNSLeft()>1)
 						subGraph=true;
 					Type = "Interface";
 					IsClass.add(node.getNSLeft());
+					if(imgSrc==null)
+					imgSrc="'/Stanly/assets/PackageGraph/img/interface.gif'";
 					break;
 				default:
 					Create=false;
@@ -330,7 +339,7 @@ public class MetricViewService {
 				if(Create)
 				{
 					childMap.put(node.getName(), node.getNSLeft());
-					composition.addNode(new CompositionNode(Integer.toString(node.getNSLeft()),sprite(node.getName()),SubGraphPath+node.getNSLeft(),Type));
+					composition.addNode(new CompositionNode(Integer.toString(node.getNSLeft()),"<div style='padding: 10px;'><img src ="+imgSrc+" width='16' height='16'/>"+sprite(node.getName())+"</div>",SubGraphPath+node.getNSLeft(),Type));
 					
 				}
 			}
