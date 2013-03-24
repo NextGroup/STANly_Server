@@ -104,7 +104,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
       .attr("class",this.id+"-node")
       .each(function(d) { d.nodePadding = 10; });
       
-  nodeEnter.append("rect").attr("id",function(d){return d.id+"rect";});
+  nodeEnter.append("rect").attr("id",function(d){return d.type;});
   this.addLabels(nodeEnter);
   	
 
