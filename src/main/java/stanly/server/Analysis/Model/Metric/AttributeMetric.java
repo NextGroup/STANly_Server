@@ -20,6 +20,7 @@ import stanly.server.Analysis.Model.Type.NodeType;
 @PrimaryKeyJoinColumn(name="EMID")
 public class AttributeMetric extends ElementNodeMetric{
 	
+
 	/**
 	 * 인스트럭션 수
 	 * Count Metrics

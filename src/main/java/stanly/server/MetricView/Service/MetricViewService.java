@@ -339,7 +339,7 @@ public class MetricViewService {
 				if(Create)
 				{
 					childMap.put(node.getName(), node.getNSLeft());
-					composition.addNode(new CompositionNode(Integer.toString(node.getNSLeft()),"<div style='padding: 10px;'><img src ="+imgSrc+" width='16' height='16'/>"+sprite(node.getName())+"</div>",SubGraphPath+node.getNSLeft(),Type));
+					composition.addNode(new CompositionNode(Integer.toString(node.getNSLeft()),"<div style='padding: 10px;'><img src ="+imgSrc+" width='16' height='16'/>"+sprite(node.getName())+"</div>",SubGraphPath+node.getNSLeft(),Integer.toString(NSLeft),Type));
 					
 				}
 			}

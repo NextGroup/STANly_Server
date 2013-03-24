@@ -3,17 +3,18 @@ package stanly.server.MetricView.Json.DoT;
 public class CompositionNode {
 	private String id;
 	private String label;
-
+	private String parent;
 	private String subgraph;
 	private String type;
 	
 	
-	public CompositionNode(String id, String label, String subgraph, String type) {
+	public CompositionNode(String id, String label, String subgraph, String parent, String type) {
 		super();
 		this.id = id;
 		this.label = label;
 		this.subgraph = subgraph;
 		this.type = type;
+		this.parent = parent;
 	}
 	public String getLabel() {
 		return label;
@@ -40,7 +41,7 @@ public class CompositionNode {
 	public String toString() {
 		String Data;
 		if(subgraph != null)
-			Data = id+"[label= \\\"" + label + "\\\", subgraph=\\\"" + subgraph
+			Data = id+"[label= \\\"" + label + "\\\", parent= \\\"" + parent + "\\\", subgraph=\\\"" + subgraph
 				+ "\\\", type=\\\"" + type + "\\\"];";
 		else
 			Data  = id+"[label= \\\"" + label + "\\\"" + ", type=\\\"" + type + "\\\"];";

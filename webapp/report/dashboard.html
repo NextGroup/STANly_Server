@@ -164,10 +164,17 @@
                     <script src="/Stanly/assets/PackageGraph/js/PackageGraph.js"></script>
                     <script>
                         $(function(){
+                                 window.lastClick  = 2;
+			                        function NodeEvent(id){
+				                       	window.lastClick = id;
+				                       	$("#codesize").empty();
+				                       	DrawCodeSize($("#codesize").width(),$("#codesize").height(),window.lastClick);
+				                       	console.log(window.lastClick );
+			                       	};
                             var Grapdata = document.querySelector("#inputGraph");
                             var Mainsvg = d3.select("svg");
                             var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getProjectName()+"&nodeID=2");
+                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getProjectName()+"&nodeID=2",NodeEvent);
                             /*
                             var option={
                                 minWidth: $('.subtitle').width(),
@@ -241,7 +248,7 @@
                     var csd_svg,csd_grandparent;
                     var csd_transition;
                     $(function(){
-                        DrawCodeSize($("#codesize").width(),$("#codesize").height());
+                        DrawCodeSize($("#codesize").width(),$("#codesize").height(),2);
                     });
                     $(window).resize(codeSizeResizeFunc);
                     function codeSizeResizeFunc(){
@@ -273,7 +280,7 @@
                         layout(csd_root);
                         csd_transition(csd_last_d,-1);
                     }
-                    function DrawCodeSize(pallet_width,pallet_height) {
+                    function DrawCodeSize(pallet_width,pallet_height,rootID) {
 
                         //var option={
                         //    minWidth: $('.subtitle').width()-0.5,
@@ -324,8 +331,8 @@
                                 .attr("y", 6 - csd_margin.top)
                                 .attr("dy", ".75em");
 
-                        d3.json("/Stanly/component/CodeSize?Name="+getProjectName()+"&nodeID=1", function(root) {
-                            root = root.children[0];
+                        d3.json("/Stanly/component/CodeSize?Name="+getProjectName()+"&nodeID="+rootID, function(root) {
+                            root = root;
                             csd_root = csd_last_d = root;
                             initialize(root);
                             accumulate(root);

@@ -20,7 +20,7 @@ function createRequst(){
 var MainGraph;
 var clickNodeList = new Array();
 
-Graph = function(svg, svgGroup, GraphId, graphML){
+Graph = function(svg, svgGroup, GraphId, graphML,nodeevent){
 
 	this.nodes;
 	this.edges;
@@ -34,7 +34,8 @@ Graph = function(svg, svgGroup, GraphId, graphML){
 	this.request.send(null);
 	
 
-
+	if(nodeevent!==null)
+		this.nodeevent = nodeevent;
 
 		self.GMLData = eval('('+this.request.responseText+')').dot;
 
@@ -133,6 +134,8 @@ Graph.prototype.draw = function(nodeData, edgeData) {
 					self.nodes.filter(function(data){return data.id == d.id;})
 						.on("click",function(d){});
 					MainGraph.tryDraw();
+					if(self.nodeevent)
+						self.nodeevent(d.id);
 			//이벤트 중첩 발생을 막기 위한 코드 임시적으로 클릭 이벤트를 없앤다.
 				}	
 				
@@ -241,6 +244,8 @@ Graph.prototype.addLabels = function(selection) {
      .on("click",function(d){
 		 			clickNodeList[d.id]= false;
 					MainGraph.tryDraw();
+						if(self.nodeevent)
+						self.nodeevent(d.parent);
 	 			});		
 
     labelGroup
@@ -262,7 +267,7 @@ Graph.prototype.addLabels = function(selection) {
 		var subGroup = subSvg.append("g").attr("id",SubArray[i]).each(function(d){
 				subgraphData = d.subgraph;
 		});
-	 self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData));	
+	 self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData, self.nodeevent));	
 	 	
 	 	subSvg.attr("width",subGroup.node().getBBox().width+10);	
 	 	//svg 테그가 자동적으로 크기를 리사이징 해주는줄 알았는데 그게 아님 이거 없으면 에러 남
