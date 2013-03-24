@@ -167,12 +167,15 @@
                         $(function(){
                                  window.lastClick  = 2;
 			                        function NodeEvent(id){
+			                        	if(	window.lastClick != id)
+				                       	{
 				                       	window.lastClick = id;
-				                       	$("#codesize").empty();
-				                       	DrawCodeSize($("#codesize").width(),$("#codesize").height(),window.lastClick);
-				                       	 BuildPollutionMainView(window.lastClick,getProjectName());
-				                       	 BuildDistanceChar(window.lastClick);
-				                       	console.log(window.lastClick );
+				                       		$("#codesize").empty();
+				                       		DrawCodeSize($("#codesize").width(),$("#codesize").height(),window.lastClick);
+				                       		BuildPollutionMainView(window.lastClick,getProjectName());
+				                       		BuildDistanceChar(window.lastClick);
+				                       		console.log(window.lastClick );
+				                       		}
 			                       	};
                             var Grapdata = document.querySelector("#inputGraph");
                             var Mainsvg = d3.select("svg");
