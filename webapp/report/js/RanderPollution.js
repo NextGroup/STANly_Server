@@ -20,7 +20,7 @@ function BuildPollutionMainView(id,name){
             data = new Array();
             for(var i=0;i<jsonData.PollutionScore.length;i++)
             {
-                //if(Number(jsonData.PollutionScore[i]) != 0)
+                if(Number(jsonData.PollutionScore[i]) != 0)
                 {
                     categories.push(jsonData.PollutionName[i]);
                     data.push({y:Number(jsonData.PollutionScore[i]),color:colors[i]});

@@ -135,7 +135,7 @@ Graph.prototype.draw = function(nodeData, edgeData) {
 						.on("click",function(d){});
 					MainGraph.tryDraw();
 					if(self.nodeevent)
-						self.nodeevent(d.id);
+						self.nodeevent(d.id,$(d.label).text());
 			//이벤트 중첩 발생을 막기 위한 코드 임시적으로 클릭 이벤트를 없앤다.
 				}	
 				
