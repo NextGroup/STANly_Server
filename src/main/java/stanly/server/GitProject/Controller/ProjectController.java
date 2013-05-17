@@ -118,6 +118,7 @@ public class ProjectController {
     		if(git.isDone()){
     			result.setResult(true);
     			session.removeAttribute("Git");
+    	
     		}
     		
     		}catch(Exception e){
