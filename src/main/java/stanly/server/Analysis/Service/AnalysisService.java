@@ -411,8 +411,9 @@ public class AnalysisService {
 		switch(relation)
 		{
 		case EXTENDS:
+			return NodeRelationType.EXTENDS;	
 		case IMPLEMENTS:
-			return NodeRelationType.EXTENDS;		//요기 문제다 혜성아... 2가지 구분해줘야될듯? 아닌가
+			return NodeRelationType.IMPLEMENTS;		//요기 문제다 혜성아... 2가지 구분해줘야될듯? 아닌가 // 바꿈요 
 		case CONTAINS:
 			return NodeRelationType.CONTAINS;
 		case RETURNS:
