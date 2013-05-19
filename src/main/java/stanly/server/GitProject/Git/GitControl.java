@@ -2,9 +2,6 @@ package stanly.server.GitProject.Git;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.jgit.api.Git;
@@ -18,12 +15,13 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
-
-import stanly.server.GitProject.Model.ProjectCommit;
-import stanly.server.GitProject.Model.ProjectInfo;
 
 /**
  * @author Karuana
@@ -102,6 +100,20 @@ public class GitControl {
 		return git.log(); 
     }
     
+    
+    public RevWalk getCommitData() throws MissingObjectException, IncorrectObjectTypeException, IOException
+    {
+    		RevWalk walk = new RevWalk(localRepo);
+		ObjectId rootId = localRepo.resolve("HEAD");
+		if(rootId!=null)
+		{
+			RevCommit t = walk.parseCommit(rootId);
+			walk.markStart(t);
+			return walk;
+		}
+		
+		return null;
+    }
 
     
 }

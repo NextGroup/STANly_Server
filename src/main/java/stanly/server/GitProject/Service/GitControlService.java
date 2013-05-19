@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -42,9 +43,9 @@ public class GitControlService {
 			String path = Git.Clone();
 			ProjectInfo project = projectService.addProject(uRL, path, ProjectName);
 			
-			Iterable<RevCommit> Temp = Git.getCommand().all().call();
+			RevWalk Temp = Git.getCommitData();
 	
-		     for (RevCommit rev : Temp) {
+		     for (RevCommit rev =Temp.next();rev !=null;rev=Temp.next()){
 		    	 		
 					org.eclipse.jgit.lib.PersonIdent Test1 = rev.getAuthorIdent();
 					Date time  = new Date((long)rev.getCommitTime()*1000);
