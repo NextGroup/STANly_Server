@@ -99,6 +99,7 @@ public class AnalysisController {
 	    		if(rootName.isDone()){
 	    			result.setResult(true);
 	    			session.removeAttribute("Analysis");
+	    			session.removeAttribute("ProjectName");
 	    		}
 	    		
 	    		}catch(Exception e){

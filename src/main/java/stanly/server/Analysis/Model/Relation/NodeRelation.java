@@ -15,7 +15,7 @@ import stanly.server.GitProject.Model.ProjectCommit;
 
 /**
  * @author Karuana
- * 노드간의 관계를 저장하기 위한 객체 
+ * 노드간의 관계를 저장하기 위한 객체 // 단순히 화면에 표시를 위해서만 사용, Composition은 다른 테이블을 이용할 
  */
 @Entity
 @Table(name = "NodeRelation")

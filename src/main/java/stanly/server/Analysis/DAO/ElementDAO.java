@@ -67,7 +67,7 @@ public class ElementDAO {
 			
 			if(node.getEMetric()!=null)
 			{
-				logger.info("Node Metric"+node.getEMetric());
+		
 				//노드에 해당하는 Metric 객체를 저장한다.
 				switch(type)
 				{	

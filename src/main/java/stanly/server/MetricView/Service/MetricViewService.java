@@ -295,7 +295,7 @@ public class MetricViewService {
 				{
 				case PROJECT:
 				case LIBRARY:
-					
+						
 					imgSrc="'/Stanly/assets/PackageGraph/img/subsystem.gif'";
 				case PACKAGESET:
 					if(imgSrc==null)

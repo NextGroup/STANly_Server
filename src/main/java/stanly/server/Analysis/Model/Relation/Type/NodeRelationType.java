@@ -6,6 +6,7 @@ package stanly.server.Analysis.Model.Relation.Type;
  */
 public enum NodeRelationType {
 	EXTENDS, 
+	IMPLEMENTS,
 	CONTAINS, 
 	RETURNS, 
 	HAS_PARAM,

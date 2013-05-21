@@ -125,7 +125,7 @@ public class RelationDAO {
 		List<NodeRelation> NodeRList = null;
 		try{
 			Session session = sessionFactory.getCurrentSession();
-		
+			//해당하는 라이브러리 부터 찾고, 그 다음 아래 범위를 라이브러리 범위로 줄인다.
 			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
 			 Criterion commitEq = Restrictions.eq("commit", CommitID);
 			 Criterion  Srclike = Restrictions.like("SrcName", SrcName+"%");
