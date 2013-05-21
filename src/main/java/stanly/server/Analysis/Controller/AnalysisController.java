@@ -107,3 +107,68 @@ public class AnalysisController {
 	    		return gson.toJson(result);
 	 }
 }
+/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@/**
+ * 분석과 관련된 컨트롤러 객체 clone받은 Git 프로젝트를 정적 분석하여 정보를 수집한다.
+ * @author Karuana 
+ */
+/**
+ * @author Karuana
+ *
+ */
+@
