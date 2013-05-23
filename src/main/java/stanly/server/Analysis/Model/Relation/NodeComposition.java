@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import stanly.server.Analysis.Model.Relation.Type.NodeRelationLevel;
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -30,6 +29,9 @@ public class NodeComposition {
 	@JoinColumn(name = "COMMITID", nullable = false)
 	private ProjectCommit commit;
 	
+	/**
+	 * 이값은 트리구조에서 NSLeft값을 나타냄
+	 */
 	@Column(name = "SRCID" , nullable = false)
 	private int SrcID;
 	
@@ -41,40 +43,33 @@ public class NodeComposition {
 
 	
 	/**
-	 * 노드의 참조 관계를 대표할 수 있는 것을 나타내는 것 
+	 * 노드의 참조 관계를 대표할 수 있는 것을 나타내는 것
+	 *  
 	 */
 	@Column(name="TYPE") 
 	@Enumerated(EnumType.STRING)
 	private NodeRelationType type;
 	
-	@Column(name="Level") 
-	@Enumerated(EnumType.STRING)
-	private NodeRelationLevel level;
-	
 
 
 
 
 
 
-	/**
-	 * @param commit 커밋 시
-	 * @param srcID 아이디 (NS Left)
-	 * @param tarID 타겟 아이디(NS Right)
-	 * @param count 카운트 
-	 * @param type 릴레이션을 대표하는 타입 
-	 * @param level 컴포지션의 수준 
-	 */
+
+
 	public NodeComposition(ProjectCommit commit, int srcID, int tarID,
-			int count, NodeRelationType type, NodeRelationLevel level) {
+			int count, NodeRelationType type) {
 		super();
 		this.commit = commit;
 		SrcID = srcID;
 		TarID = tarID;
 		Count = count;
 		this.type = type;
-		this.level = level;
 	}
+
+
+
 
 
 	public NodeRelationType getType() {
@@ -82,9 +77,7 @@ public class NodeComposition {
 	}
 
 	
-	public NodeRelationLevel getLevel() {
-		return level;
-	}
+
 
 
 	public ProjectCommit getCommit() {
