@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
+import net.sourceforge.pmd.lang.java.rule.stanly.DomainComposition;
 import net.sourceforge.pmd.lang.java.rule.stanly.DomainRelation;
 import net.sourceforge.pmd.lang.java.rule.stanly.Relations;
 import net.sourceforge.pmd.lang.java.rule.stanly.StanlyAnalysisData;
@@ -39,6 +40,7 @@ import stanly.server.Analysis.Model.Metric.MethodMetric;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
 import stanly.server.Analysis.Model.Metric.PackageSetMetric;
 import stanly.server.Analysis.Model.Metric.ProjectMetric;
+import stanly.server.Analysis.Model.Relation.NodeComposition;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.Analysis.Model.Type.NodeType;
@@ -146,6 +148,83 @@ public class AnalysisService {
 		return serverNode;
 	}
 
+
+
+	public boolean AddNode(ProjectCommit commit)
+	{
+		
+		//Test Case 만들기    
+		try{
+
+
+			ArrayList<ProjectElementNode> list = new ArrayList<ProjectElementNode>();
+			list.add(new ProjectElementNode("stanly.server", "NONE", 1, 6,NodeType.PACKAGE));
+			list.add(new ProjectElementNode("stanly.server.Analysis", "stanly.server", 2, 3,NodeType.PACKAGE));
+			list.add(new ProjectElementNode("stanly.server.GitProject", "stanly.server", 4, 5,NodeType.PACKAGE));
+			// Data Save
+			for(int i=0;i<list.size();i++)
+			{
+				list.get(i).setCommit(commit);
+				nodeDao.insertElement(list.get(i));
+			}
+
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return false;
+		}
+		return true;
+	}
+	public List<ProjectElementNode> getTree(ProjectCommit CommitID)
+	{
+		return nodeDao.getNodeTree(CommitID);
+	}
+	public ProjectElementNode getNode(ProjectCommit commitID, String projectName)
+	{
+		return nodeDao.getNode(commitID, projectName);
+	}
+	
+	/**
+	 * 데이터 가져와서 server에 노드 생성하고 DB넣기
+	 * @since 2013. 3. 10.오후 2:27:07
+	 * @author JeongSeungsu
+	 * @param commitID
+	 * @param path
+	 */
+	public ElementNode AnalysisElementNode(ProjectCommit commitID, String path)
+	{
+		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
+		InsertIterationElementNode(commitID,data.getRootNode());
+		InputRelation(commitID,data.getRelationList());				//이거 테스트 검증이 필요함
+		InputNodeComposition(commitID,data.getCompositionList());
+
+		//Composition 뷰를 위한 자료구조 추가 (NodeComposition)
+		
+		
+		return data.getRootNode();
+	}
+	private void InsertNodeComposition(ProjectCommit commit,int srcID, int tarID,int count, 
+			NodeRelationType type)
+	{
+		relationDao.insertComposition(new NodeComposition(commit, srcID, tarID, count, type));
+	}
+	
+	private void InputNodeComposition(ProjectCommit commitID, List<DomainComposition> nodeCompositionList)
+	{
+		try
+		{
+			for(DomainComposition nodecomposition : nodeCompositionList)
+			{
+				NodeRelationType type = ConvertClientRelationTypeToServerRelationType(nodecomposition.getDelegateType());
+				InsertNodeComposition(commitID, nodecomposition.getSourceID(), nodecomposition.getTargetID(), nodecomposition.getRelationCount(), type);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage() + "\n" +e.getStackTrace()); 
+		}
+	}
+	
 	/**
 	 * 
 	 * @param clientNode
@@ -328,56 +407,7 @@ public class AnalysisService {
 	}
 	
 	
-
-	public boolean AddNode(ProjectCommit commit)
-	{
-		
-		//Test Case 만들기    
-		try{
-
-
-			ArrayList<ProjectElementNode> list = new ArrayList<ProjectElementNode>();
-			list.add(new ProjectElementNode("stanly.server", "NONE", 1, 6,NodeType.PACKAGE));
-			list.add(new ProjectElementNode("stanly.server.Analysis", "stanly.server", 2, 3,NodeType.PACKAGE));
-			list.add(new ProjectElementNode("stanly.server.GitProject", "stanly.server", 4, 5,NodeType.PACKAGE));
-			// Data Save
-			for(int i=0;i<list.size();i++)
-			{
-				list.get(i).setCommit(commit);
-				nodeDao.insertElement(list.get(i));
-			}
-
-		}catch(Exception e)
-		{
-			logger.error(e.getMessage());
-			return false;
-		}
-		return true;
-	}
-	public List<ProjectElementNode> getTree(ProjectCommit CommitID)
-	{
-		return nodeDao.getNodeTree(CommitID);
-	}
-	public ProjectElementNode getNode(ProjectCommit commitID, String projectName)
-	{
-		return nodeDao.getNode(commitID, projectName);
-	}
 	
-	/**
-	 * 데이터 가져와서 server에 노드 생성하고 DB넣기
-	 * @since 2013. 3. 10.오후 2:27:07
-	 * @author JeongSeungsu
-	 * @param commitID
-	 * @param path
-	 */
-	public ElementNode AnalysisElementNode(ProjectCommit commitID, String path)
-	{
-		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
-		InsertIterationElementNode(commitID,data.getRootNode());
-		InputRelation(commitID,data.getRelationList());				//이거 테스트 검증이 필요함
-		
-		return data.getRootNode();
-	}
 	
 	private void InputRelation(ProjectCommit commitID,List<DomainRelation> relationList) 
 	{
