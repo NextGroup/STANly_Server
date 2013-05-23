@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Relation.NodeComposition;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -52,6 +53,28 @@ public class RelationDAO {
 		}
 		
 		return relation;
+	}
+	
+	/**
+	 * DB에 Composition을 넣는다.
+	 * @since 2013. 5. 19.오전 1:23:52
+	 * @author JeongSeungsu
+	 * @param composition
+	 * @return
+	 */
+	public NodeComposition insertComposition(NodeComposition composition)
+	{
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			session.save(composition);
+		
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+		
+		return composition;
 	}
 	
 	/**
