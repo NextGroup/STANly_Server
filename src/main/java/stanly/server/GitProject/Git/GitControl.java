@@ -23,6 +23,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
 
+import com.jcraft.jsch.Logger;
+
 /**
  * @author Karuana
  *	JGit을 기반으로 git을 컨트롤하는 객체이다. 
@@ -97,7 +99,9 @@ public class GitControl {
      * @return
      */
     public LogCommand getCommand(){
+    		int a=10;
 		return git.log(); 
+		
     }
     
     
