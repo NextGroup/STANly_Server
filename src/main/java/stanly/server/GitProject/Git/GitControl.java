@@ -2,6 +2,7 @@ package stanly.server.GitProject.Git;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.jgit.api.Git;
@@ -15,15 +16,16 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
-
-import com.jcraft.jsch.Logger;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 
 /**
  * @author Karuana
@@ -119,5 +121,22 @@ public class GitControl {
 		return null;
     }
 
+    
+    public List<DiffEntry> getDiffList(RevCommit old, RevCommit now) throws IncorrectObjectTypeException, IOException, GitAPIException
+    {
+		ObjectReader reader = localRepo.newObjectReader();
+		CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+		if(old!=null)
+		oldTreeIter.reset(reader, old.getTree().getId());
+		
+		CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+		newTreeIter.reset(reader, now.getTree().getId());
+		
+    		return git.diff()
+                    .setNewTree(newTreeIter)
+                    .setOldTree(oldTreeIter).setOutputStream(System.out).setShowNameAndStatusOnly(false)
+                    .call();
+	
+    }
     
 }

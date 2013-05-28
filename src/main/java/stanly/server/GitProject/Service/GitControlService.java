@@ -49,11 +49,11 @@ public class GitControlService {
 		    	 		
 					org.eclipse.jgit.lib.PersonIdent Test1 = rev.getAuthorIdent();
 					Date time  = new Date((long)rev.getCommitTime()*1000);
-					
+					//커밋 시점에서 작성자 분류할 필요 있음 
 					projectService.addCommit(project, time, rev.getFullMessage(),Test1.getName());
 
 			}
-  
+		     // 커밋 리스트 끝나고 변경 이력 넣기
 			
 		}catch(Exception e)
 		{

@@ -15,6 +15,8 @@ import stanly.server.GitProject.DAO.ProjectDAO;
 import stanly.server.GitProject.DAO.ProjectState;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
+import stanly.server.GitProject.Model.committer.CommitterInfluence;
+import stanly.server.GitProject.Model.committer.ProjectCommitter;
 
 /**
  * @author Karuana
@@ -79,6 +81,21 @@ public class ProjectInfoService {
 			return null;
 		}
 		return commit;
+	}
+	
+	
+	/**
+	 * 작성해야 하는 부분 
+	 * @return
+	 */
+	public ProjectCommitter addCommitter()
+	{
+		return null;
+	}
+	
+	public CommitterInfluence addInfluence()
+	{
+		return null;
 	}
 	
 	
