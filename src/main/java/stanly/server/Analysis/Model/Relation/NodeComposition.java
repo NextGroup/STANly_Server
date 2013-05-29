@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,13 +19,14 @@ import stanly.server.GitProject.Model.ProjectCommit;
  *	Composition 구성 정보를 저장하는 데이터, 이를 바탕으로 Composition을 그릴 수 있도록 변경할 
  */
 @Entity
-@Table(name = "NodeComposition")
+@Table(name = "NODE_COMPOSITION")
 public class NodeComposition {
-	@Id
-	@Column( name = "NCID" , nullable = false)
-	@GeneratedValue
-	private Integer NCID;
 	
+	@Id
+	@Column( name = "NRID" , nullable = false)
+	@GeneratedValue
+	private Integer NRID;
+
 	@ManyToOne( targetEntity  = stanly.server.GitProject.Model.ProjectCommit.class)
 	@JoinColumn(name = "COMMITID", nullable = false)
 	private ProjectCommit commit;
@@ -38,25 +40,19 @@ public class NodeComposition {
 	@Column(name = "TARID" , nullable = false)
 	private int TarID;
 	
-	@Column(name = "Count" , nullable = false)
-	private int Count;
+	@Column(name = "NodeCount" , nullable = false)
+	private int NodeCount;
 
 	
 	/**
 	 * 노드의 참조 관계를 대표할 수 있는 것을 나타내는 것
 	 *  
 	 */
-	@Column(name="TYPE") 
-	@Enumerated(EnumType.STRING)
 	private NodeRelationType type;
-	
-
-
-
-
-
-
-
+	public NodeComposition()
+	{
+		
+	}
 
 	public NodeComposition(ProjectCommit commit, int srcID, int tarID,
 			int count, NodeRelationType type) {
@@ -64,20 +60,18 @@ public class NodeComposition {
 		this.commit = commit;
 		SrcID = srcID;
 		TarID = tarID;
-		Count = count;
+		NodeCount = count;
 		this.type = type;
 	}
 
 
 
 
-
+	@Column(name="TYPE") 
+	@Enumerated(EnumType.STRING)
 	public NodeRelationType getType() {
 		return type;
 	}
-
-	
-
 
 
 	public ProjectCommit getCommit() {
@@ -89,13 +83,6 @@ public class NodeComposition {
 	public void setCommit(ProjectCommit commit) {
 		this.commit = commit;
 	}
-
-
-
-	public Integer getNCID() {
-		return NCID;
-	}
-
 
 
 	public int getSrcID() {
@@ -110,10 +97,18 @@ public class NodeComposition {
 
 
 
-	public int getCount() {
-		return Count;
+	public int getNodeCount() {
+		return NodeCount;
+	}
+
+	public Integer getNRID() {
+		return NRID;
+	}
+
+	public void setNRID(Integer nRID) {
+		NRID = nRID;
 	}
 	
 
-	
+
 }

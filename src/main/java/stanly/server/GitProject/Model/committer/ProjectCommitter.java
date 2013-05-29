@@ -15,7 +15,7 @@ import stanly.server.GitProject.Model.ProjectInfo;
 public class ProjectCommitter {
 	
 	@Id
-	@Column( name = "PROJECT_ID")
+	@Column( name = "ID")
 	@GeneratedValue
 	private Integer id;
 	
@@ -39,7 +39,9 @@ public class ProjectCommitter {
 	public ProjectInfo getPInfo() {
 		return PInfo;
 	}
-
+	public void setPInfo(ProjectInfo pInfo) {
+		PInfo = pInfo;
+	}
 	@Override
 	public String toString() {
 		return "ProjectCommitter [id=" + id + ", committer=" + committer

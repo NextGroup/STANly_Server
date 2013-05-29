@@ -21,6 +21,7 @@ import stanly.server.Analysis.DAO.ElementDAO;
 import stanly.server.Analysis.DAO.RelationDAO;
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
+import stanly.server.Analysis.Model.Relation.NodeComposition;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.Analysis.Model.Type.NodeType;
@@ -111,7 +112,10 @@ public class AnalysisServiceTest {
 	public void RelationTest()
 	{
 		ProjectCommit TestCommit = projectService.getLastCommit(info);
-		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.MainClass","Stanly.server.Analysis.SubGraph",TestCommit, NodeRelationType.ACCESSES));
+		NodeRelation Temp = new NodeRelation("Stanly.server.Analysis.MainClass","Stanly.server.Analysis.SubGraph",TestCommit, NodeRelationType.ACCESSES);
+		
+		Relation.insertRelation(Temp);
+		
 		Relation.insertRelation(new NodeRelation("Stanly.server.GitProject.Model.MainModel","Stanly.server.Analysis.SubGraph",TestCommit, NodeRelationType.CALLS));
 		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.Realtion","Stanly.server.Analysis.SubGraph",TestCommit,NodeRelationType.EXTENDS));
 		Relation.insertRelation(new NodeRelation("Stanly.server.Analysis.ElementNode","Stanly.server.GitProject.Model.MainModel",TestCommit,NodeRelationType.HAS_PARAM));
@@ -128,5 +132,13 @@ public class AnalysisServiceTest {
 	public void TestElementDAO()
 	{
 		eDAO.insertElement(null);
+	}
+	
+	@Test
+	public void NodeCompositionTest(){
+		ProjectCommit TestCommit = projectService.getCommitList("Logdog").get(0);
+		NodeComposition n = new NodeComposition(TestCommit,0,2,4,NodeRelationType.ACCESSES);
+		Relation.insertComposition(n);
+		System.out.println(n);
 	}
 }
