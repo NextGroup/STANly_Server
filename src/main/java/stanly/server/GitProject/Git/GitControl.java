@@ -23,9 +23,12 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
+
+import com.jcraft.jsch.Logger;
 
 /**
  * @author Karuana
@@ -115,6 +118,9 @@ public class GitControl {
 		{
 			RevCommit t = walk.parseCommit(rootId);
 			walk.markStart(t);
+		
+			walk.sort(RevSort.COMMIT_TIME_DESC, true);
+			walk.sort(RevSort.REVERSE, true);
 			return walk;
 		}
 		
@@ -125,16 +131,22 @@ public class GitControl {
     public List<DiffEntry> getDiffList(RevCommit old, RevCommit now) throws IncorrectObjectTypeException, IOException, GitAPIException
     {
 		ObjectReader reader = localRepo.newObjectReader();
+		
 		CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
 		if(old!=null)
-		oldTreeIter.reset(reader, old.getTree().getId());
+		{
+			oldTreeIter.reset(reader, old.getTree().getId());
+			System.out.println("Old: "+old.getCommitTime());
+			System.out.println("Old: "+now.getCommitTime());
+		}
 		
 		CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
 		newTreeIter.reset(reader, now.getTree().getId());
 		
+	
     		return git.diff()
                     .setNewTree(newTreeIter)
-                    .setOldTree(oldTreeIter).setOutputStream(System.out).setShowNameAndStatusOnly(false)
+                    .setOldTree(oldTreeIter).setShowNameAndStatusOnly(false)
                     .call();
 	
     }
