@@ -19,11 +19,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import stanly.server.Analysis.DAO.ElementDAO;
 import stanly.server.Analysis.DAO.RelationDAO;
+import stanly.server.Analysis.DAO.StaticAnalysisDAO;
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.PackageMetric;
 import stanly.server.Analysis.Model.Relation.NodeComposition;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
+import stanly.server.Analysis.Model.StaticAnalysis.StaticAnalysisMetric;
+import stanly.server.Analysis.Model.StaticAnalysis.Type.StaticAnalysisType;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.ProjectInfo;
@@ -44,6 +47,8 @@ public class AnalysisServiceTest {
 	@Autowired
 	private RelationDAO Relation;
 	
+	@Autowired
+	private StaticAnalysisDAO SADAO;
 	
 	private ProjectInfo info; 
 	
@@ -140,5 +145,15 @@ public class AnalysisServiceTest {
 		NodeComposition n = new NodeComposition(TestCommit,0,2,4,NodeRelationType.ACCESSES);
 		Relation.insertComposition(n);
 		System.out.println(n);
+	}
+	
+	@Test
+	public void SAMetricTableTest()
+	{
+		ProjectCommit TestCommit = projectService.getCommitList("Logdog").get(0);
+		StaticAnalysisMetric sm = SADAO.insertSAMetric(StaticAnalysisType.BASIC, "Tm", 10, "Apple",TestCommit);
+		
+		assertEquals(StaticAnalysisType.BASIC,sm.getType());
+		System.out.println(sm.getSAID());
 	}
 }
