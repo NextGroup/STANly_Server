@@ -123,4 +123,47 @@ public class PollutionList {
 		return chart;
 	}
 	
+	private String getMetricRank(int A,int B,int C,int D)// A =1번 랭크, B 2번 랭크, 3 1번 갯수, 4 2번 갯
+	{
+		return 	(A == 1) ? "F" : ((B==1)||(C>10) ? "C": ((D>10) ? "B":"A") ) ;
+	}
+	
+	private String getRank(String[] Arr)
+	{
+		int ACount=0, AMax=0, BCount=0,BMax=0;
+		
+		for(int i=0;i<pollution.size();i++)
+		{
+			PollutionValue obj = pollution.get(i);
+			if(obj.getMetric().contentEquals(Arr[0]))
+			{
+				if((AMax==0)&&obj.getType().contentEquals("Risk"))
+					AMax=1;
+				ACount++;
+			}
+			else if(obj.getMetric().contentEquals(Arr[1]))
+			{
+				if((BMax!=1)&&obj.getType().contentEquals("Risk"))
+					BMax=1;
+				BCount++;
+			}
+		}
+		return getMetricRank(AMax,BMax,ACount,BCount);
+	}
+	
+	public String getFatRank()
+	{
+		String[] Temp = {"Cyclomatic Complexity","Estimated Lines of Code (ELOC)"};
+		return getRank(Temp);
+	}
+	public String getAbstractRank()
+	{
+		String[] Temp = {"Depth of Inheritance Tree","Distance"};
+		return getRank(Temp);
+	}
+	public String getCoplingRank()
+	{
+		String[] Temp = {"Tangled","Fat"};
+		return getRank(Temp);
+	}
 }
