@@ -6,6 +6,8 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
+import net.sourceforge.pmd.lang.java.rule.Violation;
+import net.sourceforge.pmd.lang.java.rule.ViolationController;
 import net.sourceforge.pmd.lang.java.rule.stanly.DomainComposition;
 import net.sourceforge.pmd.lang.java.rule.stanly.DomainRelation;
 import net.sourceforge.pmd.lang.java.rule.stanly.Relations;
@@ -31,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.DAO.ElementDAO;
 import stanly.server.Analysis.DAO.RelationDAO;
+import stanly.server.Analysis.DAO.StaticAnalysisDAO;
 import stanly.server.Analysis.Model.*;
 import stanly.server.Analysis.Model.Metric.AttributeMetric;
 import stanly.server.Analysis.Model.Metric.ClassMetric;
@@ -43,6 +46,7 @@ import stanly.server.Analysis.Model.Metric.ProjectMetric;
 import stanly.server.Analysis.Model.Relation.NodeComposition;
 import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
+import stanly.server.Analysis.Model.StaticAnalysis.Type.StaticAnalysisType;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 
@@ -70,6 +74,12 @@ public class AnalysisService {
 	 */
 	@Autowired
 	private RelationDAO relationDao;
+	
+	/**
+	 * 정적 분석을 위한 DAO 객체
+	 */
+	@Autowired
+	private StaticAnalysisDAO staticanalysisDao;
 	
 	/**
 	 * 노드를 생성해 추가한다.
@@ -196,13 +206,43 @@ public class AnalysisService {
 		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
 		InsertIterationElementNode(commitID,data.getRootNode());
 		InputRelation(commitID,data.getRelationList());				//이거 테스트 검증이 필요함
-		InputNodeComposition(commitID,data.getCompositionList());
 
 		//Composition 뷰를 위한 자료구조 추가 (NodeComposition)
+		InputNodeComposition(commitID,data.getCompositionList());
 		
+		//정적 분석 추가
+		InputStaticAnalysis(commitID,ViolationController.getViolationList());
 		
 		return data.getRootNode();
 	}
+	private void InsertStaticAnalysis(ProjectCommit commitID, Integer violationType,String sourcePath, int sourceLine,String message)
+	{
+		StaticAnalysisType type = StaticAnalysisType.BASIC;
+		
+		if(violationType == 0)
+			type = StaticAnalysisType.BASIC;
+		else if(violationType == 1)
+			type = StaticAnalysisType.NAMING;
+		 
+		staticanalysisDao.insertSAMetric(type, sourcePath,sourceLine, message, commitID);
+	}
+	private void InputStaticAnalysis(ProjectCommit commitID, List<Violation> ViolationList)
+	{
+		try
+		{
+			for(Violation violation : ViolationList)
+			{
+				InsertStaticAnalysis(commitID,violation.getViolationType(),violation.getSourcePath(),
+									 violation.getSourceLine(),violation.getMessage());
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage() + "\n" +e.getStackTrace()); 
+		}
+	}
+	
+	
 	private void InsertNodeComposition(ProjectCommit commit,int srcID, int tarID,int count, 
 			NodeRelationType type)
 	{
