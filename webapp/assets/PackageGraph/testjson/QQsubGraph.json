@@ -1,3 +1,0 @@
-{
-"dot" : "digraph {    AA [label=\"<div style='padding: 10px;'>A <span style='font-size:32px'>Big</span> <span style='color:red;'>HTML</span> Source!</div>\"]; BB [label=\"A blue sink\"];    AA -> BB; BB -> CC; BB->YY->MM   EE -> BB;    }"
-}
