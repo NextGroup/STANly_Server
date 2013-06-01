@@ -37,6 +37,7 @@ public class DevCommitterDAO {
 			 crit.add(committerName);
 			 crit.addOrder(Order.asc("id"));
 			 committerProject = crit.list();
+		
 			
 		}catch(Exception e)
 		{
