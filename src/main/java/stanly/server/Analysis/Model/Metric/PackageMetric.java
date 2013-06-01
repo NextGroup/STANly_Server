@@ -6,6 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 /**
  * 패키지와 관련된 매트릭 정보를 정하는 클래스이다.
@@ -278,5 +279,32 @@ public class PackageMetric extends ElementNodeMetric{
 	}
 	public void setLCOM(int lCOM) {
 		totalLCOM = lCOM;
+	}
+	
+	@Override
+	public void setRate()
+	{
+		if(Units<40)
+			fatRate = MetricRate.A_RATE;
+		else if(Units<60)
+			fatRate = MetricRate.B_RATE;
+		else 
+			fatRate = MetricRate.C_RATE;
+		
+		if(this.getDistance()<0.5)
+			CPRate = MetricRate.A_RATE;
+		else if(this.getDistance()<0.8)
+			CPRate = MetricRate.B_RATE;
+		else
+			CPRate = MetricRate.C_RATE;
+		
+		if(this.getFat()>240)
+			CouplingRate = MetricRate.F_RATE;
+		else if(this.getFat()>120)
+			CouplingRate	 = MetricRate.C_RATE;
+		else if(this.getFat()>60)
+			CouplingRate	 = MetricRate.B_RATE;
+		else 
+			CouplingRate	 = MetricRate.A_RATE;
 	}
 }

@@ -1,5 +1,6 @@
 package stanly.server.GitProject.Model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,13 +45,40 @@ public class ProjectInfo {
 	@Column(name = "PROJECT_NAME")
 	private String name;
 	
-
-
-	public ProjectInfo(String uRL, String location, String name) {
+	// 최신 랭크 
+	@Column(name = "FAT_RANK")
+	private int FAT_RANK;
+	
+	@Column(name = "CO_RANK")
+	private int CoplingRANK;
+	
+	@Column(name = "CP_RANK")
+	private int CP_RANK;
+	
+	@Column(name = "NAME_RANK")
+	private int Name_RANK;
+	
+	@Column(name = "BASIC_RANK")
+	private int Basic_RANK;
+	
+	@Column(name = "FirstDate")
+	private Date FirstDate;
+	
+	@Column(name = "LastDate")
+	private Date LastDate;
+	
+	public ProjectInfo(String uRL, String location, String name, Date first) {
 		super();
 		URL = uRL;
 		Location = location;
 		this.name = name;
+		FAT_RANK=0;
+		CoplingRANK=0;
+		CP_RANK=0;
+		Name_RANK=0;
+		Basic_RANK=0;
+		FirstDate=first;
+		LastDate=first;
 	}
 
 	public ProjectInfo()
@@ -87,6 +115,59 @@ public class ProjectInfo {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+
+	public int getFAT_RANK() {
+		return FAT_RANK;
+	}
+
+	public void setFAT_RANK(int fAT_RANK) {
+		FAT_RANK = fAT_RANK;
+	}
+
+	public int getCoplingRANK() {
+		return CoplingRANK;
+	}
+
+	public void setCoplingRANK(int coplingRANK) {
+		CoplingRANK = coplingRANK;
+	}
+
+	public int getCP_RANK() {
+		return CP_RANK;
+	}
+
+	public void setCP_RANK(int cP_RANK) {
+		CP_RANK = cP_RANK;
+	}
+
+	public int getName_RANK() {
+		return Name_RANK;
+	}
+
+	public void setName_RANK(int name_RANK) {
+		Name_RANK = name_RANK;
+	}
+
+	public int getBasic_RANK() {
+		return Basic_RANK;
+	}
+
+	public void setBasic_RANK(int basic_RANK) {
+		Basic_RANK = basic_RANK;
+	}
+
+	public Date getLastDate() {
+		return LastDate;
+	}
+
+	public void setLastDate(Date lastDate) {
+		LastDate = lastDate;
+	}
+
+	public Date getFirstDate() {
+		return FirstDate;
 	}
 
 	@Override

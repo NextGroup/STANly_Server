@@ -39,14 +39,14 @@ public class ProjectDAO {
 	 * @param name
 	 * @return
 	 */
-	public ProjectInfo addProject(String uRL, String location, String name)
+	public ProjectInfo addProject(String uRL, String location, String name, Date First)
 	{
 		ProjectInfo data = null;
 		try{
 			logger.info("ProjectInfo insert");
 			Session session = sessionFactory.getCurrentSession();
 			
-			data = new ProjectInfo(uRL,location,name);
+			data = new ProjectInfo(uRL,location,name, First);
 			// Save
 			session.save(data);
 	
@@ -284,4 +284,19 @@ public class ProjectDAO {
 		return ProjectList;
 	}
 	
+	public ProjectInfo updateProjectInfo(ProjectInfo data)
+	{
+	
+		try{
+			logger.info("ProjectInfo insert");
+			Session session = sessionFactory.getCurrentSession();
+			session.update(data);
+	
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+		return data;
+	}
 }

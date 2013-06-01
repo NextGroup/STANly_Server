@@ -6,6 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 /**
  * 라이브러리와 관련된 매트릭 정보를 정하는 클래스이다.
@@ -231,5 +232,16 @@ public class LibraryMetric extends ElementNodeMetric{
 	}
 	public void addNumberOfClass(int numberOfClass) {
 		NumberOfClass += numberOfClass;
+	}
+	
+	@Override
+	public void setRate()
+	{
+		fatRate = MetricRate.NO_RATE;
+		CPRate = MetricRate.NO_RATE;
+		if(this.getTangled()>0)
+			CouplingRate = MetricRate.F_RATE;
+		else 
+			CouplingRate = MetricRate.A_RATE;
 	}
 }

@@ -8,6 +8,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 /**
  * 클래스와 관련된 매트릭 정보를 정하는 클래스이다.
@@ -208,5 +209,27 @@ public class ClassMetric extends ElementNodeMetric {
 	}
 	public int getLCOM() {
 		return LCOM;
+	}
+	
+	@Override
+	public void setRate()
+	{
+		int methods = (Methods<50) ? MetricRate.A_RATE: ((Methods<100)? MetricRate.C_RATE:MetricRate.F_RATE);
+		int fields = (Fields<20) ? MetricRate.A_RATE:((Fields<40) ? MetricRate.C_RATE: MetricRate.F_RATE);
+		int eloc= (LOC<300) ? MetricRate.A_RATE : ((LOC<400) ? MetricRate.C_RATE: MetricRate.F_RATE);
+		
+		fatRate = (methods+fields+eloc)/3;
+		
+		if(DIT>5)
+			CPRate = MetricRate.A_RATE;
+		else if(DIT>7)
+			CPRate = MetricRate.B_RATE;
+		else 
+			CPRate = MetricRate.F_RATE;
+		
+		int cboRate = (CBO<25) ? MetricRate.A_RATE: MetricRate.C_RATE;
+		int rfcRate = (RFC<100) ? MetricRate.A_RATE: MetricRate.C_RATE;
+		int fRate = (Fat<60) ? MetricRate.A_RATE: ((Fat<120) ? MetricRate.B_RATE: MetricRate.C_RATE);
+		CouplingRate = (cboRate+rfcRate+fRate)/3;
 	}
 }

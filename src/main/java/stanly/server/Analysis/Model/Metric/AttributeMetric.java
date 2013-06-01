@@ -6,6 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 /**
@@ -81,4 +82,16 @@ public class AttributeMetric extends ElementNodeMetric{
 	public void setCC(int cC) {
 		CC = cC;
 	}
+
+	@Override
+	public void setRate()
+	{
+		int ccM = (CC<15) ? MetricRate.A_RATE: ((CC<20) ? MetricRate.B_RATE: MetricRate.C_RATE);
+		int locM = (ELOC<60) ? MetricRate.A_RATE: ((ELOC<120) ? MetricRate.B_RATE: MetricRate.C_RATE);
+		fatRate = (ccM+locM)/2;
+		
+		CPRate = MetricRate.NO_RATE;
+		CouplingRate = MetricRate.NO_RATE;
+	}
+
 }
