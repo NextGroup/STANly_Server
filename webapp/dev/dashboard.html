@@ -160,7 +160,7 @@
 								]
 							}];
 						}
-						nv.addGraph(function()//Pollution Graph데이
+						nv.addGraph(function(){//Pollution Graph데이
 							var chart = nv.models.pie()
 								.values(function(d) { return d })
 								.width(115)
@@ -213,6 +213,7 @@
 					</div>
 					<!--project-list-head fin -->
 					<div id="project-list">
+                        <!--
 						<div name="Stanly" class="list-item">
 							<div class="pollution a-circle">
 								<div class="rotation-circle"><div class="text">A</div></div>
@@ -246,8 +247,9 @@
 							</div>
 							<div class="sliderr"></div>
 
-						</div>
+						</div>-->
 						<!--stanly fin-->
+                        <!--
 						<div name="Curing" class="list-item">
 							<div class="pollution c-circle">
 								<div class="rotation-circle"><div class="text">C</div></div>
@@ -280,8 +282,9 @@
 								<div class="text">FAT</div>
 							</div>
 							<div class="sliderr"></div>
-						</div>
+						</div>-->
 						<!--curing fin-->
+                        <!--
 						<div name="DynamicWAVE" class="list-item">
 							<div class="pollution f-circle">
 								<div class="rotation-circle"><div class="text">F</div></div>
@@ -314,8 +317,9 @@
 								<div class="text">FAT</div>
 							</div>
 							<div class="sliderr"></div>
-						</div>
+						</div>-->
 						<!--dynamicwave fin-->
+                        <!--
 						<div name="SecuFS" class="list-item">
 							<div class="pollution b-circle">
 								<div class="rotation-circle"><div class="text">B</div></div>
@@ -348,18 +352,47 @@
 								<div class="text">FAT</div>
 							</div>
 							<div class="sliderr"></div>
-						</div>
+						</div>-->
 						<!--secufs fin-->
 					</div>
                     <script type="text/javascript">
+
+                        function getParameter(strParamName) {
+                            var arrResult = null;
+                            if (strParamName)
+                                arrResult = location.search.match(new RegExp("[&?]" + strParamName+"=(.*?)(&|$)"));
+                            return arrResult && arrResult[1] ? arrResult[1] : null;
+                        }
                         function build_project_list(json)
                         {
-                            pjtdata = jQuery.parseJSON(json);
+                            pjtdata = jQuery.parseJSON(json).list;
                             monthtlb = ['Jan','Feb','Mar','April','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+                            oldtlb = ['very-old','old','up-to-date'];
+                            oldmonth = ['years ago','month ago',' '];
 
                             for(var i=0;i<pjtdata.length;i++)
                             {
                                 d = pjtdata[i];
+
+                                var date = new Date();
+                                var old = 2;
+                                var howold = 0;
+                                if((date.getYear()+1900) != d.lyear)
+                                {
+                                    old = 0;
+                                    howold = (date.getYear()+1900) - d.lyear;
+                                }
+                                else if(date.getMonth() != d.lmonth)
+                                {
+                                    old = 1;
+                                    howold = date.getMonth() - d.lmonth;
+                                }
+                                else
+                                {
+                                    old = 2;
+                                    howold = date.getDay() - d.lday;
+                                }
+
                                 newpjt = $('<div/>', {
                                     name: d.pname,
                                     class: 'list-item'
@@ -370,7 +403,7 @@
                                 newpjt.append($('<div class="slider"></div>'));
                                 newpjt.append($('<div class="info"></div>'));
                                 newpjt.children('.info').append($('<div class="project-name">'+d.pname+'</div>'));
-                                newpjt.children('.info').append($('<div class="project-date">'+monthtlb[d.fmonth]+' '+d.fyear+' - '+monthtlb[d.lmonth]+' '+d.lyear+' <span class="very-old">(1 year ago)</span></div>'));
+                                newpjt.children('.info').append($('<div class="project-date">'+ d.fday+'.'+monthtlb[d.fmonth]+' '+d.fyear+' - '+ d.lday+'.'+monthtlb[d.lmonth]+' '+d.lyear+' <span class="'+oldtlb[old]+'">('+howold+' '+oldmonth[old]+')</span></div>'));
                                 newpjt.append($('<div class="basicrule right '+d.prank4.toLowerCase()+'-rate">'));
                                 newpjt.children('.basicrule').append($('<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>'));
                                 newpjt.children('.basicrule').append($('<div class="rate">'+d.prank4.toUpperCase()+'</div><div class="text">BASIC RULE</div>'));
@@ -386,7 +419,8 @@
                         }
                         $.ajax({
                             type: "get",
-                            url: "./projectlist.json",
+                            url: "/Stanly/DevProject/project",
+                            data: {Name:getParameter('id')},
                             success: build_project_list
                         });
 
