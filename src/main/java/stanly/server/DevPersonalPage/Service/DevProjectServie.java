@@ -34,7 +34,7 @@ public class DevProjectServie {
 			info.setPollutionRank(MetricRate.ChangeRate(pinfo.getFAT_RANK()), MetricRate.ChangeRate(pinfo.getCoplingRANK()), MetricRate.ChangeRate(pinfo.getName_RANK()), MetricRate.ChangeRate(pinfo.getBasic_RANK()));
 			info.setPRank(MetricRate.ChangeRate((pinfo.getFAT_RANK()+pinfo.getBasic_RANK()+pinfo.getCoplingRANK()+pinfo.getName_RANK())/4));
 			info.setPName(pinfo.getName()).setStartDay(pinfo.getFirstDate().getYear()+1900, pinfo.getFirstDate().getMonth()+1, pinfo.getFirstDate().getDate());
-			info.setStartDay(pinfo.getLastDate().getYear()+1900, pinfo.getLastDate().getMonth()+1, pinfo.getLastDate().getDate());
+			info.setLastDay(pinfo.getLastDate().getYear()+1900, pinfo.getLastDate().getMonth()+1, pinfo.getLastDate().getDate());
 			list.addInfo(info);
 		}
 		
