@@ -50,7 +50,7 @@ public class StanlyPMDTest {
 	@Before
 	public void BeforeTest()
 	{
-		projectService.addProject("www.asdf.ac.kr", "C:\\workspace1\\logdog2\\Project\\LogdogClient", "PMD");
+		projectService.addProject("www.asdf.ac.kr", "C:\\workspace1\\logdog2\\Project\\LogdogClient", "PMD",new Date());
 		info = projectService.getProjectInfo("PMD");
 		logger.info("Before Setting = "+info.toString());
 		projectService.addCommit(info, new Date(), "init Commit", "Karuana");

@@ -55,7 +55,7 @@ public class AnalysisServiceTest {
 	@Before
 	public void TestProjectSetUp()
 	{
-		projectService.addProject("www.sejong.ac.kr", "/acra/Type", "Logdog");
+		projectService.addProject("www.sejong.ac.kr", "/acra/Type", "Logdog",new Date());
 		info = projectService.getProjectInfo("Logdog");
 		logger.info("Before Setting = "+info.toString());
 		projectService.addCommit(info, new Date(), "init Commit", "Karuana");

@@ -9,11 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 
 
@@ -48,6 +48,13 @@ public abstract class ElementNodeMetric {
 	 */
 	private NodeType type;
 	
+	@Column(name = "FATRate")
+	protected int fatRate; // 카운
+	@Column(name = "CPRate")
+	protected int CPRate; //추상
+	@Column(name = "CoRate")
+	protected int CouplingRate;
+
 	public ElementNodeMetric()
 	{
 		
@@ -69,8 +76,6 @@ public abstract class ElementNodeMetric {
 		return EMID;
 	}
 
-
-
 	@Column(name="TYPE") 
 	@Enumerated(EnumType.STRING)
 	public NodeType getType() {
@@ -85,4 +90,30 @@ public abstract class ElementNodeMetric {
 		this.element = element;
 	}
 
+	public int getFatRate() {
+		return fatRate;
+	}
+
+	public void setFatRate(int fatRate) {
+		this.fatRate = fatRate;
+	}
+
+	public int getCPRate() {
+		return CPRate;
+	}
+
+	public void setCPRate(int cPRate) {
+		CPRate = cPRate;
+	}
+
+	public int getCouplingRate() {
+		return CouplingRate;
+	}
+
+	public void setCouplingRate(int couplingRate) {
+		CouplingRate = couplingRate;
+	}
+	
+	public abstract void setRate();
+	
 }

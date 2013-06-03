@@ -8,6 +8,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 /**
  * 메소드와 관련된 매트릭 정보를 정하는 클래스이다.
@@ -49,5 +50,15 @@ public class MethodMetric extends ElementNodeMetric{
 	public void setCC(int cc){
 		CC = cc;
 	}
-
+	@Override
+	public void setRate()
+	{
+		int CCRate = (CC<=10) ? MetricRate.A_RATE: ((CC<=15) ? MetricRate.B_RATE:(CC<=20) ? MetricRate.C_RATE:MetricRate.F_RATE);
+		int ELOCRate  = (LOC<=60) ? MetricRate.A_RATE: ((LOC<=120) ? MetricRate.B_RATE:MetricRate.C_RATE);
+		
+		fatRate = (CCRate+ELOCRate)/2;
+			
+		CPRate = MetricRate.NO_RATE;
+		CouplingRate = MetricRate.NO_RATE;
+	}
 }

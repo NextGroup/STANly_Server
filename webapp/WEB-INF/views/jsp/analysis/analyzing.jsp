@@ -11,8 +11,8 @@
     <link href="/Stanly/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/Stanly/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
-    <script src="/Stanly/assets/js/jquery-1.7.1.min.js"></script>
-    <script src="/Stanly/assets/js/spin.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+    <script src="/Stanly/js/Stanly/spin.min.js"></script>
 
     <link href="/Stanly/assets/css/index.css" rel="stylesheet">
 
@@ -123,6 +123,6 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/Stanly/assets/js/bootstrap.min.js"></script>
+<script src="/Stanly/js/Stanly/bootstrap.min.js"></script>
 </body>
 </html>

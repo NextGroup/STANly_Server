@@ -94,7 +94,7 @@
 							<svg id="project-pol"></svg>
 							<div id="pollution-container">
 								<div id="pollution-left">
-									<div class="top">12</div>
+									<div class="top">11</div>
 									<div class="bottom">Total Projects</div>
 								</div>
 								<div id="pollution-right">
@@ -160,7 +160,7 @@
 								]
 							}];
 						}
-						nv.addGraph(function(){
+						nv.addGraph(function()//Pollution Graph데이
 							var chart = nv.models.pie()
 								.values(function(d) { return d })
 								.width(115)
@@ -183,7 +183,7 @@
 									  key: "Three",
 									  y: 2.5
 									},
-									{ 
+									{
 									  key: "Four",
 									  y: 1.5
 									},
@@ -245,7 +245,7 @@
 								<div class="text">FAT</div>
 							</div>
 							<div class="sliderr"></div>
-							
+
 						</div>
 						<!--stanly fin-->
 						<div name="Curing" class="list-item">
@@ -357,49 +357,39 @@
                             pjtdata = jQuery.parseJSON(json);
                             monthtlb = ['Jan','Feb','Mar','April','May','June','July','Aug','Sept','Oct','Nov','Dec'];
 
-                            pjtdata.length
-                            pname = 'Example Project';
-                            prank = 'A'; // total pollution rank
-                            fyear = 2012;
-                            fmonth = 4;
-                            fday = 5;
-                            lyear = 2013;
-                            lmonth = 3;
-                            lday = 10;
-
-                            prank1 = 'a';   // fat pollution
-                            prank2 = 'b';   // coupling pollution
-                            prank3 = 'c';   // naming pollution
-                            prank4 = 'f';   // basic pollution
-
-                            newpjt = $('<div/>', {
-                                name: pname,
-                                class: 'list-item'
-                            });
-                            $('#project-list').append(newpjt);
-                            newpjt.append($('<div/>', {class: 'pollution '+prank.toLowerCase()+'-circle'}));
-                            newpjt.children('.pollution').append($('<div class="rotation-circle"><div class="text">'+prank.toUpperCase()+'</div></div>'));
-                            newpjt.append($('<div class="slider"></div>'));
-                            newpjt.append($('<div class="info"></div>'));
-                            newpjt.children('.info').append($('<div class="project-name">'+pname+'</div>'));
-                            newpjt.children('.info').append($('<div class="project-date">'+monthtlb[fmonth]+' '+fyear+' - '+monthtlb[lmonth]+' '+lyear+' <span class="very-old">(1 year ago)</span></div>'));
-                            newpjt.append($('<div class="basicrule right '+prank4.toLowerCase()+'-rate">'));
-                            newpjt.children('.basicrule').append($('<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>'));
-                            newpjt.children('.basicrule').append($('<div class="rate">'+prank4.toUpperCase()+'</div><div class="text">BASIC RULE</div>'));
-                            newpjt.append($('<div class="sliderr"></div>'));
-                            newpjt.append($('<div class="naming '+prank3.toLowerCase()+'-rate">'));
-                            newpjt.children('.naming').append($('<div class="donut"><div class="rate">'+prank3.toUpperCase()+'</div></div><div class="text">NAMING</div>'));
-                            newpjt.append($('<div class="sliderr"></div>'));
-                            newpjt.append($('<div class="coupling '+prank2.toLowerCase()+'-rate"><div class="thread"></div><div class="text">COUPLING</div>'));
-                            newpjt.append($('<div class="sliderr"></div>'));
-                            newpjt.append($('<div class="fat '+prank1.toLowerCase()+'-rate"><div class="wide"><div class="rate">'+prank1.toUpperCase()+'</div></div><div class="text">FAT</div>'));
-                            newpjt.append($('<div class="sliderr"></div>'));
+                            for(var i=0;i<pjtdata.length;i++)
+                            {
+                                d = pjtdata[i];
+                                newpjt = $('<div/>', {
+                                    name: d.pname,
+                                    class: 'list-item'
+                                });
+                                $('#project-list').append(newpjt);
+                                newpjt.append($('<div/>', {class: 'pollution '+ d.prank.toLowerCase()+'-circle'}));
+                                newpjt.children('.pollution').append($('<div class="rotation-circle"><div class="text">'+d.prank.toUpperCase()+'</div></div>'));
+                                newpjt.append($('<div class="slider"></div>'));
+                                newpjt.append($('<div class="info"></div>'));
+                                newpjt.children('.info').append($('<div class="project-name">'+d.pname+'</div>'));
+                                newpjt.children('.info').append($('<div class="project-date">'+monthtlb[d.fmonth]+' '+d.fyear+' - '+monthtlb[d.lmonth]+' '+d.lyear+' <span class="very-old">(1 year ago)</span></div>'));
+                                newpjt.append($('<div class="basicrule right '+d.prank4.toLowerCase()+'-rate">'));
+                                newpjt.children('.basicrule').append($('<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>'));
+                                newpjt.children('.basicrule').append($('<div class="rate">'+d.prank4.toUpperCase()+'</div><div class="text">BASIC RULE</div>'));
+                                newpjt.append($('<div class="sliderr"></div>'));
+                                newpjt.append($('<div class="naming '+d.prank3.toLowerCase()+'-rate">'));
+                                newpjt.children('.naming').append($('<div class="donut"><div class="rate">'+d.prank3.toUpperCase()+'</div></div><div class="text">NAMING</div>'));
+                                newpjt.append($('<div class="sliderr"></div>'));
+                                newpjt.append($('<div class="coupling '+d.prank2.toLowerCase()+'-rate"><div class="thread"></div><div class="text">COUPLING</div>'));
+                                newpjt.append($('<div class="sliderr"></div>'));
+                                newpjt.append($('<div class="fat '+d.prank1.toLowerCase()+'-rate"><div class="wide"><div class="rate">'+d.prank1.toUpperCase()+'</div></div><div class="text">FAT</div>'));
+                                newpjt.append($('<div class="sliderr"></div>'));
+                            }
                         }
                         $.ajax({
                             type: "get",
                             url: "./projectlist.json",
                             success: build_project_list
                         });
+
                     </script>
 					<!--project-list fin-->
 					<div id="popup-info">

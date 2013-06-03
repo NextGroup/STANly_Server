@@ -9,6 +9,12 @@ public class PollutionValue extends MetricValue{
 		Artifact = artifact;
 		Type = (type == 0)  ? "Warning":"Risk";
 	}
+	public String getType() {
+		return Type;
+	}
+	public void setType(String type) {
+		Type = type;
+	}
 	public String getArtifact() {
 		return Artifact;
 	}

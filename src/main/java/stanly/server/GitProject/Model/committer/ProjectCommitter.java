@@ -26,6 +26,9 @@ public class ProjectCommitter {
 	@JoinColumn(name = "PROJECT_ID", nullable = false)
 	private ProjectInfo PInfo;
 
+	public ProjectCommitter(){
+		
+	}
 	public ProjectCommitter(String committer, ProjectInfo pInfo) {
 		super();
 		this.committer = committer;

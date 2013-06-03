@@ -6,6 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 /**
  * 프로젝트와 관련된 매트릭 정보를 정하는 클래스이다.
@@ -66,4 +67,17 @@ public class ProjectMetric extends ElementNodeMetric{
 		Tangled = tangled;
 	}
 	
+	@Override
+	public void setRate()
+	{
+		fatRate = MetricRate.NO_RATE;
+		CPRate = MetricRate.NO_RATE;
+	
+		if(Tangled>0)
+			CouplingRate = MetricRate.F_RATE;
+		else if(ACDLibrary> 0.5)
+			CouplingRate = MetricRate.C_RATE;
+		else 
+			CouplingRate = MetricRate.A_RATE;
+	}
 }

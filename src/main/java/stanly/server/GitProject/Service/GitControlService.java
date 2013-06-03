@@ -54,15 +54,19 @@ public class GitControlService {
 			 Git= new GitControl(uRL,ProjectName);
 			logger.info("GitCloneing");
 			String path = Git.Clone();
-			ProjectInfo project = projectService.addProject(uRL, path, ProjectName);
+			ProjectInfo project = null;
 			
 			RevWalk Temp = Git.getCommitData();
 			HashMap<String,ArrayList<String>> CrashBoard = new HashMap<String,ArrayList<String>>();
 			RevCommit oldCommit=null;
+			
 			for (RevCommit rev =Temp.next();rev !=null;rev=Temp.next()){
 		    	 		
 					org.eclipse.jgit.lib.PersonIdent Test1 = rev.getAuthorIdent();
 					Date time  = new Date((long)rev.getCommitTime()*1000);
+					//처음 반복시 프로젝트를 생성한다. 
+					if(project==null) project = projectService.addProject(uRL, path, ProjectName, time);
+					
 					//커밋 시점에서 작성자 분류할 필요 있음 
 					projectService.addCommit(project, time, rev.getFullMessage(),Test1.getName());
 					addDiff(Git,oldCommit,rev,CrashBoard);

@@ -41,14 +41,14 @@ public class ProjectInfoService {
 	 * @param name
 	 * @return
 	 */
-	public ProjectInfo addProject(String uRL, String location, String name)
+	public ProjectInfo addProject(String uRL, String location, String name, Date First)
 	{
 		ProjectInfo PInfo;
 		try{
 			PInfo = project.getProjectWithGitURL(uRL);
 			
 			if(PInfo==null)
-				PInfo = project.addProject(uRL, location, name);
+				PInfo = project.addProject(uRL, location, name,First);
 			
 	
 		}catch(Exception e)

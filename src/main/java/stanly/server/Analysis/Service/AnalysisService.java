@@ -32,9 +32,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.DAO.ElementDAO;
+import stanly.server.Analysis.DAO.PollutionRankDAO;
 import stanly.server.Analysis.DAO.RelationDAO;
 import stanly.server.Analysis.DAO.StaticAnalysisDAO;
-import stanly.server.Analysis.Model.*;
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.AttributeMetric;
 import stanly.server.Analysis.Model.Metric.ClassMetric;
 import stanly.server.Analysis.Model.Metric.ElementNodeMetric;
@@ -48,7 +49,9 @@ import stanly.server.Analysis.Model.Relation.NodeRelation;
 import stanly.server.Analysis.Model.Relation.Type.NodeRelationType;
 import stanly.server.Analysis.Model.StaticAnalysis.Type.StaticAnalysisType;
 import stanly.server.Analysis.Model.Type.NodeType;
+import stanly.server.GitProject.DAO.ProjectDAO;
 import stanly.server.GitProject.Model.ProjectCommit;
+import stanly.server.GitProject.Model.ProjectInfo;
 
 /**
  * @author Karuana
@@ -80,6 +83,12 @@ public class AnalysisService {
 	 */
 	@Autowired
 	private StaticAnalysisDAO staticanalysisDao;
+
+	@Autowired
+	private ProjectDAO pDAO;
+	
+	@Autowired
+	private PollutionRankDAO rankDAO;
 	
 	/**
 	 * 노드를 생성해 추가한다.
@@ -305,6 +314,7 @@ public class AnalysisService {
 		default:
 			throw new Exception("Not Fount Type : " + serverNode.getType().toString() + "");
 		}
+		metric.setRate();
 		
 	}
 	private void InputAttributeMetric(AttributeMetric metric, FieldDomain node)
@@ -551,8 +561,16 @@ public class AnalysisService {
 			logger.info("ProjectInfo insert");
 			RootName = AnalysisElementNode(commit, commit.getPInfo().getLocation()).getFullName();
 			
-	
-
+			ProjectInfo pinfo = commit.getPInfo();
+			
+			pinfo.setFAT_RANK(rankDAO.getProjectFATRate());
+			pinfo.setCP_RANK(rankDAO.getProjectCPRate());
+			pinfo.setCoplingRANK(rankDAO.getProjectCouplingRate());
+			pinfo.setName_RANK(rankDAO.getNameStaticAnalysisRank());
+			pinfo.setBasic_RANK(rankDAO.getBasicStaticAnalysisRank());
+			pinfo.setLastDate(commit.getUpdateDate());
+			pDAO.updateProjectInfo(pinfo);
+			
 		}catch(Exception e)
 		{
 			logger.error(e.getMessage());
