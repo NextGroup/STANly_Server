@@ -24,13 +24,13 @@ public class StaticAnalysisDAO {
 	private SessionFactory sessionFactory;
 	
 	public StaticAnalysisMetric insertSAMetric(StaticAnalysisType type, String sourcePath,
-			Integer line, String message,ProjectCommit commit){
+			Integer line, Integer left, String message,ProjectCommit commit){
 		
 		StaticAnalysisMetric saMetric = null;
 		try{
 
 			Session session = sessionFactory.getCurrentSession();
-			saMetric = new StaticAnalysisMetric(type,sourcePath,line,message,commit);
+			saMetric = new StaticAnalysisMetric(type,sourcePath,line,left,message,commit);
 			session.save(saMetric);
 		
 		}catch(Exception e)
