@@ -55,7 +55,7 @@
 
         function reqGetResponse(data) {
             //data = JSON.parse(data);
-            sendGet("/Stanly/dev/dashboard.html","Name="+data.login+"&Version=" + RadioCheck());
+            sendGet("/Stanly/dev/dashboard.html","Name="+document.Loginform.client_id.value+"&Version=" + RadioCheck());
         }
         function reset(){
             document.Loginform.client_id.value = "";
