@@ -31,7 +31,7 @@ public class ProjectCommitter {
 	}
 	public ProjectCommitter(String committer, ProjectInfo pInfo) {
 		super();
-		this.committer = committer;
+		this.committer = committer.toLowerCase();
 		PInfo = pInfo;
 	}
 

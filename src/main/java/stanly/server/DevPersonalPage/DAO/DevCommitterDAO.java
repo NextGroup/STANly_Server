@@ -33,7 +33,7 @@ public class DevCommitterDAO {
 			Session session = sessionFactory.getCurrentSession();
 			
 			 Criteria crit = session.createCriteria(ProjectCommitter.class);
-			 Criterion committerName = Restrictions.eq("committer", committer ); 
+			 Criterion committerName = Restrictions.eq("committer", committer.toLowerCase() ); 
 			 crit.add(committerName);
 			 crit.addOrder(Order.asc("id"));
 			 committerProject = crit.list();
