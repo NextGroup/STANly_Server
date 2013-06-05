@@ -16,6 +16,45 @@
 	<script type="text/javascript" src="./js/d3/lib/d3.v2.js"></script>
 	<script type="text/javascript" src="./js/d3/nv.d3.js"></script>
 	<script type="text/javascript" src="./js/d3/src/models/pie.js"></script>
+	<script type="text/javascript">
+	function getGetID(id){
+	    var ProjectName;
+		if(location.search){
+        var str = location.search.split("?")[1];
+        ProjectName = str.split(id+"=")[1].split("&")[0];
+		}
+		//console.log(ProjectName);
+		return ProjectName;
+	};
+	 function githubcall(){
+            $.ajax({
+                type: "GET",
+                url: "https://api.github.com/users/"+getParameter("Name"),
+                success: function(response){
+           
+                     $("#usrName").append(response.login);
+                     $("#userImage").attr("src",response.avatar_url);
+					 console.log("Hello");
+          
+                                
+                                
+                }
+                ,
+                error: function (data) {
+                    alert("Don't Search ID");
+                    reset();
+                }
+            });
+        };
+        $(document).ready(function(){
+	       githubcall(); 
+	       $("#add-project").click(function(eventObject){
+			   	location.href = "/Stanly/clone/index.jsp"; 
+		       
+	       })
+        });
+	</script>
+	
 </head>
 
 <body>
@@ -27,8 +66,8 @@
 			<div id="rightBox">
 				<div id="user-container">
 					<div id="userBox">
-						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
-						<div class="userName">An Jeungwon</div>
+						<div class="circle_wrapper"><img id="userImage"></div>
+						<div class="userName" id="usrName"></div>
 					</div>
 					<div id="userInfoIcon" class="img"></div>
 				</div>
@@ -420,7 +459,7 @@
                         $.ajax({
                             type: "get",
                             url: "/Stanly/DevProject/project",
-                            data: {Name:getParameter('id')},
+                            data: {Name:getParameter('Name')},
                             success: build_project_list
                         });
 

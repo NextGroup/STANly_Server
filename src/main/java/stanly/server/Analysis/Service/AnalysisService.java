@@ -224,7 +224,7 @@ public class AnalysisService {
 		
 		return data.getRootNode();
 	}
-	private void InsertStaticAnalysis(ProjectCommit commitID, Integer violationType,String sourcePath, int sourceLine,String message)
+	private void InsertStaticAnalysis(ProjectCommit commitID, Integer violationType,String sourcePath, int sourceLine,int Nsleft, String message)
 	{
 		StaticAnalysisType type = StaticAnalysisType.BASIC;
 		
@@ -233,7 +233,7 @@ public class AnalysisService {
 		else if(violationType == 1)
 			type = StaticAnalysisType.NAMING;
 		 
-		staticanalysisDao.insertSAMetric(type, sourcePath,sourceLine, message, commitID);
+		staticanalysisDao.insertSAMetric(type, sourcePath,sourceLine, Nsleft, message, commitID);
 	}
 	private void InputStaticAnalysis(ProjectCommit commitID, List<Violation> ViolationList)
 	{
@@ -242,7 +242,7 @@ public class AnalysisService {
 			for(Violation violation : ViolationList)
 			{
 				InsertStaticAnalysis(commitID,violation.getViolationType(),violation.getSourcePath(),
-									 violation.getSourceLine(),violation.getMessage());
+									 violation.getSourceLine(),violation.getDomainLeftValue(),violation.getMessage());
 			}
 		}
 		catch(Exception e)

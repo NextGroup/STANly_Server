@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <HTML>
 <HEAD>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link href="./dev/js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="./dev/css/style.css" rel="stylesheet" type="text/css">
+
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+    <script type="text/javascript" src="./dev/js/arcadia.js"></script>
+    <script type="text/javascript" src="./dev/js/aGraph.js"></script>
+    <script type="text/javascript" src="./dev/js/d3/lib/d3.v2.js"></script>
+    <script type="text/javascript" src="./dev/js/d3/nv.d3.js"></script>
+    <script type="text/javascript" src="./dev/js/d3/src/models/pie.js"></script>
 
 
 
@@ -45,14 +55,14 @@
 
         function reqGetResponse(data) {
             //data = JSON.parse(data);
-            sendGet("/Stanly/dashboard.html","Name="+data.login+"&Version=" + RadioCheck());
+            sendGet("/Stanly/dev/dashboard.html","Name="+document.Loginform.client_id.value+"&Version=" + RadioCheck());
         }
         function reset(){
             document.Loginform.client_id.value = "";
             document.Loginform.client_id.focus();
         }
         function sendGet(url,arg){
-            // Form°´Ã¼¸¦ ¸¸µé°í ¼Ó¼º°ªµéÀ» Ãß°¡ÇÔ
+            // Formï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
             var oForm = document.createElement('form');
 
             oForm.method = "get";
@@ -70,9 +80,9 @@
                 oInputHidden.value	= argArr[i].substr(equIndex);
                 oForm.appendChild(oInputHidden);
             }
-            // Form¾È¿¡ TextBox¸¦ ³ÖÀ½
+            // Formï¿½È¿ï¿½ TextBoxï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             oForm.appendChild(oInputHidden);
-            // Body¾È¿¡ FormÀ» ³ÖÀ½
+            // Bodyï¿½È¿ï¿½ Formï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             document.body.appendChild(oForm);
             oForm.submit();
         }
@@ -80,19 +90,52 @@
     </script>
 </HEAD>
 <BODY>
-<FORM name="Loginform" METHOD="get" url = "https://github.com/login/oauth/authorize"   >
-    GitHub ID : <INPUT TYPE="string" NAME="client_id">
-    <input type=button name=btn1 value="Log In" onClick="javascript:check();">
-    <input type=button name=btn1 value="Reset" onClick="javascript:reset();">
-
-    <div>
-        <form name="formname">
-    <input type="radio" name="chk_info" value="Developer" checked="checked"> °³¹ßÀÚ ¹öÀü
-    <input type="radio" name="chk_info" value="Architect"> ¾ÆÅ°ÅØÆ®&PM ¹öÀü
-            </form>
+<div id="container" class="dashboard">
+    <div id="header-container">
+        <div id="sliverLine"></div>
+            <div id="header">
+                <div id="logoBox" class="img"></div>
+            </div>
     </div>
 
-</FORM>
+    <div id="Body-Container">
+        <!-- <table style='top: 50%; left: 50%; position: absolute; height: 200px; text-align: left; margin: -100px 0pt 0pt -150px; border-color:black' cellspacing="0" cellpadding="0" border="1"> -->
+
+        <div class="loginform cf"style="font-size: 14px">
+            <form name="Loginform" METHOD="get" url = "https://github.com/login/oauth/authorize" accept-charset="utf-8">
+                <ul>
+                    <li>
+                        <label>GitHub ID</label>
+                        <input type="string" name="client_id" placeholder="GitHub ID" required>
+                    </li>
+                    <li>
+                        <label>Password</label>
+                        <input type="password" name="client_pw" placeholder="password" required>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <form name="formname">
+                            <input type="radio" name="chk_info" value="Developer" checked="checked">Developer
+                            <input type="radio" name="chk_info" value="Architect"> PM & Architect
+                        </form>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <input type="submit" name=btn1 value="Log In" onClick="javascript:check();">
+                        <input type="submit" name=btn1 value="Reset" onClick="javascript:reset();">
+                    </li>
+
+                </ul>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
 </BODY>
 </HTML>
 

@@ -38,14 +38,19 @@ public class StaticAnalysisMetric {
 	@JoinColumn(name = "COMMITID", nullable = false)
 	private ProjectCommit commit;
 	
+	@Column(name="NSLeft")
+	private Integer NSLeft;
+	
+	
 	public StaticAnalysisMetric(StaticAnalysisType type, String sourcePath,
-			Integer line, String message,ProjectCommit commit) {
+			Integer line,Integer left, String message,ProjectCommit commit) {
 		super();
 		this.type = type;
 		this.sourcePath = sourcePath;
 		Line = line;
 		this.message = message;
 		this.commit=commit;
+		this.NSLeft=left;
 	}
 
 	public Integer getSAID() {
@@ -70,6 +75,10 @@ public class StaticAnalysisMetric {
 
 	public ProjectCommit getCommit() {
 		return commit;
+	}
+
+	public Integer getNSLeft() {
+		return NSLeft;
 	}
 	
 	

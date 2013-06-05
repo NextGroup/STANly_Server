@@ -147,13 +147,5 @@ public class AnalysisServiceTest {
 		System.out.println(n);
 	}
 	
-	@Test
-	public void SAMetricTableTest()
-	{
-		ProjectCommit TestCommit = projectService.getCommitList("Logdog").get(0);
-		StaticAnalysisMetric sm = SADAO.insertSAMetric(StaticAnalysisType.BASIC, "Tm", 10, "Apple",TestCommit);
-		
-		assertEquals(StaticAnalysisType.BASIC,sm.getType());
-		System.out.println(sm.getSAID());
-	}
+
 }
