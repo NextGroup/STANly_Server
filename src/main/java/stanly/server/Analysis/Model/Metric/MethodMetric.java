@@ -2,8 +2,6 @@ package stanly.server.Analysis.Model.Metric;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -56,7 +54,7 @@ public class MethodMetric extends ElementNodeMetric{
 		int CCRate = (CC<=10) ? MetricRate.A_RATE: ((CC<=15) ? MetricRate.B_RATE:(CC<=20) ? MetricRate.C_RATE:MetricRate.F_RATE);
 		int ELOCRate  = (LOC<=60) ? MetricRate.A_RATE: ((LOC<=120) ? MetricRate.B_RATE:MetricRate.C_RATE);
 		
-		fatRate = (CCRate+ELOCRate)/2;
+		fatRate = (int) Math.ceil((CCRate+ELOCRate)/2.0f);
 			
 		CPRate = MetricRate.NO_RATE;
 		CouplingRate = MetricRate.NO_RATE;

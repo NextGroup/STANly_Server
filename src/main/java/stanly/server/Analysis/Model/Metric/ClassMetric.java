@@ -218,7 +218,7 @@ public class ClassMetric extends ElementNodeMetric {
 		int fields = (Fields<20) ? MetricRate.A_RATE:((Fields<40) ? MetricRate.C_RATE: MetricRate.F_RATE);
 		int eloc= (LOC<300) ? MetricRate.A_RATE : ((LOC<400) ? MetricRate.C_RATE: MetricRate.F_RATE);
 		
-		fatRate = (methods+fields+eloc)/3;
+		fatRate = (int) Math.ceil((methods+fields+eloc)/3.0f);
 		
 		if(DIT>5)
 			CPRate = MetricRate.A_RATE;

@@ -88,7 +88,7 @@ public class AttributeMetric extends ElementNodeMetric{
 	{
 		int ccM = (CC<15) ? MetricRate.A_RATE: ((CC<20) ? MetricRate.B_RATE: MetricRate.C_RATE);
 		int locM = (ELOC<60) ? MetricRate.A_RATE: ((ELOC<120) ? MetricRate.B_RATE: MetricRate.C_RATE);
-		fatRate = (ccM+locM)/2;
+		fatRate = (int) Math.ceil((ccM+locM)/2.0f);
 		
 		CPRate = MetricRate.NO_RATE;
 		CouplingRate = MetricRate.NO_RATE;

@@ -35,7 +35,7 @@ public class PollutionRankDAO {
 			Query query = session.createQuery("select avg(metric.fatRate) from ElementNodeMetric metric where metric.fatRate!=?");
 			query.setParameter(0, MetricRate.NO_RATE);
 			Double ave  = (Double)query.uniqueResult();
-			data = (int)ave.doubleValue(); 
+			data = (int)Math.ceil(ave.doubleValue()); 
 		}catch(Exception e)
 		{
 			logger.error(e);
@@ -51,7 +51,7 @@ public class PollutionRankDAO {
 			Query query = session.createQuery("select avg(metric.CPRate) from ElementNodeMetric metric where metric.CPRate!=?");
 			query.setParameter(0, MetricRate.NO_RATE);
 			Double ave  = (Double)query.uniqueResult();
-			data = (int)ave.doubleValue(); 
+			data = (int)Math.ceil(ave.doubleValue()); 
 		}catch(Exception e)
 		{
 			logger.error(e);
@@ -67,7 +67,7 @@ public class PollutionRankDAO {
 			Query query = session.createQuery("select avg(metric.CouplingRate) from ElementNodeMetric metric where metric.CouplingRate!=?");
 			query.setParameter(0, MetricRate.NO_RATE);
 			Double ave  = (Double)query.uniqueResult();
-			data = (int)ave.doubleValue(); 
+			data = (int)Math.ceil(ave.doubleValue()); 
 		}catch(Exception e)
 		{
 			logger.error(e);
