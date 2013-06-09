@@ -63,6 +63,7 @@ public class PollutionRankDAO {
 	{
 		int data = MetricRate.NO_RATE;
 		try{
+			//pid 추가 할 것
 			Session session = sessionFactory.getCurrentSession();
 			Query query = session.createQuery("select avg(metric.CouplingRate) from ElementNodeMetric metric where metric.CouplingRate!=?");
 			query.setParameter(0, MetricRate.NO_RATE);
