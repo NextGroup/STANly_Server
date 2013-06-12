@@ -343,7 +343,7 @@ public class AnalysisService {
 		metric.setLOC(clientMetric.getLOC());
 		metric.setNOC(clientMetric.getNOC());
 		metric.setRFC(clientMetric.getRFC());
-		
+		metric.setSRC(node.path);
 	}
 	private void InputLibraryMetric(LibraryMetric metric, LibraryDomain node)
 	{
