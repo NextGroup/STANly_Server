@@ -101,6 +101,8 @@ public class ClassMetric extends ElementNodeMetric {
 	@Column(name = "LCOM")
 	private int LCOM;
 	
+	@Column(name = "SRC")
+	private String SRC;
 	
 	public ClassMetric()
 	{
@@ -127,6 +129,7 @@ public class ClassMetric extends ElementNodeMetric {
 		CBO = cBO;
 		RFC = rFC;
 		LCOM = lCOM;
+		SRC=null;
 	}
 	public ClassMetric(NodeType type) {
 		super(type);
@@ -211,6 +214,12 @@ public class ClassMetric extends ElementNodeMetric {
 		return LCOM;
 	}
 	
+	public String getSRC() {
+		return SRC;
+	}
+	public void setSRC(String sRC) {
+		SRC = sRC;
+	}
 	@Override
 	public void setRate()
 	{

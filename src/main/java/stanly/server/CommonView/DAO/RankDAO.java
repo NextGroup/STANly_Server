@@ -13,14 +13,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.ElementNodeMetric;
 import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
+import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.CommonView.JSON.CriticalRisk;
 import stanly.server.CommonView.JSON.CriticalRiskList;
 import stanly.server.GitProject.Model.ProjectCommit;
 
+@Repository
+@Transactional
 public class RankDAO {
 	
 	protected static final Logger logger = Logger.getLogger("RankDAO");
@@ -75,16 +80,14 @@ public class RankDAO {
 		 CriticalRiskList list = new CriticalRiskList();
 		try{
 			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select metric from ElementNodeMetric metric where metric.TotalRate > ? and  metric.element.commit = ? and metric.element.type !=? and metric.element.type !=? order by metric.TotalRate desc");
+			query.setParameter(0, MetricRate.A_RATE);
+			query.setParameter(1, commit);
+			query.setParameter(2, NodeType.FIELD);
+			query.setParameter(3, NodeType.METHOD);
+			query.setMaxResults(5);
 
-			
-			 Criterion CommitEq = Restrictions.eq("commit", commit);
-			 Criterion rate = Restrictions.ge("TotalRate", MetricRate.A_RATE); //NSLeft == 1 이면 프로젝트 노
-			 Criteria crit = session.createCriteria(ElementNodeMetric.class);
-			 crit.add(rate);
-			 crit.add(CommitEq);
-			 crit.setMaxResults(3);
-			 crit.addOrder(Order.desc("TotalRate"));
-			 List nodeList = crit.list();
+			 List nodeList = query.list();
 
 			 
 			for(int i=0;i<nodeList.size();i++)
