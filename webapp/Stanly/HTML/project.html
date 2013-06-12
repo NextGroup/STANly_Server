@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	
+	<title>STANly :: Project Dashboard</title>
+
+	<meta name="viewport" content="width=device-width">
+
+	<link href="./css/style.css" rel="stylesheet" type="text/css">
+	<link href="./js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="./js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="./js/arcadia.js"></script>
+	<script type="text/javascript" src="./js/d3/lib/d3.v2.js"></script>
+	<script type="text/javascript" src="./js/d3/nv.d3.js"></script>
+	<script type="text/javascript" src="./js/d3/src/models/legend.js"></script>
+	<script type="text/javascript" src="./js/d3/src/models/pie.js"></script>
+	<script type="text/javascript" src="./js/d3/src/models/pieChart.js"></script>
+	<script type="text/javascript" src="./js/d3/src/utils.js"></script>
+</head>
+
+<body>
+<div id="container" class="project">
+	<div id="header-container">
+		<div id="sliverLine"></div>
+		<div id="header">
+			<div id="logoBox" class="img"></div>
+			<div id="rightBox">
+				<div id="user-container">
+					<div id="userBox">
+						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
+						<div class="userName">An Jeungwon</div>
+					</div>
+					<div id="userInfoIcon" class="img"></div>
+				</div>
+				<!--user-container fin-->
+			</div>
+		</div>
+		<!--header fin-->
+	</div>
+	<!--header-container fin-->
+
+	<div id="content-container">
+		<div id="sidebar-container">
+			<div id="sidebar">
+				<div id="projectMenu">
+					<a href="project.html?project=stanly">
+						<ol>
+							<li class="icon"></li>
+							<li class="text">PROJECT</li>
+						</ol>
+					</a>
+				</div>
+				<div id="noneMenu"></div>
+				<div id="dashboardMenu">
+					<div class="shadow"></div>
+					<a href="dashboard.html">
+						<ol>
+							<li class="icon"></li>
+							<li class="text">DASHBOARD</li>
+						</ol>
+					</a>
+					<div class="bottom"></div>
+				</div>
+				<div id="compositionMenu">
+					<a href="composition.html?project=stanly">
+						<ol>
+							<li class="icon"></li>
+							<li class="text">COMPOSITION</li>
+						</ol>
+					</a>
+				</div>
+				<div id="pollutionMenu">
+					<ol>
+						<li class="icon"></li>
+						<li class="text">POLLUTION</li>
+					</ol>
+				</div>
+			</div>
+			<!--sidebar fin-->
+		</div>
+		<div id="content">
+			<div id="content-body">
+				<div id="content-line"></div>
+				<div id="content-inverted-circle"></div>
+				<div id="overview">
+					<div id="overview-content">
+						<div class="pollution a-circle left">
+							<div class="rotation-circle"><div class="text">A</div></div>
+						</div>
+						<div class="text">Stanly</div>
+					</div>
+					<div id="overview-right">
+						<div class="text">PROJECT</div>
+						<div class="icon"></div>
+					</div>
+					<div id="triangleS"></div>
+					<div id="triangleE"></div>
+				</div>
+
+				<!--overview fin-->
+				<div id="main">
+					<div class="dashboard-group" style="height: 243px; ">
+						<div id="left-rate">
+							<div class="title">Critical Risk</div>
+							<div id="critical-risk" class="content-box">
+								<div class="pollution-graph">
+									<table class="critical-risk">
+										<tbody>
+											<tr>
+												<td class="rate-f">F</td>
+												<td class="icon"><img src="./images/icon/tree.gif" style="margin-top:2px;" alt="tree" /></td>
+												<td>logdog.server.accepter</td>
+											</tr>
+											<tr>
+												<td class="rate-f">F</td>
+												<td class="icon"><img src="./images/icon/package.gif" style="margin-top:2px;" alt="package" /></td>
+												<td>logdog.server.accepter.hello</td>
+											</tr>
+											<tr>
+												<td class="rate-f">F</td>
+												<td class="icon"><img src="./images/icon/class.gif" style="margin-top:6px;" alt="class" /></td>
+												<td>logdog.client.log4j.dispatcher</td>
+											</tr>
+											<tr>
+												<td class="rate-c">C</td>
+												<td class="icon"><img src="./images/icon/class.gif" style="margin-top:6px;" alt="class" /></td>
+												<td>logdog.client.log4j.dispatcher</td>
+											</tr>
+											<tr>
+												<td class="rate-c">C</td>
+												<td class="icon"><img src="./images/icon/class.gif" style="margin-top:6px;" alt="class" /></td>
+												<td>logdog.client.log4j.dispatcher</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!--fat-rate fin-->
+						</div>
+						<!--left-rate fin-->
+						<div id="right-rate">
+							<div class="title" style="margin-left: 11px;">Total Pollution Rate</div>
+							<div id="total-pollution-rate" class="content-box">
+								<div id="pollution-left">
+									<svg id="project-pol"></svg>
+								</div>
+								<div id="pollution-right">
+									<div class="list-item">
+										<div class="icon" style="background-color:#EE0000;"></div>
+										<div class="name">F: 60ea</div>
+									</div>
+									<div class="list-spliter"></div>
+									<div class="list-item">
+										<div class="icon" style="background-color:#F77700;"></div>
+										<div class="name">C: 25ea</div>
+									</div>
+									<div class="list-spliter"></div>
+									<div class="list-item">
+										<div class="icon" style="background-color:#FFEE00;"></div>
+										<div class="name">B: 10ea</div>
+									</div>
+									<div class="list-spliter"></div>
+									<div class="list-item">
+										<div class="icon" style="background-color:#00AA00;"></div>
+										<div class="name">A: 5ea</div>
+									</div>
+								</div>
+							</div>
+							<script type="text/javascript">
+							nv.addGraph(function(){
+								var chart = nv.models.pie()
+									.values(function(d) { return d })
+									.width(200)
+									.height(200)
+									.color([ "#EE0000", "#F77700", "#FFEE00", "#00AA00" ])
+									.donut(true)
+									.donutRatio(0.5);
+
+								d3.select("#project-pol")
+									.datum([[
+										{ 
+										  key: "One",
+										  y: 5.5
+										},
+										{ 
+										  key: "Two",
+										  y: 3
+										},
+										{ 
+										  key: "Three",
+										  y: 2.5
+										},
+										{ 
+										  key: "Four",
+										  y: 1.5
+										},
+									 ]])
+									.transition().duration(1200)
+									.attr('width', 200)
+									.attr('height', 200)
+									.call(chart);
+
+								return chart;
+							});
+							</script>
+						</div>
+						<!--right-rate fin-->
+					</div>
+					<!--.dashboard-group fin-->
+
+					<div class="dashboard-group">
+						<div class="title">Pollution Rank</div>
+						<div id="left-rate">
+							<div class="half-size">
+								<div id="fat-rate" class="content-box">
+									<div class="pollution-rate-title">
+										<div class="rate-icon"></div>
+										<div class="rate-name">FAT</div>
+									</div>
+									<div class="pollution-rate-content">
+										<svg id="fat-pol"></svg>
+										<div class="rate-level f-rate">F</div>
+										<script type="text/javascript">
+										nv.addGraph(function(){
+											var chart = nv.models.pie()
+												.values(function(d) { return d })
+												.width(156)
+												.height(156)
+												.color([ "#EE0000", "#949494" ])
+												.donut(true)
+												.donutRatio(0.5);
+
+											d3.select("#fat-pol")
+												.datum([[
+													{ 
+													  key: "One",
+													  y: 5.5
+													},
+													{ 
+													  key: "Two",
+													  y: 14.5
+													},
+												 ]])
+												.transition().duration(20)
+												.attr('width', 156)
+												.attr('height', 156)
+												.call(chart);
+
+											return chart;
+										});
+										</script>
+									</div>
+									<!--.pollution-rate-content fin -->
+								</div>
+								<!--fat-rate fin-->
+							</div>
+							<div class="half-size">
+								<div id="coupling-rate" class="content-box">
+									<div class="pollution-rate-title">
+										<div class="rate-icon"></div>
+										<div class="rate-name">Coupling</div>
+									</div>
+									<div class="pollution-rate-content">
+										<svg id="coupling-pol"></svg>
+										<div class="rate-level c-rate">C</div>
+										<script type="text/javascript">
+										nv.addGraph(function(){
+											var chart = nv.models.pie()
+												.values(function(d) { return d })
+												.width(156)
+												.height(156)
+												.color([ "#F77700", "#949494" ])
+												.donut(true)
+												.donutRatio(0.5);
+
+											d3.select("#coupling-pol")
+												.datum([[
+													{ 
+													  key: "One",
+													  y: 3
+													},
+													{ 
+													  key: "Two",
+													  y: 17
+													},
+												 ]])
+												.transition().duration(10)
+												.attr('width', 156)
+												.attr('height', 156)
+												.call(chart);
+
+											return chart;
+										});
+										</script>
+									</div>
+									<!--.pollution-rate-content fin-->
+								</div>
+								<!--coupling-rate fin-->
+							</div>
+						</div>
+						<!--left-rate fin-->
+						<div id="right-rate">
+							<div id="basicrule-rate" class="content-box">
+								<div class="pollution-rate-title">
+									<div class="rate-icon"></div>
+									<div class="rate-name">Basic Rule</div>
+								</div>
+								<div class="pollution-rate-content c-rate">
+									<div class="rate-title">
+										<div><h1 class="text">A</h1></div>
+										<div class="rate-bar"></div>
+										<div><h1 class="text">B</h1></div>
+										<div class="rate-bar"></div>
+										<div><h1 class="text">C</h1></div>
+										<div class="rate-bar"></div>
+										<div><h1 class="text">F</h1></div>
+									</div>
+									<div class="rate-body">
+										<div><div class="body"></div></div>
+										<div class="rate-bar"></div>
+										<div><div class="body"></div></div>
+										<div class="rate-bar"></div>
+										<div><div class="body"></div></div>
+										<div class="rate-bar"></div>
+										<div><div class="body"></div></div>
+									</div>
+									<div class="rate-head">
+										<div class="a-rate">
+											<div class="essence" style="width: 38px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="a2b">
+											<div class="essence-body" style="display: block;"></div>
+										</div>
+										<div class="b-rate">
+											<div class="essence" style="width: 38px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="b2c">
+											<div class="essence-body" style="display: block;"></div>
+										</div>
+										<div class="c-rate">
+											<div class="essence" style="width: 19px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="c2f">
+											<div class="essence-body" style="display: none;"></div>
+										</div>
+										<div class="f-rate">
+											<div class="essence" style="width: 0px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="current-slider" style="margin-left: 217px;">
+											<div class="img"></div>
+											<div class="text">RANK<span>C</span></div>
+										</div>
+										<div class="slider-bottom" style="width: 211px"></div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin-->
+							</div>
+							<div id="naming-rate" class="content-box">
+								<div class="pollution-rate-title">
+									<div class="rate-icon"></div>
+									<div class="rate-name">Unknown Naming</div>
+								</div>
+								<div class="pollution-rate-content f-rate">
+									<div class="rate-title">
+										<div><h1 class="text">A</h1></div>
+										<div class="rate-bar"></div>
+										<div><h1 class="text">B</h1></div>
+										<div class="rate-bar"></div>
+										<div><h1 class="text">C</h1></div>
+										<div class="rate-bar"></div>
+										<div><h1 class="text">F</h1></div>
+									</div>
+									<div class="rate-body">
+										<div><div class="body"></div></div>
+										<div class="rate-bar"></div>
+										<div><div class="body"></div></div>
+										<div class="rate-bar"></div>
+										<div><div class="body"></div></div>
+										<div class="rate-bar"></div>
+										<div><div class="body"></div></div>
+									</div>
+									<div class="rate-head">
+										<div class="a-rate">
+											<div class="essence" style="width: 38px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="a2b">
+											<div class="essence-body" style="display: block;"></div>
+										</div>
+										<div class="b-rate">
+											<div class="essence" style="width: 38px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="b2c">
+											<div class="essence-body" style="display: block;"></div>
+										</div>
+										<div class="c-rate">
+											<div class="essence" style="width: 38px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="c2f">
+											<div class="essence-body" style="display: block;"></div>
+										</div>
+										<div class="f-rate">
+											<div class="essence" style="width: 20px;"><div class="essence-body"></div></div>
+										</div>
+										<div class="current-slider" style="margin-left: 314px;">
+											<div class="img"></div>
+											<div class="text">RANK<span>F</span></div>
+										</div>
+										<div class="slider-bottom" style="width: 308px"></div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin-->
+							</div>
+						</div>
+						<!--right-rate fin-->
+					</div>
+					<!--.dashboard-group fin-->
+					<div id="popup-info">
+						<div id="popup-tri"></div>
+						<div id="popup-body">
+							<div id="popup-title">Basic Rule</div>
+							<div id="popup-line"></div>
+							<div id="popup-content">PMD를 통해 나온 정보로 규칙 위반의 정도를 보여주는 지표이다.</div>
+						</div>
+					</div>
+				</div>
+				<!--main fin-->
+			</div>
+			<!--content-body fin-->
+		</div>
+		<!--content fin-->
+	</div>
+	<!--content-container fin-->
+</div>
+
+<script type="text/javascript">
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#72c380", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#eloc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 39
+			},
+			{
+			  key: "Two",
+			  y: 10
+			},
+			{
+			  key: "Three",
+			  y: 51
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#eloc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#eloc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#eloc .graph .bar", (360 * 49 / 100) / 15 * 7 - 180 / 15 * 7);
+
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#de6262", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#ecoc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 68
+			},
+			{
+			  key: "Two",
+			  y: 20
+			},
+			{
+			  key: "Three",
+			  y: 12
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#ecoc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#ecoc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#ecoc .graph .bar", (360 * 68 / 100) / 15 * 7 - 180 / 15 * 7);
+</script>
+
+</body>
+</html>
