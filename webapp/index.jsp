@@ -4,15 +4,15 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <link href="./dev/js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
-    <link href="./dev/css/style.css" rel="stylesheet" type="text/css">
+    <link href="./js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
-    <script type="text/javascript" src="./dev/js/arcadia.js"></script>
-    <script type="text/javascript" src="./dev/js/aGraph.js"></script>
-    <script type="text/javascript" src="./dev/js/d3/lib/d3.v2.js"></script>
-    <script type="text/javascript" src="./dev/js/d3/nv.d3.js"></script>
-    <script type="text/javascript" src="./dev/js/d3/src/models/pie.js"></script>
+    <script type="text/javascript" src="./js/arcadia.js"></script>
+    <script type="text/javascript" src="./js/aGraph.js"></script>
+    <script type="text/javascript" src="./js/d3/lib/d3.v2.js"></script>
+    <script type="text/javascript" src="./js/d3/nv.d3.js"></script>
+    <script type="text/javascript" src="./js/d3/src/models/pie.js"></script>
 
 
 
