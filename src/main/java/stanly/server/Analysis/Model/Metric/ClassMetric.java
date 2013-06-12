@@ -231,5 +231,7 @@ public class ClassMetric extends ElementNodeMetric {
 		int rfcRate = (RFC<100) ? MetricRate.A_RATE: MetricRate.C_RATE;
 		int fRate = (Fat<60) ? MetricRate.A_RATE: ((Fat<120) ? MetricRate.B_RATE: MetricRate.C_RATE);
 		CouplingRate = (cboRate+rfcRate+fRate)/3;
+		
+		TotalRate = (fatRate +CPRate+ CouplingRate)/3;
 	}
 }

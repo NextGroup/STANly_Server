@@ -306,5 +306,7 @@ public class PackageMetric extends ElementNodeMetric{
 			CouplingRate	 = MetricRate.B_RATE;
 		else 
 			CouplingRate	 = MetricRate.A_RATE;
+		
+		TotalRate = (fatRate +CPRate+ CouplingRate)/3;
 	}
 }

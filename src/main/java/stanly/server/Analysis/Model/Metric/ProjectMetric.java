@@ -79,5 +79,7 @@ public class ProjectMetric extends ElementNodeMetric{
 			CouplingRate = MetricRate.C_RATE;
 		else 
 			CouplingRate = MetricRate.A_RATE;
+		
+		TotalRate = (CouplingRate);
 	}
 }

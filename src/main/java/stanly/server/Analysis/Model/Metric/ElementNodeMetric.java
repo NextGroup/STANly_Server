@@ -58,6 +58,9 @@ public abstract class ElementNodeMetric {
 	@Column(name = "CoRate")
 	protected int CouplingRate;
 
+	@Column(name = "TotalRate")
+	protected int TotalRate;
+	
 	public ElementNodeMetric()
 	{
 		
@@ -120,6 +123,14 @@ public abstract class ElementNodeMetric {
 		CouplingRate = couplingRate;
 	}
 	
+	public int getTotalRate() {
+		return TotalRate;
+	}
+
+	public void setTotalRate(int totalRate) {
+		TotalRate = totalRate;
+	}
+
 	public abstract void setRate();
 	
 }

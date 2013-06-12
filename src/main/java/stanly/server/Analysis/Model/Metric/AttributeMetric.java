@@ -92,6 +92,7 @@ public class AttributeMetric extends ElementNodeMetric{
 		
 		CPRate = MetricRate.NO_RATE;
 		CouplingRate = MetricRate.NO_RATE;
+		TotalRate = (fatRate + CouplingRate)/2;
 	}
 
 }

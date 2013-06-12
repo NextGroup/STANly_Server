@@ -1,5 +1,8 @@
 package stanly.server.CommonView.DAO;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -8,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
+import stanly.server.GitProject.Model.ProjectCommit;
 
 public class RankDAO {
 	
@@ -18,15 +22,38 @@ public class RankDAO {
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 	
-	public int getTotalARank()
+	private int getRate(double a)
+	{
+		return (0.01>a) ?  MetricRate.A_RATE: ((0.02>a) ? MetricRate.B_RATE: ((0.04>a) ? MetricRate.C_RATE: MetricRate.F_RATE));
+	}
+	
+	public int getTotalARank(ProjectCommit commit)
 	{
 		int data = MetricRate.NO_RATE;
 		try{
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select max(metric.fatRate) from ElementNodeMetric metric where metric.fatRate!=?");
-			query.setParameter(0, MetricRate.NO_RATE);
-			Double ave  = (Double)query.uniqueResult();
-			data = (int)Math.ceil(ave.doubleValue()); 
+			Query query = session.createQuery("select metric.TotalRate ,count(metric.TotalRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.TotalRate");
+			query.setParameter(0, commit);
+			List group = query.list();
+			Iterator ite = group.iterator();
+			long arate=0;
+			long etcrate=0;
+			while(ite.hasNext())
+			{
+				Object[] datas = (Object[]) ite.next();
+				if((Integer)datas[0]==1)
+				{
+					
+					arate= ((Long)datas[1]);
+				
+				}
+				else
+					etcrate += (Long)datas[1];
+				
+			}
+			double rate = ((double)etcrate) / (arate+etcrate);
+			logger.info("Total"+rate);
+			data = getRate(rate);
 		}catch(Exception e)
 		{
 			logger.error(e);

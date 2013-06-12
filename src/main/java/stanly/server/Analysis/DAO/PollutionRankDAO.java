@@ -31,6 +31,11 @@ public class PollutionRankDAO {
 		return (count<51) ? MetricRate.A_RATE:((count<101) ? MetricRate.B_RATE: ((count<201)? MetricRate.C_RATE: MetricRate.F_RATE)); 
 	}
 	
+	private int getStaticAnalysisNamingRank(int count)
+	{
+		return (count<101) ? MetricRate.A_RATE:((count<251) ? MetricRate.B_RATE: ((count<501)? MetricRate.C_RATE: MetricRate.F_RATE)); 
+	}
+	
 	private int getRate(double a)
 	{
 		return (0.01>a) ?  MetricRate.A_RATE: ((0.02>a) ? MetricRate.B_RATE: ((0.04>a) ? MetricRate.C_RATE: MetricRate.F_RATE));
@@ -176,6 +181,6 @@ public class PollutionRankDAO {
 			logger.error("SA-Name");
 			logger.error(e);
 		}
-		return getStaticAnalysisRank(data);
+		return getStaticAnalysisNamingRank(data);
 	}
 }

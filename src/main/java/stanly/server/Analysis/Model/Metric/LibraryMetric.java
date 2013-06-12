@@ -243,5 +243,6 @@ public class LibraryMetric extends ElementNodeMetric{
 			CouplingRate = MetricRate.F_RATE;
 		else 
 			CouplingRate = MetricRate.A_RATE;
+		TotalRate =  CouplingRate;
 	}
 }
