@@ -33,7 +33,7 @@ public class PollutionRankDAO {
 	
 	private int getStaticAnalysisNamingRank(int count)
 	{
-		return (count<101) ? MetricRate.A_RATE:((count<251) ? MetricRate.B_RATE: ((count<501)? MetricRate.C_RATE: MetricRate.F_RATE)); 
+		return (count<151) ? MetricRate.A_RATE:((count<551) ? MetricRate.B_RATE: ((count<1001)? MetricRate.C_RATE: MetricRate.F_RATE)); 
 	}
 	
 	private int getRate(double a)

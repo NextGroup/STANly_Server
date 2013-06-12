@@ -6,11 +6,19 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
+import stanly.server.Analysis.Model.ProjectElementNode;
+import stanly.server.Analysis.Model.Metric.ElementNodeMetric;
 import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
+import stanly.server.CommonView.JSON.CriticalRisk;
+import stanly.server.CommonView.JSON.CriticalRiskList;
 import stanly.server.GitProject.Model.ProjectCommit;
 
 public class RankDAO {
@@ -61,4 +69,35 @@ public class RankDAO {
 		return data;
 	}
 	
+	public CriticalRiskList getCriticalRiskList(ProjectCommit commit)
+	{
+		
+		 CriticalRiskList list = new CriticalRiskList();
+		try{
+			Session session = sessionFactory.getCurrentSession();
+
+			
+			 Criterion CommitEq = Restrictions.eq("commit", commit);
+			 Criterion rate = Restrictions.ge("TotalRate", MetricRate.A_RATE); //NSLeft == 1 이면 프로젝트 노
+			 Criteria crit = session.createCriteria(ElementNodeMetric.class);
+			 crit.add(rate);
+			 crit.add(CommitEq);
+			 crit.setMaxResults(3);
+			 crit.addOrder(Order.desc("TotalRate"));
+			 List nodeList = crit.list();
+
+			 
+			for(int i=0;i<nodeList.size();i++)
+			{
+				ElementNodeMetric em = (ElementNodeMetric)nodeList.get(i);
+				ProjectElementNode node = em.getElement();
+				list.addData(node.getName(),em.getTotalRate(),node.getType());
+			}
+				
+		}catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return list;
+	}
 }
