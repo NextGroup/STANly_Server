@@ -51,7 +51,7 @@ public class PollutionRankDAO {
 			query.setParameter(1, commit);
 			List group = query.list();
 			Iterator ite = group.iterator();
-			long arate=0;
+			long arate=0;	
 			long etcrate=0;
 			while(ite.hasNext())
 			{

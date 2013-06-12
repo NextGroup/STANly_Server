@@ -30,7 +30,10 @@ public class RankDAO {
 	 */
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
-	
+	private String RateChange(int i)
+	{
+		return (i==1) ? "A":((i==2) ? "B" : ((i==3) ? "C":"F"));
+	}
 	private int getRate(double a)
 	{
 		return (0.01>a) ?  MetricRate.A_RATE: ((0.02>a) ? MetricRate.B_RATE: ((0.04>a) ? MetricRate.C_RATE: MetricRate.F_RATE));
@@ -143,5 +146,136 @@ public class RankDAO {
 		return pList;
 	}
 	
+	
+	
+	public PollutionRatioList getFatRank(ProjectCommit commit)
+	{
+		PollutionRatioList pList = new PollutionRatioList();
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select metric.fatRate ,count(metric.fatRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.fatRate");
+			query.setParameter(0, commit);
+			List group = query.list();
+			Iterator ite = group.iterator();
+			int LastI = -1;
+			int LastData=0;
+			int Total=0;
+			while(ite.hasNext())
+			{
+				Object[] datas = (Object[]) ite.next();
+				if((Integer)datas[0] > LastI)
+				{
+					LastI=(Integer)datas[0];
+					long Temp = ((Long)datas[1]);
+					LastData = (int)Temp;
+					Total+=LastData;
+				}
+				else
+				{
+					long Temp = ((Long)datas[1]);
+					Total+=(int)Temp;
+				}
+
+			}
+			if(LastI==1)
+				pList.insertRatio("A", Total);
+			else
+			{
+				pList.insertRatio("etc", Total-LastData);
+				pList.insertRatio(RateChange(LastI),LastData*10);
+			}
+			
+		}catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return pList;
+	}
+	public PollutionRatioList getCpRank(ProjectCommit commit)
+	{
+		PollutionRatioList pList = new PollutionRatioList();
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select metric.CPRate ,count(metric.CPRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.CPRate");
+			query.setParameter(0, commit);
+			List group = query.list();
+			Iterator ite = group.iterator();
+			int LastI = -1;
+			int LastData=0;
+			int Total=0;
+			while(ite.hasNext())
+			{
+				Object[] datas = (Object[]) ite.next();
+				if((Integer)datas[0] > LastI)
+				{
+					LastI=(Integer)datas[0];
+					long Temp = ((Long)datas[1]);
+					LastData = (int)Temp;
+					Total+=LastData;
+				}
+				else
+				{
+					long Temp = ((Long)datas[1]);
+					Total+=(int)Temp;
+				}
+
+			}
+			if(LastI==1)
+				pList.insertRatio("A", Total);
+			else
+			{
+				pList.insertRatio("etc", Total-LastData);
+				pList.insertRatio(RateChange(LastI),LastData*10);
+			}
+			
+		}catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return pList;
+	}
+	public PollutionRatioList getCouplingRank(ProjectCommit commit)
+	{
+		PollutionRatioList pList = new PollutionRatioList();
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select metric.CouplingRate ,count(metric.CouplingRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.CouplingRate");
+			query.setParameter(0, commit);
+			List group = query.list();
+			Iterator ite = group.iterator();
+			int LastI = -1;
+			int LastData=0;
+			int Total=0;
+			while(ite.hasNext())
+			{
+				Object[] datas = (Object[]) ite.next();
+				if((Integer)datas[0] > LastI)
+				{
+					LastI=(Integer)datas[0];
+					long Temp = ((Long)datas[1]);
+					LastData = (int)Temp;
+					Total+=LastData;
+				}
+				else
+				{
+					long Temp = ((Long)datas[1]);
+					Total+=(int)Temp;
+				}
+
+			}
+			if(LastI==1)
+				pList.insertRatio("A", Total);
+			else
+			{
+				pList.insertRatio("etc", Total-LastData);
+				pList.insertRatio(RateChange(LastI),LastData*10);
+			}
+			
+		}catch(Exception e)
+		{
+			logger.error(e);
+		}
+		return pList;
+	}
 	
 }

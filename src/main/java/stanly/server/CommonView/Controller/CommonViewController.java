@@ -35,4 +35,24 @@ public class CommonViewController {
 			logger.info("Critical Risk Getter");
 			return commonS.getPollutionRisk(name);
 	}
+	
+	@RequestMapping(value = "/pollution/fat", method=RequestMethod.GET)
+	@ResponseBody
+	public String getFatList(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+			logger.info("Critical Risk Getter");
+			return commonS.getFatRatioRank(name);
+	}
+	@RequestMapping(value = "/pollution/cprate", method=RequestMethod.GET)
+	@ResponseBody
+	public String getCpList(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+			logger.info("Critical Risk Getter");
+			return commonS.getCpRatioRank(name);
+	}
+	@RequestMapping(value = "/pollution/coupling", method=RequestMethod.GET)
+	@ResponseBody
+	public String getCouplingList(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+			logger.info("Critical Risk Getter");
+			return commonS.getCouplingRatioRank(name);
+	}
+	
 }
