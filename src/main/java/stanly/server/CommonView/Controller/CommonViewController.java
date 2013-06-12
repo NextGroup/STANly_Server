@@ -54,5 +54,11 @@ public class CommonViewController {
 			logger.info("Critical Risk Getter");
 			return commonS.getCouplingRatioRank(name);
 	}
+	@RequestMapping(value = "/pollution/static", method=RequestMethod.GET)
+	@ResponseBody
+	public String getStaticAnalysis(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+			logger.info("Critical Risk Getter");
+			return commonS.getSAList(name);
+	}
 	
 }

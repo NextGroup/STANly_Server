@@ -18,7 +18,9 @@ import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.CommonView.JSON.CriticalRiskList;
 import stanly.server.CommonView.JSON.PollutionRatioList;
+import stanly.server.CommonView.JSON.SAList;
 import stanly.server.GitProject.Model.ProjectCommit;
+import stanly.server.GitProject.Model.ProjectInfo;
 
 @Repository
 @Transactional
@@ -278,4 +280,12 @@ public class RankDAO {
 		return pList;
 	}
 	
+	public SAList getStaticAnalysisList(ProjectCommit commit)
+	{
+		SAList list = new SAList();
+		ProjectInfo pinfo = commit.getPInfo();
+		list.add("NAMING", RateChange(pinfo.getName_RANK()));
+		list.add("BASIC", RateChange(pinfo.getBasic_RANK()));
+		return list;
+	}
 }
