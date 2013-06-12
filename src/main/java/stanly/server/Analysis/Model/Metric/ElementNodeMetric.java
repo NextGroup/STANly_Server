@@ -9,12 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
+import stanly.server.GitProject.Model.ProjectCommit;
 
 
 
@@ -43,6 +45,7 @@ public abstract class ElementNodeMetric {
 	@JoinColumn(name = "ElementID", nullable = false)
 	private ProjectElementNode element;
 	
+
 	/**
 	 * 어떠한 타입에 매트릭인지 나타낸다.
 	 */
@@ -63,11 +66,13 @@ public abstract class ElementNodeMetric {
 	public ElementNodeMetric(NodeType type) {
 		super();
 		this.type = type;
+		
 	}
 	public ElementNodeMetric(ProjectElementNode node, NodeType type) {
 		super();
 		this.type = type;
 		this.element=node;
+
 		
 	}
 
@@ -88,6 +93,7 @@ public abstract class ElementNodeMetric {
 
 	public void setElement(ProjectElementNode element) {
 		this.element = element;
+
 	}
 
 	public int getFatRate() {

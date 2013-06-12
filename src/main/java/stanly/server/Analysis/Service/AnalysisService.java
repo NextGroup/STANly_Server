@@ -213,6 +213,7 @@ public class AnalysisService {
 	public ElementNode AnalysisElementNode(ProjectCommit commitID, String path)
 	{
 		StanlyAnalysisData data = StanlyControler.StartAnalysis(path);
+		
 		InsertIterationElementNode(commitID,data.getRootNode());
 		InputRelation(commitID,data.getRelationList());				//이거 테스트 검증이 필요함
 
@@ -403,7 +404,6 @@ public class AnalysisService {
 	private void InputPackageSetMetric(PackageSetMetric metric, PackageSetDomain node)
 	{
 		net.sourceforge.pmd.lang.java.rule.stanly.metrics.PackageSetMetric clientMetric = node.metric;
-
 		metric.setFat(clientMetric.getFat());
 		metric.setNumberOfClass(clientMetric.getNumberOfClass());
 		metric.setNumberOfClasses(clientMetric.getNumberOfClasses());
@@ -563,11 +563,11 @@ public class AnalysisService {
 			
 			ProjectInfo pinfo = commit.getPInfo();
 			
-			pinfo.setFAT_RANK(rankDAO.getProjectFATRate());
-			pinfo.setCP_RANK(rankDAO.getProjectCPRate());
-			pinfo.setCoplingRANK(rankDAO.getProjectCouplingRate());
-			pinfo.setName_RANK(rankDAO.getNameStaticAnalysisRank());
-			pinfo.setBasic_RANK(rankDAO.getBasicStaticAnalysisRank());
+			pinfo.setFAT_RANK(rankDAO.getProjectFATRate(commit));
+			pinfo.setCP_RANK(rankDAO.getProjectCPRate(commit));
+			pinfo.setCoplingRANK(rankDAO.getProjectCouplingRate(commit));
+			pinfo.setName_RANK(rankDAO.getNameStaticAnalysisRank(commit));
+			pinfo.setBasic_RANK(rankDAO.getBasicStaticAnalysisRank(commit));
 			pinfo.setLastDate(commit.getUpdateDate());
 			pDAO.updateProjectInfo(pinfo);
 			
