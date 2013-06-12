@@ -19,6 +19,7 @@
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
 
     <script type="text/javascript">
+        var cur_prj;
         $(document).ready(function() {
             $("#add-project").click(function(eventObject){
                 location.href = "/Stanly/clone/index.jsp"+"?Name="+getParameter('Name');
@@ -89,6 +90,7 @@
 				<div id="overview">
 					<div class="text">Current Project</div>
 					<div id="project-list-top">
+                        <!--
 						<a href="project.html?project=stanly">
 							<div class="list-item">
 								<div class="info">
@@ -123,15 +125,15 @@
 								</div>
 								<div class="sliderr"></div>
 							</div>
-							<!--stanly fin-->
 						</a>
+					    <!--stanly fin-->
 					</div>
 					<ol>
 						<li class="pollution-graph">
 							<div class="text">Critical Risk</div>
 							<table class="critical-risk">
 								<tbody>
-									<tr>
+									<!--<tr>
 										<td class="rate">F</td>
 										<td class="icon"><img src="../images/icon/tree.gif" style="margin-top:2px;" alt="tree" /></td>
 										<td>logdog.server.accepter</td>
@@ -145,9 +147,27 @@
 										<td class="rate">F</td>
 										<td class="icon"><img src="../images/icon/class.gif" style="margin-top:6px;" alt="class" /></td>
 										<td>logdog.client.log4j.dispatcher</td>
-									</tr>
+									</tr>-->
 								</tbody>
 							</table>
+                            <script type="text/javascript">
+                                function build_critical_risk(json)
+                                {
+                                    risk = jQuery.parseJSON(json).list;
+
+                                    for(var i=0;i<(risk.length<3?risk.length:3);i++)
+                                    {
+                                        if(risk[i].Type == 'PACKAGESET')    icon = 'tree';
+                                        else if(risk[i].Type == 'PACKAGE')    icon = 'package';
+                                        else if(risk[i].Type == 'CLASS')    icon = 'class';
+                                        tbltr = $('<tr></tr>');
+                                        $('.critical-risk>tbody').append(tbltr);
+                                        tbltr.append($('<td class="rate">'+risk[i].Rank+'</td>'));
+                                        tbltr.append($('<td class="icon"><img src="../images/icon/'+icon+'.gif" style="margin-top:6px;" alt="'+icon+'" /></td>'));
+                                        tbltr.append($('<td>'+risk[i].Name+'</td>'))
+                                    }
+                                }
+                            </script>
 						</li>
 						<!--pollution-graph fin-->
 						<li class="project-pollution">
@@ -159,22 +179,22 @@
 								<div id="pollution-right">
 									<div class="list-item">
 										<div class="icon" style="background-color:#EE0000;"></div>
-										<div class="name">F: 60ea</div>
+										<div class="name"></div>
 									</div>
 									<div class="list-spliter"></div>
 									<div class="list-item">
 										<div class="icon" style="background-color:#F77700;"></div>
-										<div class="name">C: 25ea</div>
+										<div class="name"></div>
 									</div>
 									<div class="list-spliter"></div>
 									<div class="list-item">
 										<div class="icon" style="background-color:#FFEE00;"></div>
-										<div class="name">B: 10ea</div>
+										<div class="name"></div>
 									</div>
 									<div class="list-spliter"></div>
 									<div class="list-item">
 										<div class="icon" style="background-color:#00AA00;"></div>
-										<div class="name">A: 5ea</div>
+										<div class="name"></div>
 									</div>
 								</div>
 							</div>
@@ -182,41 +202,39 @@
 						<!--project-pollution fin-->
 					</ol>
 					<script type="text/javascript">
-					nv.addGraph(function(){
-						var chart = nv.models.pie()
-							.values(function(d) { return d })
-							.width(115)
-							.height(115)
-							.color([ "#EE0000", "#F77700", "#FFEE00", "#00AA00" ])
-							.donut(true)
-							.donutRatio(0.5);
+                    function build_pollution_donut(json)
+                    {
+                        donut_data = jQuery.parseJSON(json).list;
+                        for(var i=0;i<4;i++)
+                            $($('#pollution-right>.list-item>.name')[i]).text(donut_data[i].y+' EA');
+                        nv.addGraph(function(){
+                            var chart = nv.models.pie()
+                                .values(function(d) { return d })
+                                .width(115)
+                                .height(115)
+                                .color([ "#EE0000", "#F77700", "#FFEE00", "#00AA00" ])
+                                .donut(true)
+                                .donutRatio(0.5);
 
-						d3.select("#project-pol")
-							.datum([[
-								{ 
-								  key: "One",
-								  y: 5.5
-								},
-								{ 
-								  key: "Two",
-								  y: 3
-								},
-								{ 
-								  key: "Three",
-								  y: 2.5
-								},
-								{ 
-								  key: "Four",
-								  y: 1.5
-								},
-							 ]])
-							.transition().duration(1200)
-							.attr('width', 115)
-							.attr('height', 115)
-							.call(chart);
+                            total = donut_data[0].y+donut_data[1].y+donut_data[2].y+donut_data[3].y;
+                            normal_data = donut_data;
+                            for(var i=0;i<4;i++)
+                            {
+                                if(normal_data[i].y == 0)   continue;
+                                normal_data[i].y = 360*normal_data[i].y/total;
+                                if(normal_data[i].y < 10) normal_data[i].y = 10;
+                            }
 
-						return chart;
-					});
+                            d3.select("#project-pol")
+                                .datum([normal_data])
+                                .transition().duration(1200)
+                                .attr('width', 115)
+                                .attr('height', 115)
+                                .call(chart);
+
+                            return chart;
+                        });
+                    }
 					</script>
 					<div id="triangleS"></div>
 					<div id="triangleE"></div>
@@ -397,9 +415,15 @@
                             oldtlb = ['very-old','old','up-to-date'];
                             oldmonth = ['years ago','month ago',' '];
 
-                            for(var i=0;i<pjtdata.length;i++)
+                            for(var i=0;i<=pjtdata.length;i++)
                             {
-                                d = pjtdata[i];
+                                if(i == pjtdata.length)
+                                {
+                                    d = pjtdata[0];
+                                    cur_prj = d.pname;
+                                }
+                                else
+                                    d = pjtdata[i];
 
                                 var date = new Date();
                                 var old = 2;
@@ -421,7 +445,10 @@
                                 }
 
                                 newpjt = $('<a href="project.html?project='+d.pname+'&Name='+getParameter('Name')+'"></a>');
-                                $('#project-list').append(newpjt);
+                                if(i == pjtdata.length)
+                                    $('#project-list-top').append(newpjt);
+                                else
+                                    $('#project-list').append(newpjt);
                                 newpjt.append($('<div class="list-item"></div>'));
                                 newpjt = newpjt.children('.list-item');
                                 newpjt.append($('<div class="info"></div>'));
@@ -442,6 +469,19 @@
                                 newpjt.append($('<div class="fat '+d.prank1.toLowerCase()+'-rate"><div class="wide"><div class="rate">'+d.prank1.toUpperCase()+'</div></div><div class="text">FAT</div>'));
                                 newpjt.append($('<div class="sliderr"></div>'));
                             }
+
+                            $.ajax({
+                                type: "get",
+                                url: "/Stanly/common/risk",
+                                data: {name:cur_prj},
+                                success: build_critical_risk
+                            });
+                            $.ajax({
+                                type: "get",
+                                url: "/Stanly/common/pollution/rate",
+                                data: {name:cur_prj},
+                                success: build_pollution_donut
+                            });
                         }
                         $.ajax({
                             type: "get",
