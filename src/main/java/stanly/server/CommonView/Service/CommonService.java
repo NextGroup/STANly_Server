@@ -30,4 +30,12 @@ public class CommonService {
 		return gson.toJson(RankDAO.getCriticalRiskList(commit));
 		
 	}
+	
+	public String getPollutionRisk(String projectName)
+	{
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		Gson gson = new Gson();
+		
+		return gson.toJson(RankDAO.getPollutionList(commit));
+	}
 }

@@ -24,8 +24,15 @@ public class CommonViewController {
 	
 	@RequestMapping(value = "/risk", method=RequestMethod.GET)
 	@ResponseBody
-	public String getProjectTree(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+	public String getCriticalRiskJson(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
 			logger.info("Critical Risk Getter");
 			return commonS.getCriticalRisk(name);
+	}
+	
+	@RequestMapping(value = "/pollution/rate", method=RequestMethod.GET)
+	@ResponseBody
+	public String getPollutionList(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+			logger.info("Critical Risk Getter");
+			return commonS.getPollutionRisk(name);
 	}
 }

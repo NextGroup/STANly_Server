@@ -6,13 +6,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +16,8 @@ import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Metric.ElementNodeMetric;
 import stanly.server.Analysis.Model.Metric.Rate.MetricRate;
 import stanly.server.Analysis.Model.Type.NodeType;
-import stanly.server.CommonView.JSON.CriticalRisk;
 import stanly.server.CommonView.JSON.CriticalRiskList;
+import stanly.server.CommonView.JSON.PollutionRatioList;
 import stanly.server.GitProject.Model.ProjectCommit;
 
 @Repository
@@ -103,4 +99,49 @@ public class RankDAO {
 		}
 		return list;
 	}
+	
+	public PollutionRatioList getPollutionList(ProjectCommit commit)
+	{
+		PollutionRatioList pList = new PollutionRatioList();
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select metric.TotalRate ,count(metric.TotalRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.TotalRate order by metric.TotalRate desc");
+			query.setParameter(0, commit);
+			
+			List group = query.list();
+			Iterator ite = group.iterator();
+			long rate=0;
+			while(ite.hasNext())
+			{
+				Object[] datas = (Object[]) ite.next();
+				switch((Integer)datas[0])
+				{
+					case MetricRate.A_RATE:
+						rate = (Long)datas[1];
+						pList.insertRatio("A", (int)rate);
+						break;
+					case MetricRate.B_RATE:
+						rate = (Long)datas[1];
+						pList.insertRatio("B", (int)rate);
+						break;
+					case MetricRate.C_RATE:
+						rate = (Long)datas[1];
+						pList.insertRatio("C", (int)rate);
+						break;
+					case MetricRate.F_RATE:
+						rate = (Long)datas[1];
+						pList.insertRatio("F", (int)rate);
+						break;
+				}
+			}
+
+		}catch(Exception e)
+		{
+			logger.error(e);
+		}
+
+		return pList;
+	}
+	
+	
 }
