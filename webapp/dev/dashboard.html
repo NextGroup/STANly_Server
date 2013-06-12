@@ -17,6 +17,15 @@
 	<script type="text/javascript" src="../js/d3/nv.d3.js"></script>
 	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#add-project").click(function(eventObject){
+                location.href = "/Stanly/clone/index.jsp"+"?Name="+getParameter('Name');
+            })
+        });
+
+    </script>
 </head>
 
 <body>
@@ -124,17 +133,17 @@
 								<tbody>
 									<tr>
 										<td class="rate">F</td>
-										<td class="icon"><img src="./images/icon/tree.gif" style="margin-top:2px;" alt="tree" /></td>
+										<td class="icon"><img src="../images/icon/tree.gif" style="margin-top:2px;" alt="tree" /></td>
 										<td>logdog.server.accepter</td>
 									</tr>
 									<tr>
 										<td class="rate">F</td>
-										<td class="icon"><img src="./images/icon/package.gif" style="margin-top:2px;" alt="package" /></td>
+										<td class="icon"><img src="../images/icon/package.gif" style="margin-top:2px;" alt="package" /></td>
 										<td>logdog.server.accepter.hello</td>
 									</tr>
 									<tr>
 										<td class="rate">F</td>
-										<td class="icon"><img src="./images/icon/class.gif" style="margin-top:6px;" alt="class" /></td>
+										<td class="icon"><img src="../images/icon/class.gif" style="margin-top:6px;" alt="class" /></td>
 										<td>logdog.client.log4j.dispatcher</td>
 									</tr>
 								</tbody>
@@ -217,12 +226,10 @@
 				<div id="main">
 					<div id="project-list-head">
 						<div class="mini-title">My Projects</div>
-                        <a href="/Stanly/clone/index.jsp">
-                            <div id="add-project">
-                                <div class="icon"></div>
-                                <div class="text">Add Project</div>
-                            </div>
-                        </a>
+                        <div id="add-project">
+                            <div class="icon"></div>
+                            <div class="text">Add Project</div>
+                        </div>
 					</div>
 					<!--project-list-head fin -->
 					<div id="project-head">
