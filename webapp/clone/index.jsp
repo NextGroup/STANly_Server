@@ -8,16 +8,38 @@
     <meta name="author" content="Team STANly">
 
     <!-- Le styles -->
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
     <link href="/Stanly/clone/css/bootstrap.css" rel="stylesheet">
     <link href="/Stanly/clone/css/bootstrap-responsive.css" rel="stylesheet">
 
     <link href="/Stanly/clone/css/index.css" rel="stylesheet">
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
 </head>
 
-<body>
 
+<body>
+    <div id="container" class="dashboard">
+    <div id="header-container">
+    <div id="sliverLine"></div>
+    <div id="header">
+    <div id="logoBox" class="img"></div>
+    <div id="rightBox">
+    <div id="user-container">
+    <div id="userBox">
+    <!--<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" /></div>
+    <div class="userName">An Jeungwon</div>-->
+    </div>
+    <div id="userInfoIcon" class="img"></div>
+    </div>
+    <!--user-container fin-->
+    </div>
+    </div>
+    <!--header fin-->
+    </div>
+    </div>
+    <!--header-container fin-->
     <div class="container-narrow">
 
         <hr>

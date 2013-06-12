@@ -7,54 +7,25 @@
 
 	<meta name="viewport" content="width=device-width">
 
-	<link href="./css/style.css" rel="stylesheet" type="text/css">
-	<link href="./js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
 
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
-	<script type="text/javascript" src="./js/arcadia.js"></script>
-	<script type="text/javascript" src="./js/aGraph.js"></script>
-	<script type="text/javascript" src="./js/d3/lib/d3.v2.js"></script>
-	<script type="text/javascript" src="./js/d3/nv.d3.js"></script>
-	<script type="text/javascript" src="./js/d3/src/models/pie.js"></script>
-	<script type="text/javascript">
-	function getGetID(id){
-	    var ProjectName;
-		if(location.search){
-        var str = location.search.split("?")[1];
-        ProjectName = str.split(id+"=")[1].split("&")[0];
-		}
-		//console.log(ProjectName);
-		return ProjectName;
-	};
-	 function githubcall(){
-            $.ajax({
-                type: "GET",
-                url: "https://api.github.com/users/"+getParameter("Name"),
-                success: function(response){
-           
-                     $("#usrName").append(response.login);
-                     $("#userImage").attr("src",response.avatar_url);
-					 console.log("Hello");
-          
-                                
-                                
-                }
-                ,
-                error: function (data) {
-                    alert("Don't Search ID");
-                    reset();
-                }
-            });
-        };
-        $(document).ready(function(){
-	       githubcall(); 
-	       $("#add-project").click(function(eventObject){
-			   	location.href = "/Stanly/clone/index.jsp"; 
-		       
-	       })
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+	<script type="text/javascript" src="../js/aGraph.js"></script>
+	<script type="text/javascript" src="../js/d3/lib/d3.v2.js"></script>
+	<script type="text/javascript" src="../js/d3/nv.d3.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#add-project").click(function(eventObject){
+                location.href = "/Stanly/clone/index.jsp"+"?Name="+getParameter('Name');
+            })
         });
-	</script>
-	
+
+    </script>
 </head>
 
 <body>
@@ -66,8 +37,8 @@
 			<div id="rightBox">
 				<div id="user-container">
 					<div id="userBox">
-						<div class="circle_wrapper"><img id="userImage"></div>
-						<div class="userName" id="usrName"></div>
+						<!--<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" /></div>
+						<div class="userName">An Jeungwon</div>-->
 					</div>
 					<div id="userInfoIcon" class="img"></div>
 				</div>
@@ -116,127 +87,137 @@
 				<div id="content-line"></div>
 				<div id="content-inverted-circle"></div>
 				<div id="overview">
-					<div class="text">Overview</div>
+					<div class="text">Current Project</div>
+					<div id="project-list-top">
+						<a href="project.html?project=stanly">
+							<div class="list-item">
+								<div class="info">
+									<div class="project-name">Stanly</div>
+									<div class="project-date">April 2013 - May 2013 <span class="normal">(1 month ago)</span></div>
+								</div>
+								<div class="pollution a-circle">
+									<div class="rotation-circle"><div class="text">A</div></div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="basicrule right a-rate">
+									<div class="box">
+										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
+									</div>
+									<div class="rate">A</div>
+									<div class="text">BASIC RULE</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="naming b-rate">
+									<div class="donut"><div class="rate">B</div></div>
+									<div class="text">NAMING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="coupling c-rate">
+									<div class="thread"></div>
+									<div class="text">COUPLING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="fat f-rate">
+									<div class="wide"><div class="rate">F</div></div>
+									<div class="text">FAT</div>
+								</div>
+								<div class="sliderr"></div>
+							</div>
+							<!--stanly fin-->
+						</a>
+					</div>
 					<ol>
-						<li class="pollution-graph"></li>
-						<script type="text/javascript">
-							makeAGraph([
-								{ name: "6/16", value: 19 },
-								{ name: "6/18", value: 35 },
-								{ name: "6/20", value: 13 },
-								{ name: "6/22", value: 17 },
-								{ name: "6/24", value: 30 },
-							]);
-						</script>
+						<li class="pollution-graph">
+							<div class="text">Critical Risk</div>
+							<table class="critical-risk">
+								<tbody>
+									<tr>
+										<td class="rate">F</td>
+										<td class="icon"><img src="../images/icon/tree.gif" style="margin-top:2px;" alt="tree" /></td>
+										<td>logdog.server.accepter</td>
+									</tr>
+									<tr>
+										<td class="rate">F</td>
+										<td class="icon"><img src="../images/icon/package.gif" style="margin-top:2px;" alt="package" /></td>
+										<td>logdog.server.accepter.hello</td>
+									</tr>
+									<tr>
+										<td class="rate">F</td>
+										<td class="icon"><img src="../images/icon/class.gif" style="margin-top:6px;" alt="class" /></td>
+										<td>logdog.client.log4j.dispatcher</td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
 						<!--pollution-graph fin-->
 						<li class="project-pollution">
-							<svg id="project-pol"></svg>
 							<div id="pollution-container">
+								<div class="text">Total Pollution Rate</div>
 								<div id="pollution-left">
-									<div class="top">11</div>
-									<div class="bottom">Total Projects</div>
+									<svg id="project-pol"></svg>
 								</div>
 								<div id="pollution-right">
 									<div class="list-item">
-										<div class="icon" style="background-color:#de6264;"></div>
-										<div class="name">STANly</div>
+										<div class="icon" style="background-color:#EE0000;"></div>
+										<div class="name">F: 60ea</div>
 									</div>
 									<div class="list-spliter"></div>
 									<div class="list-item">
-										<div class="icon" style="background-color:#5a9ccc;"></div>
-										<div class="name">Curing</div>
+										<div class="icon" style="background-color:#F77700;"></div>
+										<div class="name">C: 25ea</div>
 									</div>
 									<div class="list-spliter"></div>
 									<div class="list-item">
-										<div class="icon" style="background-color:#72c380;"></div>
-										<div class="name">DynamicWAVE</div>
+										<div class="icon" style="background-color:#FFEE00;"></div>
+										<div class="name">B: 10ea</div>
 									</div>
 									<div class="list-spliter"></div>
 									<div class="list-item">
-										<div class="icon" style="background-color:#cccdc7;"></div>
-										<div class="name">Others</div>
+										<div class="icon" style="background-color:#00AA00;"></div>
+										<div class="name">A: 5ea</div>
 									</div>
 								</div>
 							</div>
 						</li>
-						<script type="text/javascript">
-						function exampleData() {
-							return [{
-								key: "Cumulative Return",
-								values: [
-									{
-										"label" : "CDS / Options",
-										"value" : 29.765957771107
-									},
-									{
-										"label" : "Cash",
-										"value" : 0
-									},
-									{
-										"label" : "Corporate Bonds",
-										"value" : 32.807804682612
-									},
-									{
-										"label" : "Equity",
-										"value" : 196.45946739256
-									},
-									{
-										"label" : "Index Futures",
-										"value" : 0.19434030906893
-									},
-									{
-										"label" : "Options",
-										"value" : 98.079782601442
-									},
-									{
-										"label" : "Preferred",
-										"value" : 13.925743130903
-									},
-									{
-										"label" : "Not Available",
-										"value" : 5.1387322875705
-									}
-								]
-							}];
-						}
-						nv.addGraph(function(){//Pollution Graph데이
-							var chart = nv.models.pie()
-								.values(function(d) { return d })
-								.width(115)
-								.height(115)
-								.color([ "#de6363", "#5a9ccc", "#72c380", "#cccdc7", "#9d61dd", "#6371dc", "#dca763", "#a96f6e", "#6fa79a", "#737270" ])
-								.donut(true)
-								.donutRatio(0.61);
-
-							d3.select("#project-pol")
-								.datum([[
-									{ 
-									  key: "One",
-									  y: 5.5
-									},
-									{ 
-									  key: "Two",
-									  y: 3
-									},
-									{ 
-									  key: "Three",
-									  y: 2.5
-									},
-									{
-									  key: "Four",
-									  y: 1.5
-									},
-								 ]])
-								.transition().duration(1200)
-								.attr('width', 115)
-								.attr('height', 115)
-								.call(chart);
-
-							return chart;
-						});
-						</script>
 						<!--project-pollution fin-->
 					</ol>
+					<script type="text/javascript">
+					nv.addGraph(function(){
+						var chart = nv.models.pie()
+							.values(function(d) { return d })
+							.width(115)
+							.height(115)
+							.color([ "#EE0000", "#F77700", "#FFEE00", "#00AA00" ])
+							.donut(true)
+							.donutRatio(0.5);
+
+						d3.select("#project-pol")
+							.datum([[
+								{ 
+								  key: "One",
+								  y: 5.5
+								},
+								{ 
+								  key: "Two",
+								  y: 3
+								},
+								{ 
+								  key: "Three",
+								  y: 2.5
+								},
+								{ 
+								  key: "Four",
+								  y: 1.5
+								},
+							 ]])
+							.transition().duration(1200)
+							.attr('width', 115)
+							.attr('height', 115)
+							.call(chart);
+
+						return chart;
+					});
+					</script>
 					<div id="triangleS"></div>
 					<div id="triangleE"></div>
 				</div>
@@ -244,164 +225,171 @@
 				<!--overview fin-->
 				<div id="main">
 					<div id="project-list-head">
-						<div id="my-project">My Projects</div>
-						<div id="add-project">
-							<div class="icon"></div>
-							<div class="text">Add Project</div>
-						</div>
+						<div class="mini-title">My Projects</div>
+                        <div id="add-project">
+                            <div class="icon"></div>
+                            <div class="text">Add Project</div>
+                        </div>
 					</div>
 					<!--project-list-head fin -->
-					<div id="project-list">
-                        <!--
-						<div name="Stanly" class="list-item">
-							<div class="pollution a-circle">
-								<div class="rotation-circle"><div class="text">A</div></div>
-							</div>
-							<div class="slider"></div>
-							<div class="info">
-								<div class="project-name">Stanly</div>
-								<div class="project-date">April 2013 - May 2013 <span class="normal">(1 month ago)</span></div>
-							</div>
-							<div class="basicrule right a-rate">
-								<div class="box">
-									<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-								</div>
-								<div class="rate">A</div>
-								<div class="text">BASIC RULE</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="naming b-rate">
-								<div class="donut"><div class="rate">B</div></div>
-								<div class="text">NAMING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="coupling c-rate">
-								<div class="thread"></div>
-								<div class="text">COUPLING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="fat f-rate">
-								<div class="wide"><div class="rate">F</div></div>
-								<div class="text">FAT</div>
-							</div>
-							<div class="sliderr"></div>
-
-						</div>-->
-						<!--stanly fin-->
-                        <!--
-						<div name="Curing" class="list-item">
-							<div class="pollution c-circle">
-								<div class="rotation-circle"><div class="text">C</div></div>
-							</div>
-							<div class="slider"></div>
-							<div class="info">
-								<div class="project-name">Curing</div>
-								<div class="project-date">Jan 2011 - Jan 2012 <span class="very-old">(1 year ago)</span></div>
-							</div>
-							<div class="basicrule right c-rate">
-								<div class="box">
-									<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-								</div>
-								<div class="rate">C</div>
-								<div class="text">BASIC RULE</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="naming a-rate">
-								<div class="donut"><div class="rate">A</div></div>
-								<div class="text">NAMING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="coupling f-rate">
-								<div class="thread"></div>
-								<div class="text">COUPLING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="fat b-rate">
-								<div class="wide"><div class="rate">B</div></div>
-								<div class="text">FAT</div>
-							</div>
-							<div class="sliderr"></div>
-						</div>-->
-						<!--curing fin-->
-                        <!--
-						<div name="DynamicWAVE" class="list-item">
-							<div class="pollution f-circle">
-								<div class="rotation-circle"><div class="text">F</div></div>
-							</div>
-							<div class="slider"></div>
-							<div class="info">
-								<div class="project-name">DynamicWAVE</div>
-								<div class="project-date">Sep 2010 - March 2012 <span class="old">(3 months ago)</span></div>
-							</div>
-							<div class="basicrule right f-rate">
-								<div class="box">
-									<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-								</div>
-								<div class="rate">F</div>
-								<div class="text">BASIC RULE</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="naming c-rate">
-								<div class="donut"><div class="rate">C</div></div>
-								<div class="text">NAMING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="coupling a-rate">
-								<div class="thread"></div>
-								<div class="text">COUPLING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="fat a-rate">
-								<div class="wide"><div class="rate">A</div></div>
-								<div class="text">FAT</div>
-							</div>
-							<div class="sliderr"></div>
-						</div>-->
-						<!--dynamicwave fin-->
-                        <!--
-						<div name="SecuFS" class="list-item">
-							<div class="pollution b-circle">
-								<div class="rotation-circle"><div class="text">B</div></div>
-							</div>
-							<div class="slider"></div>
-							<div class="info">
-								<div class="project-name">SecuFS</div>
-								<div class="project-date">Jun 2011 - Aug 2011 <span class="very-old">(1 year ago)</span></div>
-							</div>
-							<div class="basicrule right b-rate">
-								<div class="box">
-									<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-								</div>
-								<div class="rate">B</div>
-								<div class="text">BASIC RULE</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="naming f-rate">
-								<div class="donut"><div class="rate">F</div></div>
-								<div class="text">NAMING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="coupling b-rate">
-								<div class="thread"></div>
-								<div class="text">COUPLING</div>
-							</div>
-							<div class="sliderr"></div>
-							<div class="fat c-rate">
-								<div class="wide"><div class="rate">C</div></div>
-								<div class="text">FAT</div>
-							</div>
-							<div class="sliderr"></div>
-						</div>-->
-						<!--secufs fin-->
+					<div id="project-head">
+						<div class="project-name hover">Project Name</div>
+						<div class="pollution hover">Rank</div>
+						<div class="basicrule hover">Basic Rule</div>
+						<div class="naming hover">Naming</div>
+						<div class="coupling hover">Coupling</div>
+						<div class="fat hover">FAT</div>
 					</div>
-                    <script type="text/javascript">
+					<!--project-head fin-->
+					<div id="project-list">
+						<a href="project.html?project=stanly">
+							<div class="list-item">
+								<div class="info">
+									<div class="project-name">Stanly</div>
+									<div class="project-date">April 2013 - May 2013 <span class="normal">(1 month ago)</span></div>
+								</div>
+								<div class="pollution a-circle">
+									<div class="rotation-circle"><div class="text">A</div></div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="basicrule right a-rate">
+									<div class="box">
+										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
+									</div>
+									<div class="rate">A</div>
+									<div class="text">BASIC RULE</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="naming b-rate">
+									<div class="donut"><div class="rate">B</div></div>
+									<div class="text">NAMING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="coupling c-rate">
+									<div class="thread"></div>
+									<div class="text">COUPLING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="fat f-rate">
+									<div class="wide"><div class="rate">F</div></div>
+									<div class="text">FAT</div>
+								</div>
+								<div class="sliderr"></div>
+								
+							</div>
+							<!--stanly fin-->
+						</a>
+						<a href="project.html?project=curing">
+							<div class="list-item">
+								<div class="info">
+									<div class="project-name">Curing</div>
+									<div class="project-date">Jan 2011 - Jan 2012 <span class="very-old">(1 year ago)</span></div>
+								</div>
+								<div class="pollution c-circle">
+									<div class="rotation-circle"><div class="text">C</div></div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="basicrule right c-rate">
+									<div class="box">
+										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
+									</div>
+									<div class="rate">C</div>
+									<div class="text">BASIC RULE</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="naming a-rate">
+									<div class="donut"><div class="rate">A</div></div>
+									<div class="text">NAMING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="coupling f-rate">
+									<div class="thread"></div>
+									<div class="text">COUPLING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="fat b-rate">
+									<div class="wide"><div class="rate">B</div></div>
+									<div class="text">FAT</div>
+								</div>
+								<div class="sliderr"></div>
+							</div>
+							<!--curing fin-->
+						</a>
+						<a href="project.html?project=dynamicwave">
+							<div class="list-item">
+								<div class="info">
+									<div class="project-name">DynamicWAVE</div>
+									<div class="project-date">Sep 2010 - March 2012 <span class="old">(3 months ago)</span></div>
+								</div>
+								<div class="pollution f-circle">
+									<div class="rotation-circle"><div class="text">F</div></div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="basicrule right f-rate">
+									<div class="box">
+										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
+									</div>
+									<div class="rate">F</div>
+									<div class="text">BASIC RULE</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="naming c-rate">
+									<div class="donut"><div class="rate">C</div></div>
+									<div class="text">NAMING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="coupling a-rate">
+									<div class="thread"></div>
+									<div class="text">COUPLING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="fat a-rate">
+									<div class="wide"><div class="rate">A</div></div>
+									<div class="text">FAT</div>
+								</div>
+								<div class="sliderr"></div>
+							</div>
+							<!--dynamicwave fin-->
+						</a>
+						<a href="project.html?project=secufs">
+							<div class="list-item">
+								<div class="info">
+									<div class="project-name">SecuFS</div>
+									<div class="project-date">Jun 2011 - Aug 2011 <span class="very-old">(1 year ago)</span></div>
+								</div>
+								<div class="pollution b-circle">
+									<div class="rotation-circle"><div class="text">B</div></div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="basicrule right b-rate">
+									<div class="box">
+										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
+									</div>
+									<div class="rate">B</div>
+									<div class="text">BASIC RULE</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="naming f-rate">
+									<div class="donut"><div class="rate">F</div></div>
+									<div class="text">NAMING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="coupling b-rate">
+									<div class="thread"></div>
+									<div class="text">COUPLING</div>
+								</div>
+								<div class="sliderr"></div>
+								<div class="fat c-rate">
+									<div class="wide"><div class="rate">C</div></div>
+									<div class="text">FAT</div>
+								</div>
+								<div class="sliderr"></div>
+							</div>
+							<!--secufs fin-->
+						</a>
+					</div>
 
-                        function getParameter(strParamName) {
-                            var arrResult = null;
-                            if (strParamName)
-                                arrResult = location.search.match(new RegExp("[&?]" + strParamName+"=(.*?)(&|$)"));
-                            return arrResult && arrResult[1] ? arrResult[1] : null;
-                        }
+                    <script type="text/javascript">
                         function build_project_list(json)
                         {
                             pjtdata = jQuery.parseJSON(json).list;
@@ -432,17 +420,16 @@
                                     howold = date.getDay() - d.lday;
                                 }
 
-                                newpjt = $('<div/>', {
-                                    name: d.pname,
-                                    class: 'list-item'
-                                });
+                                newpjt = $('<a href="project.html?project='+d.pname+'&Name='+getParameter('Name')+'"></a>');
                                 $('#project-list').append(newpjt);
-                                newpjt.append($('<div/>', {class: 'pollution '+ d.prank.toLowerCase()+'-circle'}));
-                                newpjt.children('.pollution').append($('<div class="rotation-circle"><div class="text">'+d.prank.toUpperCase()+'</div></div>'));
-                                newpjt.append($('<div class="slider"></div>'));
+                                newpjt.append($('<div class="list-item"></div>'));
+                                newpjt = newpjt.children('.list-item');
                                 newpjt.append($('<div class="info"></div>'));
                                 newpjt.children('.info').append($('<div class="project-name">'+d.pname+'</div>'));
                                 newpjt.children('.info').append($('<div class="project-date">'+ d.fday+'.'+monthtlb[d.fmonth]+' '+d.fyear+' - '+ d.lday+'.'+monthtlb[d.lmonth]+' '+d.lyear+' <span class="'+oldtlb[old]+'">('+howold+' '+oldmonth[old]+')</span></div>'));
+                                newpjt.append($('<div/>', {class: 'pollution '+ d.prank.toLowerCase()+'-circle'}));
+                                newpjt.children('.pollution').append($('<div class="rotation-circle"><div class="text">'+d.prank.toUpperCase()+'</div></div>'));
+                                newpjt.append($('<div class="sliderr"></div>'));
                                 newpjt.append($('<div class="basicrule right '+d.prank4.toLowerCase()+'-rate">'));
                                 newpjt.children('.basicrule').append($('<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>'));
                                 newpjt.children('.basicrule').append($('<div class="rate">'+d.prank4.toUpperCase()+'</div><div class="text">BASIC RULE</div>'));
