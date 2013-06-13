@@ -289,6 +289,8 @@ public class RankDAO {
 		ProjectInfo pinfo = commit.getPInfo();
 		list.add("NAMING", RateChange(pinfo.getName_RANK()));
 		list.add("BASIC", RateChange(pinfo.getBasic_RANK()));
+		int ave = (pinfo.getBasic_RANK()+pinfo.getCoplingRANK()+pinfo.getFAT_RANK()+pinfo.getName_RANK())/4;
+		list.add("PROJECT", RateChange(ave));
 		return list;
 	}
 }
