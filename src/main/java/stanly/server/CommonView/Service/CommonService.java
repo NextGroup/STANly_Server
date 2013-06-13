@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 @Service("commonService")
 @Transactional
 public class CommonService {
-	protected static final Logger logger = Logger.getLogger("AnalysisService");
+	protected static final Logger logger = Logger.getLogger("CommonService");
 	
 	@Autowired
 	private RankDAO RankDAO;

@@ -28,7 +28,10 @@ public class CommitterInfluence {
 	@JoinColumn(name = "PROJECT_ID", nullable = false)
 	private ProjectInfo PInfo;
 
-	
+	public CommitterInfluence()
+	{
+		
+	}
 	
 	public CommitterInfluence(String committer, String influenceClass,
 			ProjectInfo pInfo) {
