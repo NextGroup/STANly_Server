@@ -19,11 +19,12 @@
 	<script type="text/javascript" src="../js/d3/src/models/pieChart.js"></script>
 	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#dashboardMenu").click(function(eventObject){location.href = "dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version');})
-            $("#compositionMenu").click(function(eventObject){location.href = "composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version');})
-            $('#content>#content-body>#overview>#overview-content>.text').text(getParameter('Project'));
+            $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+            $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+            $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
         });
 
         donut_size = 200;
@@ -172,8 +173,8 @@
             success: function(json)
             {
                 rate = jQuery.parseJSON(json).list;
-                $('#content>#content-body>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
-                $('#content>#content-body>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
+                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
+                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
 
                 draw_rule_rank('basicrule-rate',rate[1]);
                 draw_rule_rank('naming-rate',rate[0]);
@@ -204,42 +205,6 @@
 	<!--header-container fin-->
 
 	<div id="content-container">
-        <div id="sidebar-container-warrper">
-            <div id="sidebar-container">
-                <div id="sidebar">
-                    <div id="projectMenu">
-                        <!--<a href="project.html?project=stanly">-->
-                            <ol>
-                                <li class="icon"></li>
-                                <li class="text">PROJECT</li>
-                            </ol>
-                        <!--</a>-->
-                    </div>
-                    <div id="noneMenu"></div>
-                    <div id="dashboardMenu">
-                        <div class="shadow"></div>
-                        <ol>
-                            <li class="icon"></li>
-                            <li class="text">DASHBOARD</li>
-                        </ol>
-                        <div class="bottom"></div>
-                    </div>
-                    <div id="compositionMenu">
-                        <ol>
-                            <li class="icon"></li>
-                            <li class="text">COMPOSITION</li>
-                        </ol>
-                    </div>
-                    <div id="pollutionMenu">
-                        <ol>
-                            <li class="icon"></li>
-                            <li class="text">POLLUTION</li>
-                        </ol>
-                    </div>
-                </div>
-                <!--sidebar fin-->
-            </div>
-        </div>
 		<div id="content">
 			<div id="content-body"><div id="content-position-change">
 				<div id="content-line"></div>
@@ -468,10 +433,50 @@
 					</div>
 				</div>
 				<!--main fin-->
-			</div>
+            </div></div>
 			<!--content-body fin-->
 		</div>
 		<!--content fin-->
+        <div id="sidebar-container-warrper">
+            <div id="sidebar-container">
+                <div id="sidebar">
+                    <div id="projectMenu">
+                        <!--<a href="project.html?project=stanly">-->
+                        <ol>
+                            <li class="icon"></li>
+                            <li class="text">PROJECT</li>
+                        </ol>
+                        <!--</a>-->
+                    </div>
+                    <div id="noneMenu"></div>
+                    <div id="dashboardMenu">
+                        <div class="shadow"></div>
+                        <a>
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">DASHBOARD</li>
+                            </ol>
+                        </a>
+                        <div class="bottom"></div>
+                    </div>
+                    <div id="compositionMenu">
+                        <a>
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">COMPOSITION</li>
+                            </ol>
+                        </a>
+                    </div>
+                    <div id="pollutionMenu">
+                        <ol>
+                            <li class="icon"></li>
+                            <li class="text">POLLUTION</li>
+                        </ol>
+                    </div>
+                </div>
+                <!--sidebar fin-->
+            </div>
+        </div>
 	</div>
 	<!--content-container fin-->
 </div>

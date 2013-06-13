@@ -33,7 +33,7 @@
                 url: "https://api.github.com/users/"+document.Loginform.client_id.value,
                 success: reqGetResponse,
                 error: function (data) {
-                    alert("Don't Search ID");
+                    alert("Could not Search ID");
                     reset();
                 }
             });

@@ -18,6 +18,27 @@
 	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
 	<script type="text/javascript" src="../js/d3/src/models/pieChart.js"></script>
 	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+            $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+            $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/common/pollution/static",
+            data: {name:getParameter('Project')},
+            success: function(json)
+            {
+                rate = jQuery.parseJSON(json).list;
+                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
+                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -29,8 +50,8 @@
 			<div id="rightBox">
 				<div id="user-container">
 					<div id="userBox">
-						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
-						<div class="userName">An Jeungwon</div>
+						<!--<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
+						<div class="userName">An Jeungwon</div>-->
 					</div>
 					<div id="userInfoIcon" class="img"></div>
 				</div>
@@ -134,7 +155,7 @@
 			<div id="sidebar-container">
 				<div id="sidebar">
 					<div id="projectMenu">
-						<a href="project.html?project=stanly">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">PROJECT</li>
@@ -144,7 +165,7 @@
 					<div id="noneMenu"></div>
 					<div id="dashboardMenu">
 						<div class="shadow"></div>
-						<a href="dashboard.html">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">DASHBOARD</li>
@@ -153,12 +174,10 @@
 						<div class="bottom"></div>
 					</div>
 					<div id="compositionMenu">
-						<a href="composition.html?project=stanly">
 							<ol>
 								<li class="icon"></li>
 								<li class="text">COMPOSITION</li>
 							</ol>
-						</a>
 					</div>
 					<div id="pollutionMenu">
 						<ol>

@@ -96,4 +96,20 @@ $(document).ready(function() {
 		$("#popup-content").html(popupmenu_info[3].content);
 		popup_show($(this));
 	},popup_hide);
+	$(".left-hidden-menu .right-button").click(function() {
+		if($(".left-hidden-menu").css("margin-left") == "-210px")
+		{
+			$(".left-hidden-menu").stop(true, true);
+			$(".right-content-area").stop(true, true);
+			$(".left-hidden-menu").animate({ 'margin-left':0 }, 250, function() { $(this).css('margin-left', 0); } );
+			$(".right-content-area").animate({ 'margin-right':-211 }, 250, function() { $(this).css('margin-right', "-210px"); } );
+		}
+		else
+		{
+			$(".left-hidden-menu").stop(true, true);
+			$(".right-content-area").stop(true, true);
+			$(".left-hidden-menu").animate({ 'margin-left':-210 }, 250, function() { $(this).css('margin-left', "-210px"); } );
+			$(".right-content-area").animate({ 'margin-right':0 }, 250, function() { $(this).css('margin-right', 0); } );
+		}
+	});
 });
