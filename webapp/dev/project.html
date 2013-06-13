@@ -138,6 +138,47 @@
                 });
             }
         });
+
+        rate_str = ['a-rate','b-rate','c-rate','f-rate'];
+        lag_str = ['a2b','b2c','c2f'];
+        function draw_rule_rank(target,rate)
+        {
+            $('#'+target+'>.pollution-rate-content').addClass(rate.rate.toLowerCase()+'-rate');
+            rate_head = $('#'+target+'>.pollution-rate-content>.rate-head');
+
+            if(rate.rate=='A')   flag = 0;
+            if(rate.rate=='B')   flag = 1;
+            if(rate.rate=='C')   flag = 2;
+            if(rate.rate=='F')   flag = 3;
+
+            for(var i=0;i<4;i++)
+            {
+                if(i < flag)        rate_head.children('.'+rate_str[i]).children('.essence').width('38px');
+                else if(i==flag)    rate_head.children('.'+rate_str[i]).children('.essence').width('19px');
+                else if(i>flag)     rate_head.children('.'+rate_str[i]).children('.essence').width('0px');
+
+                if(i < flag)        rate_head.children('.'+lag_str[i]).children('.essence-body').css('display','block');
+                else if(i<3)        rate_head.children('.'+lag_str[i]).children('.essence-body').css('display','none');
+            }
+            rate_head.children('.current-slider').css('margin-left',(97*flag+23)+'px');
+            rate_head.children('.slider-bottom').css('width',(97*flag+17)+'px');
+            rate_head.children('.current-slider').children('.text').children('span').text(rate.rate.toUpperCase());
+
+        }
+        $.ajax({
+            type: "get",
+            url: "/Stanly/common/pollution/static",
+            data: {name:getParameter('Project')},
+            success: function(json)
+            {
+                rate = jQuery.parseJSON(json).list;
+                $('#content>#content-body>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
+                $('#content>#content-body>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
+
+                draw_rule_rank('basicrule-rate',rate[1]);
+                draw_rule_rank('naming-rate',rate[0]);
+            }
+        });
     </script>
 </head>
 
@@ -163,42 +204,44 @@
 	<!--header-container fin-->
 
 	<div id="content-container">
-		<div id="sidebar-container">
-			<div id="sidebar">
-				<div id="projectMenu">
-					<!--<a href="project.html?project=stanly">-->
-						<ol>
-							<li class="icon"></li>
-							<li class="text">PROJECT</li>
-						</ol>
-					<!--</a>-->
-				</div>
-				<div id="noneMenu"></div>
-				<div id="dashboardMenu">
-					<div class="shadow"></div>
-                    <ol>
-                        <li class="icon"></li>
-                        <li class="text">DASHBOARD</li>
-                    </ol>
-					<div class="bottom"></div>
-				</div>
-				<div id="compositionMenu">
-                    <ol>
-                        <li class="icon"></li>
-                        <li class="text">COMPOSITION</li>
-                    </ol>
-				</div>
-				<div id="pollutionMenu">
-					<ol>
-						<li class="icon"></li>
-						<li class="text">POLLUTION</li>
-					</ol>
-				</div>
-			</div>
-			<!--sidebar fin-->
-		</div>
+        <div id="sidebar-container-warrper">
+            <div id="sidebar-container">
+                <div id="sidebar">
+                    <div id="projectMenu">
+                        <!--<a href="project.html?project=stanly">-->
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">PROJECT</li>
+                            </ol>
+                        <!--</a>-->
+                    </div>
+                    <div id="noneMenu"></div>
+                    <div id="dashboardMenu">
+                        <div class="shadow"></div>
+                        <ol>
+                            <li class="icon"></li>
+                            <li class="text">DASHBOARD</li>
+                        </ol>
+                        <div class="bottom"></div>
+                    </div>
+                    <div id="compositionMenu">
+                        <ol>
+                            <li class="icon"></li>
+                            <li class="text">COMPOSITION</li>
+                        </ol>
+                    </div>
+                    <div id="pollutionMenu">
+                        <ol>
+                            <li class="icon"></li>
+                            <li class="text">POLLUTION</li>
+                        </ol>
+                    </div>
+                </div>
+                <!--sidebar fin-->
+            </div>
+        </div>
 		<div id="content">
-			<div id="content-body">
+			<div id="content-body"><div id="content-position-change">
 				<div id="content-line"></div>
 				<div id="content-inverted-circle"></div>
 				<div id="overview">

@@ -42,68 +42,57 @@
 	<!--header-container fin-->
 
 	<div id="content-container">
-		<div id="sidebar-container">
-			<div id="sidebar">
-				<div id="projectMenu">
-					<a href="project.html?project=stanly">
-						<ol>
-							<li class="icon"></li>
-							<li class="text">PROJECT</li>
-						</ol>
-					</a>
-				</div>
-				<div id="noneMenu"></div>
-				<div id="dashboardMenu">
-					<div class="shadow"></div>
-					<a href="dashboard.html">
-						<ol>
-							<li class="icon"></li>
-							<li class="text">DASHBOARD</li>
-						</ol>
-					</a>
-					<div class="bottom"></div>
-				</div>
-				<div id="compositionMenu">
-					<a href="composition.html?project=stanly">
-						<ol>
-							<li class="icon"></li>
-							<li class="text">COMPOSITION</li>
-						</ol>
-					</a>
-				</div>
-				<div id="pollutionMenu">
-					<ol>
-						<li class="icon"></li>
-						<li class="text">POLLUTION</li>
-					</ol>
-				</div>
-			</div>
-			<!--sidebar fin-->
-		</div>
 		<div id="content">
-			<div id="content-body">
+			<div id="content-body"><div id="content-position-change">
 				<div id="content-line"></div>
 				<div id="content-inverted-circle"></div>
-				<div id="overview">
-					<div id="overview-content">
-						<div class="pollution a-circle left">
-							<div class="rotation-circle"><div class="text">A</div></div>
-						</div>
-						<div class="text">Stanly</div>
-					</div>
-					<div id="overview-right">
-						<div class="text">COMPOSITION</div>
-						<div class="icon"></div>
-					</div>
-					<div id="triangleS"></div>
-					<div id="triangleE"></div>
-				</div>
-
-				<!--overview fin-->
 				<div id="main">
-					
-					<div class="dashboard-group">
-						<div class="title">Pollution Rank</div>
+					<div class="dashboard-group wide-area">
+						<div class="group">
+							<div class="right-content-area">
+								<table>
+									<tbody>
+										<tr class="composition-view">
+											<td></td>
+											<td class="right-white-area"></td>
+										</tr>
+										<tr class="information">
+											<td>
+												<div class="relations">
+													<ol class="content-box">
+														<li class="head">Source</li>
+														<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
+														<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
+														<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule.addExample(String)</li>
+														<li class="center">··· 125 More ···</li>
+													</ol>
+												</div>
+												<div class="developer">
+													<div class="icon"></div>
+													<div class="title">51<span>Members</span></div>
+													<ol class="content-box">
+														<li>Nicolas Rodriguez</li>
+														<li>Dan Carpenter</li>
+														<li>Eric Cooper</li>
+														<li class="center">··· 25 Members ···</li>
+													</ol>
+												</div>
+											</td>
+											<td class="right-white-area"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="left-hidden-menu">
+								<div class="title">Project Explorer</div>
+								<div class="explorer-list">
+									<div class="content-body">
+									</div>
+								</div>
+								<div class="right-button"></div>
+							</div>
+						</div>
+
 						<div id="left-rate">
 						</div>
 						<!--left-rate fin-->
@@ -122,107 +111,68 @@
 					</div>
 				</div>
 				<!--main fin-->
-			</div>
+				<div id="overview">
+					<div id="overview-content">
+						<div class="pollution a-circle left">
+							<div class="rotation-circle"><div class="text">A</div></div>
+						</div>
+						<div class="text">Stanly</div>
+					</div>
+					<div id="overview-right">
+						<div class="text">COMPOSITION</div>
+						<div class="icon"></div>
+					</div>
+					<div id="triangleS"></div>
+					<div id="triangleE"></div>
+				</div>
+				<!--overview fin-->
+			</div></div>
 			<!--content-body fin-->
 		</div>
 		<!--content fin-->
+		<div id="sidebar-container-warrper">
+			<div id="sidebar-container">
+				<div id="sidebar">
+					<div id="projectMenu">
+						<a href="project.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">PROJECT</li>
+							</ol>
+						</a>
+					</div>
+					<div id="noneMenu"></div>
+					<div id="dashboardMenu">
+						<div class="shadow"></div>
+						<a href="dashboard.html">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">DASHBOARD</li>
+							</ol>
+						</a>
+						<div class="bottom"></div>
+					</div>
+					<div id="compositionMenu">
+						<a href="composition.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">COMPOSITION</li>
+							</ol>
+						</a>
+					</div>
+					<div id="pollutionMenu">
+						<ol>
+							<li class="icon"></li>
+							<li class="text">POLLUTION</li>
+						</ol>
+					</div>
+				</div>
+				<!--sidebar fin-->
+			</div>
+		</div>
 	</div>
 	<!--content-container fin-->
 </div>
-
-<script type="text/javascript">
-nv.addGraph(function() {
-	var width = 290 * 2.5,
-		height = 140 * 2.5;
-
-	var chart = nv.models.pieChart()
-		.x(function(d) { return d.key })
-		.values(function(d) { return d })
-		.color([ "#5a9ccc", "#72c380", "#c7c7c7" ])
-		.showLabels(false)
-		.tooltips(false)
-		.width(width)
-		.height(height)
-		.donut(true)
-		.donutRatio(0.55);
-
-	chart.pie
-		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
-		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
-
-	  d3.select("#eloc .graph .donut")
-		  .datum([[
-			{
-			  key: "One",
-			  y: 39
-			},
-			{
-			  key: "Two",
-			  y: 10
-			},
-			{
-			  key: "Three",
-			  y: 51
-			}
-		]])
-		.transition().duration(100)
-		.attr('width', "290")
-		.attr('height', "105")
-		.call(chart);
-	
-	$("#eloc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
-	$("#eloc .graph .donut .nv-legendWrap").remove();
-
-	return chart;
-});
-rotateObject("#eloc .graph .bar", (360 * 49 / 100) / 15 * 7 - 180 / 15 * 7);
-
-nv.addGraph(function() {
-	var width = 290 * 2.5,
-		height = 140 * 2.5;
-
-	var chart = nv.models.pieChart()
-		.x(function(d) { return d.key })
-		.values(function(d) { return d })
-		.color([ "#5a9ccc", "#de6262", "#c7c7c7" ])
-		.showLabels(false)
-		.tooltips(false)
-		.width(width)
-		.height(height)
-		.donut(true)
-		.donutRatio(0.55);
-
-	chart.pie
-		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
-		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
-
-	  d3.select("#ecoc .graph .donut")
-		  .datum([[
-			{
-			  key: "One",
-			  y: 68
-			},
-			{
-			  key: "Two",
-			  y: 20
-			},
-			{
-			  key: "Three",
-			  y: 12
-			}
-		]])
-		.transition().duration(100)
-		.attr('width', "290")
-		.attr('height', "105")
-		.call(chart);
-	
-	$("#ecoc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
-	$("#ecoc .graph .donut .nv-legendWrap").remove();
-
-	return chart;
-});
-rotateObject("#ecoc .graph .bar", (360 * 68 / 100) / 15 * 7 - 180 / 15 * 7);
-</script>
 
 </body>
 </html>
