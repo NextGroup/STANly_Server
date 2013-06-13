@@ -183,8 +183,9 @@ public class RankDAO {
 				pList.insertRatio("A", Total);
 			else
 			{
-				pList.insertRatio("etc", Total-LastData);
 				pList.insertRatio(RateChange(LastI),LastData);
+				pList.insertRatio("etc", Total-LastData);
+
 			}
 			
 		}catch(Exception e)
@@ -226,8 +227,9 @@ public class RankDAO {
 				pList.insertRatio("A", Total);
 			else
 			{
-				pList.insertRatio("etc", Total-LastData);
 				pList.insertRatio(RateChange(LastI),LastData);
+				pList.insertRatio("etc", Total-LastData);
+
 			}
 			
 		}catch(Exception e)
@@ -269,8 +271,9 @@ public class RankDAO {
 				pList.insertRatio("A", Total);
 			else
 			{
-				pList.insertRatio("etc", Total-LastData);
+
 				pList.insertRatio(RateChange(LastI),LastData);
+				pList.insertRatio("etc", Total-LastData);
 			}
 			
 		}catch(Exception e)
