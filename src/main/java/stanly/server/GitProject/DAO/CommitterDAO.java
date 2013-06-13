@@ -27,7 +27,7 @@ public class CommitterDAO {
 			logger.info("ProjectInfo insert");
 			Session session = sessionFactory.getCurrentSession();
 			
-			data = new ProjectCommitter(committer,pInfo);
+			data = new ProjectCommitter(committer.toLowerCase(),pInfo);
 			// Save
 			session.save(data);
 	
