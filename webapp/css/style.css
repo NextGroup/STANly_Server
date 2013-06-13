@@ -1696,7 +1696,7 @@ div.agraph div.bar {
 }
 .left-hidden-menu .explorer-list .content-body {
 	margin-top: 224px;
-	border-top: 1px solid #d8d8d8;
+	/*border-top: 1px solid #d8d8d8;*/
 }
 .left-hidden-menu .right-button {
 	width: 15px;

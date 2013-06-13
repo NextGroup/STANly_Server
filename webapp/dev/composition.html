@@ -20,11 +20,18 @@
 	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
 
+    <script type="text/javascript" src="../js/jstree/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jstree/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../js/jstree/jquery.jstree.js"></script>
+    <script type="text/javascript" src="../js/ProjectTree.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version'));
             $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
             $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
+
+            draw_project_explorer(getParameter('Project'));
         });
 
         $.ajax({
@@ -74,7 +81,44 @@
 								<table>
 									<tbody>
 										<tr class="composition-view">
-											<td></td>
+											<td>
+                                                <svg id="MainSVG">
+                                                    <defs>
+                                                        <marker id="arrowhead"
+                                                                viewBox="0 0 10 10"
+                                                                refX="8"
+                                                                refY="5"
+                                                                markerUnits="strokeWidth"
+                                                                markerWidth="8"
+                                                                markerHeight="5"
+                                                                orient="auto"
+                                                                style="fill: #333">
+                                                            <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                                                        </marker>
+                                                    </defs>
+                                                </svg>
+                                                <script src="/Stanly/js/d3/lib/d3.v2.min.js"></script>
+                                                <script src="/Stanly/js/PackageGraph/js/dagre.js"></script>
+                                                <script src="/Stanly/js/PackageGraph/js/PackageGraph.js"></script>
+                                                <script>
+                                                    function BuildMainView(id,name){
+                                                        var backup = $('#MainSVG').find('defs');
+                                                        $('#MainSVG').empty();
+                                                        $('#MainSVG').append(backup);
+                                                        var Grapdata = document.querySelector("#inputGraph");
+                                                        var Mainsvg = d3.select("svg");
+                                                        var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
+                                                        var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id);
+                                                    }
+
+                                                    $(function(){
+                                                        BuildMainView(1);
+                                                    });
+
+                                                </script>
+
+
+											</td>
 											<td class="right-white-area"></td>
 										</tr>
 										<tr class="information">
@@ -107,7 +151,7 @@
 							<div class="left-hidden-menu">
 								<div class="title">Project Explorer</div>
 								<div class="explorer-list">
-									<div class="content-body">
+									<div class="content-body" style="height:74%;margin-left:5px;margin-right:5px;overflow: auto;">
 									</div>
 								</div>
 								<div class="right-button"></div>
