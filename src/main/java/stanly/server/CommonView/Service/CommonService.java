@@ -38,4 +38,26 @@ public class CommonService {
 		
 		return gson.toJson(RankDAO.getPollutionList(commit));
 	}
+	
+	public String getFatRatioRank(String projectName)
+	{
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		Gson gson = new Gson();
+		
+		return gson.toJson(RankDAO.getFatRank(commit));
+	}
+	public String getCpRatioRank(String projectName)
+	{
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		Gson gson = new Gson();
+		
+		return gson.toJson(RankDAO.getCpRank(commit));
+	}
+	public String getCouplingRatioRank(String projectName)
+	{
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		Gson gson = new Gson();
+		
+		return gson.toJson(RankDAO.getCouplingRank(commit));
+	}
 }
