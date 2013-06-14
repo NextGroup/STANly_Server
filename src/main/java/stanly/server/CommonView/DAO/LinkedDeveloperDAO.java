@@ -6,18 +6,16 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.CommonView.JSON.LinkedDeveloper;
-import stanly.server.GitProject.Model.ProjectInfo;
+import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.GitProject.Model.committer.CommitterInfluence;
 
 @Repository
@@ -40,12 +38,12 @@ public class LinkedDeveloperDAO {
 	
 
 	
-	public LinkedDeveloper getLinkedDeveloper(ProjectInfo pinfo, ProjectElementNode node)
+	public LinkedDeveloper getLinkedDeveloper(ProjectCommit commit, ProjectElementNode node)
 	{
 		LinkedDeveloper dev = new LinkedDeveloper();
 		try{
 			//NSleft
-			if(node.getType() == NodeType.CLASS)
+			/*if(node.getType() == NodeType.CLASS || node.getType() == NodeType.INTERFACE )
 			{
 				Session session = sessionFactory.getCurrentSession();
 				String name = sprite(node.getName());
@@ -64,8 +62,24 @@ public class LinkedDeveloperDAO {
 					 dev.add(Temp.getCommitter());
 					 
 				 }
-			}
-		
+			}*/
+			List nList=null;
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select distinct CI.committer from CommitterInfluence CI where CI.influenceClass in (select PE.singlename from ProjectElementNode PE where PE.NSLeft >= ? and PE.NSRight <= ? and PE.commit=? and (PE.type = ? or PE.type = ?))");
+			query.setParameter(0, node.getNSLeft());
+			query.setParameter(1, node.getNSRight());
+			query.setParameter(2, commit);
+			query.setParameter(3, NodeType.CLASS);
+			query.setParameter(4, NodeType.INTERFACE);
+			 nList = query.list();
+			 Iterator it = nList.iterator();
+			 while(it.hasNext())
+			 {
+				 String Temp = (String)it.next();
+				 dev.add(Temp);
+				 
+			 }
+			
 		}catch(Exception e)
 		{
 			logger.error(e);

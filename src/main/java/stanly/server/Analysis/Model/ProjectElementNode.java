@@ -47,6 +47,11 @@ public class ProjectElementNode {
 	private String Name;
 	
 	/**
+	 *  SingleName
+	 */
+	@Column(name = "SingleName")
+	private String SingleName;
+	/**
 	 * 부모 노드의 이름이다.
 	 * 부모가 없을 경우 기본적으로 Project라는 값이 들어간다. 
 	 */
@@ -86,6 +91,18 @@ public class ProjectElementNode {
 	@Enumerated(EnumType.STRING)
 	private NodeType type;
 
+	/**
+	 * 노드의 이름에서 가장 마지막 데이터를 가져오기 위한 함수 
+	 * @param path
+	 * @return
+	 */
+	private String sprite(String path)
+	{
+		String[]  arr =  path.split("\\.");
+		return (arr.length>1) ?  arr[arr.length-1]:path;
+	}
+	
+	
 	
 	public ProjectElementNode(String name, String paretnName, int nSLeft, int nSRight,
 			 NodeType type) {
@@ -96,6 +113,7 @@ public class ProjectElementNode {
 		NSRight = nSRight;
 		this.type = type;
 		EMetric = null;
+		SingleName = sprite(Name);
 	}
 
 	public ProjectElementNode()
@@ -109,6 +127,7 @@ public class ProjectElementNode {
 
 	public void setName(String name) {
 		Name = name;
+		SingleName = sprite(Name);
 	}
 
 	public String getParetnName() {
@@ -136,6 +155,12 @@ public class ProjectElementNode {
 	}
 
 	
+	public String getSingleName() {
+		return SingleName;
+	}
+
+
+
 	public NodeType getType() {
 		return type;
 	}

@@ -32,7 +32,7 @@ public class LinkedDService {
 		Gson gson = new Gson();
 		ProjectInfo pinfo = projectDAO.getProjectInfo(ProjectName);
 		ProjectCommit commit = projectDAO.getLastCommit(pinfo);
-		return gson.toJson(LDevDAO.getLinkedDeveloper(pinfo, EsearchDAO.getElementNode(commit, NSleft)));
+		return gson.toJson(LDevDAO.getLinkedDeveloper(commit, EsearchDAO.getElementNode(commit, NSleft)));
 	}
 	
 }
