@@ -76,7 +76,24 @@
                 data: {name:getParameter('Project'),nsleft:id},
                 success: function(json)
                 {
+                    devs = jQuery.parseJSON(json).list;
+                    $('.developer>.title')
+                        .text(devs.length)
+                        .append($('<span>Members</span>'));
 
+                    $('.developer>.content-box').empty();
+
+                    if(devs.length<4)
+                    {
+                        for(var i=0;i<devs.length;i++)
+                            $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                    }
+                    else
+                    {
+                        for(var i=0;i<3;i++)
+                            $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                        $('.developer>.content-box').append($('<li class="center">··· More members ···</li>'))
+                    }
                 }
             });
         }
@@ -171,10 +188,6 @@
 													<div class="icon"></div>
 													<div class="title">51<span>Members</span></div>
 													<ol class="content-box">
-														<li>Nicolas Rodriguez</li>
-														<li>Dan Carpenter</li>
-														<li>Eric Cooper</li>
-														<li class="center">··· 25 Members ···</li>
 													</ol>
 												</div>
 											</td>
