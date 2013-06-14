@@ -18,6 +18,16 @@
 	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
 	<script type="text/javascript" src="../js/d3/src/models/pieChart.js"></script>
 	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+            $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+            $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+            $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
+        });
+    </script>
 </head>
 
 <body>
@@ -29,8 +39,6 @@
 			<div id="rightBox">
 				<div id="user-container">
 					<div id="userBox">
-						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
-						<div class="userName">An Jeungwon</div>
 					</div>
 					<div id="userInfoIcon" class="img"></div>
 				</div>
@@ -222,7 +230,7 @@
 									<div class="pollution"><img src="../images/pollution/fat.png" alt="fat" /></div>
 									<div class="rank">F</div>
 									<div class="pollution-name">Number of Branch statement</div>
-									<div class="domain"><img src="./images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
+									<div class="domain"><img src="../images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
 									<div class="name">com.swmaestro.List.LinkedList</div>
 									<div class="person">3명</div>
 								</li>
@@ -230,7 +238,7 @@
 									<div class="pollution"><img src="../images/pollution/fat.png" alt="fat" /></div>
 									<div class="rank">C</div>
 									<div class="pollution-name">Long Naming</div>
-									<div class="domain"><img src="./images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
+									<div class="domain"><img src="../images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
 									<div class="name">com.swmaestro.List.LinkedList</div>
 									<div class="person">3명</div>
 								</li>
@@ -266,7 +274,7 @@
 			<div id="sidebar-container">
 				<div id="sidebar">
 					<div id="projectMenu">
-						<a href="project.html?project=stanly">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">PROJECT</li>
@@ -276,7 +284,7 @@
 					<div id="noneMenu"></div>
 					<div id="dashboardMenu">
 						<div class="shadow"></div>
-						<a href="dashboard.html">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">DASHBOARD</li>
@@ -285,7 +293,7 @@
 						<div class="bottom"></div>
 					</div>
 					<div id="compositionMenu">
-						<a href="composition.html?project=stanly">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">COMPOSITION</li>
@@ -293,10 +301,12 @@
 						</a>
 					</div>
 					<div id="pollutionMenu">
-						<ol>
-							<li class="icon"></li>
-							<li class="text">POLLUTION</li>
-						</ol>
+                        <a>
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">POLLUTION</li>
+                            </ol>
+                        </a>
 					</div>
 				</div>
 				<!--sidebar fin-->
