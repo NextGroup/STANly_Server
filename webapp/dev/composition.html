@@ -8,7 +8,8 @@
 	<meta name="viewport" content="width=device-width">
 
 	<link href="../css/style.css" rel="stylesheet" type="text/css">
-	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="../js/PackageGraph/css/PackageGraph.css" rel="stylesheet" type="text/css">
 
 	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
 	<script type="text/javascript" src="../js/arcadia.js"></script>
@@ -45,6 +46,30 @@
                 $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
             }
         });
+
+        var table;
+        function BuildDetailList(id){
+            $.ajax( {
+                type :'GET'
+                ,asyn :true
+                ,url :'/Stanly/component/RelationList'
+                ,dataType :"json"
+                ,data:{Name:getParameter('Project'),SrcID:id}
+                //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                ,beforeSend : function(xhr){
+                }
+                ,success : function(jsonData) {
+                    table = jsonData.relation;
+
+                    //BuildTable();
+                    //AdjustStyle();
+                }
+                ,error : function(xhr, textStatus) {
+                }
+                ,complete : function(xhr, textStatus) {
+                }
+            });
+        }
     </script>
 </head>
 
