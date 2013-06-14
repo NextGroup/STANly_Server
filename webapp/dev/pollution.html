@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	
+	<title>STANly :: Project Dashboard</title>
+
+	<meta name="viewport" content="width=device-width">
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+	<script type="text/javascript" src="../js/d3/lib/d3.v2.js"></script>
+	<script type="text/javascript" src="../js/d3/nv.d3.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/legend.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pieChart.js"></script>
+	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
+</head>
+
+<body>
+<div id="container" class="pollution">
+	<div id="header-container">
+		<div id="sliverLine"></div>
+		<div id="header">
+			<div id="logoBox" class="img"></div>
+			<div id="rightBox">
+				<div id="user-container">
+					<div id="userBox">
+						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
+						<div class="userName">An Jeungwon</div>
+					</div>
+					<div id="userInfoIcon" class="img"></div>
+				</div>
+				<!--user-container fin-->
+			</div>
+		</div>
+		<!--header fin-->
+	</div>
+	<!--header-container fin-->
+
+	<div id="content-container">
+		<div id="content">
+			<div id="content-body"><div id="content-position-change">
+				<div id="content-line"></div>
+				<div id="content-inverted-circle"></div>
+				<div id="overview">
+					<div id="overview-content">
+						<div class="pollution a-circle left">
+							<div class="rotation-circle"><div class="text">A</div></div>
+						</div>
+						<div class="text">Stanly</div>
+					</div>
+					<div id="overview-right">
+						<div class="text">POLLUTION</div>
+						<div class="icon"></div>
+					</div>
+					<div id="triangleS"></div>
+					<div id="triangleE"></div>
+				</div>
+
+				<!--overview fin-->
+				<div id="main">
+					<div class="dashboard-group">
+						<div class="title">Pollution Rate</div>
+						<div id="left-rate">
+							<div id="fat-rate" class="content-box">
+								<div class="pollution-rate-title">
+									<div class="rate-icon"></div>
+									<div class="rate-name">FAT</div>
+								</div>
+								<div class="pollution-rate-content">
+									<div class="mini-title">Number of Top Level Classes(Units)</div>
+									<div class="rate-level">
+										<div class="left-rate">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin -->
+								<div class="pollution-rate-content">
+									<div class="mini-title">Number of Method</div>
+									<div class="rate-level">
+										<div class="left-rate">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin -->
+								<div class="pollution-rate-content">
+									<div class="mini-title">Number of Field</div>
+									<div class="rate-level">
+										<div class="left-rate">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin -->
+								<div class="pollution-rate-content">
+									<div class="mini-title">Estimated Line of Code(ELOC)</div>
+									<div class="rate-level">
+										<div class="left-rate">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin -->
+								<div class="pollution-rate-content">
+									<div class="mini-title">Number of Branch statement(CC)</div>
+									<div class="rate-level">
+										<div class="left-rate">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin-->
+							</div>
+							<!--fat-rate fin-->
+						</div>
+						<!--left-rate fin-->
+						<div id="right-rate">
+							<div id="coupling-rate" class="content-box">
+								<div class="pollution-rate-title">
+									<div class="rate-icon"></div>
+									<div class="rate-name">Coupling</div>
+								</div>
+								<div class="pollution-rate-content">
+									<div class="mini-title">Number of Relationship</div>
+									<div class="rate-level">
+										<div class="left-rate">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin-->
+								<div class="pollution-rate-content">
+									<div class="mini-title">Tangled</div>
+									<div class="rate-level">
+										<div class="left-rate">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin-->
+							</div>
+							<!--coupling-rate fin-->
+							<div id="basicrule-rate" class="content-box">
+								<div class="pollution-rate-title">
+									<div class="rate-icon"></div>
+									<div class="rate-name">Basic Rule</div>
+								</div>
+								<div class="pollution-rate-content">
+									<div class="rate-level">
+										<div class="rate-body">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin-->
+							</div>
+							<div id="naming-rate" class="content-box">
+								<div class="pollution-rate-title">
+									<div class="rate-icon"></div>
+									<div class="rate-name">Unknown Naming</div>
+								</div>
+								<div class="pollution-rate-content">
+									<div class="rate-level">
+										<div class="rate-body">
+											<div class="a-rate" style="width:40%">A</div>
+											<div class="b-rate" style="width:20%">B</div>
+											<div class="c-rate" style="width:20%">C</div>
+											<div class="f-rate" style="width:20%">F</div>
+										</div>
+									</div>
+								</div>
+								<!--.pollution-rate-content fin-->
+							</div>
+						</div>
+						<!--right-rate fin-->
+						<div class="group-end">1</div>
+					</div>
+					<!--.dashboard-group fin-->
+
+					<div class="dashboard-group">
+						<div class="pollution-list">
+							<ol class="content-box">
+								<li id="pollution-head">
+									<div class="pollution hover">Pollution</div>
+									<div class="rank hover">Rank</div>
+									<div class="pollution-name hover">Pollution Name</div>
+									<div class="domain hover">Domain</div>
+									<div class="name hover">Name</div>
+									<div class="person hover">Person</div>
+								</li>
+								<li>
+									<div class="pollution"><img src="../images/pollution/fat.png" alt="fat" /></div>
+									<div class="rank">F</div>
+									<div class="pollution-name">Number of Branch statement</div>
+									<div class="domain"><img src="./images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
+									<div class="name">com.swmaestro.List.LinkedList</div>
+									<div class="person">3명</div>
+								</li>
+								<li>
+									<div class="pollution"><img src="../images/pollution/fat.png" alt="fat" /></div>
+									<div class="rank">C</div>
+									<div class="pollution-name">Long Naming</div>
+									<div class="domain"><img src="./images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
+									<div class="name">com.swmaestro.List.LinkedList</div>
+									<div class="person">3명</div>
+								</li>
+								<li>
+									<div class="pollution"><img src="../images/pollution/coupling.png" alt="coupling" /></div>
+									<div class="rank">F</div>
+									<div class="pollution-name">Tangled</div>
+									<div class="domain"><img src="../images/icon/package.gif" style="margin-top:2px;" alt="tree" /></div>
+									<div class="name">com.swmaestro.List</div>
+									<div class="person">10명</div>
+								</li>
+							</ol>
+						</div>
+						<!--count-metric fin -->
+					</div>
+					<!--.dashboard-group fin-->
+
+					<div id="popup-info">
+						<div id="popup-tri"></div>
+						<div id="popup-body">
+							<div id="popup-title">Basic Rule</div>
+							<div id="popup-line"></div>
+							<div id="popup-content">PMD를 통해 나온 정보로 규칙 위반의 정도를 보여주는 지표이다.</div>
+						</div>
+					</div>
+				</div>
+				<!--main fin-->
+			</div></div>
+			<!--content-body fin-->
+		</div>
+		<!--content fin-->
+		<div id="sidebar-container-warrper">
+			<div id="sidebar-container">
+				<div id="sidebar">
+					<div id="projectMenu">
+						<a href="project.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">PROJECT</li>
+							</ol>
+						</a>
+					</div>
+					<div id="noneMenu"></div>
+					<div id="dashboardMenu">
+						<div class="shadow"></div>
+						<a href="dashboard.html">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">DASHBOARD</li>
+							</ol>
+						</a>
+						<div class="bottom"></div>
+					</div>
+					<div id="compositionMenu">
+						<a href="composition.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">COMPOSITION</li>
+							</ol>
+						</a>
+					</div>
+					<div id="pollutionMenu">
+						<ol>
+							<li class="icon"></li>
+							<li class="text">POLLUTION</li>
+						</ol>
+					</div>
+				</div>
+				<!--sidebar fin-->
+			</div>
+		</div>
+	</div>
+	<!--content-container fin-->
+</div>
+
+<script type="text/javascript">
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#72c380", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#eloc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 39
+			},
+			{
+			  key: "Two",
+			  y: 10
+			},
+			{
+			  key: "Three",
+			  y: 51
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#eloc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#eloc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#eloc .graph .bar", (360 * 49 / 100) / 15 * 7 - 180 / 15 * 7);
+
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#de6262", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#ecoc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 68
+			},
+			{
+			  key: "Two",
+			  y: 20
+			},
+			{
+			  key: "Three",
+			  y: 12
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#ecoc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#ecoc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#ecoc .graph .bar", (360 * 68 / 100) / 15 * 7 - 180 / 15 * 7);
+</script>
+</body>
+</html>

@@ -61,8 +61,37 @@
                 ,success : function(jsonData) {
                     table = jsonData.relation;
 
-                    //BuildTable();
-                    //AdjustStyle();
+                    $('.relations>.content-box').empty();
+                    $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+                    if(table.length < 5)
+                    {
+                        for(var i=0;i<table.length;i++)
+                        {
+                            templi = $('<li></li>');
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                            $('.relations>.content-box').append(templi);
+                        }
+                    }
+                    else
+                    {
+                        for(var i=0;i<4;i++)
+                        {
+                            templi = $('<li></li>');
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                            $('.relations>.content-box').append(templi);
+                        }
+                        $('.relations>.content-box').append($('<li class="center">··· '+table.length-4+' More ···</li>'));
+                    }
+                    /*<li>
+                     <div class="source">Source</div>
+                     <div class="relation">Relation</div>
+                     <div class="target">Target</div>
+                     </li>
+                     <li class="center">··· 125 More ···</li>*/
                 }
                 ,error : function(xhr, textStatus) {
                 }
@@ -176,13 +205,38 @@
 										<tr class="information">
 											<td>
 												<div class="relations">
-													<ol class="content-box">
-														<li class="head">Source</li>
-														<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
-														<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
-														<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule.addExample(String)</li>
-														<li class="center">··· 125 More ···</li>
-													</ol>
+                                                    <ol class="content-box">
+                                                        <li id="relation-head">
+                                                            <div class="source hover">Source</div>
+                                                            <div class="relation hover">Relation</div>
+                                                            <div class="target hover">Target</div>
+                                                        </li>
+                                                        <!--
+                                                        <li>
+                                                            <div class="source">Source</div>
+                                                            <div class="relation">Relation</div>
+                                                            <div class="target">Target</div>
+                                                        </li>
+                                                        <li class="center">··· 125 More ···</li>
+                                                        -->
+                                                    </ol>
+                                                    <!--<table>
+                                                        <thead>
+                                                        <tr>
+                                                            <td>Source</td>
+                                                            <td>Relation</td>
+                                                            <td>Target</td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Source</td>
+                                                            <td>Relation</td>
+                                                            <td>Target</td>
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>-->
 												</div>
 												<div class="developer">
 													<div class="icon"></div>
