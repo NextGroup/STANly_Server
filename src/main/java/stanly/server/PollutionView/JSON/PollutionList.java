@@ -1,22 +1,24 @@
 package stanly.server.PollutionView.JSON;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import stanly.server.CommonView.JSON.PollutionRatio;
 
 public class PollutionList {
-	private ArrayList<PollutionSet> list;
+	private HashMap<String,ArrayList<PollutionRatio>> map;
 	
 	public PollutionList()
 	{
-		list = new ArrayList<PollutionSet>();
+		map = new HashMap<String,ArrayList<PollutionRatio>>();
 	}
 	
-	public void add(String name, int a,int b,int c, int f)
+	public void add(String name, String R, int C)
 	{
-		PollutionSet p = new PollutionSet(name);
-		p.add("A", a);
-		p.add("B", b);
-		p.add("C", c);
-		p.add("F", f);
-		list.add(p);
+		if(!map.containsKey(name))
+			map.put(name, new ArrayList<PollutionRatio>());
+	
+		map.get(name).add(new PollutionRatio(R,C));
+		
 	}
 }
