@@ -51,6 +51,18 @@ public class MethodMetric extends ElementNodeMetric{
 	@Override
 	public void setRate()
 	{
+		UnitsRate =MetricRate.NO_RATE;
+		ELOCRate = MetricRate.NO_RATE;
+		NOMRate = MetricRate.NO_RATE;
+		NOFRate = MetricRate.NO_RATE;
+		CCRate = MetricRate.NO_RATE;
+		TangleRate = MetricRate.NO_RATE;
+		NoRRate	= MetricRate.NO_RATE;
+		DRate = MetricRate.NO_RATE;
+		DITRate = MetricRate.NO_RATE;
+		
+		fatRate = MetricRate.NO_RATE;
+		CPRate = MetricRate.NO_RATE;
 		int CCRate = (CC<=10) ? MetricRate.A_RATE: ((CC<=15) ? MetricRate.B_RATE:(CC<=20) ? MetricRate.C_RATE:MetricRate.F_RATE);
 		int ELOCRate  = (LOC<=60) ? MetricRate.A_RATE: ((LOC<=120) ? MetricRate.B_RATE:MetricRate.C_RATE);
 		

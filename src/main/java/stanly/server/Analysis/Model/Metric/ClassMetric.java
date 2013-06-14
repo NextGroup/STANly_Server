@@ -223,22 +223,37 @@ public class ClassMetric extends ElementNodeMetric {
 	@Override
 	public void setRate()
 	{
+		
+		UnitsRate =MetricRate.NO_RATE;
+		ELOCRate = MetricRate.NO_RATE;
+		NOMRate = MetricRate.NO_RATE;
+		NOFRate = MetricRate.NO_RATE;
+		CCRate = MetricRate.NO_RATE;
+		TangleRate = MetricRate.NO_RATE;
+		NoRRate	= MetricRate.NO_RATE;
+		DRate = MetricRate.NO_RATE;
+		DITRate = MetricRate.NO_RATE;
+		
 		int methods = (Methods<50) ? MetricRate.A_RATE: ((Methods<100)? MetricRate.C_RATE:MetricRate.F_RATE);
 		int fields = (Fields<20) ? MetricRate.A_RATE:((Fields<40) ? MetricRate.C_RATE: MetricRate.F_RATE);
 		int eloc= (LOC<300) ? MetricRate.A_RATE : ((LOC<400) ? MetricRate.C_RATE: MetricRate.F_RATE);
-		
+		NOFRate = fields;
+		NOMRate = methods;
+		ELOCRate = eloc;
 		fatRate = (int) Math.ceil((methods+fields+eloc)/3.0f);
 		
 		if(DIT>5)
-			CPRate = MetricRate.A_RATE;
+			DITRate = CPRate = MetricRate.A_RATE;
 		else if(DIT>7)
-			CPRate = MetricRate.B_RATE;
+			DITRate = CPRate = MetricRate.B_RATE;
 		else 
-			CPRate = MetricRate.F_RATE;
+			DITRate = CPRate = MetricRate.F_RATE;
 		
 		int cboRate = (CBO<25) ? MetricRate.A_RATE: MetricRate.C_RATE;
 		int rfcRate = (RFC<100) ? MetricRate.A_RATE: MetricRate.C_RATE;
 		int fRate = (Fat<60) ? MetricRate.A_RATE: ((Fat<120) ? MetricRate.B_RATE: MetricRate.C_RATE);
+		CCRate = (WMC<50) ? MetricRate.A_RATE: ((WMC<100) ? MetricRate.B_RATE: ((WMC<200) ? MetricRate.C_RATE: MetricRate.F_RATE));
+		NoRRate = fRate;
 		CouplingRate = (cboRate+rfcRate+fRate)/3;
 		
 		TotalRate = (fatRate +CPRate+ CouplingRate)/3;

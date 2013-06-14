@@ -70,15 +70,25 @@ public class ProjectMetric extends ElementNodeMetric{
 	@Override
 	public void setRate()
 	{
+		UnitsRate =MetricRate.NO_RATE;
+		ELOCRate = MetricRate.NO_RATE;
+		NOMRate = MetricRate.NO_RATE;
+		NOFRate = MetricRate.NO_RATE;
+		CCRate = MetricRate.NO_RATE;
+		TangleRate = MetricRate.NO_RATE;
+		NoRRate	= MetricRate.NO_RATE;
+		DRate = MetricRate.NO_RATE;
+		DITRate = MetricRate.NO_RATE;
+		
 		fatRate = MetricRate.NO_RATE;
 		CPRate = MetricRate.NO_RATE;
 	
 		if(Tangled>0)
-			CouplingRate = MetricRate.F_RATE;
+			TangleRate = CouplingRate = MetricRate.F_RATE;
 		else if(ACDLibrary> 0.5)
-			CouplingRate = MetricRate.C_RATE;
+			TangleRate = CouplingRate = MetricRate.C_RATE;
 		else 
-			CouplingRate = MetricRate.A_RATE;
+			TangleRate= CouplingRate = MetricRate.A_RATE;
 		
 		TotalRate = (CouplingRate);
 	}

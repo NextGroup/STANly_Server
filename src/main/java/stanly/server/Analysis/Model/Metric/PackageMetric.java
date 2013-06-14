@@ -284,28 +284,38 @@ public class PackageMetric extends ElementNodeMetric{
 	@Override
 	public void setRate()
 	{
+		UnitsRate =MetricRate.NO_RATE;
+		ELOCRate = MetricRate.NO_RATE;
+		NOMRate = MetricRate.NO_RATE;
+		NOFRate = MetricRate.NO_RATE;
+		CCRate = MetricRate.NO_RATE;
+		TangleRate = MetricRate.NO_RATE;
+		NoRRate	= MetricRate.NO_RATE;
+		DRate = MetricRate.NO_RATE;
+		DITRate = MetricRate.NO_RATE;
+		
 		if(Units<40)
-			fatRate = MetricRate.A_RATE;
+			UnitsRate = fatRate = MetricRate.A_RATE;
 		else if(Units<60)
-			fatRate = MetricRate.B_RATE;
+			UnitsRate = fatRate = MetricRate.B_RATE;
 		else 
-			fatRate = MetricRate.C_RATE;
+			UnitsRate = fatRate = MetricRate.C_RATE;
 		
 		if(this.getDistance()<0.5)
-			CPRate = MetricRate.A_RATE;
+			DRate = CPRate = MetricRate.A_RATE;
 		else if(this.getDistance()<0.8)
-			CPRate = MetricRate.B_RATE;
+			DRate =CPRate = MetricRate.B_RATE;
 		else
-			CPRate = MetricRate.C_RATE;
+			DRate = CPRate = MetricRate.C_RATE;
 		
 		if(this.getFat()>240)
-			CouplingRate = MetricRate.F_RATE;
+			NoRRate = CouplingRate = MetricRate.F_RATE;
 		else if(this.getFat()>120)
-			CouplingRate	 = MetricRate.C_RATE;
+			NoRRate = CouplingRate	 = MetricRate.C_RATE;
 		else if(this.getFat()>60)
-			CouplingRate	 = MetricRate.B_RATE;
+			NoRRate =CouplingRate	 = MetricRate.B_RATE;
 		else 
-			CouplingRate	 = MetricRate.A_RATE;
+			NoRRate = CouplingRate	 = MetricRate.A_RATE;
 		
 		TotalRate = (fatRate +CPRate+ CouplingRate)/3;
 	}

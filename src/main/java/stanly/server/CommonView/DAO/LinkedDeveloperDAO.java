@@ -65,7 +65,7 @@ public class LinkedDeveloperDAO {
 			}*/
 			List nList=null;
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select distinct CI.committer from CommitterInfluence CI where CI.influenceClass in (select PE.singlename from ProjectElementNode PE where PE.NSLeft >= ? and PE.NSRight <= ? and PE.commit=? and (PE.type = ? or PE.type = ?))");
+			Query query = session.createQuery("select distinct CI.committer from CommitterInfluence CI where CI.influenceClass in (select PE.SingleName from ProjectElementNode PE where PE.NSLeft >= ? and PE.NSRight <= ? and PE.commit=? and (PE.type = ? or PE.type = ?))");
 			query.setParameter(0, node.getNSLeft());
 			query.setParameter(1, node.getNSRight());
 			query.setParameter(2, commit);

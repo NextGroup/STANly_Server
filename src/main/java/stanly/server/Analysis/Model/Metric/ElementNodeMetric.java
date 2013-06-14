@@ -51,19 +51,58 @@ public abstract class ElementNodeMetric {
 	 */
 	private NodeType type;
 	
+	/**
+	 *  Fat 계열 
+	 */
 	@Column(name = "FATRate")
 	protected int fatRate; // 카운
+	
+	@Column(name = "UnitRate")
+	protected int UnitsRate;
+	
+	@Column(name = "ELOCRate")
+	protected int ELOCRate;
+	
+	@Column(name = "NOMRate")
+	protected int NOMRate;	//메솓,
+	
+	@Column(name = "NOFRate")
+	protected int NOFRate;	
+	
+	@Column(name = "CCRate")
+	protected int CCRate;	
+	
+	
+	/**
+	 *  추상화 계열 
+	 */
 	@Column(name = "CPRate")
 	protected int CPRate; //추상
+	
+	@Column(name = "DITRate")
+	protected int DITRate; 
+	
+	@Column(name = "DRate")
+	protected int DRate;
+	
+	/**
+	 * 커플링 계열 
+	 */
 	@Column(name = "CoRate")
 	protected int CouplingRate;
-
+	
+	@Column(name = "NoRRate")
+	protected int NoRRate;
+	@Column(name = "TangleRate")
+	protected int TangleRate;
+	
+	
 	@Column(name = "TotalRate")
 	protected int TotalRate;
 	
 	public ElementNodeMetric()
 	{
-		
+	
 	}
 	
 	public ElementNodeMetric(NodeType type) {
