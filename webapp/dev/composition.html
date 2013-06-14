@@ -69,6 +69,16 @@
                 ,complete : function(xhr, textStatus) {
                 }
             });
+
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/Stanly/linkdev/list",
+                data: {name:getParameter('Project'),nsleft:id},
+                success: function(json)
+                {
+
+                }
+            });
         }
     </script>
 </head>
@@ -107,7 +117,7 @@
 									<tbody>
 										<tr class="composition-view">
 											<td>
-                                                <svg id="MainSVG">
+                                                <svg id="MainSVG" style="height:550px">
                                                     <defs>
                                                         <marker id="arrowhead"
                                                                 viewBox="0 0 10 10"
