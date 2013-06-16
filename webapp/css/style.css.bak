@@ -439,7 +439,7 @@ div.pollution-graph .critical-risk tr:hover {
 	font: 800 18px 'Helvetica';
 }
 .pollution-graph .critical-risk td.rate-a { color:#00AA00; }
-.pollution-graph .critical-risk td.rate-b { color:#FFEE00; }
+.pollution-graph .critical-risk td.rate-b { color:#fdd04f; }
 .pollution-graph .critical-risk td.rate-c { color:#F77700; }
 .pollution-graph .critical-risk td.rate-f { color:#EE0000; }
 .pollution-graph .critical-risk td.icon {
@@ -807,7 +807,7 @@ div.agraph div.bar {
 }
 #overview-content .b-circle,
 #project-list-top .list-item .b-circle,
-#project-list .list-item .b-circle { background-color: #FFEE00; }
+#project-list .list-item .b-circle { background-color: #fdd04f; }
 #overview-content .b-circle .rotation-circle,
 #project-list-top .list-item .b-circle .rotation-circle,
 #project-list .list-item .b-circle .rotation-circle {
@@ -989,7 +989,7 @@ div.agraph div.bar {
 #project-list-top .list-item .basicrule.b-rate .rate,
 #project-list .list-item .fat.b-rate .rate,
 #project-list .list-item .naming.b-rate .rate,
-#project-list .list-item .basicrule.b-rate .rate { color: #FFEE00; }
+#project-list .list-item .basicrule.b-rate .rate { color: #fdd04f; }
 #project-list-top .list-item .fat.c-rate .rate,
 #project-list-top .list-item .naming.c-rate .rate,
 #project-list-top .list-item .basicrule.c-rate .rate,
@@ -1008,7 +1008,7 @@ div.agraph div.bar {
 #project-list-top .list-item .basicrule.b-rate .c3,
 #project-list-top .list-item .basicrule.b-rate .c4,
 #project-list .list-item .basicrule.b-rate .c3,
-#project-list .list-item .basicrule.b-rate .c4 { background-color: #FFEE00; }
+#project-list .list-item .basicrule.b-rate .c4 { background-color: #fdd04f; }
 #project-list-top .list-item .basicrule.c-rate .c2,
 #project-list-top .list-item .basicrule.c-rate .c3,
 #project-list-top .list-item .basicrule.c-rate .c4,
@@ -1049,7 +1049,7 @@ div.agraph div.bar {
 #project-list-top .list-item .naming.a-rate .donut,
 #project-list .list-item .naming.a-rate .donut { border-color: #00AA00; }
 #project-list-top .list-item .naming.b-rate .donut,
-#project-list .list-item .naming.b-rate .donut { border-color: #FFEE00; }
+#project-list .list-item .naming.b-rate .donut { border-color: #fdd04f; }
 #project-list-top .list-item .naming.c-rate .donut,
 #project-list .list-item .naming.c-rate .donut { border-color: #F77700; }
 #project-list-top .list-item .naming.f-rate .donut,
@@ -1365,7 +1365,7 @@ div.agraph div.bar {
 .pollution-rate-title .rate-icon { float: left; margin-left: 4px; margin-top: 11px; width: 32px; height: 32px; }
 .pollution-rate-title .rate-name { float: left; margin-left: 8px; margin-top: 15px; font: 800 20px "Helvetica"; color: #272727; }
 .pollution-rate-title.a-rate .rate-level { color: #00AA00; }
-.pollution-rate-title.b-rate .rate-level { color: #FFEE00; }
+.pollution-rate-title.b-rate .rate-level { color: #fdd04f; }
 .pollution-rate-title.c-rate .rate-level { color: #F77700; }
 .pollution-rate-title.f-rate .rate-level { color: #EE0000; }
 
@@ -1536,22 +1536,22 @@ div.agraph div.bar {
 	margin-right: -11px;
 }
 .pollution-rate-content .rate-head .a2b .essence-body {
-	background-image: linear-gradient(left, #00aa00, #ffee00);
-	background-image: -moz-linear-gradient(left, #00aa00, #ffee00);
-	background-image: -webkit-linear-gradient(left, #00aa00, #ffee00);
-	background-image: -o-linear-gradient(left, #00aa00, #ffee00);
-	background-image: -ms-linear-gradient(left, #00aa00 0%, #ffee00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00aa00", endColorstr="#ffee00", GradientType=1);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#00aa00\", endColorstr=\"#ffee00\", GradientType=1)";
+	background-image: linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -moz-linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -webkit-linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -o-linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -ms-linear-gradient(left, #00aa00 0%, #fdd04f 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00aa00", endColorstr="#fdd04f", GradientType=1);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#00aa00\", endColorstr=\"#fdd04f\", GradientType=1)";
 }
 .pollution-rate-content .rate-head .b2c .essence-body {
-	background-image: linear-gradient(left, #ffee00, #f77700);
-	background-image: -moz-linear-gradient(left, #ffee00, #f77700);
-	background-image: -webkit-linear-gradient(left, #ffee00, #f77700);
-	background-image: -o-linear-gradient(left, #ffee00, #f77700);
-	background-image: -ms-linear-gradient(left, #ffee00 0%, #f77700 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffee00", endColorstr="#f77700", GradientType=1);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#ffee00\", endColorstr=\"#f77700\", GradientType=1)";
+	background-image: linear-gradient(left, #fdd04f, #f77700);
+	background-image: -moz-linear-gradient(left, #fdd04f, #f77700);
+	background-image: -webkit-linear-gradient(left, #fdd04f, #f77700);
+	background-image: -o-linear-gradient(left, #fdd04f, #f77700);
+	background-image: -ms-linear-gradient(left, #fdd04f 0%, #f77700 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fdd04f", endColorstr="#f77700", GradientType=1);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#fdd04f\", endColorstr=\"#f77700\", GradientType=1)";
 }
 .pollution-rate-content .rate-head .c2f .essence-body {
 	background-image: linear-gradient(left, #f77700, #ee0000);
@@ -1576,7 +1576,7 @@ div.agraph div.bar {
 	-o-border-radius: 19px;
 }
 .pollution-rate-content .rate-head .a-rate .essence .essence-body { background-color: #00AA00; }
-.pollution-rate-content .rate-head .b-rate .essence .essence-body { background-color: #FFEE00; }
+.pollution-rate-content .rate-head .b-rate .essence .essence-body { background-color: #fdd04f; }
 .pollution-rate-content .rate-head .c-rate .essence .essence-body { background-color: #F77700; }
 .pollution-rate-content .rate-head .f-rate .essence .essence-body { background-color: #EE0000; }
 .pollution-rate-content .rate-head .current-slider {
@@ -1610,7 +1610,7 @@ div.agraph div.bar {
 	margin-top: -46px;
 }
 .pollution-rate-content.a-rate .rate-head .current-slider .text span { color: #00AA00; }
-.pollution-rate-content.b-rate .rate-head .current-slider .text span { color: #FFEE00; }
+.pollution-rate-content.b-rate .rate-head .current-slider .text span { color: #fdd04f; }
 .pollution-rate-content.c-rate .rate-head .current-slider .text span { color: #F77700; }
 .pollution-rate-content.f-rate .rate-head .current-slider .text span { color: #EE0000; }
 .pollution-rate-content .rate-level {
@@ -1622,7 +1622,7 @@ div.agraph div.bar {
 	font: 800 28px "Helvetica";
 }
 .pollution-rate-content .rate-level.a-rate { color: #00AA00; }
-.pollution-rate-content .rate-level.b-rate { color: #FFEE00; }
+.pollution-rate-content .rate-level.b-rate { color: #fdd04f; }
 .pollution-rate-content .rate-level.c-rate { color: #F77700; }
 .pollution-rate-content .rate-level.f-rate { color: #EE0000; }
 .pollution-rate-content .rate-level .right-rate {
