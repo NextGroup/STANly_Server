@@ -19,6 +19,9 @@ public class SelectedRisk {
 		DomainName = domainName;
 		LinkedPerson = linkedPerson;
 	}
+	public String getRank() {
+		return rank;
+	}
 	public SelectedRisk(int Nsleft, String Rank)
 	{
 		nsleft = Nsleft ;
