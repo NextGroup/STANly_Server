@@ -1393,9 +1393,9 @@ div.agraph div.bar {
 #container				#coupling-rate .rate-icon,
 #container.decelerate	#coupling-rate .rate-icon { background: url(../images/pollution/coupling.png) no-repeat; }
 
-#container.svg			#basicrule-rate .rate-icon { background: url(../images/pollution/basicrule.svg) no-repeat; }
+#container.svg			#basicrule-rate .rate-icon { background: url(../images/pollution/basic.svg) no-repeat; }
 #container				#basicrule-rate .rate-icon,
-#container.decelerate	#basicrule-rate .rate-icon { background: url(../images/pollution/basicrule.png) no-repeat; }
+#container.decelerate	#basicrule-rate .rate-icon { background: url(../images/pollution/basic.png) no-repeat; }
 
 #container.svg			#naming-rate .rate-icon { background: url(../images/pollution/naming.svg) no-repeat; }
 #container				#naming-rate .rate-icon,
@@ -2029,7 +2029,7 @@ div.agraph div.bar {
 .pollution-list .rank { width: 8%; padding-top: 9px; font-size: 22px; font-weight: 800; text-align: center; }
 .pollution-list .pollution-name { width: 25%; padding-top: 14px; }
 .pollution-list .domain { width: 8%; text-align: center; padding-top: 13px; }
-.pollution-list .name { width: 41%; padding-top: 14px; }
+.pollution-list .name { width: 41%; padding-top: 14px; overflow:hidden}
 .pollution-list .person { width: 10%; text-align: center; padding-top: 14px; }
 .pollution-list .hover {
 	text-align: left;

@@ -28,8 +28,43 @@
             $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
 
             $($('.rate-level>.left-rate')).children('.rate').click(pol_event_handler);
+            $($('.rate-level>.rate-body')).children('.rate').click(static_event_handler);
         });
 
+        function make_list(json)
+        {
+            list = jQuery.parseJSON(json).list;
+            $('.dashboard-group>.pollution-list>.content-box')
+                    .empty()
+                    .append($('<li id="pollution-head"><div class="pollution hover">Pollution</div><div class="rank hover">Rank</div><div class="pollution-name hover">Pollution Name</div><div class="domain hover">Domain</div><div class="name hover">Name</div><div class="person hover">Person</div></li>'));
+            for(var i=0;i<list.length;i++)
+            {
+                item = $('<li></li>');
+                item.append($('<div class="pollution"><img src="../images/pollution/'+list[i].type.toLowerCase()+'.png" alt="fat" /></div>'));
+                item.append($('<div class="rank">'+list[i].rank+'</div>'));
+                item.append($('<div class="pollution-name">'+list[i].RiskName+'</div>'));
+                item.append($('<div class="domain"><img src="../images/icon/'+list[i].Domain.toLowerCase()+'.gif" style="margin-top:2px;" alt="tree" /></div>'));
+                item.append($('<div class="name">'+list[i].DomainName+'</div>'));
+                item.append($('<div class="person">'+list[i].LinkedPerson+'명</div>'));
+
+                $('.dashboard-group>.pollution-list>.content-box').append(item);
+            }
+        }
+
+        function static_event_handler(eventObject)
+        {
+            if($(this).text() == 'A')   rankquery = '0';
+            if($(this).text() == 'B')   rankquery = '1';
+            if($(this).text() == 'C')   rankquery = '2';
+            if($(this).text() == 'F')   rankquery = '3';
+
+            $.ajax({
+                type: "get",
+                url: "/Stanly/pollution/"+$(this).parent().attr('id').toLowerCase()+"list",
+                data: {name:getParameter('Project'),rank:rankquery},
+                success: make_list
+            });
+        }
 
         function pol_event_handler(eventObject){
             if($(this).text() == 'A')   rankquery = '0';
@@ -40,27 +75,7 @@
                 type: "get",
                 url: "/Stanly/pollution/list",
                 data: {name:getParameter('Project'),type:$(this).parent().attr('id'),rank:rankquery},
-                success: function(json)
-                {
-                    list = jQuery.parseJSON(json).list;
-                    $('.dashboard-group>.pollution-list>.content-box')
-                            .empty()
-                            .append($('<li id="pollution-head"><div class="pollution hover">Pollution</div><div class="rank hover">Rank</div><div class="pollution-name hover">Pollution Name</div><div class="domain hover">Domain</div><div class="name hover">Name</div><div class="person hover">Person</div></li>'));
-                    for(var i=0;i<list.length;i++)
-                    {
-                        item = $('<li></li>');
-                        item.append($('<div class="pollution"><img src="../images/pollution/'+list[i].type.toLowerCase()+'.png" alt="fat" /></div>'));
-                        item.append($('<div class="rank">'+list[i].rank+'</div>'));
-                        item.append($('<div class="pollution-name">'+list[i].RiskName+'</div>'));
-                        item.append($('<div class="domain"><img src="../images/icon/'+list[i].Domain.toLowerCase()+'.gif" style="margin-top:2px;" alt="tree" /></div>'));
-                        item.append($('<div class="name">'+list[i].DomainName+'</div>'));
-                        item.append($('<div class="person">'+list[i].LinkedPerson+'명</div>'));
-
-                        $('.dashboard-group>.pollution-list>.content-box').append(item);
-                    }
-
-                    //{"nsleft":4492,"type":"FAT","rank":"B","RiskName":"Units","Domain":"PACKAGE","DomainName":"net.sourceforge.pmd.lang.ecmascript.ast","LinkedPerson":0
-                }
+                success: make_list
             });
         }
 
@@ -72,10 +87,10 @@
             normal_b = rate[1].y / total * 100;
             normal_c = rate[2].y / total * 100;
             normal_f = rate[3].y / total * 100;
-            if(rate[0].y != 0 && normal_a < 5)    full_rate -= 5;
-            if(rate[1].y != 0 && normal_b < 5)    full_rate -= 5;
-            if(rate[2].y != 0 && normal_c < 5)    full_rate -= 5;
-            if(rate[3].y != 0 && normal_f < 5)    full_rate -= 5;
+            if(rate[0].y != 0 && normal_a < 5){ full_rate -= 5; total -= rate[0].y;}
+            if(rate[1].y != 0 && normal_b < 5){ full_rate -= 5; total -= rate[1].y;}
+            if(rate[2].y != 0 && normal_c < 5){ full_rate -= 5; total -= rate[2].y;}
+            if(rate[3].y != 0 && normal_f < 5){ full_rate -= 5; total -= rate[3].y;}
 
             if(rate[0].y != 0 && normal_a < 5)    normal_a = 5;
             else                normal_a = rate[0].y / total * full_rate;
@@ -351,30 +366,6 @@
 									<div class="domain hover">Domain</div>
 									<div class="name hover">Name</div>
 									<div class="person hover">Person</div>
-								</li>
-								<li>
-									<div class="pollution"><img src="../images/pollution/fat.png" alt="fat" /></div>
-									<div class="rank">F</div>
-									<div class="pollution-name">Number of Branch statement</div>
-									<div class="domain"><img src="../images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
-									<div class="name">com.swmaestro.List.LinkedList</div>
-									<div class="person">3명</div>
-								</li>
-								<li>
-									<div class="pollution"><img src="../images/pollution/fat.png" alt="fat" /></div>
-									<div class="rank">C</div>
-									<div class="pollution-name">Long Naming</div>
-									<div class="domain"><img src="../images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
-									<div class="name">com.swmaestro.List.LinkedList</div>
-									<div class="person">3명</div>
-								</li>
-								<li>
-									<div class="pollution"><img src="../images/pollution/coupling.png" alt="coupling" /></div>
-									<div class="rank">F</div>
-									<div class="pollution-name">Tangled</div>
-									<div class="domain"><img src="../images/icon/package.gif" style="margin-top:2px;" alt="tree" /></div>
-									<div class="name">com.swmaestro.List</div>
-									<div class="person">10명</div>
 								</li>
 							</ol>
 						</div>
