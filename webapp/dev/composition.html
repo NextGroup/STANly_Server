@@ -64,7 +64,7 @@
 
                     $('.relations>.content-box').empty();
                     $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
-                    if(table.length < 5)
+                    if(table.length < 4)
                     {
                         for(var i=0;i<table.length;i++)
                         {
@@ -77,7 +77,7 @@
                     }
                     else
                     {
-                        for(var i=0;i<4;i++)
+                        for(var i=0;i<3;i++)
                         {
                             templi = $('<li></li>');
                             templi.append($('<div class="source">'+table[i].Sources+'</div>'));
@@ -85,7 +85,7 @@
                             templi.append($('<div class="target">'+table[i].Targets+'</div>'));
                             $('.relations>.content-box').append(templi);
                         }
-                        $('.relations>.content-box').append($('<li class="center">··· '+table.length-4+' More ···</li>'));
+                        $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
                     }
                     /*<li>
                      <div class="source">Source</div>

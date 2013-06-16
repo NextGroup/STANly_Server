@@ -27,6 +27,94 @@
             $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
             $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
         });
+
+        function draw_pollution_rate(target, rate)
+        {
+            full_rate = 100;
+            total = rate[0].y + rate[1].y + rate[2].y + rate[3].y;
+            normal_a = rate[0].y / total * 100;
+            normal_b = rate[1].y / total * 100;
+            normal_c = rate[2].y / total * 100;
+            normal_f = rate[3].y / total * 100;
+            if(rate[0].y != 0 && normal_a < 5)    full_rate -= 5;
+            if(rate[1].y != 0 && normal_b < 5)    full_rate -= 5;
+            if(rate[2].y != 0 && normal_c < 5)    full_rate -= 5;
+            if(rate[3].y != 0 && normal_f < 5)    full_rate -= 5;
+
+            if(rate[0].y != 0 && normal_a < 5)    normal_a = 5;
+            else                normal_a = rate[0].y / total * full_rate;
+            if(rate[1].y != 0 && normal_b < 5)    normal_b = 5;
+            else                normal_b = rate[1].y / total * full_rate;
+            if(rate[2].y != 0 && normal_c < 5)    normal_c = 5;
+            else                normal_c = rate[2].y / total * full_rate;
+            if(rate[3].y != 0 && normal_f < 5)    normal_f = 5;
+            else                normal_f = rate[3].y / total * full_rate;
+
+            target.children('.a-rate').css('width',normal_a + '%');
+            target.children('.b-rate').css('width',normal_b + '%');
+            target.children('.c-rate').css('width',normal_c + '%');
+            target.children('.f-rate').css('width',normal_f + '%');
+
+            if(normal_a == 0)       target.children('.a-rate').text('');
+            if(normal_b == 0)       target.children('.b-rate').text('');
+            if(normal_c == 0)       target.children('.c-rate').text('');
+            if(normal_f == 0)       target.children('.f-rate').text('');
+
+            if(normal_a != 0)       target.children('.a-rate').addClass('most-left');
+            else if(normal_b != 0)  target.children('.b-rate').addClass('most-left');
+            else if(normal_c != 0)  target.children('.c-rate').addClass('most-left');
+            else if(normal_f != 0)  target.children('.f-rate').addClass('most-left');
+
+            if(normal_f != 0)       target.children('.f-rate').addClass('most-right');
+            else if(normal_c != 0)  target.children('.c-rate').addClass('most-right');
+            else if(normal_b != 0)  target.children('.b-rate').addClass('most-right');
+            else if(normal_a != 0)  target.children('.a-rate').addClass('most-right');
+        }
+        $.ajax({
+            type: "get",
+            url: "/Stanly/pollution/fat",
+            data: {name:getParameter('Project')},
+            success: function(json)
+            {
+                unit_rate = jQuery.parseJSON(json).map.UnitsRate;
+                nom_rate = jQuery.parseJSON(json).map.NOMRate;
+                nof_rate = jQuery.parseJSON(json).map.NOFRate;
+                eloc_rate = jQuery.parseJSON(json).map.ELOCRate;
+                cc_rate = jQuery.parseJSON(json).map.CCRate;
+
+                draw_pollution_rate($($('.rate-level>.left-rate')[0]),unit_rate);
+                draw_pollution_rate($($('.rate-level>.left-rate')[1]),nom_rate);
+                draw_pollution_rate($($('.rate-level>.left-rate')[2]),nof_rate);
+                draw_pollution_rate($($('.rate-level>.left-rate')[3]),eloc_rate);
+                draw_pollution_rate($($('.rate-level>.left-rate')[4]),cc_rate);
+            }
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/pollution/coupling",
+            data: {name:getParameter('Project')},
+            success: function(json)
+            {
+                nor_rate = jQuery.parseJSON(json).map.NoRRate;
+                tangle_rate = jQuery.parseJSON(json).map.TangleRate;
+
+                draw_pollution_rate($($('.rate-level>.left-rate')[5]),nor_rate);
+                draw_pollution_rate($($('.rate-level>.left-rate')[6]),tangle_rate);
+            }
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/pollution/static",
+            data: {name:getParameter('Project')},
+            success: function(json)
+            {
+                basic_rate = jQuery.parseJSON(json).map.BASIC;
+
+                draw_pollution_rate($($('.rate-level>.rate-body')[5]),basic_rate);
+            }
+        });
     </script>
 </head>
 
