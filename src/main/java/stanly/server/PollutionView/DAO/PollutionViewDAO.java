@@ -1,6 +1,8 @@
 package stanly.server.PollutionView.DAO;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -291,7 +293,17 @@ public class PollutionViewDAO {
 
 				}
 				updateElementNode(map,commit);	
-				Iterator it = map.values().iterator();
+				List<SelectedRisk> Sortedlist = new ArrayList<SelectedRisk>(map.values());
+				
+				Collections.sort(Sortedlist, new Comparator<SelectedRisk> (){
+					@Override
+					public int compare(SelectedRisk o1, SelectedRisk o2) {
+						// TODO Auto-generated method stub
+						return o1.getRank().compareTo(o2.getRank());
+					}
+					
+				});
+				Iterator it = Sortedlist.iterator();
 
 				while(it.hasNext())
 				{
@@ -397,7 +409,7 @@ public class PollutionViewDAO {
 				String Type = ConvertColumCode(dataType);
 				HashMap<Integer, SelectedRisk> map = new HashMap<Integer, SelectedRisk>();
 				Session session = sessionFactory.getCurrentSession();
-				Query query = session.createQuery("select metric.element.NSLeft , metric."+Type+" from ElementNodeMetric metric where metric."+Type+" != ? and metric."+Type+" > ? and metric.element.commit = ? ");
+				Query query = session.createQuery("select metric.element.NSLeft , metric."+Type+" from ElementNodeMetric metric where metric."+Type+" != ? and metric."+Type+" > ? and metric.element.commit = ? order by metric."+Type+" asc");
 				query.setParameter(0, MetricRate.NO_RATE);
 				query.setParameter(1, Rank);
 				query.setParameter(2, commit);
@@ -412,8 +424,18 @@ public class PollutionViewDAO {
 			
 						map.put(key, new SelectedRisk(key,MetricRate.ChangeRate((int)count)));
 				}
-				updateElementNode(map,commit);	
-				Iterator it = map.values().iterator();
+				updateElementNode(map,commit);
+				List<SelectedRisk> Sortedlist = new ArrayList<SelectedRisk>(map.values());
+				
+				Collections.sort(Sortedlist, new Comparator<SelectedRisk> (){
+					@Override
+					public int compare(SelectedRisk o1, SelectedRisk o2) {
+						// TODO Auto-generated method stub
+						return o1.getRank().compareTo(o2.getRank());
+					}
+					
+				});
+				Iterator it = Sortedlist.iterator();
 
 				while(it.hasNext())
 				{
