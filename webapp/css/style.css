@@ -1839,10 +1839,10 @@ div.agraph div.bar {
 }
 #container.pollution .pollution-rate-title .rate-icon { float: left; margin-left: 4px; margin-top: 11px; width: 32px; height: 32px; }
 #container.pollution .pollution-rate-title .rate-name { float: left; margin-left: 4px; margin-top: 15px; font: 800 20px "Helvetica"; color: #272727; }
-#container.pollution .pollution-rate-title.a-rate .rate-level { color: #5a9ccc; }
-#container.pollution .pollution-rate-title.b-rate .rate-level { color: #72c380; }
-#container.pollution .pollution-rate-title.c-rate .rate-level { color: #dca763; }
-#container.pollution .pollution-rate-title.f-rate .rate-level { color: #de6262; }
+#container.pollution .pollution-rate-title.a-rate .rate-level { color: #00aa00; }
+#container.pollution .pollution-rate-title.b-rate .rate-level { color: #ffee00; }
+#container.pollution .pollution-rate-title.c-rate .rate-level { color: #f77700; }
+#container.pollution .pollution-rate-title.f-rate .rate-level { color: #ee0000; }
 
 #container.pollution .pollution-rate-content {
 	width: 100%;
@@ -1916,37 +1916,45 @@ div.agraph div.bar {
 	font: 500 16px "Helvetica";
 	color: #f7f6f2;
 }
+
+#container.pollution .pollution-rate-content .rate-level .rate-body .most-left,
+#container.pollution .pollution-rate-content .rate-level .left-rate .most-left{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    -moz-border-bottom-left-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -o-border-top-left-radius: 10px;
+    -o-border-bottom-left-radius: 10px;
+}
+#container.pollution .pollution-rate-content .rate-level .rate-body .most-right,
+#container.pollution .pollution-rate-content .rate-level .left-rate .most-right {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -moz-border-top-right-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -o-border-top-right-radius: 10px;
+    -o-border-bottom-right-radius: 10px;
+}
+
 #container.pollution .pollution-rate-content .rate-level .rate-body .a-rate,
 #container.pollution .pollution-rate-content .rate-level .left-rate .a-rate {
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-	-moz-border-top-left-radius: 10px;
-	-moz-border-bottom-left-radius: 10px;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-bottom-left-radius: 10px;
-	-o-border-top-left-radius: 10px;
-	-o-border-bottom-left-radius: 10px;
-	background-color: #5a9ccc;
+	background-color: #00aa00;
 }
 #container.pollution .pollution-rate-content .rate-level .rate-body .b-rate,
 #container.pollution .pollution-rate-content .rate-level .left-rate .b-rate {
-	background-color: #72c380;
+	background-color: #ffee00;
 }
 #container.pollution .pollution-rate-content .rate-level .rate-body .c-rate,
 #container.pollution .pollution-rate-content .rate-level .left-rate .c-rate {
-	background-color: #dca763;
+	background-color: #f77700;
 }
 #container.pollution .pollution-rate-content .rate-level .rate-body .f-rate,
 #container.pollution .pollution-rate-content .rate-level .left-rate .f-rate {
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	-moz-border-top-right-radius: 10px;
-	-moz-border-bottom-right-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
-	-webkit-border-bottom-right-radius: 10px;
-	-o-border-top-right-radius: 10px;
-	-o-border-bottom-right-radius: 10px;
-	background-color: #de6262;
+	background-color: #ee0000;
 }
 
 #container.pollution #fat-rate,
