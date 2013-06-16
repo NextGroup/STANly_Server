@@ -11,14 +11,23 @@ public class PollutionList {
 	public PollutionList()
 	{
 		map = new HashMap<String,ArrayList<PollutionRatio>>();
+		
 	}
 	
-	public void add(String name, String R, int C)
+	public void add(String name, int R, int C)
 	{
 		if(!map.containsKey(name))
-			map.put(name, new ArrayList<PollutionRatio>());
+		{
+			ArrayList<PollutionRatio> list = new ArrayList<PollutionRatio>();
+			map.put(name, list);
+			list.add(new PollutionRatio("A",0));
+			list.add(new PollutionRatio("B",0));
+			list.add(new PollutionRatio("C",0));
+			list.add(new PollutionRatio("F",0));
+			
+		}
 	
-		map.get(name).add(new PollutionRatio(R,C));
+		map.get(name).get(R).setY(C);
 		
 	}
 }

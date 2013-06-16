@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import stanly.server.Analysis.Model.StaticAnalysis.Type.StaticAnalysisType;
 import stanly.server.GitProject.DAO.ProjectDAO;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.PollutionView.DAO.PollutionViewDAO;
@@ -48,5 +49,12 @@ public class PollutionViewService {
 		Gson gson  = new Gson();
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
 		return gson.toJson(pollutionDAO.getSAList(commit));
+	}
+	
+	public String getTotalSAListBasic(String projectName)
+	{
+		Gson gson  = new Gson();
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		return gson.toJson(pollutionDAO.getSATotalList(commit,StaticAnalysisType.BASIC));
 	}
 }

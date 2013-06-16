@@ -48,4 +48,11 @@ public class PollutionViewController {
 			logger.info("Fat");
 			return PVService.getSAList(name);
 	}
+	
+	@RequestMapping(value = "/basiclist", method=RequestMethod.GET)
+	@ResponseBody
+	public String getStaticBasicList(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+			logger.info("basic");
+			return PVService.getTotalSAListBasic(name);
+	}
 }

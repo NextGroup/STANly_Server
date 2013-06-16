@@ -1,5 +1,7 @@
 package stanly.server.PollutionView.DAO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +19,8 @@ import stanly.server.Analysis.Model.StaticAnalysis.Type.StaticAnalysisType;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
 import stanly.server.PollutionView.JSON.PollutionList;
+import stanly.server.PollutionView.JSON.SelectedRisk;
+import stanly.server.PollutionView.JSON.SelectedRiskList;
 
 @Repository
 @Transactional
@@ -25,6 +29,12 @@ public class PollutionViewDAO {
 	
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
+	
+	private String getStaticAnalysisRank(int Count)
+	{
+		return  (Count == 0) ? "A": (Count<=5) ? "B":((Count<=10) ? "C":"F");
+	}
+	
 	private PollutionList AddPollutionSet(PollutionList p, String Name , ProjectCommit commit)
 	{
 		try{
@@ -42,21 +52,22 @@ public class PollutionViewDAO {
 				{
 					case MetricRate.A_RATE:
 						rate = (Long)datas[1];
-						p.add(Name,"A", (int)rate);
+						p.add(Name,0, (int)rate);
 						break;
 					case MetricRate.B_RATE:
 						rate = (Long)datas[1];
-						p.add(Name,"B", (int)rate);
+						p.add(Name,1, (int)rate);
 						break;
 					case MetricRate.C_RATE:
 						rate = (Long)datas[1];
-						p.add(Name,"C", (int)rate);
+						p.add(Name,2, (int)rate);
 						break;
 					case MetricRate.F_RATE:
 						rate = (Long)datas[1];
-						p.add(Name,"F", (int)rate);
+						p.add(Name,3, (int)rate);
 						break;
 				}
+			
 			}
 
 		}catch(Exception e)
@@ -124,25 +135,17 @@ public class PollutionViewDAO {
 			}
 			if(type == StaticAnalysisType.BASIC)
 			{
-				if(classCount-(b+c+f)!=0)
-					p.add("BASIC","A", classCount-(b+c+f));	
-				if(b!=0)
-				p.add("BASIC", "B", b);
-				if(c!=0)
-				p.add("BASIC", "C", c);
-				if(f!=0)
-				p.add("BASIC", "F", f);
+				p.add("BASIC",0, classCount-(b+c+f));	
+				p.add("BASIC", 1, b);
+				p.add("BASIC", 2, c);
+				p.add("BASIC", 3, f);
 			}
 			else
-			{
-				if(classCount-(b+c+f)!=0)
-					p.add("NAMING","A", classCount-(b+c+f));	
-				if(b!=0)
-				p.add("NAMING", "B", b);
-				if(c!=0)
-				p.add("NAMING", "C", c);
-				if(f!=0)
-				p.add("NAMING", "F", f);
+			{			
+				p.add("BASIC",0, classCount-(b+c+f));	
+				p.add("BASIC", 1, b);
+				p.add("BASIC", 2, c);
+				p.add("BASIC", 3, f);
 			}
 		}catch(Exception e)
 		{
@@ -158,5 +161,152 @@ public class PollutionViewDAO {
 		addSARank(pList,StaticAnalysisType.BASIC,commit,ClassCount);
 		addSARank(pList,StaticAnalysisType.NAMING,commit,ClassCount);
 		return pList;
+	}
+	
+	private SelectedRisk setDomain(NodeType type, SelectedRisk risk)
+	{
+		switch(type)
+		{
+			case CLASS: 
+				risk.setDomain("CLASS");
+				break;
+			case INTERFACE:
+				risk.setDomain("INTERFACE");
+				break;
+			case PROJECT: 
+				risk.setDomain("PROJECT");
+				break;
+			case LIBRARY:
+				risk.setDomain("LIBRARY");
+				break;
+			case PACKAGE: 
+				risk.setDomain("PACKAGE");
+				break;
+			case PACKAGESET:
+				risk.setDomain("PACKAGESET");
+				break;
+			case FIELD:
+				risk.setDomain("FIELD");
+				break;
+			case METHOD:
+				risk.setDomain("METHOD");
+				break;
+			case ENUM:
+				risk.setDomain("ENUM");
+				break;
+			case CONSTRUCTOR:
+				risk.setDomain("CONSTRUCTOR");
+				break;
+			case ANNOTATION:
+				risk.setDomain("ANNOTATION");
+				break;
+		}	
+		return risk;
+	}
+	
+	private HashMap<Integer, SelectedRisk> updateElementNode(HashMap<Integer, SelectedRisk> map, ProjectCommit commit)
+	{
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select node.NSLeft, node.type, node.Name, node.SingleName from ProjectElementNode node where node.commit = ? and node.NSRight in ( :left )");
+			query.setParameter(0, commit);
+			query.setParameterList("left", map.keySet());
+			
+			List data = query.list();
+			Iterator ite = data.iterator();
+			HashMap<String,Integer> singleMap = new HashMap<String,Integer>();
+			
+			while(ite.hasNext())
+			{
+				Object[] obj = (Object[])ite.next();
+				int key = (Integer)obj[0];
+				NodeType type = (NodeType)obj[1];
+				String name = (String)obj[2];
+				singleMap.put((String)obj[3],key);
+				
+				SelectedRisk risk = map.get(key);
+				risk.setDomainName(name);
+				setDomain(type, risk);
+			}
+			// 두번째 관련 개발자 찾기 
+			Query query2 = session.createQuery("select CI.influenceClass, count(CI.influenceClass) from CommitterInfluence CI group by CI.influenceClass having CI.influenceClass in ( :name ) ");
+			query2.setParameterList("name", singleMap.keySet());
+			data = query2.list();
+			ite = data.iterator();
+			while(ite.hasNext())
+			{
+				Object[] obj = (Object[])ite.next();
+				String key = (String)obj[0];
+				SelectedRisk risk = map.get(singleMap.get(key));
+				long linked = (Long) obj[1];
+				risk.setLinkedPerson((int)linked);
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	
+	private SelectedRiskList createSARisk(ProjectCommit commit, StaticAnalysisType type)
+	{
+		SelectedRiskList riskList = new SelectedRiskList();
+		try{
+				HashMap<Integer, SelectedRisk> map = new HashMap<Integer, SelectedRisk>();
+				Session session = sessionFactory.getCurrentSession();
+				Query query = session.createQuery("select metric.NSLeft, count(metric.NSLeft) from StaticAnalysisMetric metric where metric.type = ? and metric.commit = ? group by metric.NSLeft");
+				query.setParameter(0, type);
+				query.setParameter(1, commit);
+				List data = query.list();
+				Iterator ite = data.iterator();
+				while(ite.hasNext())
+				{
+					Object[] obj = (Object[])ite.next();
+					int key = (Integer)obj[0];
+					long count = (Long)obj[1];
+					map.put(key, new SelectedRisk(key,getStaticAnalysisRank((int)count)));
+				}
+				updateElementNode(map,commit);	
+				Iterator it = map.values().iterator();
+
+				while(it.hasNext())
+				{
+					SelectedRisk obj = (SelectedRisk)it.next();
+					obj.setType((type==StaticAnalysisType.BASIC) ? "BASIC":"NAMING");
+					obj.setRiskName((type==StaticAnalysisType.BASIC) ? "BASIC":"NAMING");
+					riskList.add(obj);
+				}
+				
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return riskList;
+	}
+
+	public SelectedRiskList getSATotalList(ProjectCommit commit,StaticAnalysisType type)
+	{
+		return 	createSARisk(commit,type);
+	}
+	
+	public SelectedRiskList getPollutionRisk(ProjectCommit commit, int index)
+	{
+		try{
+			
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("select metric.NSLeft, count(metric.NSLeft) from StaticAnalysisMetric metric where metric.type = ?and metric.commit = ? group by metric.NSLeft");
+
+			query.setParameter(1, commit);
+		
+			
+			
+		}catch(Exception e)
+		{
+			logger.error(e);
+		}
+		
+		
+		return null;
 	}
 }
