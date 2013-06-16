@@ -329,13 +329,13 @@ public class PollutionViewDAO {
 			Data="UnitsRate";
 			break;
 		case 1:
-			Data="ELOCRate";
+			Data="NOMRate";	
 			break;
 		case 2:
-			Data="NOMRate";
+			Data="NOFRate";
 			break;
 		case 3:
-			Data="NOFRate";
+			Data="ELOCRate";
 			break;
 		case 4:
 			Data="CCRate";
@@ -372,13 +372,13 @@ public class PollutionViewDAO {
 			Data="Units";
 			break;
 		case 1:
-			Data="ELOC";
-			break;
-		case 2:
 			Data="Number of methods";
 			break;
-		case 3:
+		case 2:
 			Data="Number of field";
+			break;
+		case 3:
+			Data="ELOC";
 			break;
 		case 4:
 			Data="Number of Branch statement";
