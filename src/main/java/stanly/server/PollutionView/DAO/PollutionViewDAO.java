@@ -410,7 +410,7 @@ public class PollutionViewDAO {
 					long count = (Integer)obj[1];
 				
 			
-						map.put(key, new SelectedRisk(key,getStaticAnalysisRank((int)count)));
+						map.put(key, new SelectedRisk(key,MetricRate.ChangeRate((int)count)));
 				}
 				updateElementNode(map,commit);	
 				Iterator it = map.values().iterator();
