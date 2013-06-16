@@ -8,13 +8,13 @@ import java.util.HashMap;
 public class FATDetail {
 	private String name;
 	private HashMap<String, Integer> data;
-	private ArrayList<String> source;
+
 	
 	public FATDetail(String name)
 	{
 		this.name=name;
 		data = new HashMap<String, Integer>();
-		source = new ArrayList<String>();
+		
 	}
 	
 	public FATDetail setMethod(int method)
@@ -37,25 +37,5 @@ public class FATDetail {
 		data.put("Number of Branch Statement", CC);
 		return this;
 	}
-	public boolean updateSource(String src)
-	{
-		
-		try {
-			FileReader input =new FileReader(src);
-			BufferedReader br = new BufferedReader(input);
-			String readdata = null;
-			while((readdata=br.readLine())!=null)
-			{
-				
-				source.add(readdata.replaceAll("\\t", ""));
-			}
-			br.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
 
-		return true;
-	}
 }

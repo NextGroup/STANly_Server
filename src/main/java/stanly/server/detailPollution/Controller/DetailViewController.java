@@ -35,4 +35,16 @@ public class DetailViewController {
 			logger.info("Get Detail Common View - "+ SrcID );
 			return detailView.getFatDetailView(name, SrcID);
 	}
+	@RequestMapping(value = "/source", method=RequestMethod.GET)
+	@ResponseBody
+	public String getSourceDetail(@RequestParam("name") String name,@RequestParam("nsleft") int SrcID,HttpServletResponse response) throws Exception {
+			logger.info("Get Source code - "+ SrcID );
+			return detailView.getSourceFile(name, SrcID);
+	}
+	@RequestMapping(value = "/static", method=RequestMethod.GET)
+	@ResponseBody
+	public String getStaticAnalysisDetail(@RequestParam("name") String name,@RequestParam("nsleft") int SrcID,@RequestParam("type") int type, HttpServletResponse response) throws Exception {
+			logger.info("Get Source code - "+ SrcID );
+			return detailView.getStaticAnalysisDetail(name, SrcID,type);
+	}
 }
