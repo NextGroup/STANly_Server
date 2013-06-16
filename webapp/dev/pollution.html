@@ -26,7 +26,43 @@
             $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
             $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
             $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
+
+            $($('.rate-level>.left-rate')).children('.rate').click(pol_event_handler);
         });
+
+
+        function pol_event_handler(eventObject){
+            if($(this).text() == 'A')   rankquery = '0';
+            if($(this).text() == 'B')   rankquery = '1';
+            if($(this).text() == 'C')   rankquery = '2';
+            if($(this).text() == 'F')   rankquery = '3';
+            $.ajax({
+                type: "get",
+                url: "/Stanly/pollution/list",
+                data: {name:getParameter('Project'),type:$(this).parent().attr('id'),rank:rankquery},
+                success: function(json)
+                {
+                    list = jQuery.parseJSON(json).list;
+                    $('.dashboard-group>.pollution-list>.content-box')
+                            .empty()
+                            .append($('<li id="pollution-head"><div class="pollution hover">Pollution</div><div class="rank hover">Rank</div><div class="pollution-name hover">Pollution Name</div><div class="domain hover">Domain</div><div class="name hover">Name</div><div class="person hover">Person</div></li>'));
+                    for(var i=0;i<list.length;i++)
+                    {
+                        item = $('<li></li>');
+                        item.append($('<div class="pollution"><img src="../images/pollution/'+list[i].type.toLowerCase()+'.png" alt="fat" /></div>'));
+                        item.append($('<div class="rank">'+list[i].rank+'</div>'));
+                        item.append($('<div class="pollution-name">'+list[i].RiskName+'</div>'));
+                        item.append($('<div class="domain"><img src="../images/icon/'+list[i].Domain.toLowerCase()+'.gif" style="margin-top:2px;" alt="tree" /></div>'));
+                        item.append($('<div class="name">'+list[i].DomainName+'</div>'));
+                        item.append($('<div class="person">'+list[i].LinkedPerson+'명</div>'));
+
+                        $('.dashboard-group>.pollution-list>.content-box').append(item);
+                    }
+
+                    //{"nsleft":4492,"type":"FAT","rank":"B","RiskName":"Units","Domain":"PACKAGE","DomainName":"net.sourceforge.pmd.lang.ecmascript.ast","LinkedPerson":0
+                }
+            });
+        }
 
         function draw_pollution_rate(target, rate)
         {
@@ -111,8 +147,10 @@
             success: function(json)
             {
                 basic_rate = jQuery.parseJSON(json).map.BASIC;
+                naming_rate = jQuery.parseJSON(json).map.NAMING;
 
-                draw_pollution_rate($($('.rate-level>.rate-body')[5]),basic_rate);
+                draw_pollution_rate($($('.rate-level>.rate-body')[0]),basic_rate);
+                draw_pollution_rate($($('.rate-level>.rate-body')[1]),naming_rate);
             }
         });
     </script>
@@ -170,11 +208,11 @@
 								<div class="pollution-rate-content">
 									<div class="mini-title">Number of Top Level Classes(Units)</div>
 									<div class="rate-level">
-										<div class="left-rate">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="left-rate" id="0">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -182,11 +220,11 @@
 								<div class="pollution-rate-content">
 									<div class="mini-title">Number of Method</div>
 									<div class="rate-level">
-										<div class="left-rate">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="left-rate" id="1">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -194,11 +232,11 @@
 								<div class="pollution-rate-content">
 									<div class="mini-title">Number of Field</div>
 									<div class="rate-level">
-										<div class="left-rate">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="left-rate"  id="2">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -206,11 +244,11 @@
 								<div class="pollution-rate-content">
 									<div class="mini-title">Estimated Line of Code(ELOC)</div>
 									<div class="rate-level">
-										<div class="left-rate">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="left-rate" id="3">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -218,11 +256,11 @@
 								<div class="pollution-rate-content">
 									<div class="mini-title">Number of Branch statement(CC)</div>
 									<div class="rate-level">
-										<div class="left-rate">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="left-rate" id="4">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -240,11 +278,11 @@
 								<div class="pollution-rate-content">
 									<div class="mini-title">Number of Relationship</div>
 									<div class="rate-level">
-										<div class="left-rate">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="left-rate" id="7">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -252,11 +290,11 @@
 								<div class="pollution-rate-content">
 									<div class="mini-title">Tangled</div>
 									<div class="rate-level">
-										<div class="left-rate">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="left-rate" id="8">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -270,11 +308,11 @@
 								</div>
 								<div class="pollution-rate-content">
 									<div class="rate-level">
-										<div class="rate-body">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="rate-body" id="basic">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
@@ -283,15 +321,15 @@
 							<div id="naming-rate" class="content-box">
 								<div class="pollution-rate-title">
 									<div class="rate-icon"></div>
-									<div class="rate-name">Unknown Naming</div>
+									<div class="rate-name">Naming Rule</div>
 								</div>
 								<div class="pollution-rate-content">
 									<div class="rate-level">
-										<div class="rate-body">
-											<div class="a-rate" style="width:40%">A</div>
-											<div class="b-rate" style="width:20%">B</div>
-											<div class="c-rate" style="width:20%">C</div>
-											<div class="f-rate" style="width:20%">F</div>
+										<div class="rate-body" id="naming">
+											<div class="a-rate rate" style="width:40%">A</div>
+											<div class="b-rate rate" style="width:20%">B</div>
+											<div class="c-rate rate" style="width:20%">C</div>
+											<div class="f-rate rate" style="width:20%">F</div>
 										</div>
 									</div>
 								</div>
