@@ -32,8 +32,9 @@ public class PollutionViewDAO {
 	
 	private String getStaticAnalysisRank(int Count)
 	{
-		return  (Count == 0) ? "A": (Count<=5) ? "B":((Count<=10) ? "C":"F");
+		return  (Count == 0) ? "A": (Count<=5) ? "B": ((Count<=10) ? "C":"F");
 	}
+
 	
 	private PollutionList AddPollutionSet(PollutionList p, String Name , ProjectCommit commit)
 	{
@@ -208,38 +209,44 @@ public class PollutionViewDAO {
 	{
 		try{
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select node.NSLeft, node.type, node.Name, node.SingleName from ProjectElementNode node where node.commit = ? and node.NSRight in ( :left )");
-			query.setParameter(0, commit);
-			query.setParameterList("left", map.keySet());
-			
-			List data = query.list();
-			Iterator ite = data.iterator();
-			HashMap<String,Integer> singleMap = new HashMap<String,Integer>();
-			
-			while(ite.hasNext())
-			{
-				Object[] obj = (Object[])ite.next();
-				int key = (Integer)obj[0];
-				NodeType type = (NodeType)obj[1];
-				String name = (String)obj[2];
-				singleMap.put((String)obj[3],key);
+				if(!map.isEmpty())
+				{
+					Query query = session.createQuery("select node.NSLeft, node.type, node.Name, node.SingleName from ProjectElementNode node where node.commit = ? and node.NSLeft in ( :left )");
+		
+				query.setParameter(0, commit);
+				query.setParameterList("left", map.keySet());
 				
-				SelectedRisk risk = map.get(key);
-				risk.setDomainName(name);
-				setDomain(type, risk);
-			}
-			// 두번째 관련 개발자 찾기 
-			Query query2 = session.createQuery("select CI.influenceClass, count(CI.influenceClass) from CommitterInfluence CI group by CI.influenceClass having CI.influenceClass in ( :name ) ");
-			query2.setParameterList("name", singleMap.keySet());
-			data = query2.list();
-			ite = data.iterator();
-			while(ite.hasNext())
-			{
-				Object[] obj = (Object[])ite.next();
-				String key = (String)obj[0];
-				SelectedRisk risk = map.get(singleMap.get(key));
-				long linked = (Long) obj[1];
-				risk.setLinkedPerson((int)linked);
+				List data = query.list();
+				Iterator ite = data.iterator();
+				HashMap<String,Integer> singleMap = new HashMap<String,Integer>();
+				
+				while(ite.hasNext())
+				{
+					Object[] obj = (Object[])ite.next();
+					int key = (Integer)obj[0];
+					NodeType type = (NodeType)obj[1];
+					String name = (String)obj[2];
+					singleMap.put((String)obj[3],key);
+					
+					SelectedRisk risk = map.get(key);
+					risk.setDomainName(name);
+					setDomain(type, risk);
+				}
+				// 두번째 관련 개발자 찾기 
+				
+				Query query2 = session.createQuery("select CI.influenceClass, count(CI.influenceClass) from CommitterInfluence CI group by CI.influenceClass having CI.influenceClass in (:name)");
+					
+				query2.setParameterList("name", singleMap.keySet());
+				data = query2.list();
+				ite = data.iterator();
+				while(ite.hasNext())
+				{
+					Object[] obj = (Object[])ite.next();
+					String key = (String)obj[0];
+					SelectedRisk risk = map.get(singleMap.get(key));
+					long linked = (Long) obj[1];
+					risk.setLinkedPerson((int)linked);
+				}
 			}
 		}catch(Exception e)
 		{
@@ -249,7 +256,7 @@ public class PollutionViewDAO {
 	}
 	
 	
-	private SelectedRiskList createSARisk(ProjectCommit commit, StaticAnalysisType type)
+	private SelectedRiskList createSARisk(ProjectCommit commit, StaticAnalysisType type, int Rank)
 	{
 		SelectedRiskList riskList = new SelectedRiskList();
 		try{
@@ -260,12 +267,28 @@ public class PollutionViewDAO {
 				query.setParameter(1, commit);
 				List data = query.list();
 				Iterator ite = data.iterator();
+				
+				//(Count == 0) ? "A": (Count<=5) ? "B":((Count<=10) ? "C":"F");
 				while(ite.hasNext())
 				{
 					Object[] obj = (Object[])ite.next();
 					int key = (Integer)obj[0];
 					long count = (Long)obj[1];
-					map.put(key, new SelectedRisk(key,getStaticAnalysisRank((int)count)));
+				
+					if(Rank==0) //B전체 
+						map.put(key, new SelectedRisk(key,getStaticAnalysisRank((int)count)));
+					else if (Rank==1)// B 등급 
+					{	
+						if(count>5) 
+							map.put(key, new SelectedRisk(key,getStaticAnalysisRank((int)count)));
+					}
+					else if(Rank==2)// C등급 이하
+					{
+						if(count>10) 
+							map.put(key, new SelectedRisk(key,getStaticAnalysisRank((int)count)));
+					}	
+					
+
 				}
 				updateElementNode(map,commit);	
 				Iterator it = map.values().iterator();
@@ -285,11 +308,10 @@ public class PollutionViewDAO {
 		return riskList;
 	}
 
-	public SelectedRiskList getSATotalList(ProjectCommit commit,StaticAnalysisType type)
+	public SelectedRiskList getSATotalList(ProjectCommit commit,StaticAnalysisType type, int Rank)
 	{
-		return 	createSARisk(commit,type);
+		return 	createSARisk(commit,type,Rank);
 	}
-	
 	public SelectedRiskList getPollutionRisk(ProjectCommit commit, int index)
 	{
 		try{

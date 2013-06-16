@@ -51,10 +51,23 @@ public class PollutionViewService {
 		return gson.toJson(pollutionDAO.getSAList(commit));
 	}
 	
-	public String getTotalSAListBasic(String projectName)
+	
+	/**
+	 * @param projectName
+	 * @param Rank 0==B랭크 이하, 1==C랭크 이하, 2== F랭크 이하, 기타 F
+	 * @return
+	 */
+	public String getTotalSAListBasic(String projectName, int Rank)
 	{
 		Gson gson  = new Gson();
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
-		return gson.toJson(pollutionDAO.getSATotalList(commit,StaticAnalysisType.BASIC));
+		return gson.toJson(pollutionDAO.getSATotalList(commit,StaticAnalysisType.BASIC,Rank));
+	}
+	
+	public String getTotalSAListNaming(String projectName, int Rank)
+	{
+		Gson gson  = new Gson();
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		return gson.toJson(pollutionDAO.getSATotalList(commit,StaticAnalysisType.NAMING,Rank));
 	}
 }

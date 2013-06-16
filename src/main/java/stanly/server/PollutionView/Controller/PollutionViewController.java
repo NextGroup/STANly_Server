@@ -51,8 +51,14 @@ public class PollutionViewController {
 	
 	@RequestMapping(value = "/basiclist", method=RequestMethod.GET)
 	@ResponseBody
-	public String getStaticBasicList(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+	public String getStaticBasicList(@RequestParam("name") String name,@RequestParam("rank") int rank, HttpServletResponse response) throws Exception {
 			logger.info("basic");
-			return PVService.getTotalSAListBasic(name);
+			return PVService.getTotalSAListBasic(name,rank);
+	}
+	@RequestMapping(value = "/naminglist", method=RequestMethod.GET)
+	@ResponseBody
+	public String getStaticNamingList(@RequestParam("name") String name,@RequestParam("rank") int rank, HttpServletResponse response) throws Exception {
+			logger.info("basic");
+			return PVService.getTotalSAListNaming(name,rank);
 	}
 }
