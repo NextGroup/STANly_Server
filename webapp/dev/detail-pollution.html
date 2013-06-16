@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	
+	<title>STANly :: Project Dashboard</title>
+
+	<meta name="viewport" content="width=device-width">
+
+	<link href="../syntaxhighlighter/styles/shCore.css" rel="stylesheet" type="text/css">
+	<link href="../syntaxhighlighter/styles/shThemeEclipse.css" rel="stylesheet" type="text/css">
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushAS3.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushBash.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCpp.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCSharp.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCss.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushDelphi.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushDiff.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushGroovy.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJava.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJavaFX.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPerl.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPhp.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPlain.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPowerShell.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPython.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushRuby.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushScala.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushSql.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushVb.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushXml.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shLegacy.js"></script>
+
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+	<script type="text/javascript" src="../js/d3/lib/d3.v2.js"></script>
+	<script type="text/javascript" src="../js/d3/nv.d3.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/legend.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pieChart.js"></script>
+	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
+
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+	<script type="text/javascript"> 
+		SyntaxHighlighter.all(); 
+		dp.SyntaxHighlighter.HighlightAll('code'); 
+	</script>
+</head>
+
+<body>
+<div id="container" class="pollution">
+	<div id="header-container">
+		<div id="sliverLine"></div>
+		<div id="header">
+			<div id="logoBox" class="img"></div>
+			<div id="rightBox">
+				<div id="user-container">
+					<div id="userBox">
+                        <!--
+						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
+						<div class="userName">An Jeungwon</div>-->
+					</div>
+					<div id="userInfoIcon" class="img"></div>
+				</div>
+				<!--user-container fin-->
+			</div>
+		</div>
+		<!--header fin-->
+	</div>
+	<!--header-container fin-->
+
+	<div id="content-container">
+		<div id="content">
+			<div id="content-body"><div id="content-position-change">
+				<div id="content-line"></div>
+				<div id="content-inverted-circle"></div>
+				<div id="overview">
+					<div id="overview-content">
+						<div class="pollution a-circle left">
+							<div class="rotation-circle"><div class="text">A</div></div>
+						</div>
+						<div class="text">Stanly</div>
+					</div>
+					<div id="overview-right">
+						<div class="text">POLLUTION</div>
+						<div class="icon"></div>
+					</div>
+					<div id="triangleS"></div>
+					<div id="triangleE"></div>
+				</div>
+
+				<!--overview fin-->
+				<div id="main">
+					<div class="dashboard-group">
+						<div class="pollution-title">
+							<div class="icon"><img src="../images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
+							<div class="title">logdog.server.accepter.hello</div>
+						</div>
+						<div class="pollution-content content-box">
+							<table>
+								<tbody>
+									<tr>
+										<td>Inner Classes : <span>12</span></td>
+										<td>ELOC : <span>312</span></td>
+									</tr>
+									<tr>
+										<td>Methods : <span>10</span></td>
+										<td>Number of Relations : <span>6</span></td>
+									</tr>
+									<tr>
+										<td>Fields : <span>5</span></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="pollution-footer">
+							<div class="menu">
+								<div class="empty"></div>
+								<div class="fat selected"><div>FAT</div></div>
+								<div class="coupling"><div>Coupling</div></div>
+								<div class="naming"><div>Naming</div></div>
+								<div class="basicrule"><div>Basic Rule</div></div>
+								<div class="empty"></div>
+							</div>
+							<table>
+								<tbody>
+									<tr class="body">
+										<td colspan="6">
+											<div class="fat show-div">
+												<div class="title">LogDog/server/accepter/hello.java</div>
+												<table>
+													<tbody>
+														<tr>
+															<td style="width: 20%">Methods : <span>10</span></td>
+															<td style="width: 20%">Filed : <span>5</span></td>
+															<td style="width: 20%">ELOC : <span>312</span></td>
+															<td style="width: 40%">Number of Branch Statement : <span>20</span></td>
+														</tr>
+													</tbody>
+												</table>
+												<pre class="brush: cpp; first-line: 10; toolbar: false; highlight: [12]">function foo()
+{
+	if(counter &lt;= 10)
+		return;
+	// it works!
+}
+												</pre>
+											</div>
+											<div class="coupling hide-div">
+												<table>
+													<tbody>
+														<tr>
+															<td class="icon-td">Number of Relations : <span>6</span></td>
+															<td style="width: 50%"></td>
+														</tr>
+													</tbody>
+												</table>
+												<div class="composition">
+												</div>
+											</div>
+											<div class="naming hide-div">
+												<div class="title">LogDog/server/accepter/hello.java</div>
+												<table>
+													<tbody>
+														<tr>
+															<td style="padding-left: 20px; text-align: left; width: 100%">Number of Naming Violation : <span>32</span></td>
+														</tr>
+													</tbody>
+												</table>
+												<pre class="brush: cpp; first-line: 10; toolbar: false; highlight: [12]">function foo()
+{
+	if(counter &lt;= 10)
+		return;
+	// it works!
+}
+												</pre>
+											</div>
+											<div class="basicrule hide-div">
+												<div class="title">LogDog/server/accepter/hello.java</div>
+												<table>
+													<tbody>
+														<tr>
+															<td style="padding-left: 20px; text-align: left; width: 100%">Number of Basic Violation : <span>12</span></td>
+														</tr>
+													</tbody>
+												</table>
+												<pre class="brush: cpp; first-line: 10; toolbar: false; highlight: [12]">function foo()
+{
+	if(counter &lt;= 10)
+		return;
+	// it works!
+}
+												</pre>
+											</div>
+										</td>
+									</tr>
+									<tr class="bottom-sizing"><td colspan="6"></td></tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--.dashboard-group fin-->
+
+					<div id="popup-info">
+						<div id="popup-tri"></div>
+						<div id="popup-body">
+							<div id="popup-title">Basic Rule</div>
+							<div id="popup-line"></div>
+							<div id="popup-content">PMD를 통해 나온 정보로 규칙 위반의 정도를 보여주는 지표이다.</div>
+						</div>
+					</div>
+				</div>
+				<!--main fin-->
+			</div></div>
+			<!--content-body fin-->
+		</div>
+		<!--content fin-->
+		<div id="sidebar-container-warrper">
+			<div id="sidebar-container">
+				<div id="sidebar">
+					<div id="projectMenu">
+						<a href="project.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">PROJECT</li>
+							</ol>
+						</a>
+					</div>
+					<div id="noneMenu"></div>
+					<div id="dashboardMenu">
+						<div class="shadow"></div>
+						<a href="dashboard.html">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">DASHBOARD</li>
+							</ol>
+						</a>
+						<div class="bottom"></div>
+					</div>
+					<div id="compositionMenu">
+						<a href="composition.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">COMPOSITION</li>
+							</ol>
+						</a>
+					</div>
+					<div id="pollutionMenu">
+						<ol>
+							<li class="icon"></li>
+							<li class="text">POLLUTION</li>
+						</ol>
+					</div>
+				</div>
+				<!--sidebar fin-->
+			</div>
+		</div>
+	</div>
+	<!--content-container fin-->
+</div>
+
+<script type="text/javascript">
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#72c380", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#eloc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 39
+			},
+			{
+			  key: "Two",
+			  y: 10
+			},
+			{
+			  key: "Three",
+			  y: 51
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#eloc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#eloc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#eloc .graph .bar", (360 * 49 / 100) / 15 * 7 - 180 / 15 * 7);
+
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#de6262", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#ecoc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 68
+			},
+			{
+			  key: "Two",
+			  y: 20
+			},
+			{
+			  key: "Three",
+			  y: 12
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#ecoc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#ecoc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#ecoc .graph .bar", (360 * 68 / 100) / 15 * 7 - 180 / 15 * 7);
+</script>
+</body>
+</html>

@@ -452,7 +452,7 @@ div.pollution-graph .critical-risk tr:hover {
 	font: 800 18px 'Helvetica';
 }
 .pollution-graph .critical-risk td.rate-a { color:#00AA00; }
-.pollution-graph .critical-risk td.rate-b { color:#FFEE00; }
+.pollution-graph .critical-risk td.rate-b { color:#fdd04f; }
 .pollution-graph .critical-risk td.rate-c { color:#F77700; }
 .pollution-graph .critical-risk td.rate-f { color:#EE0000; }
 .pollution-graph .critical-risk td.icon {
@@ -820,7 +820,7 @@ div.agraph div.bar {
 }
 #overview-content .b-circle,
 #project-list-top .list-item .b-circle,
-#project-list .list-item .b-circle { background-color: #FFEE00; }
+#project-list .list-item .b-circle { background-color: #fdd04f; }
 #overview-content .b-circle .rotation-circle,
 #project-list-top .list-item .b-circle .rotation-circle,
 #project-list .list-item .b-circle .rotation-circle {
@@ -1002,7 +1002,7 @@ div.agraph div.bar {
 #project-list-top .list-item .basicrule.b-rate .rate,
 #project-list .list-item .fat.b-rate .rate,
 #project-list .list-item .naming.b-rate .rate,
-#project-list .list-item .basicrule.b-rate .rate { color: #FFEE00; }
+#project-list .list-item .basicrule.b-rate .rate { color: #fdd04f; }
 #project-list-top .list-item .fat.c-rate .rate,
 #project-list-top .list-item .naming.c-rate .rate,
 #project-list-top .list-item .basicrule.c-rate .rate,
@@ -1021,7 +1021,7 @@ div.agraph div.bar {
 #project-list-top .list-item .basicrule.b-rate .c3,
 #project-list-top .list-item .basicrule.b-rate .c4,
 #project-list .list-item .basicrule.b-rate .c3,
-#project-list .list-item .basicrule.b-rate .c4 { background-color: #FFEE00; }
+#project-list .list-item .basicrule.b-rate .c4 { background-color: #fdd04f; }
 #project-list-top .list-item .basicrule.c-rate .c2,
 #project-list-top .list-item .basicrule.c-rate .c3,
 #project-list-top .list-item .basicrule.c-rate .c4,
@@ -1062,7 +1062,7 @@ div.agraph div.bar {
 #project-list-top .list-item .naming.a-rate .donut,
 #project-list .list-item .naming.a-rate .donut { border-color: #00AA00; }
 #project-list-top .list-item .naming.b-rate .donut,
-#project-list .list-item .naming.b-rate .donut { border-color: #FFEE00; }
+#project-list .list-item .naming.b-rate .donut { border-color: #fdd04f; }
 #project-list-top .list-item .naming.c-rate .donut,
 #project-list .list-item .naming.c-rate .donut { border-color: #F77700; }
 #project-list-top .list-item .naming.f-rate .donut,
@@ -1381,7 +1381,7 @@ div.agraph div.bar {
 .pollution-rate-title .rate-icon { float: left; margin-left: 4px; margin-top: 11px; width: 32px; height: 32px; }
 .pollution-rate-title .rate-name { float: left; margin-left: 8px; margin-top: 15px; font: 800 20px "Helvetica"; color: #272727; }
 .pollution-rate-title.a-rate .rate-level { color: #00AA00; }
-.pollution-rate-title.b-rate .rate-level { color: #FFEE00; }
+.pollution-rate-title.b-rate .rate-level { color: #fdd04f; }
 .pollution-rate-title.c-rate .rate-level { color: #F77700; }
 .pollution-rate-title.f-rate .rate-level { color: #EE0000; }
 
@@ -1393,9 +1393,9 @@ div.agraph div.bar {
 #container				#coupling-rate .rate-icon,
 #container.decelerate	#coupling-rate .rate-icon { background: url(../images/pollution/coupling.png) no-repeat; }
 
-#container.svg			#basicrule-rate .rate-icon { background: url(../images/pollution/basicrule.svg) no-repeat; }
+#container.svg			#basicrule-rate .rate-icon { background: url(../images/pollution/basic.svg) no-repeat; }
 #container				#basicrule-rate .rate-icon,
-#container.decelerate	#basicrule-rate .rate-icon { background: url(../images/pollution/basicrule.png) no-repeat; }
+#container.decelerate	#basicrule-rate .rate-icon { background: url(../images/pollution/basic.png) no-repeat; }
 
 #container.svg			#naming-rate .rate-icon { background: url(../images/pollution/naming.svg) no-repeat; }
 #container				#naming-rate .rate-icon,
@@ -1552,22 +1552,22 @@ div.agraph div.bar {
 	margin-right: -11px;
 }
 .pollution-rate-content .rate-head .a2b .essence-body {
-	background-image: linear-gradient(left, #00aa00, #ffee00);
-	background-image: -moz-linear-gradient(left, #00aa00, #ffee00);
-	background-image: -webkit-linear-gradient(left, #00aa00, #ffee00);
-	background-image: -o-linear-gradient(left, #00aa00, #ffee00);
-	background-image: -ms-linear-gradient(left, #00aa00 0%, #ffee00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00aa00", endColorstr="#ffee00", GradientType=1);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#00aa00\", endColorstr=\"#ffee00\", GradientType=1)";
+	background-image: linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -moz-linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -webkit-linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -o-linear-gradient(left, #00aa00, #fdd04f);
+	background-image: -ms-linear-gradient(left, #00aa00 0%, #fdd04f 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00aa00", endColorstr="#fdd04f", GradientType=1);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#00aa00\", endColorstr=\"#fdd04f\", GradientType=1)";
 }
 .pollution-rate-content .rate-head .b2c .essence-body {
-	background-image: linear-gradient(left, #ffee00, #f77700);
-	background-image: -moz-linear-gradient(left, #ffee00, #f77700);
-	background-image: -webkit-linear-gradient(left, #ffee00, #f77700);
-	background-image: -o-linear-gradient(left, #ffee00, #f77700);
-	background-image: -ms-linear-gradient(left, #ffee00 0%, #f77700 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffee00", endColorstr="#f77700", GradientType=1);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#ffee00\", endColorstr=\"#f77700\", GradientType=1)";
+	background-image: linear-gradient(left, #fdd04f, #f77700);
+	background-image: -moz-linear-gradient(left, #fdd04f, #f77700);
+	background-image: -webkit-linear-gradient(left, #fdd04f, #f77700);
+	background-image: -o-linear-gradient(left, #fdd04f, #f77700);
+	background-image: -ms-linear-gradient(left, #fdd04f 0%, #f77700 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fdd04f", endColorstr="#f77700", GradientType=1);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#fdd04f\", endColorstr=\"#f77700\", GradientType=1)";
 }
 .pollution-rate-content .rate-head .c2f .essence-body {
 	background-image: linear-gradient(left, #f77700, #ee0000);
@@ -1592,7 +1592,7 @@ div.agraph div.bar {
 	-o-border-radius: 19px;
 }
 .pollution-rate-content .rate-head .a-rate .essence .essence-body { background-color: #00AA00; }
-.pollution-rate-content .rate-head .b-rate .essence .essence-body { background-color: #FFEE00; }
+.pollution-rate-content .rate-head .b-rate .essence .essence-body { background-color: #fdd04f; }
 .pollution-rate-content .rate-head .c-rate .essence .essence-body { background-color: #F77700; }
 .pollution-rate-content .rate-head .f-rate .essence .essence-body { background-color: #EE0000; }
 .pollution-rate-content .rate-head .current-slider {
@@ -1626,7 +1626,7 @@ div.agraph div.bar {
 	margin-top: -46px;
 }
 .pollution-rate-content.a-rate .rate-head .current-slider .text span { color: #00AA00; }
-.pollution-rate-content.b-rate .rate-head .current-slider .text span { color: #FFEE00; }
+.pollution-rate-content.b-rate .rate-head .current-slider .text span { color: #fdd04f; }
 .pollution-rate-content.c-rate .rate-head .current-slider .text span { color: #F77700; }
 .pollution-rate-content.f-rate .rate-head .current-slider .text span { color: #EE0000; }
 .pollution-rate-content .rate-level {
@@ -1638,7 +1638,7 @@ div.agraph div.bar {
 	font: 800 28px "Helvetica";
 }
 .pollution-rate-content .rate-level.a-rate { color: #00AA00; }
-.pollution-rate-content .rate-level.b-rate { color: #FFEE00; }
+.pollution-rate-content .rate-level.b-rate { color: #fdd04f; }
 .pollution-rate-content .rate-level.c-rate { color: #F77700; }
 .pollution-rate-content .rate-level.f-rate { color: #EE0000; }
 .pollution-rate-content .rate-level .right-rate {
@@ -1840,7 +1840,7 @@ div.agraph div.bar {
 #container.pollution .pollution-rate-title .rate-icon { float: left; margin-left: 4px; margin-top: 11px; width: 32px; height: 32px; }
 #container.pollution .pollution-rate-title .rate-name { float: left; margin-left: 4px; margin-top: 15px; font: 800 20px "Helvetica"; color: #272727; }
 #container.pollution .pollution-rate-title.a-rate .rate-level { color: #00aa00; }
-#container.pollution .pollution-rate-title.b-rate .rate-level { color: #ffee00; }
+#container.pollution .pollution-rate-title.b-rate .rate-level { color: #fdd04f; }
 #container.pollution .pollution-rate-title.c-rate .rate-level { color: #f77700; }
 #container.pollution .pollution-rate-title.f-rate .rate-level { color: #ee0000; }
 
@@ -1946,7 +1946,7 @@ div.agraph div.bar {
 }
 #container.pollution .pollution-rate-content .rate-level .rate-body .b-rate,
 #container.pollution .pollution-rate-content .rate-level .left-rate .b-rate {
-	background-color: #ffee00;
+	background-color: #fdd04f;
 }
 #container.pollution .pollution-rate-content .rate-level .rate-body .c-rate,
 #container.pollution .pollution-rate-content .rate-level .left-rate .c-rate {
@@ -2029,7 +2029,7 @@ div.agraph div.bar {
 .pollution-list .rank { width: 8%; padding-top: 9px; font-size: 22px; font-weight: 800; text-align: center; }
 .pollution-list .pollution-name { width: 25%; padding-top: 14px; }
 .pollution-list .domain { width: 8%; text-align: center; padding-top: 13px; }
-.pollution-list .name { width: 41%; padding-top: 14px; }
+.pollution-list .name { width: 41%; padding-top: 14px; overflow:hidden}
 .pollution-list .person { width: 10%; text-align: center; padding-top: 14px; }
 .pollution-list .hover {
 	text-align: left;
@@ -2138,4 +2138,156 @@ div.agraph div.bar {
     background-image: -ms-linear-gradient(bottom, #4986b2 0%, #194b70 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4986b2", endColorstr="#194b70", GradientType=0);
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#4986b2\", endColorstr=\"#194b70\", GradientType=0)";
+}
+
+.pollution-title .icon img {
+	float: left;
+	width: 24px;
+	height: 24px;
+	margin-right: 8px;
+}
+.pollution-title .title {
+	font-size: 20px;
+}
+.pollution-content { margin-bottom: 10px; }
+.pollution-content table { width: 100%; }
+.pollution-content td {
+	width: 50%;
+	padding-left: 4px;
+	font-size: 12px;
+}
+.pollution-content td span {
+	font-weight: 800;
+}
+
+.pollution-footer { width: 100%; }
+.pollution-footer .menu .empty,
+.pollution-footer .menu .fat,
+.pollution-footer .menu .coupling,
+.pollution-footer .menu .naming,
+.pollution-footer .menu .basicrule {
+	float: left;
+	width: 20%;
+	height: 28px;
+	font: 800 13px "Helvetica";
+	text-align: center;
+
+	padding-top: 2px;
+	margin-top: 3px;
+	margin-left: 4px;
+	margin-bottom: -1px;
+
+	border: 1px solid #b4b4b4;
+
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	-moz-border-top-left-radius: 2px;
+	-moz-border-top-right-radius: 2px;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+	-o-border-top-left-radius: 2px;
+	-o-border-top-right-radius: 2px;
+
+	background-color: #e4e4e4;
+
+	cursor: pointer;
+}
+.pollution-footer .menu .fat {
+	background: 48px url(../images/pollution/fat.png) no-repeat #e4e4e4;
+	background-size: 20px 20px;
+}
+.pollution-footer .menu .coupling {
+	background: 32px url(../images/pollution/coupling.png) no-repeat #e4e4e4;
+	background-size: 20px 20px;
+}
+.pollution-footer .menu .naming {
+	background: 38px url(../images/pollution/naming.png) no-repeat #e4e4e4;
+	background-size: 20px 20px;
+}
+.pollution-footer .menu .basicrule {
+	background: 28px url(../images/pollution/basic.png) no-repeat #e4e4e4;
+	background-size: 20px 20px;
+}
+.pollution-footer .menu div div {
+	margin-top: 5px;
+	margin-left: 14px;
+}
+.pollution-footer .menu .selected div {
+	margin-top: 4px;
+}
+.pollution-footer table {
+	border-spacing: 0px;
+	width: 100%;
+}
+.pollution-footer .menu .empty {
+	width: 10%;
+	margin-left: -8px;
+	margin-right: -8px;
+	border: none;
+	background-color: transparent;
+
+	cursor: default;
+}
+.pollution-footer .menu .selected {
+	border-bottom: 0;
+	background-color: #f7f6f2;
+	padding-top: 5px;
+	margin-top: 0px;
+}
+.pollution-footer .body td {
+	border: 1px solid #b4b4b4;
+	background-color: #f7f6f2;
+	width: 100%;
+}
+.pollution-footer .body .title {
+	font-size: 14px;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+.pollution-footer .body table {
+	border-spacing: 0px;
+	width: 100%;
+}
+.pollution-footer .body table td {
+	border: 0;
+	text-align: center;
+	background-color: transparent;
+}
+.pollution-footer .body table td span {
+	font-weight: 800;
+}
+.pollution-footer .body .show-div {
+	display: block;
+}
+.pollution-footer .body .hide-div {
+	display: none;
+}
+.syntaxhighlighter {
+	margin-bottom: 0px !important;
+}
+.pollution-footer .body .composition {
+	width: 100%;
+	height: 300px;
+}
+
+#container.svg			.pollution-footer .body .coupling td.icon-td { background-image: url(../images/coupling_c.svg); }
+#container				.pollution-footer .body .coupling td.icon-td,
+#container.decelerate	.pollution-footer .body .coupling td.icon-td { background-image: url(../images/coupling_c.png); }
+
+.pollution-footer .body .coupling td.icon-td {
+	padding-left: 50px;
+	font-size: 14px;
+	text-align: left;
+	padding-top: 11px;
+	padding-bottom: 10px;
+	width: 50%;
+	background-size: 40px 40px;
+	background-position: 5px 0px;
+	background-repeat: no-repeat;
+}
+.pollution-footer .body .coupling td.icon-td span {
+	font-weight: 800;
+}
+.pollution-footer .bottom-sizing {
+	height: 20px;
 }

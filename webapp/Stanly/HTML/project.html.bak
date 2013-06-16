@@ -158,7 +158,7 @@
 									</div>
 									<div class="list-spliter"></div>
 									<div class="list-item">
-										<div class="icon" style="background-color:#FFEE00;"></div>
+										<div class="icon" style="background-color:#fdd04f;"></div>
 										<div class="name">B: 10ea</div>
 									</div>
 									<div class="list-spliter"></div>
@@ -174,7 +174,7 @@
 									.values(function(d) { return d })
 									.width(200)
 									.height(200)
-									.color([ "#EE0000", "#F77700", "#FFEE00", "#00AA00" ])
+									.color([ "#EE0000", "#F77700", "#fdd04f", "#00AA00" ])
 									.donut(true)
 									.donutRatio(0.5);
 

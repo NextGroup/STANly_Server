@@ -27,7 +27,7 @@ function build_pollution_donut(json)
             .values(function(d) { return d })
             .width(donut_size)
             .height(donut_size)
-            .color([ "#EE0000", "#F77700", "#FFEE00", "#00AA00" ])
+            .color([ "#EE0000", "#F77700", "#fdd04f", "#00AA00" ])
             .donut(true)
             .donutRatio(0.5);
 

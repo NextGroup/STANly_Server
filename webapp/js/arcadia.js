@@ -112,4 +112,33 @@ $(document).ready(function() {
 			$(".right-content-area").animate({ 'margin-right':0 }, 250, function() { $(this).css('margin-right', 0); } );
 		}
 	});
+
+	$(".pollution-footer .menu .fat").click(function() {
+		$(".pollution-footer .menu .selected").removeClass("selected");
+		$(this).addClass("selected");
+
+		$(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+		$(".pollution-footer .body .fat").removeClass("hide-div").addClass("show-div");
+	});
+	$(".pollution-footer .menu .coupling").click(function() {
+		$(".pollution-footer .menu .selected").removeClass("selected");
+		$(this).addClass("selected");
+
+		$(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+		$(".pollution-footer .body .coupling").removeClass("hide-div").addClass("show-div");
+	});
+	$(".pollution-footer .menu .naming").click(function() {
+		$(".pollution-footer .menu .selected").removeClass("selected");
+		$(this).addClass("selected");
+
+		$(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+		$(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
+	});
+	$(".pollution-footer .menu .basicrule").click(function() {
+		$(".pollution-footer .menu .selected").removeClass("selected");
+		$(this).addClass("selected");
+
+		$(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+		$(".pollution-footer .body .basicrule").removeClass("hide-div").addClass("show-div");
+	});
 });
