@@ -53,10 +53,16 @@
 
         function static_event_handler(eventObject)
         {
-            if($(this).text() == 'A')   rankquery = '0';
-            if($(this).text() == 'B')   rankquery = '1';
-            if($(this).text() == 'C')   rankquery = '2';
-            if($(this).text() == 'F')   rankquery = '3';
+            if($(this).text() == 'A')
+            {
+                $('.dashboard-group>.pollution-list>.content-box')
+                        .empty()
+                        .append($('<li id="pollution-head"><div class="pollution hover">Pollution</div><div class="rank hover">Rank</div><div class="pollution-name hover">Pollution Name</div><div class="domain hover">Domain</div><div class="name hover">Name</div><div class="person hover">Person</div></li>'));
+                return;
+            }
+            if($(this).text() == 'B')   rankquery = '0';
+            if($(this).text() == 'C')   rankquery = '1';
+            if($(this).text() == 'F')   rankquery = '2';
 
             $.ajax({
                 type: "get",
