@@ -34,6 +34,8 @@ public class CommonDetail {
 		{
 			data.put("Inner Classes", inner);
 			data.put("Methods", method);
+			data.put("Field", field);
+			data.put("Number of Relations", fat);
 			data.put("ELOC", eloc);
 		}
 	}
