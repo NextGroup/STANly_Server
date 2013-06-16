@@ -19,7 +19,9 @@ import stanly.server.Analysis.Model.Metric.PackageSetMetric;
 import stanly.server.Analysis.Model.StaticAnalysis.Type.StaticAnalysisType;
 import stanly.server.Analysis.Model.Type.NodeType;
 import stanly.server.GitProject.Model.ProjectCommit;
+import stanly.server.detailPollution.JSON.ChainReDetail;
 import stanly.server.detailPollution.JSON.CommonDetail;
+import stanly.server.detailPollution.JSON.CouplingDetail;
 import stanly.server.detailPollution.JSON.FATDetail;
 import stanly.server.detailPollution.JSON.JavaSource;
 import stanly.server.detailPollution.JSON.StaticAnalysisDetail;
@@ -66,6 +68,47 @@ public class DetailViewDAO {
 		}
 		return fat;
 	}
+	
+	public ChainReDetail getCRDetail(ProjectCommit commit,ProjectElementNode element)
+	{
+		ChainReDetail cr = new ChainReDetail(element.getName());
+		if(element.getType() == NodeType.CLASS)
+		{
+			ClassMetric cm = (ClassMetric)element.getEMetric();
+			cr.setDIT(cm.getDIT());
+		}
+		else if(element.getType() == NodeType.PACKAGE)
+		{
+			PackageMetric pm = (PackageMetric) element.getEMetric();
+			cr.setDistance(pm.getDistance());
+			
+		}
+		return cr;
+	}
+	
+	public CouplingDetail getCouplingDetail(ProjectCommit commit,ProjectElementNode element)
+	{
+		CouplingDetail coupling = new CouplingDetail(element.getName());
+		if(element.getType() == NodeType.CLASS)
+		{
+			ClassMetric cm = (ClassMetric)element.getEMetric();
+			coupling.setFat(cm.getFat());
+		}
+		else if(element.getType() == NodeType.PACKAGE)
+		{
+			PackageMetric pm = (PackageMetric) element.getEMetric();
+			coupling.setFat(pm.getFat());
+			
+		}
+		else if(element.getType() == NodeType.PACKAGESET)
+		{
+			PackageSetMetric psm = (PackageSetMetric) element.getEMetric();
+			coupling.setFat(psm.getFat());
+			coupling.setTangle(psm.getTangled());
+		}
+		return coupling;
+	}
+	
 	public JavaSource getJavaSource(ProjectCommit commit,ProjectElementNode element)
 	{
 		JavaSource js = new JavaSource();
@@ -96,4 +139,7 @@ public class DetailViewDAO {
 		}
 		return saDetail;
 	}
+	
+	
+	
 }

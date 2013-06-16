@@ -47,4 +47,25 @@ public class DetailViewController {
 			logger.info("Get Source code - "+ SrcID );
 			return detailView.getStaticAnalysisDetail(name, SrcID,type);
 	}
+
+	@RequestMapping(value = "/chain", method=RequestMethod.GET)
+	@ResponseBody
+	public String getChainDetail(@RequestParam("name") String name,@RequestParam("nsleft") int SrcID, HttpServletResponse response) throws Exception {
+			logger.info("Chain P - "+ SrcID );
+			return detailView.getCPDetailView(name, SrcID);
+	}
+	
+	@RequestMapping(value = "/coupling", method=RequestMethod.GET)
+	@ResponseBody
+	public String getCoupling(@RequestParam("name") String name,@RequestParam("nsleft") int SrcID, HttpServletResponse response) throws Exception {
+			logger.info("coupling P - "+ SrcID );
+			return detailView.getCouplingDetailView(name, SrcID);
+	}
+	
+	@RequestMapping(value = "/composition", method=RequestMethod.GET)
+	@ResponseBody
+	public String getComposition(@RequestParam("name") String name,@RequestParam("nsleft") int SrcID, HttpServletResponse response) throws Exception {
+			logger.info("composition P - "+ SrcID );
+			return detailView.getMetricView(name, SrcID);
+	}
 }

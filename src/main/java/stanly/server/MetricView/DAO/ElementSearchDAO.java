@@ -132,5 +132,29 @@ public class ElementSearchDAO {
 	}
 	
 
+	public ProjectElementNode getParentNode(ProjectCommit commit, int NSLeft)
+	{
+		ProjectElementNode  SeletedNode = getElementNode(commit,NSLeft);
+		ProjectElementNode  ParentNode =null;
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+			 Criterion CommitEq = Restrictions.eq("commit", commit);
+			 Criterion projectEq = Restrictions.eq("Name", SeletedNode.getParetnName()); //NSLeft == 1 이면 프로젝트 노
+			 Criteria crit = session.createCriteria(ProjectElementNode.class);
+			 crit.add(projectEq);
+			 crit.add(CommitEq);
+			
+			 SeletedNode = (ProjectElementNode) crit.uniqueResult();
+			
+		}catch(Exception e)
+		{
+			logger.error(e.getMessage());
+			return null;
+		}
+		
+		return SeletedNode;
+	}
 	
 }
