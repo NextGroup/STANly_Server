@@ -70,4 +70,11 @@ public class PollutionViewService {
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
 		return gson.toJson(pollutionDAO.getSATotalList(commit,StaticAnalysisType.NAMING,Rank));
 	}
+	
+	public String getTotalPollutionList(String projectName, int index, int Rank)
+	{
+		Gson gson  = new Gson();
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		return gson.toJson(pollutionDAO.getPollutionRisk(commit, index, Rank));
+	}
 }

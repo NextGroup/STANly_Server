@@ -143,10 +143,10 @@ public class PollutionViewDAO {
 			}
 			else
 			{			
-				p.add("BASIC",0, classCount-(b+c+f));	
-				p.add("BASIC", 1, b);
-				p.add("BASIC", 2, c);
-				p.add("BASIC", 3, f);
+				p.add("NAMING",0, classCount-(b+c+f));	
+				p.add("NAMING", 1, b);
+				p.add("NAMING", 2, c);
+				p.add("NAMING", 3, f);
 			}
 		}catch(Exception e)
 		{
@@ -308,27 +308,136 @@ public class PollutionViewDAO {
 		return riskList;
 	}
 
+	private String ConvertColumCode(int i)
+	{
+		String Data;
+		switch(i)
+		{
+		case 0:
+			Data="UnitsRate";
+			break;
+		case 1:
+			Data="ELOCRate";
+			break;
+		case 2:
+			Data="NOMRate";
+			break;
+		case 3:
+			Data="NOFRate";
+			break;
+		case 4:
+			Data="CCRate";
+			break;
+		case 5:
+			Data="DITRate";
+			break;
+		case 6:
+			Data="DRate";
+			break;
+		case 7:
+			Data="NoRRate";
+			break;
+		case 8:
+			Data="TangleRate";
+			break;
+			default:
+				Data="TangleRate";
+		}
+		
+		return Data;
+	}
+	
+	private String ConvertTypeCode(int i)
+	{
+		return (i>=0 && i<=4) ? "FAT": ((i>=5 && i<=6) ? "Change Propagation":"Coupling");
+	}
+	private String ConvertRiskName(int i)
+	{
+		String Data;
+		switch(i)
+		{
+		case 0:
+			Data="Units";
+			break;
+		case 1:
+			Data="ELOC";
+			break;
+		case 2:
+			Data="Number of methods";
+			break;
+		case 3:
+			Data="Number of field";
+			break;
+		case 4:
+			Data="Number of Branch statement";
+			break;
+		case 5:
+			Data="DIT";
+			break;
+		case 6:
+			Data="Balancing Abstractness";
+			break;
+		case 7:
+			Data="Number of Relationship";
+			break;
+		case 8:
+			Data="Tangle";
+			break;
+			default:
+				Data="Tangle";
+		}
+		
+		return Data;
+	}
+	private SelectedRiskList createPollutionList(ProjectCommit commit, int dataType, int Rank)
+	{
+		SelectedRiskList riskList = new SelectedRiskList();
+		try{
+				
+				String Type = ConvertColumCode(dataType);
+				HashMap<Integer, SelectedRisk> map = new HashMap<Integer, SelectedRisk>();
+				Session session = sessionFactory.getCurrentSession();
+				Query query = session.createQuery("select metric.element.NSLeft , metric."+Type+" from ElementNodeMetric metric where metric."+Type+" != ? and metric."+Type+" > ? and metric.element.commit = ? ");
+				query.setParameter(0, MetricRate.NO_RATE);
+				query.setParameter(1, Rank);
+				query.setParameter(2, commit);
+				List data = query.list();
+				Iterator ite = data.iterator();
+				while(ite.hasNext())
+				{
+					Object[] obj = (Object[])ite.next();
+					int key = (Integer)obj[0];
+					long count = (Integer)obj[1];
+				
+			
+						map.put(key, new SelectedRisk(key,getStaticAnalysisRank((int)count)));
+				}
+				updateElementNode(map,commit);	
+				Iterator it = map.values().iterator();
+
+				while(it.hasNext())
+				{
+					SelectedRisk obj = (SelectedRisk)it.next();
+					obj.setType(ConvertTypeCode(dataType));
+					obj.setRiskName(ConvertRiskName(dataType));
+					riskList.add(obj);
+				}
+				
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return riskList;
+	}
+	
+	
 	public SelectedRiskList getSATotalList(ProjectCommit commit,StaticAnalysisType type, int Rank)
 	{
 		return 	createSARisk(commit,type,Rank);
 	}
-	public SelectedRiskList getPollutionRisk(ProjectCommit commit, int index)
+	
+	public SelectedRiskList getPollutionRisk(ProjectCommit commit, int index,int Rank)
 	{
-		try{
-			
-			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select metric.NSLeft, count(metric.NSLeft) from StaticAnalysisMetric metric where metric.type = ?and metric.commit = ? group by metric.NSLeft");
-
-			query.setParameter(1, commit);
-		
-			
-			
-		}catch(Exception e)
-		{
-			logger.error(e);
-		}
-		
-		
-		return null;
+		return createPollutionList(commit,index,Rank);
 	}
 }

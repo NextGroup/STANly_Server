@@ -61,4 +61,11 @@ public class PollutionViewController {
 			logger.info("basic");
 			return PVService.getTotalSAListNaming(name,rank);
 	}
+	
+	@RequestMapping(value = "/list", method=RequestMethod.GET)
+	@ResponseBody
+	public String getPollutionList(@RequestParam("name") String name, @RequestParam("type")int pollutionType,@RequestParam("rank") int rank, HttpServletResponse response) throws Exception {
+			logger.info("basic");
+			return PVService.getTotalPollutionList(name, pollutionType, rank);
+	}
 }

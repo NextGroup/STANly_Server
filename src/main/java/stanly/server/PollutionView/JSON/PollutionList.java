@@ -19,12 +19,12 @@ public class PollutionList {
 		if(!map.containsKey(name))
 		{
 			ArrayList<PollutionRatio> list = new ArrayList<PollutionRatio>();
-			map.put(name, list);
+			
 			list.add(new PollutionRatio("A",0));
 			list.add(new PollutionRatio("B",0));
 			list.add(new PollutionRatio("C",0));
 			list.add(new PollutionRatio("F",0));
-			
+			map.put(name, list);
 		}
 	
 		map.get(name).get(R).setY(C);
