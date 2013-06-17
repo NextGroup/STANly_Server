@@ -60,6 +60,51 @@
             $('.pollution-title>.icon').empty()
                     .append($('<img src="../images/icon/'+getParameter('domain').toLowerCase()+'.gif" style="margin-top:2px;" alt="tree" />'));
             select_tab(getParameter('fs'));
+
+
+            if(getParameter('domain')=='class')
+            {
+                $(".pollution-footer .menu .fat").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .fat").removeClass("hide-div").addClass("show-div");
+                });
+                $(".pollution-footer .menu .naming").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
+                });
+                $(".pollution-footer .menu .basic").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .basic").removeClass("hide-div").addClass("show-div");
+                });
+
+
+                $(".pollution-footer .menu .coupling").addClass("disabled");
+            }
+            else
+            {
+                $(".pollution-footer .menu .fat").addClass("disabled");
+                $(".pollution-footer .menu .naming").addClass("disabled");
+                $(".pollution-footer .menu .basic").addClass("disabled");
+
+                $(".pollution-footer .menu .coupling").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .coupling").removeClass("hide-div").addClass("show-div");
+                });
+            }
+
+
         });
 
         function select_tab(type){
@@ -135,7 +180,18 @@
             url: "/Stanly/detail/coupling",
             data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
             success: function(json){
-
+                data = jQuery.parseJSON(json).data;
+                $('table>tbody>.body>td>.coupling>table>tbody').empty();
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr style="height:40px"></tr>')
+                        $('table>tbody>.body>td>.coupling>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
             }
         });
         $.ajax({
@@ -340,7 +396,7 @@
                                                             var Grapdata = document.querySelector("#inputGraph");
                                                             var Mainsvg = d3.select("svg");
                                                             var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","Stanly/detail/composition?name="+getParameter('Project')+"&nsleft="+getParameter('nsleft'));
+                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+getParameter('nsleft'));
                                                         }
 
                                                         $(function(){

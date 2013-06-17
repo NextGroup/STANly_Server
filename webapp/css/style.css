@@ -2228,6 +2228,13 @@ div.agraph div.bar {
 
 	cursor: default;
 }
+
+.pollution-footer .menu .disabled {
+    color: #b4b4b4;
+    background-color: transparent;
+    cursor: default;
+}
+
 .pollution-footer .menu .selected {
 	border-bottom: 0;
 	background-color: #f7f6f2;
