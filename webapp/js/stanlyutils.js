@@ -68,3 +68,17 @@ function build_critical_risk(json)
         tbltr.append($('<td>'+risk[i].Name+'</td>'))
     }
 }
+
+function set_title(){
+    $.ajax({
+        type: "get",
+        url: "/Stanly/common/pollution/static",
+        data: {name:getParameter('Project')},
+        success: function(json)
+        {
+            rate = jQuery.parseJSON(json).list;
+            $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
+            $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
+        }
+    });
+}

@@ -21,6 +21,8 @@
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
 
     <script type="text/javascript">
+
+        set_title();
         $(document).ready(function() {
             $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version'));
             $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
@@ -31,6 +33,12 @@
             $($('.rate-level>.rate-body')).children('.rate').click(static_event_handler);
         });
 
+        function list_click_handler(eventObject)
+        {
+            console.log($(this).attr('id'));
+            location.href = 'detail-pollution.html'+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version')+"&nsleft="+$(this).attr('id')+"&fs="+$(this).attr('class')+"&domain="+$(this).children('.domain').attr('id');
+        }
+
         function make_list(json)
         {
             list = jQuery.parseJSON(json).list;
@@ -39,16 +47,21 @@
                     .append($('<li id="pollution-head"><div class="pollution hover">Pollution</div><div class="rank hover">Rank</div><div class="pollution-name hover">Pollution Name</div><div class="domain hover">Domain</div><div class="name hover">Name</div><div class="person hover">Person</div></li>'));
             for(var i=0;i<list.length;i++)
             {
-                item = $('<li></li>');
+                if(list[i].Domain.toLowerCase() == 'project') continue;
+                if(list[i].Domain.toLowerCase() == 'library') continue;
+                item = $('<li class="'+list[i].type.toLowerCase()+'" id="'+list[i].nsleft+'"></li>');
                 item.append($('<div class="pollution"><img src="../images/pollution/'+list[i].type.toLowerCase()+'.png" alt="fat" /></div>'));
                 item.append($('<div class="rank">'+list[i].rank+'</div>'));
                 item.append($('<div class="pollution-name">'+list[i].RiskName+'</div>'));
-                item.append($('<div class="domain"><img src="../images/icon/'+list[i].Domain.toLowerCase()+'.gif" style="margin-top:2px;" alt="tree" /></div>'));
+                item.append($('<div class="domain" id="'+list[i].Domain.toLowerCase()+'"><img src="../images/icon/'+list[i].Domain.toLowerCase()+'.gif" style="margin-top:2px;" alt="tree" /></div>'));
                 item.append($('<div class="name">'+list[i].DomainName+'</div>'));
                 item.append($('<div class="person">'+list[i].LinkedPerson+'명</div>'));
+                item.click(list_click_handler);
 
                 $('.dashboard-group>.pollution-list>.content-box').append(item);
             }
+
+
         }
 
         function static_event_handler(eventObject)
@@ -174,6 +187,9 @@
                 draw_pollution_rate($($('.rate-level>.rate-body')[1]),naming_rate);
             }
         });
+
+
+
     </script>
 </head>
 
