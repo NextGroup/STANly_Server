@@ -63,7 +63,7 @@ a:active { text-decoration:none; }
 	margin: 0px;
 	padding: 21px 24px;
 }
-#userBox .circle_wrapper {
+.circle_wrapper {
 	float: left;
 	width: 32px;
 	height: 32px;
@@ -74,7 +74,7 @@ a:active { text-decoration:none; }
 	border: 0;
 	overflow: hidden;
 }
-#userBox .circle_wrapper img {
+.circle_wrapper img {
 	width: 32px;
 	height: 32px;
 }
@@ -702,7 +702,9 @@ div.agraph div.bar {
 #project-head .basic,
 #project-head .naming,
 #project-head .coupling,
-#project-head .fat { width: 77px; }
+#project-head .fat,
+#project-head .change-propagation { width: 77px; }
+#project-head .change-propagation { padding-top: 3px; padding-bottom: 14px; }
 #project-head .project-name {
 	float: left;
 	width: 100%;
@@ -712,6 +714,9 @@ div.agraph div.bar {
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 	-o-box-shadow: none;
+}
+#container.architect #project-head .project-name {
+	margin-right: -577px;
 }
 #project-head .pollution {
 	margin-right: 0px;
@@ -979,10 +984,12 @@ div.agraph div.bar {
 #project-list-top .list-item .coupling .text,
 #project-list-top .list-item .naming .text,
 #project-list-top .list-item .basic .text,
+#project-list-top .list-item .change-propagation .text,
 #project-list .list-item .fat .text,
 #project-list .list-item .coupling .text,
 #project-list .list-item .naming .text,
-#project-list .list-item .basic .text {
+#project-list .list-item .basic .text,
+#project-list .list-item .change-propagation .text  {
 	clear: both;
 	margin: auto;
 	width: 62px;
@@ -1037,6 +1044,8 @@ div.agraph div.bar {
 #project-list .list-item .basic.f-rate .c3,
 #project-list .list-item .basic.f-rate .c4 { background-color: #EE0000; }
 
+#project-list-top .list-item .change-propagation,
+#project-list .list-item .change-propagation,
 #project-list-top .list-item .naming,
 #project-list .list-item .naming {
 	float: right;
@@ -1121,6 +1130,20 @@ div.agraph div.bar {
 	width: 46px;
 	height: 40px;
 }
+#project-list-top .list-item .change-propagation .rate,
+#project-list .list-item .change-propagation .rate {
+	margin-left: 14px;
+	margin-top: 12px;
+	color: #FFF;
+}
+#project-list-top .list-item .change-propagation .wide,
+#project-list .list-item .change-propagation .wide {
+	margin: auto;
+	margin-top: -2px;
+	margin-bottom: 2px;
+	width: 38px;
+	height: 42px;
+}
 #container.svg			#project-list-top .list-item .fat.a-rate .wide { background: url(../images/fat_a.svg) no-repeat; }
 #container				#project-list-top .list-item .fat.a-rate .wide,
 #container.decelerate	#project-list-top .list-item .fat.b-rate .wide { background: url(../images/fat_a.png) no-repeat; }
@@ -1134,6 +1157,19 @@ div.agraph div.bar {
 #container				#project-list-top .list-item .fat.f-rate .wide,
 #container.decelerate	#project-list-top .list-item .fat.f-rate .wide { background: url(../images/fat_f.png) no-repeat; }
 
+#container.svg			#project-list-top .list-item .change-propagation.a-rate .wide { background: url(../images/cp-a.svg) no-repeat; }
+#container				#project-list-top .list-item .change-propagation.a-rate .wide,
+#container.decelerate	#project-list-top .list-item .change-propagation.b-rate .wide { background: url(../images/cp-a.png) no-repeat; }
+#container.svg			#project-list-top .list-item .change-propagation.b-rate .wide { background: url(../images/cp-b.svg) no-repeat; }
+#container				#project-list-top .list-item .change-propagation.b-rate .wide,
+#container.decelerate	#project-list-top .list-item .change-propagation.b-rate .wide { background: url(../images/cp-b.png) no-repeat; }
+#container.svg			#project-list-top .list-item .change-propagation.c-rate .wide { background: url(../images/cp-c.svg) no-repeat; }
+#container				#project-list-top .list-item .change-propagation.c-rate .wide,
+#container.decelerate	#project-list-top .list-item .change-propagation.c-rate .wide { background: url(../images/cp-c.png) no-repeat; }
+#container.svg			#project-list-top .list-item .change-propagation.f-rate .wide { background: url(../images/cp-f.svg) no-repeat; }
+#container				#project-list-top .list-item .change-propagation.f-rate .wide,
+#container.decelerate	#project-list-top .list-item .change-propagation.f-rate .wide { background: url(../images/cp-f.png) no-repeat; }
+
 #container.svg			#project-list .list-item .fat.a-rate .wide { background: url(../images/fat_a.svg) no-repeat; }
 #container				#project-list .list-item .fat.a-rate .wide,
 #container.decelerate	#project-list .list-item .fat.b-rate .wide { background: url(../images/fat_a.png) no-repeat; }
@@ -1146,6 +1182,19 @@ div.agraph div.bar {
 #container.svg			#project-list .list-item .fat.f-rate .wide { background: url(../images/fat_f.svg) no-repeat; }
 #container				#project-list .list-item .fat.f-rate .wide,
 #container.decelerate	#project-list .list-item .fat.f-rate .wide { background: url(../images/fat_f.png) no-repeat; }
+
+#container.svg			#project-list .list-item .change-propagation.a-rate .wide { background: url(../images/cp-a.svg) no-repeat; }
+#container				#project-list .list-item .change-propagation.a-rate .wide,
+#container.decelerate	#project-list .list-item .change-propagation.b-rate .wide { background: url(../images/cp-a.png) no-repeat; }
+#container.svg			#project-list .list-item .change-propagation.b-rate .wide { background: url(../images/cp-b.svg) no-repeat; }
+#container				#project-list .list-item .change-propagation.b-rate .wide,
+#container.decelerate	#project-list .list-item .change-propagation.b-rate .wide { background: url(../images/cp-b.png) no-repeat; }
+#container.svg			#project-list .list-item .change-propagation.c-rate .wide { background: url(../images/cp-c.svg) no-repeat; }
+#container				#project-list .list-item .change-propagation.c-rate .wide,
+#container.decelerate	#project-list .list-item .change-propagation.c-rate .wide { background: url(../images/cp-c.png) no-repeat; }
+#container.svg			#project-list .list-item .change-propagation.f-rate .wide { background: url(../images/cp-f.svg) no-repeat; }
+#container				#project-list .list-item .change-propagation.f-rate .wide,
+#container.decelerate	#project-list .list-item .change-propagation.f-rate .wide { background: url(../images/cp-f.png) no-repeat; }
 
 #popup-info {
 	position: absolute;
@@ -1265,6 +1314,10 @@ div.agraph div.bar {
 	width: 50%;
 	margin: auto;
 }
+#container.architect .dashboard-group .half-size {
+	width: 33%;
+	margin: auto;
+}
 .dashboard-group .content-box {
 	margin-left: -2px;
 	border: 1px solid #dedede;
@@ -1350,10 +1403,17 @@ div.agraph div.bar {
 	margin-right: 11px;
 }
 #fat-rate,
-#coupling-rate {
-	float: left;
-	margin-right: 9px;
-	width: 90%;
+#coupling-rate,
+#change-propagation-rate {
+	float: center;
+	width: auto;
+	margin-right: 5px;
+}
+#container.architect.project #fat-rate,
+#container.architect.project #coupling-rate,
+#container.architect.project #change-propagation-rate {
+	margin-left: 5px !important;
+	margin-bottom: 0px !important;
 }
 #total-pollution-rate,
 #coupling-rate,
@@ -1740,6 +1800,7 @@ div.agraph div.bar {
 	padding-bottom: 20px;
 }
 .pollution-list #pollution-head {
+	width: 100%;
 	margin: 0;
 	padding: 0;
 	margin-bottom: 2px;
@@ -2297,4 +2358,49 @@ div.agraph div.bar {
 }
 .pollution-footer .bottom-sizing {
 	height: 20px;
+}
+.developer-list {
+	width: 100%;
+	padding-bottom: 20px;
+}
+.developer-list #pollution-head {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 2px;
+}
+.developer-list ol {
+	list-style: none;
+}
+.developer-list li {
+	font: 500 12px "Gulim";
+	color: #676767;
+	height: 44px;
+	border-bottom: 1px solid #dedede;
+}
+.developer-list li:hover {
+	background-color: #ffd3d3;
+}
+.developer-list div {
+	float: left;
+}
+.developer-list .picture-name-id { width: 80%; padding-top: 14px; }
+.developer-list .picture { width: 5%; padding-top: 5px; }
+.developer-list .name-id { width: 75%; padding-top: 14px; }
+.developer-list .commit { width: 10%; text-align: center; padding-top: 14px; }
+.developer-list .rank { width: 10%; padding-top: 9px; font-size: 22px; font-weight: 800; text-align: center; }
+.developer-list .picture .circle_wrapper { margin-left: 30px; }
+.developer-list .hover {
+	text-align: left;
+	font-size: 11px;
+	padding-left: 6px;
+	height: 18px;
+	padding-top: 10px;
+	padding-bottom: 7px;
+	margin-right: -6px;
+
+	box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.3), -1px 0px 0px 0px #5492c0;
+	-moz-box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.3), -1px 0px 0px 0px #5492c0;
+	-webkit-box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.3), -1px 0px 0px 0px #5492c0;
+	-o-box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.3), -1px 0px 0px 0px #5492c0;
 }
