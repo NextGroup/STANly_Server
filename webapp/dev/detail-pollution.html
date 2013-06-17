@@ -12,6 +12,7 @@
 
 	<link href="../css/style.css" rel="stylesheet" type="text/css">
 	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="../js/PackageGraph/css/PackageGraph.css" rel="stylesheet" type="text/css">
 
 	<script type="text/javascript" src="../syntaxhighlighter/scripts/shCore.js"></script>
 	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushAS3.js"></script>
@@ -69,14 +70,7 @@
 
                 $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
                 $(".pollution-footer .body .fat").removeClass("hide-div").addClass("show-div");
-                $.ajax({
-                    type: "get",
-                    url: "/Stanly/detail/fat",
-                    data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
-                    success: function(){
 
-                    }
-                });
             }
             else if(type == 'coupling')
             {
@@ -85,14 +79,7 @@
 
                 $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
                 $(".pollution-footer .body .coupling").removeClass("hide-div").addClass("show-div");
-                $.ajax({
-                    type: "get",
-                    url: "/Stanly/detail/coupling",
-                    data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
-                    success: function(){
 
-                    }
-                });
             }
             else if(type == 'basic')
             {
@@ -101,14 +88,7 @@
 
                 $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
                 $(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
-                $.ajax({
-                    type: "get",
-                    url: "/Stanly/detail/static",
-                    data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'0'},
-                    success: function(){
 
-                    }
-                });
             }
             else if(type == 'naming')
             {
@@ -117,17 +97,133 @@
 
                 $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
                 $(".pollution-footer .body .basic").removeClass("hide-div").addClass("show-div");
-                $.ajax({
-                    type: "get",
-                    url: "/Stanly/detail/static",
-                    data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'1'},
-                    success: function(){
 
-                    }
-                });
             }
         }
 
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/fat",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+
+                width_percent=["20%","20%","20%","40%"]
+
+                name = jQuery.parseJSON(json).name;
+                $('.pollution-title>.title').text(name);
+
+                name = name.replace(/\./gi,'/') + '.java';
+                $('table>tbody>.body>td>.fat>.title').text(name);
+                data = jQuery.parseJSON(json).data;
+
+                $('table>tbody>.body>td>.fat>table>tbody').empty();
+
+                col = 0;
+                for (property in data) {
+                    if(col%4 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.fat>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: '+width_percent[col]+';text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+            }
+        });
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/coupling",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+
+            }
+        });
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/static",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'0'},
+            success: function(json){
+                name = jQuery.parseJSON(json).name;
+                name = name.replace(/\./gi,'/') + '.java';
+                $('table>tbody>.body>td>.basic>.title').text(name);
+                data = jQuery.parseJSON(json).data;
+
+                $('table>tbody>.body>td>.basic>table>tbody').empty();
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.basic>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+            }
+        });
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/static",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'1'},
+            success: function(json){
+                name = jQuery.parseJSON(json).name;
+                name = name.replace(/\./gi,'/') + '.java';
+                $('table>tbody>.body>td>.naming>.title').text(name);
+                data = jQuery.parseJSON(json).data;
+
+                $('table>tbody>.body>td>.naming>table>tbody').empty();
+
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.naming>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+            }
+        });
+
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/common",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+                data = jQuery.parseJSON(json).data;
+
+                $('.pollution-content>table>tbody').empty();
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('.pollution-content>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td>'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+                //{"data":{"Field":0,"Methods":4,"ELOC":19,"Number of Relations":0,"Inner Classes":0}}
+            }
+        });
+
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/source",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+                source = jQuery.parseJSON(json).source;
+                sum = "";
+                for(var i=0;i<source.length;i++)
+                    sum += (source[i] + '\n');
+                $('table>tbody>.body>td>.fat>pre').text(sum);
+                $('table>tbody>.body>td>.basic>pre').text(sum);
+                $('table>tbody>.body>td>.naming>pre').text(sum);
+            }
+        });
 	</script>
 </head>
 
@@ -183,18 +279,6 @@
 						<div class="pollution-content content-box">
 							<table>
 								<tbody>
-									<tr>
-										<td>Inner Classes : <span>12</span></td>
-										<td>ELOC : <span>312</span></td>
-									</tr>
-									<tr>
-										<td>Methods : <span>10</span></td>
-										<td>Number of Relations : <span>6</span></td>
-									</tr>
-									<tr>
-										<td>Fields : <span>5</span></td>
-										<td></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -215,20 +299,9 @@
 												<div class="title">LogDog/server/accepter/hello.java</div>
 												<table>
 													<tbody>
-														<tr>
-															<td style="width: 20%">Methods : <span>10</span></td>
-															<td style="width: 20%">Filed : <span>5</span></td>
-															<td style="width: 20%">ELOC : <span>312</span></td>
-															<td style="width: 40%">Number of Branch Statement : <span>20</span></td>
-														</tr>
 													</tbody>
 												</table>
-												<pre class="brush: cpp; first-line: 10; toolbar: false; highlight: [12]">function foo()
-{
-	if(counter &lt;= 10)
-		return;
-	// it works!
-}
+												<pre class="brush: java; first-line: 1; toolbar: false; ">
 												</pre>
 											</div>
 											<div class="coupling hide-div">
@@ -241,6 +314,40 @@
 													</tbody>
 												</table>
 												<div class="composition">
+                                                    <svg id="MainSVG" style="height:550px">
+                                                        <defs>
+                                                            <marker id="arrowhead"
+                                                                    viewBox="0 0 10 10"
+                                                                    refX="8"
+                                                                    refY="5"
+                                                                    markerUnits="strokeWidth"
+                                                                    markerWidth="8"
+                                                                    markerHeight="5"
+                                                                    orient="auto"
+                                                                    style="fill: #333">
+                                                                <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                                                            </marker>
+                                                        </defs>
+                                                    </svg>
+                                                    <script src="/Stanly/js/d3/lib/d3.v2.min.js"></script>
+                                                    <script src="/Stanly/js/PackageGraph/js/dagre.js"></script>
+                                                    <script src="/Stanly/js/PackageGraph/js/PackageGraph.js"></script>
+                                                    <script>
+                                                        function BuildMainView(){
+                                                            var backup = $('#MainSVG').find('defs');
+                                                            $('#MainSVG').empty();
+                                                            $('#MainSVG').append(backup);
+                                                            var Grapdata = document.querySelector("#inputGraph");
+                                                            var Mainsvg = d3.select("svg");
+                                                            var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
+                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","Stanly/detail/composition?name="+getParameter('Project')+"&nsleft="+getParameter('nsleft'));
+                                                        }
+
+                                                        $(function(){
+                                                            BuildMainView();
+                                                        });
+
+                                                    </script>
 												</div>
 											</div>
 											<div class="naming hide-div">
@@ -252,12 +359,7 @@
 														</tr>
 													</tbody>
 												</table>
-												<pre class="brush: cpp; first-line: 10; toolbar: false; highlight: [12]">function foo()
-{
-	if(counter &lt;= 10)
-		return;
-	// it works!
-}
+												<pre class="brush: java; first-line: 1; toolbar: false; ">
 												</pre>
 											</div>
 											<div class="basic hide-div">
@@ -269,12 +371,7 @@
 														</tr>
 													</tbody>
 												</table>
-												<pre class="brush: cpp; first-line: 10; toolbar: false; highlight: [12]">function foo()
-{
-	if(counter &lt;= 10)
-		return;
-	// it works!
-}
+												<pre class="brush: java; first-line: 1; toolbar: false; ">
 												</pre>
 											</div>
 										</td>
@@ -331,11 +428,13 @@
 						</a>
 					</div>
 					<div id="pollutionMenu">
-						<ol>
-							<li class="icon"></li>
-							<li class="text">POLLUTION</li>
-						</ol>
-					</div>
+                        <a>
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">POLLUTION</li>
+                            </ol>
+                        </a>
+                    </div>
 				</div>
 				<!--sidebar fin-->
 			</div>
