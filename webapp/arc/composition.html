@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	
+	<title>STANly :: Project Dashboard</title>
+
+	<meta name="viewport" content="width=device-width">
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="../js/PackageGraph/css/PackageGraph.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+	<script type="text/javascript" src="../js/d3/lib/d3.v2.js"></script>
+	<script type="text/javascript" src="../js/d3/nv.d3.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/legend.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pieChart.js"></script>
+	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript" src="../js/jstree/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jstree/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../js/jstree/jquery.jstree.js"></script>
+    <script type="text/javascript" src="../js/ProjectTree.js"></script>
+
+    <script type="text/javascript">
+        set_title();
+        $(document).ready(function() {
+            draw_project_explorer(getParameter('Project'));
+        });
+
+
+
+        var table;
+        function BuildDetailList(id){
+            $.ajax( {
+                type :'GET'
+                ,asyn :true
+                ,url :'/Stanly/component/RelationList'
+                ,dataType :"json"
+                ,data:{Name:getParameter('Project'),SrcID:id}
+                //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                ,beforeSend : function(xhr){
+                }
+                ,success : function(jsonData) {
+                    table = jsonData.relation;
+
+                    $('.relations>.content-box').empty();
+                    $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+                    if(table.length < 4)
+                    {
+                        for(var i=0;i<table.length;i++)
+                        {
+                            templi = $('<li></li>');
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                            $('.relations>.content-box').append(templi);
+                        }
+                    }
+                    else
+                    {
+                        for(var i=0;i<3;i++)
+                        {
+                            templi = $('<li></li>');
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                            $('.relations>.content-box').append(templi);
+                        }
+                        $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
+                    }
+                    /*<li>
+                     <div class="source">Source</div>
+                     <div class="relation">Relation</div>
+                     <div class="target">Target</div>
+                     </li>
+                     <li class="center">··· 125 More ···</li>*/
+                }
+                ,error : function(xhr, textStatus) {
+                }
+                ,complete : function(xhr, textStatus) {
+                }
+            });
+
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/Stanly/linkdev/list",
+                data: {name:getParameter('Project'),nsleft:id},
+                success: function(json)
+                {
+                    devs = jQuery.parseJSON(json).list;
+                    $('.developer>.title')
+                        .text(devs.length)
+                        .append($('<span>Members</span>'));
+
+                    $('.developer>.content-box').empty();
+
+                    if(devs.length<4)
+                    {
+                        for(var i=0;i<devs.length;i++)
+                            $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                    }
+                    else
+                    {
+                        for(var i=0;i<3;i++)
+                            $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                        $('.developer>.content-box').append($('<li class="center">··· More members ···</li>'))
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body style="font-family:none; line-height:1">
+<div id="container" class="composition">
+	<div id="header-container">
+		<div id="sliverLine"></div>
+		<div id="header">
+			<div id="logoBox" class="img"></div>
+			<div id="rightBox">
+				<div id="user-container">
+					<div id="userBox">
+						<!--<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
+						<div class="userName">An Jeungwon</div>-->
+					</div>
+					<div id="userInfoIcon" class="img"></div>
+				</div>
+				<!--user-container fin-->
+			</div>
+		</div>
+		<!--header fin-->
+	</div>
+	<!--header-container fin-->
+
+	<div id="content-container">
+		<div id="content">
+			<div id="content-body"><div id="content-position-change">
+				<div id="content-line"></div>
+				<div id="content-inverted-circle"></div>
+				<div id="main">
+					<div class="dashboard-group wide-area">
+						<div class="group">
+							<div class="right-content-area">
+								<table>
+									<tbody>
+										<tr class="composition-view">
+											<td>
+                                                <svg id="MainSVG" style="height:550px">
+                                                    <defs>
+                                                        <marker id="arrowhead"
+                                                                viewBox="0 0 10 10"
+                                                                refX="8"
+                                                                refY="5"
+                                                                markerUnits="strokeWidth"
+                                                                markerWidth="8"
+                                                                markerHeight="5"
+                                                                orient="auto"
+                                                                style="fill: #333">
+                                                            <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                                                        </marker>
+                                                    </defs>
+                                                </svg>
+                                                <script src="/Stanly/js/d3/lib/d3.v2.min.js"></script>
+                                                <script src="/Stanly/js/PackageGraph/js/dagre.js"></script>
+                                                <script src="/Stanly/js/PackageGraph/js/PackageGraph.js"></script>
+                                                <script>
+                                                    function BuildMainView(id,name){
+                                                        var backup = $('#MainSVG').find('defs');
+                                                        $('#MainSVG').empty();
+                                                        $('#MainSVG').append(backup);
+                                                        var Grapdata = document.querySelector("#inputGraph");
+                                                        var Mainsvg = d3.select("svg");
+                                                        var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
+                                                        var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id);
+                                                    }
+
+                                                    $(function(){
+                                                        BuildMainView(1);
+                                                    });
+
+                                                </script>
+
+
+											</td>
+											<td class="right-white-area"></td>
+										</tr>
+										<tr class="information">
+											<td>
+												<div class="relations">
+                                                    <ol class="content-box">
+                                                        <li id="relation-head">
+                                                            <div class="source hover">Source</div>
+                                                            <div class="relation hover">Relation</div>
+                                                            <div class="target hover">Target</div>
+                                                        </li>
+                                                        <!--
+                                                        <li>
+                                                            <div class="source">Source</div>
+                                                            <div class="relation">Relation</div>
+                                                            <div class="target">Target</div>
+                                                        </li>
+                                                        <li class="center">··· 125 More ···</li>
+                                                        -->
+                                                    </ol>
+                                                    <!--<table>
+                                                        <thead>
+                                                        <tr>
+                                                            <td>Source</td>
+                                                            <td>Relation</td>
+                                                            <td>Target</td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Source</td>
+                                                            <td>Relation</td>
+                                                            <td>Target</td>
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>-->
+												</div>
+												<div class="developer">
+													<div class="icon"></div>
+													<div class="title">0<span>Members</span></div>
+													<ol class="content-box">
+													</ol>
+												</div>
+											</td>
+											<td class="right-white-area"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="left-hidden-menu">
+								<div class="title">Project Explorer</div>
+								<div class="explorer-list">
+									<div class="content-body" style="height:74%;margin-left:5px;margin-right:5px;overflow: auto;">
+									</div>
+								</div>
+								<div class="right-button"></div>
+							</div>
+						</div>
+
+						<div id="left-rate">
+						</div>
+						<!--left-rate fin-->
+						<div id="right-rate">
+						</div>
+						<!--right-rate fin-->
+					</div>
+					<!--.dashboard-group fin-->
+					<div id="popup-info">
+						<div id="popup-tri"></div>
+						<div id="popup-body">
+							<div id="popup-title">Basic Rule</div>
+							<div id="popup-line"></div>
+							<div id="popup-content">PMD를 통해 나온 정보로 규칙 위반의 정도를 보여주는 지표이다.</div>
+						</div>
+					</div>
+				</div>
+				<!--main fin-->
+				<div id="overview">
+					<div id="overview-content">
+						<div class="pollution a-circle left">
+							<div class="rotation-circle"><div class="text">A</div></div>
+						</div>
+						<div class="text">Stanly</div>
+					</div>
+					<div id="overview-right">
+						<div class="text">COMPOSITION</div>
+						<div class="icon"></div>
+					</div>
+					<div id="triangleS"></div>
+					<div id="triangleE"></div>
+				</div>
+				<!--overview fin-->
+			</div></div>
+			<!--content-body fin-->
+		</div>
+		<!--content fin-->
+		<div id="sidebar-container-warrper">
+			<div id="sidebar-container">
+				<div id="sidebar">
+					<div id="projectMenu">
+						<a>
+							<ol>
+								<li class="icon"></li>
+								<li class="text">PROJECT</li>
+							</ol>
+						</a>
+					</div>
+					<div id="noneMenu"></div>
+					<div id="dashboardMenu">
+						<div class="shadow"></div>
+						<a>
+							<ol>
+								<li class="icon"></li>
+								<li class="text">DASHBOARD</li>
+							</ol>
+						</a>
+						<div class="bottom"></div>
+					</div>
+					<div id="compositionMenu">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">COMPOSITION</li>
+							</ol>
+					</div>
+					<div id="pollutionMenu">
+                        <a>
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">POLLUTION</li>
+                            </ol>
+                        </a>
+					</div>
+				</div>
+				<!--sidebar fin-->
+			</div>
+		</div>
+	</div>
+	<!--content-container fin-->
+</div>
+
+</body>
+</html>

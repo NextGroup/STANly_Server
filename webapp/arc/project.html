@@ -136,6 +136,54 @@
             }
         });
 
+        $.ajax({
+            type: "get",
+            url: "/Stanly/common/pollution/cprate",
+            data: {name:getParameter('Project')},
+            success: function(json){
+                cp_data = jQuery.parseJSON(json).list;
+                color = "#EE0000";
+
+                if(cp_data[0].key.toLowerCase() == 'F')    color = color_tbl[0];
+                if(cp_data[0].key.toLowerCase() == 'C')    color = color_tbl[1];
+                if(cp_data[0].key.toLowerCase() == 'B')    color = color_tbl[2];
+                if(cp_data[0].key.toLowerCase() == 'A')    color = color_tbl[3];
+
+                total = cp_data[0].y+cp_data[1].y;
+                //normal_data = cp_data;
+
+                for(var i=0;i<2;i++)
+                {
+                    if(cp_data[i].y == 0)   continue;
+                    cp_data[i].y = 360*cp_data[i].y/total;
+                    if(cp_data[i].y < 10) cp_data[i].y = 10;
+                }
+
+                $('#change-propagation-rate>.pollution-rate-content>.rate-level')
+                        .text(cp_data[0].key)
+                        .addClass(cp_data[0].key.toLowerCase()+'-rate');
+
+                nv.addGraph(function(){
+                    var chart = nv.models.pie()
+                            .values(function(d) { return d })
+                            .width(156)
+                            .height(156)
+                            .color([ color, "#949494" ])
+                            .donut(true)
+                            .donutRatio(0.5);
+
+                    d3.select("#change-propagation-pol")
+                            .datum([cp_data])
+                            .transition().duration(20)
+                            .attr('width', 156)
+                            .attr('height', 156)
+                            .call(chart);
+
+                    return chart;
+                });
+            }
+        });
+
         rate_str = ['a-rate','b-rate','c-rate','f-rate'];
         lag_str = ['a2b','b2c','c2f'];
         function draw_rule_rank(target,rate)
@@ -173,6 +221,33 @@
                 draw_rule_rank('naming-rate',rate[0]);
             }
         });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/diff/dev",
+            data: {name:getParameter('Project')},
+            success: function(json)
+            {
+                data = jQuery.parseJSON(json).list;
+                $('#pollution-head').parent()
+                        .empty()
+                        .append($('<li id="pollution-head"><div class="picture-name-id hover">Developer Picture / ID</div><div class="commit hover">Commit Count</div><div class="rank hover">Rank</div></li>'))
+                for(var i=0;i<data.length;i++)
+                {
+                    new_li = $('<li></li>');
+                    new_li.append($('<div class="picture"><div class="circle_wrapper"></div>'));
+                    new_li.append($('<div class="name-id">'+data[i].Devloper+'</div>'));
+                    new_li.append($('<div class="commit">'+data[i].Commit+'</div>'));
+                    new_li.append($('<div class="rank">'+data[i].TotalScore+'</div>'));
+
+                    $('#pollution-head').parent().append(new_li);
+
+                }
+
+                //"{"list":[{"Devloper":"YangHyunchul","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":83,"TotalScore":"C"},{"Devloper":"sjdmldi","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":53,"TotalScore":"C"},{"Devloper":"karuana","CPRank":"F","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":10,"TotalScore":"C"}]}"
+            }
+        });
+
     </script>
 </head>
 
@@ -269,7 +344,7 @@
 
 					<div class="dashboard-group">
 						<div class="title">Pollution Rank</div>
-						<div id="left-rate">
+						<div style="height: 228px">
 							<div class="half-size">
 								<div id="fat-rate" class="content-box">
 									<div class="pollution-rate-title">
@@ -303,7 +378,7 @@
 								<div id="change-propagation-rate" class="content-box">
 									<div class="pollution-rate-title">
 										<div class="rate-icon"></div>
-										<div class="rate-name">Change Propagation</div>
+										<div class="rate-name">Propagation</div>
 									</div>
 									<div class="pollution-rate-content">
 										<svg id="change-propagation-pol"></svg>
@@ -318,7 +393,7 @@
 						<!--left-rate fin-->
 						<div style="height: 186px">
 							<div id="left-rate">
-								<div id="basicrule-rate" class="content-box">
+								<div id="basic-rate" class="content-box">
 									<div class="pollution-rate-title">
 										<div class="rate-icon"></div>
 										<div class="rate-name">Basic Rule</div>
@@ -378,7 +453,7 @@
 								<div id="naming-rate" class="content-box">
 									<div class="pollution-rate-title">
 										<div class="rate-icon"></div>
-										<div class="rate-name">Unknown Naming</div>
+										<div class="rate-name">Naming Rule</div>
 									</div>
 									<div class="pollution-rate-content f-rate">
 										<div class="rate-title">
@@ -443,18 +518,6 @@
 									<div class="picture-name-id hover">Developer Picture / ID</div>
 									<div class="commit hover">Commit Count</div>
 									<div class="rank hover">Rank</div>
-								</li>
-								<li>
-									<div class="picture"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-frc1/s32x32/572661_100003198556738_186969429_q.jpg"></div></div>
-									<div class="name-id">KARUANA</div>
-									<div class="commit">120</div>
-									<div class="rank">A</div>
-								</li>
-								<li>
-									<div class="picture"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div></div>
-									<div class="name-id">AN JEUNGWON</div>
-									<div class="commit">100</div>
-									<div class="rank">B</div>
 								</li>
 							</ol>
 						</div>
@@ -522,99 +585,6 @@
 	<!--content-container fin-->
 </div>
 
-<script type="text/javascript">
-nv.addGraph(function() {
-	var width = 290 * 2.5,
-		height = 140 * 2.5;
-
-	var chart = nv.models.pieChart()
-		.x(function(d) { return d.key })
-		.values(function(d) { return d })
-		.color([ "#5a9ccc", "#72c380", "#c7c7c7" ])
-		.showLabels(false)
-		.tooltips(false)
-		.width(width)
-		.height(height)
-		.donut(true)
-		.donutRatio(0.55);
-
-	chart.pie
-		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
-		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
-
-	  d3.select("#eloc .graph .donut")
-		  .datum([[
-			{
-			  key: "One",
-			  y: 39
-			},
-			{
-			  key: "Two",
-			  y: 10
-			},
-			{
-			  key: "Three",
-			  y: 51
-			}
-		]])
-		.transition().duration(100)
-		.attr('width', "290")
-		.attr('height', "105")
-		.call(chart);
-	
-	$("#eloc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
-	$("#eloc .graph .donut .nv-legendWrap").remove();
-
-	return chart;
-});
-rotateObject("#eloc .graph .bar", (360 * 49 / 100) / 15 * 7 - 180 / 15 * 7);
-
-nv.addGraph(function() {
-	var width = 290 * 2.5,
-		height = 140 * 2.5;
-
-	var chart = nv.models.pieChart()
-		.x(function(d) { return d.key })
-		.values(function(d) { return d })
-		.color([ "#5a9ccc", "#de6262", "#c7c7c7" ])
-		.showLabels(false)
-		.tooltips(false)
-		.width(width)
-		.height(height)
-		.donut(true)
-		.donutRatio(0.55);
-
-	chart.pie
-		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
-		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
-
-	  d3.select("#ecoc .graph .donut")
-		  .datum([[
-			{
-			  key: "One",
-			  y: 68
-			},
-			{
-			  key: "Two",
-			  y: 20
-			},
-			{
-			  key: "Three",
-			  y: 12
-			}
-		]])
-		.transition().duration(100)
-		.attr('width', "290")
-		.attr('height', "105")
-		.call(chart);
-	
-	$("#ecoc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
-	$("#ecoc .graph .donut .nv-legendWrap").remove();
-
-	return chart;
-});
-rotateObject("#ecoc .graph .bar", (360 * 68 / 100) / 15 * 7 - 180 / 15 * 7);
-</script>
 
 </body>
 </html>

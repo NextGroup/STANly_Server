@@ -1460,6 +1460,10 @@ div.agraph div.bar {
 #container.svg			#naming-rate .rate-icon { background: url(../images/pollution/naming.svg) no-repeat; }
 #container				#naming-rate .rate-icon,
 #container.decelerate	#naming-rate .rate-icon { background: url(../images/pollution/naming.png) no-repeat; }
+
+#container.svg			#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.png) no-repeat; }
+#container				#change-propagation-rate .rate-icon,
+#container.decelerate	#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.png) no-repeat; }
 /*
 #container.svg			#fat-rate .a-rate .rate-icon { background: url(../images/icon_fat_a.svg) no-repeat; }
 #container				#fat-rate .a-rate .rate-icon,
@@ -2384,10 +2388,10 @@ div.agraph div.bar {
 .developer-list div {
 	float: left;
 }
-.developer-list .picture-name-id { width: 80%; padding-top: 14px; }
-.developer-list .picture { width: 5%; padding-top: 5px; }
-.developer-list .name-id { width: 75%; padding-top: 14px; }
-.developer-list .commit { width: 10%; text-align: center; padding-top: 14px; }
+.developer-list .picture-name-id { width: 75%; padding-top: 14px; }
+.developer-list .picture { width: 10%; padding-top: 5px; }
+.developer-list .name-id { width: 65%; padding-top: 14px; }
+.developer-list .commit { width: 15%; text-align: center; padding-top: 14px; }
 .developer-list .rank { width: 10%; padding-top: 9px; font-size: 22px; font-weight: 800; text-align: center; }
 .developer-list .picture .circle_wrapper { margin-left: 30px; }
 .developer-list .hover {
