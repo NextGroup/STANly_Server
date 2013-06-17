@@ -21,11 +21,7 @@
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version'));
-            $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
-            $("#pollutionMenu>a").attr('href',"pollution.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
-        });
+        set_title();
 
         donut_size = 200;
         $.ajax({
@@ -173,10 +169,7 @@
             success: function(json)
             {
                 rate = jQuery.parseJSON(json).list;
-                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
-                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
-
-                draw_rule_rank('basicrule-rate',rate[1]);
+                draw_rule_rank('basic-rate',rate[1]);
                 draw_rule_rank('naming-rate',rate[0]);
             }
         });
@@ -309,7 +302,7 @@
 						</div>
 						<!--left-rate fin-->
 						<div id="right-rate">
-							<div id="basicrule-rate" class="content-box">
+							<div id="basic-rate" class="content-box">
 								<div class="pollution-rate-title">
 									<div class="rate-icon"></div>
 									<div class="rate-name">Basic Rule</div>
@@ -367,7 +360,7 @@
 							<div id="naming-rate" class="content-box">
 								<div class="pollution-rate-title">
 									<div class="rate-icon"></div>
-									<div class="rate-name">Unknown Naming</div>
+									<div class="rate-name">Naming rule</div>
 								</div>
 								<div class="pollution-rate-content f-rate">
 									<div class="rate-title">

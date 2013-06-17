@@ -91,7 +91,7 @@ $(document).ready(function() {
 		popup_show($(this));
 	},popup_hide);
 
-	$("#project-list .list-item .basicrule").hover(function() {
+	$("#project-list .list-item .basic").hover(function() {
 		$("#popup-title").html(popupmenu_info[3].title);
 		$("#popup-content").html(popupmenu_info[3].content);
 		popup_show($(this));
@@ -134,11 +134,11 @@ $(document).ready(function() {
 		$(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
 		$(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
 	});
-	$(".pollution-footer .menu .basicrule").click(function() {
+	$(".pollution-footer .menu .basic").click(function() {
 		$(".pollution-footer .menu .selected").removeClass("selected");
 		$(this).addClass("selected");
 
 		$(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
-		$(".pollution-footer .body .basicrule").removeClass("hide-div").addClass("show-div");
+		$(".pollution-footer .body .basic").removeClass("hide-div").addClass("show-div");
 	});
 });

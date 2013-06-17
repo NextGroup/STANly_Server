@@ -699,7 +699,7 @@ div.agraph div.bar {
 	-webkit-box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.3), -1px 0px 0px 0px #5492c0;
 	-o-box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.3), -1px 0px 0px 0px #5492c0;
 }
-#project-head .basicrule,
+#project-head .basic,
 #project-head .naming,
 #project-head .coupling,
 #project-head .fat { width: 77px; }
@@ -952,12 +952,12 @@ div.agraph div.bar {
 	color: #dca763;
 }
 
-#project-list-top .list-item .basicrule,
-#project-list .list-item .basicrule { width: 62px; }
-#project-list-top .list-item .basicrule .box,
-#project-list .list-item .basicrule .box { float: left; }
-#project-list-top .list-item .basicrule .box div,
-#project-list .list-item .basicrule .box div {
+#project-list-top .list-item .basic,
+#project-list .list-item .basic { width: 62px; }
+#project-list-top .list-item .basic .box,
+#project-list .list-item .basic .box { float: left; }
+#project-list-top .list-item .basic .box div,
+#project-list .list-item .basic .box div {
 	width: 8px;
 	height: 8px;
 	margin-left: 13px;
@@ -965,8 +965,8 @@ div.agraph div.bar {
 	background-color: #cccdc7;
 }
 
-#project-list-top .list-item .basicrule .rate,
-#project-list .list-item .basicrule .rate {
+#project-list-top .list-item .basic .rate,
+#project-list .list-item .basic .rate {
 	margin-left: 10px;
 	margin-top: 11px;
 }
@@ -978,11 +978,11 @@ div.agraph div.bar {
 #project-list-top .list-item .fat .text,
 #project-list-top .list-item .coupling .text,
 #project-list-top .list-item .naming .text,
-#project-list-top .list-item .basicrule .text,
+#project-list-top .list-item .basic .text,
 #project-list .list-item .fat .text,
 #project-list .list-item .coupling .text,
 #project-list .list-item .naming .text,
-#project-list .list-item .basicrule .text {
+#project-list .list-item .basic .text {
 	clear: both;
 	margin: auto;
 	width: 62px;
@@ -993,49 +993,49 @@ div.agraph div.bar {
 }
 #project-list-top .list-item .fat.a-rate .rate,
 #project-list-top .list-item .naming.a-rate .rate,
-#project-list-top .list-item .basicrule.a-rate .rate,
+#project-list-top .list-item .basic.a-rate .rate,
 #project-list .list-item .fat.a-rate .rate,
 #project-list .list-item .naming.a-rate .rate,
-#project-list .list-item .basicrule.a-rate .rate { color: #00AA00; }
+#project-list .list-item .basic.a-rate .rate { color: #00AA00; }
 #project-list-top .list-item .fat.b-rate .rate,
 #project-list-top .list-item .naming.b-rate .rate,
-#project-list-top .list-item .basicrule.b-rate .rate,
+#project-list-top .list-item .basic.b-rate .rate,
 #project-list .list-item .fat.b-rate .rate,
 #project-list .list-item .naming.b-rate .rate,
-#project-list .list-item .basicrule.b-rate .rate { color: #fdd04f; }
+#project-list .list-item .basic.b-rate .rate { color: #fdd04f; }
 #project-list-top .list-item .fat.c-rate .rate,
 #project-list-top .list-item .naming.c-rate .rate,
-#project-list-top .list-item .basicrule.c-rate .rate,
+#project-list-top .list-item .basic.c-rate .rate,
 #project-list .list-item .fat.c-rate .rate,
 #project-list .list-item .naming.c-rate .rate,
-#project-list .list-item .basicrule.c-rate .rate { color: #F77700; }
+#project-list .list-item .basic.c-rate .rate { color: #F77700; }
 #project-list-top .list-item .fat.f-rate .rate,
 #project-list-top .list-item .naming.f-rate .rate,
-#project-list-top .list-item .basicrule.f-rate .rate,
+#project-list-top .list-item .basic.f-rate .rate,
 #project-list .list-item .fat.f-rate .rate,
 #project-list .list-item .naming.f-rate .rate,
-#project-list .list-item .basicrule.f-rate .rate { color: #EE0000; }
+#project-list .list-item .basic.f-rate .rate { color: #EE0000; }
 
-#project-list-top .list-item .basicrule.a-rate .c4,
-#project-list .list-item .basicrule.a-rate .c4 { background-color: #00AA00; }
-#project-list-top .list-item .basicrule.b-rate .c3,
-#project-list-top .list-item .basicrule.b-rate .c4,
-#project-list .list-item .basicrule.b-rate .c3,
-#project-list .list-item .basicrule.b-rate .c4 { background-color: #fdd04f; }
-#project-list-top .list-item .basicrule.c-rate .c2,
-#project-list-top .list-item .basicrule.c-rate .c3,
-#project-list-top .list-item .basicrule.c-rate .c4,
-#project-list .list-item .basicrule.c-rate .c2,
-#project-list .list-item .basicrule.c-rate .c3,
-#project-list .list-item .basicrule.c-rate .c4 { background-color: #F77700; }
-#project-list-top .list-item .basicrule.f-rate .c1,
-#project-list-top .list-item .basicrule.f-rate .c2,
-#project-list-top .list-item .basicrule.f-rate .c3,
-#project-list-top .list-item .basicrule.f-rate .c4,
-#project-list .list-item .basicrule.f-rate .c1,
-#project-list .list-item .basicrule.f-rate .c2,
-#project-list .list-item .basicrule.f-rate .c3,
-#project-list .list-item .basicrule.f-rate .c4 { background-color: #EE0000; }
+#project-list-top .list-item .basic.a-rate .c4,
+#project-list .list-item .basic.a-rate .c4 { background-color: #00AA00; }
+#project-list-top .list-item .basic.b-rate .c3,
+#project-list-top .list-item .basic.b-rate .c4,
+#project-list .list-item .basic.b-rate .c3,
+#project-list .list-item .basic.b-rate .c4 { background-color: #fdd04f; }
+#project-list-top .list-item .basic.c-rate .c2,
+#project-list-top .list-item .basic.c-rate .c3,
+#project-list-top .list-item .basic.c-rate .c4,
+#project-list .list-item .basic.c-rate .c2,
+#project-list .list-item .basic.c-rate .c3,
+#project-list .list-item .basic.c-rate .c4 { background-color: #F77700; }
+#project-list-top .list-item .basic.f-rate .c1,
+#project-list-top .list-item .basic.f-rate .c2,
+#project-list-top .list-item .basic.f-rate .c3,
+#project-list-top .list-item .basic.f-rate .c4,
+#project-list .list-item .basic.f-rate .c1,
+#project-list .list-item .basic.f-rate .c2,
+#project-list .list-item .basic.f-rate .c3,
+#project-list .list-item .basic.f-rate .c4 { background-color: #EE0000; }
 
 #project-list-top .list-item .naming,
 #project-list .list-item .naming {
@@ -1357,7 +1357,7 @@ div.agraph div.bar {
 }
 #total-pollution-rate,
 #coupling-rate,
-#basicrule-rate,
+#basic-rate,
 #naming-rate {
 	margin-left: 11px;
 	margin-bottom: 22px;
@@ -1393,9 +1393,9 @@ div.agraph div.bar {
 #container				#coupling-rate .rate-icon,
 #container.decelerate	#coupling-rate .rate-icon { background: url(../images/pollution/coupling.png) no-repeat; }
 
-#container.svg			#basicrule-rate .rate-icon { background: url(../images/pollution/basic.svg) no-repeat; }
-#container				#basicrule-rate .rate-icon,
-#container.decelerate	#basicrule-rate .rate-icon { background: url(../images/pollution/basic.png) no-repeat; }
+#container.svg			#basic-rate .rate-icon { background: url(../images/pollution/basic.svg) no-repeat; }
+#container				#basic-rate .rate-icon,
+#container.decelerate	#basic-rate .rate-icon { background: url(../images/pollution/basic.png) no-repeat; }
 
 #container.svg			#naming-rate .rate-icon { background: url(../images/pollution/naming.svg) no-repeat; }
 #container				#naming-rate .rate-icon,
@@ -1427,18 +1427,18 @@ div.agraph div.bar {
 #container				#coupling-rate .f-rate .rate-icon,
 #container.decelerate	#coupling-rate .f-rate .rate-icon { background: url(../images/icon_coupling_f.png) no-repeat; }
 
-#container.svg			#basicrule-rate .a-rate .rate-icon { background: url(../images/icon_basicrule_a.svg) no-repeat; }
-#container				#basicrule-rate .a-rate .rate-icon,
-#container.decelerate	#basicrule-rate .a-rate .rate-icon { background: url(../images/icon_basicrule_a.png) no-repeat; }
-#container.svg			#basicrule-rate .b-rate .rate-icon { background: url(../images/icon_basicrule_b.svg) no-repeat; }
-#container				#basicrule-rate .b-rate .rate-icon,
-#container.decelerate	#basicrule-rate .b-rate .rate-icon { background: url(../images/icon_basicrule_b.png) no-repeat; }
-#container.svg			#basicrule-rate .c-rate .rate-icon { background: url(../images/icon_basicrule_c.svg) no-repeat; }
-#container				#basicrule-rate .c-rate .rate-icon,
-#container.decelerate	#basicrule-rate .c-rate .rate-icon { background: url(../images/icon_basicrule_c.png) no-repeat; }
-#container.svg			#basicrule-rate .f-rate .rate-icon { background: url(../images/icon_basicrule_f.svg) no-repeat; }
-#container				#basicrule-rate .f-rate .rate-icon,
-#container.decelerate	#basicrule-rate .f-rate .rate-icon { background: url(../images/icon_basicrule_f.png) no-repeat; }
+#container.svg			#basic-rate .a-rate .rate-icon { background: url(../images/icon_basic_a.svg) no-repeat; }
+#container				#basic-rate .a-rate .rate-icon,
+#container.decelerate	#basic-rate .a-rate .rate-icon { background: url(../images/icon_basic_a.png) no-repeat; }
+#container.svg			#basic-rate .b-rate .rate-icon { background: url(../images/icon_basic_b.svg) no-repeat; }
+#container				#basic-rate .b-rate .rate-icon,
+#container.decelerate	#basic-rate .b-rate .rate-icon { background: url(../images/icon_basic_b.png) no-repeat; }
+#container.svg			#basic-rate .c-rate .rate-icon { background: url(../images/icon_basic_c.svg) no-repeat; }
+#container				#basic-rate .c-rate .rate-icon,
+#container.decelerate	#basic-rate .c-rate .rate-icon { background: url(../images/icon_basic_c.png) no-repeat; }
+#container.svg			#basic-rate .f-rate .rate-icon { background: url(../images/icon_basic_f.svg) no-repeat; }
+#container				#basic-rate .f-rate .rate-icon,
+#container.decelerate	#basic-rate .f-rate .rate-icon { background: url(../images/icon_basic_f.png) no-repeat; }
 
 #container.svg			#naming-rate .a-rate .rate-icon { background: url(../images/icon_naming_a.svg) no-repeat; }
 #container				#naming-rate .a-rate .rate-icon,
@@ -1461,7 +1461,7 @@ div.agraph div.bar {
 	width: 154px;
 }
 #naming-rate .pollution-rate-content,
-#basicrule-rate .pollution-rate-content {
+#basic-rate .pollution-rate-content {
 	margin-top: -8px;
 	width: 350px;
 }
@@ -1828,7 +1828,7 @@ div.agraph div.bar {
 
 #container.pollution #fat-rate { margin-right: 11px; }
 #container.pollution #coupling-rate,
-#container.pollution #basicrule-rate,
+#container.pollution #basic-rate,
 #container.pollution #naming-rate {
 	margin-left: 11px;
 	margin-bottom: 10px;
@@ -1855,7 +1855,7 @@ div.agraph div.bar {
 	margin-bottom: 24px;
 }
 #container.pollution #naming-rate .pollution-rate-content,
-#container.pollution #basicrule-rate .pollution-rate-content {
+#container.pollution #basic-rate .pollution-rate-content {
 	margin-top: -8px;
 }
 #container.pollution .pollution-rate-content .mini-title {
@@ -1963,7 +1963,7 @@ div.agraph div.bar {
 	width: auto;
 	float: none;
 }
-#container.pollution #basicrule-rate,
+#container.pollution #basic-rate,
 #container.pollution #naming-rate {
 	margin-right: 0;
 }
@@ -1971,7 +1971,7 @@ div.agraph div.bar {
 #container.pollution #naming-rate {
 	margin-bottom: 20px;
 }
-#container.pollution #basicrule-rate .pollution-rate-content .rate-level,
+#container.pollution #basic-rate .pollution-rate-content .rate-level,
 #container.pollution #naming-rate .pollution-rate-content .rate-level{
 	margin-right: 30px;
 	width: auto;
@@ -2165,7 +2165,7 @@ div.agraph div.bar {
 .pollution-footer .menu .fat,
 .pollution-footer .menu .coupling,
 .pollution-footer .menu .naming,
-.pollution-footer .menu .basicrule {
+.pollution-footer .menu .basic {
 	float: left;
 	width: 20%;
 	height: 28px;
@@ -2204,7 +2204,7 @@ div.agraph div.bar {
 	background: 38px url(../images/pollution/naming.png) no-repeat #e4e4e4;
 	background-size: 20px 20px;
 }
-.pollution-footer .menu .basicrule {
+.pollution-footer .menu .basic {
 	background: 28px url(../images/pollution/basic.png) no-repeat #e4e4e4;
 	background-size: 20px 20px;
 }
