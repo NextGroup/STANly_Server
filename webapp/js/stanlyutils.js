@@ -81,4 +81,6 @@ function set_title(){
             $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
         }
     });
+
+    $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
 }
