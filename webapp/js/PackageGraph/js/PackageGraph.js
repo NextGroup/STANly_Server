@@ -207,7 +207,8 @@ Graph.prototype.addLabels = function(selection) {
     .append("g")
       .attr("class", this.id+"-label");
 
-   labelGroup.append("rect").attr("id",function(d){return d.type;});
+   labelGroup.append("rect").attr("id",function(d){return d.type;})
+   		.attr("style", "fill:#EAEAEA");
       	//foLabel이 안나오는 경우 값이 정상 출력됨
   var foLabel = labelGroup
     .filter(function(d) { return (d.label[0] === "<")&&(!clickNodeList[d.id]); })
