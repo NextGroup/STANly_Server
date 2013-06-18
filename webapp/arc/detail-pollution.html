@@ -103,7 +103,13 @@
                     $(".pollution-footer .body .coupling").removeClass("hide-div").addClass("show-div");
                 });
             }
+            $(".pollution-footer .menu .change-propagation").click(function() {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(this).addClass("selected");
 
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .change-propagation").removeClass("hide-div").addClass("show-div");
+            });
 
         });
 
@@ -126,13 +132,22 @@
                 $(".pollution-footer .body .coupling").removeClass("hide-div").addClass("show-div");
 
             }
+            else if(type == 'change-propagation')
+            {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(".pollution-footer .menu .change-propagation").addClass("selected");
+
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .change-propagation").removeClass("hide-div").addClass("show-div");
+
+            }
             else if(type == 'basic')
             {
                 $(".pollution-footer .menu .selected").removeClass("selected");
                 $(".pollution-footer .menu .basic").addClass("selected");
 
                 $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
-                $(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
+                $(".pollution-footer .body .basic").removeClass("hide-div").addClass("show-div");
 
             }
             else if(type == 'naming')
@@ -141,7 +156,7 @@
                 $(".pollution-footer .menu .naming").addClass("selected");
 
                 $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
-                $(".pollution-footer .body .basic").removeClass("hide-div").addClass("show-div");
+                $(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
 
             }
         }
@@ -188,6 +203,26 @@
                     {
                         new_tr = $('<tr style="height:40px"></tr>')
                         $('table>tbody>.body>td>.coupling>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+            }
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/chain",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+                data = jQuery.parseJSON(json).data;
+                $('table>tbody>.body>td>.change-propagation>table>tbody').empty();
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.change-propagation>table>tbody').append(new_tr);
                     }
                     new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
                     col++
@@ -279,7 +314,7 @@
 </head>
 
 <body>
-<div id="container" class="pollution">
+<div id="container" class="architect pollution">
 	<div id="header-container">
 		<div id="sliverLine"></div>
 		<div id="header">
@@ -338,6 +373,7 @@
 								<div class="empty"></div>
 								<div class="fat selected"><div>FAT</div></div>
 								<div class="coupling"><div>Coupling</div></div>
+								<div class="change-propagation"><div>Change Propagation</div></div>
 								<div class="naming"><div>Naming</div></div>
 								<div class="basic"><div>Basic Rule</div></div>
 								<div class="empty"></div>
@@ -399,6 +435,19 @@
                                                         });
 
                                                     </script>
+												</div>
+											</div>
+											<div class="change-propagation hide-div">
+                                                <div class="title">LogDog/server/accepter/hello.java</div>
+												<table>
+													<tbody>
+														<tr>
+															<td class="icon-td">Depth of Inheritance Tree : <span>8</span></td>
+															<td style="width: 50%"></td>
+														</tr>
+													</tbody>
+												</table>
+												<div class="composition">
 												</div>
 											</div>
 											<div class="naming hide-div">
