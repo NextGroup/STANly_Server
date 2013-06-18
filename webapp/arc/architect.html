@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	
+	<title>STANly :: Architect View</title>
+
+	<meta name="viewport" content="width=device-width">
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../js/PackageGraph/css/PackageGraph.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript" src="../js/jstree/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jstree/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../js/jstree/jquery.jstree.js"></script>
+    <script type="text/javascript" src="../js/ProjectTree.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            draw_project_explorer(getParameter('Project'));
+        });
+    </script>
+
+</head>
+
+<body>
+<div id="container" class="architect">
+	<div id="content-container">
+		<div id="content" style="position: absolute; height: 100%;; min-height: 0px;overflow: hidden">
+			<div class="right-content-area" style="margin-right: 0px">
+				<table>
+					<tbody>
+						<tr class="composition-view">
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
+						</tr>
+						<tr class="composition-view">
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
+						</tr>
+						<tr class="information" style="height: 170px">
+							<td colspan="2">
+								<div class="relations" style="height: auto;">
+									<ol class="content-box">
+										<li class="head">Source</li>
+										<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
+										<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
+										<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule.addExample(String)</li>
+										<li class="center">··· 125 More ···</li>
+									</ol>
+								</div>
+								<div class="developer" style="height: auto;">
+									<div class="icon"></div>
+									<div class="title">51<span>Members</span></div>
+									<ol class="content-box">
+										<li>Nicolas Rodriguez</li>
+										<li>Dan Carpenter</li>
+										<li>Eric Cooper</li>
+										<li class="center">··· 25 Members ···</li>
+									</ol>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="left-hidden-menu">
+				<div class="title">Project Explorer</div>
+				<div class="explorer-list">
+					<!--<div class="content-body" style="margin-top: 63px;">
+					</div>-->
+                    <div class="content-body" style="height:94%;margin-top:50px;margin-left:5px;margin-right:5px;overflow: auto;">
+                    </div>
+				</div>
+				<div class="right-button"></div>
+			</div>
+		</div>
+		<!--content fin-->
+	</div>
+	<!--content-container fin-->
+</div>
+
+</body>
+</html>

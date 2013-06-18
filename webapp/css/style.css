@@ -2230,6 +2230,10 @@ div.agraph div.bar {
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#4986b2\", endColorstr=\"#194b70\", GradientType=0)";
 }
 
+#container.architect.pollution .group-end {
+	margin-bottom: -28px;
+}
+
 .pollution-title .icon img {
 	float: left;
 	width: 24px;
