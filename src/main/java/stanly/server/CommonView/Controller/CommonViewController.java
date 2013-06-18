@@ -56,9 +56,9 @@ public class CommonViewController {
 	}
 	@RequestMapping(value = "/pollution/static", method=RequestMethod.GET)
 	@ResponseBody
-	public String getStaticAnalysis(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+	public String getStaticAnalysis(@RequestParam("name") String name,@RequestParam("mode") int mode,  HttpServletResponse response) throws Exception {
 			logger.info("Critical Risk Getter");
-			return commonS.getSAList(name);
+			return commonS.getSAList(name,mode);
 	}
 	
 }

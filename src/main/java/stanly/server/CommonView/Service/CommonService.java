@@ -61,11 +61,11 @@ public class CommonService {
 		return gson.toJson(RankDAO.getCouplingRank(commit));
 	}
 	
-	public String getSAList(String projectName)
+	public String getSAList(String projectName,int mode)
 	{
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
 		Gson gson = new Gson();
 		
-		return gson.toJson(RankDAO.getStaticAnalysisList(commit));
+		return gson.toJson(RankDAO.getStaticAnalysisList(commit,mode));
 	}
 }

@@ -286,13 +286,14 @@ public class RankDAO {
 		return pList;
 	}
 	
-	public SAList getStaticAnalysisList(ProjectCommit commit)
+	public SAList getStaticAnalysisList(ProjectCommit commit,int mode)
 	{
 		SAList list = new SAList();
 		ProjectInfo pinfo = commit.getPInfo();
 		list.add("NAMING", RateChange(pinfo.getName_RANK()));
 		list.add("BASIC", RateChange(pinfo.getBasic_RANK()));
-		int ave = (pinfo.getBasic_RANK()+pinfo.getCoplingRANK()+pinfo.getFAT_RANK()+pinfo.getName_RANK())/4;
+	
+		int ave = (mode == 0) ? Math.round((pinfo.getBasic_RANK()+pinfo.getCoplingRANK()+pinfo.getFAT_RANK()+pinfo.getName_RANK())/4.0f):Math.round((pinfo.getBasic_RANK()+pinfo.getCoplingRANK()+pinfo.getFAT_RANK()+pinfo.getName_RANK()+pinfo.getCP_RANK())/5.0f);
 		list.add("PROJECT", RateChange(ave));
 		return list;
 	}
