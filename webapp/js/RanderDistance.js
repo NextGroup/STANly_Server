@@ -9,7 +9,7 @@ var plot1b;
 var arr;
 var flag_data;
 var option = {
-    title: 'Martin.C Distance',
+    title: 'Balancing Abstractness Chart',
     seriesColors: $.jqplot.config.defaultColors,
     seriesDefaults:{
         renderer: $.jqplot.BubbleRenderer,
