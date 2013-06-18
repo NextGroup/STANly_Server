@@ -5,7 +5,9 @@
  * Time: 오후 4:21
  * To change this template use File | Settings | File Templates.
  */
+var plot1b;
 var arr;
+var flag_data;
 var option = {
     title: 'Martin.C Distance',
     seriesColors: $.jqplot.config.defaultColors,
@@ -52,12 +54,10 @@ $(window).resize(function(){
     $('#tooltip').empty();
     DrowDistanceChart();
 });
-$(document).ready(function(){
 
-    BuildDistanceChar(1);
-});
-function BuildDistanceChar(id)
+function BuildDistanceChar(pname)
 {
+    id = 1;
     $('#distance').empty();
     $('#tooltip').empty();
     $.ajax( {
@@ -70,13 +70,16 @@ function BuildDistanceChar(id)
         ,beforeSend : function(xhr){
         }
         ,success : function(jsonData) {
-            arr = jsonData;
             arr= new Array();
             option.seriesColors = new Array();
             for(var i=0;i<jsonData.metricDistance.length;i++)
             {
                 var element = jsonData.metricDistance[i];
                 arr.push([element.abstractness,element.instability,element.size,element.name,element.Distance]);
+                if(element.name == pname)
+                {
+                    flag_data = jsonData.metricDistance[i];
+                }
                 //option.seriesColors.push('#' + Math.round(16*Math.abs(element.Distance)).toString(16) + 'D0');
                 if(element.Distance < 0.5 && element.Distance>-0.5)
                     option.seriesColors.push('#00DD00');
@@ -84,6 +87,7 @@ function BuildDistanceChar(id)
                     option.seriesColors.push('#DDDD00');
             }
             DrowDistanceChart();
+            show_tooltip([flag_data.abstractness,flag_data.instability,flag_data.size,flag_data.name,flag_data.Distance],5);
         }
         ,error : function(xhr, textStatus) {
         }
@@ -92,7 +96,7 @@ function BuildDistanceChar(id)
     });
 }
 function DrowDistanceChart(){
-    var plot1b = $.jqplot('distance',[arr],option);
+    plot1b = $.jqplot('distance',[arr],option);
 
     // Legend is a simple table in the html.
     // Dynamically populate it with the labels from each data value.
@@ -102,6 +106,7 @@ function DrowDistanceChart(){
 
     // Now bind function to the highlight event to show the tooltip
     // and highlight the row in the legend.
+
     $('#distance').bind('jqplotDataHighlight',
         function (ev, seriesIndex, pointIndex, data, radius) {
             var chart_left = $('#distance').offset().left,
@@ -123,6 +128,7 @@ function DrowDistanceChart(){
         function (ev, seriesIndex, pointIndex, data) {
             $('#tooltip').empty();
             $('#tooltip').hide();
+            show_tooltip([flag_data.abstractness,flag_data.instability,flag_data.size,flag_data.name,flag_data.Distance],5);
             //$('#legend1b tr').css('background-color', '#ffffff');
         });
     $('.button-reset').click(function() {
@@ -137,6 +143,19 @@ function DrowDistanceChart(){
     canvas.lineTo(canvas_width,canvas_height);
     canvas.strokeStyle = '#cccccc';
     canvas.stroke();
+}
+
+function show_tooltip(data, radius) {
+    var chart_left = $('#distance').offset().left,
+        chart_top = $('#distance').offset().top,
+        x = plot1b.axes.xaxis.u2p(data[0]),  // convert x axis unita to pixels
+        y = plot1b.axes.yaxis.u2p(data[1]);  // convert y axis units to pixels
+    var color = 'rgb(50%,50%,100%)';
+    $('#tooltip').css({left:chart_left+x+radius+5, top:chart_top+y});
+    $('#tooltip').html('<span style="font-size:14px;font-weight:bold;color:' +
+        color + ';">' + data[3] + '</span><br />' + 'Abstractness: ' + data[0] +
+        '<br />' + 'Instability: ' + data[1] + '<br />' + 'Distance: ' + data[4] + '<br />' + 'Line of Code: ' + data[2]);
+    $('#tooltip').show();
 }
 /*
  var data;

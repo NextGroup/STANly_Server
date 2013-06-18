@@ -56,11 +56,12 @@
     <script type="text/javascript" src="../js/jqplot/plugins/jqplot.canvasTextRenderer.js"></script>
     <script type="text/javascript" src="../js/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
     <link rel="stylesheet" href="../js/jqplot/jquery.jqplot.min.css">
+
+    <script type="text/javascript" src="../js/RanderDistance.js"></script>
     
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
 
 	<script type="text/javascript">
-
         set_title();
 		SyntaxHighlighter.all(); 
 		dp.SyntaxHighlighter.HighlightAll('code');
@@ -180,6 +181,8 @@
 
                 name = jQuery.parseJSON(json).name;
                 $('.pollution-title>.title').text(name);
+
+                BuildDistanceChar(name);
 
                 name = name.replace(/\./gi,'/') + '.java';
                 $('table>tbody>.body>td>.fat>.title').text(name);
@@ -477,9 +480,6 @@
 												<div class="composition">
                                                     <div id="distance" style="height:100%;"></div>
                                                     <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
-                                                    <!--<script type="text/javascript" src="/Stanly/report/js/google_jsapi.js"></script>
-                                                    <script type="text/javascript" src="/Stanly/report/js/wz_jsgraphics.js"></script>-->
-                                                    <script type="text/javascript" src="../js/RanderDistance.js"></script>
 												</div>
 											</div>
 											<div class="naming hide-div">
