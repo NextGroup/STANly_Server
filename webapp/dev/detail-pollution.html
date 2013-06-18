@@ -194,53 +194,66 @@
                 }
             }
         });
-        $.ajax({
-            type: "get",
-            url: "/Stanly/detail/static",
-            data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'0'},
-            success: function(json){
-                name = jQuery.parseJSON(json).name;
-                name = name.replace(/\./gi,'/') + '.java';
-                $('table>tbody>.body>td>.basic>.title').text(name);
-                data = jQuery.parseJSON(json).data;
 
-                $('table>tbody>.body>td>.basic>table>tbody').empty();
-                col = 0;
-                for (property in data) {
-                    if(col%2 == 0)
-                    {
-                        new_tr = $('<tr></tr>')
-                        $('table>tbody>.body>td>.basic>table>tbody').append(new_tr);
+        setTimeout(insert_static_info,1000);
+        function insert_static_info(){
+            $.ajax({
+                type: "get",
+                url: "/Stanly/detail/static",
+                data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'0'},
+                success: function(json){
+                    name = jQuery.parseJSON(json).name;
+                    name = name.replace(/\./gi,'/') + '.java';
+                    $('table>tbody>.body>td>.basic>.title').text(name);
+                    data = jQuery.parseJSON(json).data;
+
+                    $('table>tbody>.body>td>.basic>table>tbody').empty();
+
+                    new_tr = $('<tr></tr>')
+                    $('table>tbody>.body>td>.basic>table>tbody').append(new_tr);
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+'Number of Basic rule Violation'+' : <span>'+data.length+'</span></td>'))
+
+                    for (var i=0;i<data.length;i++) {
+
+                        $('.basic>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).attr('class')+'">.</div>'));
+                        $('.basic>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).attr('class')+' highlighted">'+
+                                "// " + data[i].Message + '</div>'));
+                        /*
+                         new_tr = $('<tr></tr>')
+                         $('table>tbody>.body>td>.basic>table>tbody').append(new_tr);
+                         new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">Line '+data[i].Line +' : <span>'+data[i].Message+'</span></td>'))*/
                     }
-                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
-                    col++
                 }
-            }
-        });
-        $.ajax({
-            type: "get",
-            url: "/Stanly/detail/static",
-            data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'1'},
-            success: function(json){
-                name = jQuery.parseJSON(json).name;
-                name = name.replace(/\./gi,'/') + '.java';
-                $('table>tbody>.body>td>.naming>.title').text(name);
-                data = jQuery.parseJSON(json).data;
+            });
+            $.ajax({
+                type: "get",
+                url: "/Stanly/detail/static",
+                data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'1'},
+                success: function(json){
+                    name = jQuery.parseJSON(json).name;
+                    name = name.replace(/\./gi,'/') + '.java';
+                    $('table>tbody>.body>td>.naming>.title').text(name);
+                    data = jQuery.parseJSON(json).data;
 
-                $('table>tbody>.body>td>.naming>table>tbody').empty();
+                    $('table>tbody>.body>td>.naming>table>tbody').empty();
 
-                col = 0;
-                for (property in data) {
-                    if(col%2 == 0)
-                    {
-                        new_tr = $('<tr></tr>')
-                        $('table>tbody>.body>td>.naming>table>tbody').append(new_tr);
+                    $('table>tbody>.body>td>.naming>table>tbody').empty();
+
+                    new_tr = $('<tr></tr>')
+                    $('table>tbody>.body>td>.naming>table>tbody').append(new_tr);
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+'Number of Naming rule Violation'+' : <span>'+data.length+'</span></td>'))
+
+                    for (var i=0;i<data.length;i++) {
+                        $('.naming>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).attr('class')+'">.</div>'));
+                        $('.naming>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).attr('class')+' highlighted">'+
+                                "// " + data[i].Message + '</div>'));
+                        /*new_tr = $('<tr></tr>')
+                         $('table>tbody>.body>td>.naming>table>tbody').append(new_tr);
+                         new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">Line '+data[i].Line +' : <span>'+data[i].Message+'</span></td>'))*/
                     }
-                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
-                    col++
                 }
-            }
-        });
+            });
+        }
 
 
         $.ajax({
@@ -330,7 +343,7 @@
 					<div class="dashboard-group">
 						<div class="pollution-title">
 							<div class="icon"><img src="../images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
-							<div class="title">logdog.server.accepter.hello</div>
+							<div class="title"></div>
 						</div>
 						<div class="pollution-content content-box">
 							<table>
@@ -352,7 +365,7 @@
 									<tr class="body">
 										<td colspan="6">
 											<div class="fat show-div">
-												<div class="title">LogDog/server/accepter/hello.java</div>
+												<div class="title"></div>
 												<table>
 													<tbody>
 													</tbody>
@@ -364,7 +377,7 @@
 												<table>
 													<tbody>
 														<tr>
-															<td class="icon-td">Number of Relations : <span>6</span></td>
+															<td class="icon-td"></td>
 															<td style="width: 50%"></td>
 														</tr>
 													</tbody>
@@ -407,11 +420,11 @@
 												</div>
 											</div>
 											<div class="naming hide-div">
-												<div class="title">LogDog/server/accepter/hello.java</div>
+												<div class="title"></div>
 												<table>
 													<tbody>
 														<tr>
-															<td style="padding-left: 20px; text-align: left; width: 100%">Number of Naming Violation : <span>32</span></td>
+															<td style="padding-left: 20px; text-align: left; width: 100%"></td>
 														</tr>
 													</tbody>
 												</table>
@@ -419,11 +432,11 @@
 												</pre>
 											</div>
 											<div class="basic hide-div">
-												<div class="title">LogDog/server/accepter/hello.java</div>
+												<div class="title"></div>
 												<table>
 													<tbody>
 														<tr>
-															<td style="padding-left: 20px; text-align: left; width: 100%">Number of Basic Violation : <span>12</span></td>
+															<td style="padding-left: 20px; text-align: left; width: 100%"></td>
 														</tr>
 													</tbody>
 												</table>

@@ -1260,6 +1260,9 @@ div.agraph div.bar {
 
 #overview-content .pollution { margin-left: 18px; margin-right: 12px; }
 #overview-content .pollution .text { margin-top: 0px; margin-left: 0px; }
+#container.pollution.svg			#overview-right .icon { width: 24px; height: 22px; background-image: url(../images/pollution_gray.svg); }
+#container.pollution				#overview-right .icon,
+#container.pollution.decelertate	#overview-right .icon { width: 24px; height: 22px; background-image: url(../images/pollution_gray.png); background-size: 24px 22px; }
 #container.project.svg			#overview-right .icon { width: 24px; height: 22px; background-image: url(../images/project_gray.svg); }
 #container.project				#overview-right .icon,
 #container.project.decelertate	#overview-right .icon { width: 24px; height: 22px; background-image: url(../images/project_gray.png); background-size: 24px 22px; }
@@ -1457,13 +1460,14 @@ div.agraph div.bar {
 #container				#basic-rate .rate-icon,
 #container.decelerate	#basic-rate .rate-icon { background: url(../images/pollution/basic.png) no-repeat; }
 
+#container.svg			#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.svg) no-repeat; }
+#container				#change-propagation-rate .rate-icon,
+#container.decelerate	#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.png) no-repeat; }
+
 #container.svg			#naming-rate .rate-icon { background: url(../images/pollution/naming.svg) no-repeat; }
 #container				#naming-rate .rate-icon,
 #container.decelerate	#naming-rate .rate-icon { background: url(../images/pollution/naming.png) no-repeat; }
 
-#container.svg			#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.png) no-repeat; }
-#container				#change-propagation-rate .rate-icon,
-#container.decelerate	#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.png) no-repeat; }
 /*
 #container.svg			#fat-rate .a-rate .rate-icon { background: url(../images/icon_fat_a.svg) no-repeat; }
 #container				#fat-rate .a-rate .rate-icon,
@@ -1898,6 +1902,27 @@ div.agraph div.bar {
 	margin-left: 11px;
 	margin-bottom: 10px;
 }
+#container.architect.pollution #coupling-rate,
+#container.architect.pollution #basic-rate,
+#container.architect.pollution #naming-rate {
+	padding-bottom: 15px;
+}
+#container.architect.pollution #basic-rate,
+#container.architect.pollution #naming-rate {
+	padding-bottom: 0px;
+}
+#container.architect.pollution #basic-rate {
+	margin-left: -2px;
+	margin-bottom: 24px;
+	width: 100%;
+}
+#container.pollution #change-propagation-rate {
+	margin-left: 11px;
+	margin-right: 0px;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	padding-bottom: 18px;
+}
 #container.pollution .pollution-rate-title {
 	margin-top: 10px;
 	margin-left: 15px;
@@ -2229,6 +2254,7 @@ div.agraph div.bar {
 .pollution-footer .menu .empty,
 .pollution-footer .menu .fat,
 .pollution-footer .menu .coupling,
+.pollution-footer .menu .change-propagation,
 .pollution-footer .menu .naming,
 .pollution-footer .menu .basic {
 	float: left;
@@ -2257,28 +2283,47 @@ div.agraph div.bar {
 
 	cursor: pointer;
 }
+#container.architect .pollution-footer .menu .fat,
+#container.architect .pollution-footer .menu .coupling,
+#container.architect .pollution-footer .menu .change-propagation,
+#container.architect .pollution-footer .menu .naming,
+#container.architect .pollution-footer .menu .basic {
+	width: 16%;
+}
 .pollution-footer .menu .fat {
-	background: 48px url(../images/pollution/fat.png) no-repeat #e4e4e4;
+	background: 30px url(../images/pollution/fat.png) no-repeat #e4e4e4;
 	background-size: 20px 20px;
 }
 .pollution-footer .menu .coupling {
-	background: 32px url(../images/pollution/coupling.png) no-repeat #e4e4e4;
+	background: 16px url(../images/pollution/coupling.png) no-repeat #e4e4e4;
+	background-size: 20px 20px;
+}
+.pollution-footer .menu .change-propagation {
+	background: 4px url(../images/pollution/change-propagation.png) no-repeat #e4e4e4;
 	background-size: 20px 20px;
 }
 .pollution-footer .menu .naming {
-	background: 38px url(../images/pollution/naming.png) no-repeat #e4e4e4;
+	background: 18px url(../images/pollution/naming.png) no-repeat #e4e4e4;
 	background-size: 20px 20px;
 }
 .pollution-footer .menu .basic {
-	background: 28px url(../images/pollution/basic.png) no-repeat #e4e4e4;
+	background: 10px url(../images/pollution/basic.png) no-repeat #e4e4e4;
 	background-size: 20px 20px;
 }
 .pollution-footer .menu div div {
 	margin-top: 5px;
 	margin-left: 14px;
 }
+.pollution-footer .menu .change-propagation div {
+	margin-top: 0px;
+	line-height: 12px;
+}
 .pollution-footer .menu .selected div {
 	margin-top: 4px;
+}
+.pollution-footer .menu .change-propagation.selected div {
+	margin-top: -1px;
+	line-height: 12px;
 }
 .pollution-footer table {
 	border-spacing: 0px;
@@ -2346,7 +2391,11 @@ div.agraph div.bar {
 #container				.pollution-footer .body .coupling td.icon-td,
 #container.decelerate	.pollution-footer .body .coupling td.icon-td { background-image: url(../images/coupling_c.png); }
 
-.pollution-footer .body .coupling td.icon-td {
+#container.svg			.pollution-footer .body .change-propagation td.icon-td { background-image: url(../images/depth-of-inheritance.svg); }
+#container				.pollution-footer .body .change-propagation td.icon-td,
+#container.decelerate	.pollution-footer .body .change-propagation td.icon-td { background-image: url(../images/depth-of-inheritance.png); }
+
+.pollution-footer .body td.icon-td {
 	padding-left: 50px;
 	font-size: 14px;
 	text-align: left;
@@ -2357,7 +2406,11 @@ div.agraph div.bar {
 	background-position: 5px 0px;
 	background-repeat: no-repeat;
 }
-.pollution-footer .body .coupling td.icon-td span {
+.pollution-footer .body .change-propagation td.icon-td {
+	background-size: 32px 32px;
+	background-position: 10px 5px;
+}
+.pollution-footer .body td.icon-td span {
 	font-weight: 800;
 }
 .pollution-footer .bottom-sizing {
