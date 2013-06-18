@@ -301,9 +301,9 @@ public class PackageMetric extends ElementNodeMetric{
 		else 
 			UnitsRate = fatRate = MetricRate.C_RATE;
 		
-		if(this.getDistance()<0.5)
+		if(Math.abs(this.getDistance())<0.5)
 			DRate = CPRate = MetricRate.A_RATE;
-		else if(this.getDistance()<0.8)
+		else if(Math.abs(this.getDistance())<0.8)
 			DRate =CPRate = MetricRate.B_RATE;
 		else
 			DRate = CPRate = MetricRate.C_RATE;

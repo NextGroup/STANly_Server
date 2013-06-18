@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	
+	<title>STANly :: Project Dashboard</title>
+
+	<meta name="viewport" content="width=device-width">
+
+	<link href="../syntaxhighlighter/styles/shCore.css" rel="stylesheet" type="text/css">
+	<link href="../syntaxhighlighter/styles/shThemeEclipse.css" rel="stylesheet" type="text/css">
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="../js/PackageGraph/css/PackageGraph.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushAS3.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushBash.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCpp.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCSharp.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCss.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushDelphi.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushDiff.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushGroovy.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJava.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJavaFX.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPerl.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPhp.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPlain.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPowerShell.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPython.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushRuby.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushScala.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushSql.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushVb.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushXml.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="../syntaxhighlighter/scripts/shLegacy.js"></script>
+
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+	<script type="text/javascript" src="../js/d3/lib/d3.v2.js"></script>
+	<script type="text/javascript" src="../js/d3/nv.d3.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/legend.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pie.js"></script>
+	<script type="text/javascript" src="../js/d3/src/models/pieChart.js"></script>
+	<script type="text/javascript" src="../js/d3/src/utils.js"></script>
+
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+	<script type="text/javascript">
+
+        set_title();
+		SyntaxHighlighter.all(); 
+		dp.SyntaxHighlighter.HighlightAll('code');
+
+        $(document).ready(function() {
+            $('.pollution-title>.icon').empty()
+                    .append($('<img src="../images/icon/'+getParameter('domain').toLowerCase()+'.gif" style="margin-top:2px;" alt="tree" />'));
+            select_tab(getParameter('fs'));
+
+
+            if(getParameter('domain')=='class')
+            {
+                $(".pollution-footer .menu .fat").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .fat").removeClass("hide-div").addClass("show-div");
+                });
+                $(".pollution-footer .menu .naming").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
+                });
+                $(".pollution-footer .menu .basic").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .basic").removeClass("hide-div").addClass("show-div");
+                });
+
+
+                $(".pollution-footer .menu .coupling").addClass("disabled");
+            }
+            else
+            {
+                $(".pollution-footer .menu .fat").addClass("disabled");
+                $(".pollution-footer .menu .naming").addClass("disabled");
+                $(".pollution-footer .menu .basic").addClass("disabled");
+
+                $(".pollution-footer .menu .coupling").click(function() {
+                    $(".pollution-footer .menu .selected").removeClass("selected");
+                    $(this).addClass("selected");
+
+                    $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                    $(".pollution-footer .body .coupling").removeClass("hide-div").addClass("show-div");
+                });
+            }
+            $(".pollution-footer .menu .change-propagation").click(function() {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(this).addClass("selected");
+
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .change-propagation").removeClass("hide-div").addClass("show-div");
+            });
+
+        });
+
+        function select_tab(type){
+            if(type == 'fat')
+            {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(".pollution-footer .menu .fat").addClass("selected");
+
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .fat").removeClass("hide-div").addClass("show-div");
+
+            }
+            else if(type == 'coupling')
+            {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(".pollution-footer .menu .coupling").addClass("selected");
+
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .coupling").removeClass("hide-div").addClass("show-div");
+
+            }
+            else if(type == 'change-propagation')
+            {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(".pollution-footer .menu .change-propagation").addClass("selected");
+
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .change-propagation").removeClass("hide-div").addClass("show-div");
+
+            }
+            else if(type == 'basic')
+            {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(".pollution-footer .menu .basic").addClass("selected");
+
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .basic").removeClass("hide-div").addClass("show-div");
+
+            }
+            else if(type == 'naming')
+            {
+                $(".pollution-footer .menu .selected").removeClass("selected");
+                $(".pollution-footer .menu .naming").addClass("selected");
+
+                $(".pollution-footer .body .show-div").removeClass("show-div").addClass("hide-div");
+                $(".pollution-footer .body .naming").removeClass("hide-div").addClass("show-div");
+
+            }
+        }
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/fat",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+
+                width_percent=["20%","20%","20%","40%"]
+
+                name = jQuery.parseJSON(json).name;
+                $('.pollution-title>.title').text(name);
+
+                name = name.replace(/\./gi,'/') + '.java';
+                $('table>tbody>.body>td>.fat>.title').text(name);
+                data = jQuery.parseJSON(json).data;
+
+                $('table>tbody>.body>td>.fat>table>tbody').empty();
+
+                col = 0;
+                for (property in data) {
+                    if(col%4 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.fat>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: '+width_percent[col]+';text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+            }
+        });
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/coupling",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+                data = jQuery.parseJSON(json).data;
+                $('table>tbody>.body>td>.coupling>table>tbody').empty();
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr style="height:40px"></tr>')
+                        $('table>tbody>.body>td>.coupling>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+            }
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/chain",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+                data = jQuery.parseJSON(json).data;
+                $('table>tbody>.body>td>.change-propagation>table>tbody').empty();
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.change-propagation>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+            }
+        });
+
+        setTimeout(insert_static_info,1000);
+        function insert_static_info(){
+            $.ajax({
+                type: "get",
+                url: "/Stanly/detail/static",
+                data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'0'},
+                success: function(json){
+                    name = jQuery.parseJSON(json).name;
+                    name = name.replace(/\./gi,'/') + '.java';
+                    $('table>tbody>.body>td>.basic>.title').text(name);
+                    data = jQuery.parseJSON(json).data;
+
+                    $('table>tbody>.body>td>.basic>table>tbody').empty();
+
+                    new_tr = $('<tr></tr>')
+                    $('table>tbody>.body>td>.basic>table>tbody').append(new_tr);
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+'Number of Basic rule Violation'+' : <span>'+data.length+'</span></td>'))
+
+                    for (var i=0;i<data.length;i++) {
+
+                        $('.basic>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).attr('class')+'">.</div>'));
+                        $('.basic>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).attr('class')+' highlighted">'+
+                                "// " + data[i].Message + '</div>'));
+                        /*
+                        new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.basic>table>tbody').append(new_tr);
+                        new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">Line '+data[i].Line +' : <span>'+data[i].Message+'</span></td>'))*/
+                    }
+                }
+            });
+            $.ajax({
+                type: "get",
+                url: "/Stanly/detail/static",
+                data: {name:getParameter('Project'),nsleft:getParameter('nsleft'),type:'1'},
+                success: function(json){
+                    name = jQuery.parseJSON(json).name;
+                    name = name.replace(/\./gi,'/') + '.java';
+                    $('table>tbody>.body>td>.naming>.title').text(name);
+                    data = jQuery.parseJSON(json).data;
+
+                    $('table>tbody>.body>td>.naming>table>tbody').empty();
+
+                    $('table>tbody>.body>td>.naming>table>tbody').empty();
+
+                    new_tr = $('<tr></tr>')
+                    $('table>tbody>.body>td>.naming>table>tbody').append(new_tr);
+                    new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">'+'Number of Naming rule Violation'+' : <span>'+data.length+'</span></td>'))
+
+                    for (var i=0;i<data.length;i++) {
+                        $('.naming>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.gutter>.number'+data[i].Line).attr('class')+'">.</div>'));
+                        $('.naming>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).after($('<div class="'+$('.naming>div>div>table>tbody>tr>.code>.container>.number'+data[i].Line).attr('class')+' highlighted">'+
+                                "// " + data[i].Message + '</div>'));
+                        /*new_tr = $('<tr></tr>')
+                        $('table>tbody>.body>td>.naming>table>tbody').append(new_tr);
+                        new_tr.append($('<td style="width: 50%;text-align: left;padding-left: 15px;">Line '+data[i].Line +' : <span>'+data[i].Message+'</span></td>'))*/
+                    }
+                }
+            });
+        }
+
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/common",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+                data = jQuery.parseJSON(json).data;
+
+                $('.pollution-content>table>tbody').empty();
+                col = 0;
+                for (property in data) {
+                    if(col%2 == 0)
+                    {
+                        new_tr = $('<tr></tr>')
+                        $('.pollution-content>table>tbody').append(new_tr);
+                    }
+                    new_tr.append($('<td>'+property +': <span>'+data[property]+'</span></td>'))
+                    col++
+                }
+                //{"data":{"Field":0,"Methods":4,"ELOC":19,"Number of Relations":0,"Inner Classes":0}}
+            }
+        });
+
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/source",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json){
+                source = jQuery.parseJSON(json).source;
+                sum = "";
+                for(var i=0;i<source.length;i++)
+                    sum += (source[i] + '\n');
+                $('table>tbody>.body>td>.fat>pre').text(sum);
+                $('table>tbody>.body>td>.basic>pre').text(sum);
+                $('table>tbody>.body>td>.naming>pre').text(sum);
+            }
+        });
+	</script>
+</head>
+
+<body>
+<div id="container" class="architect pollution">
+	<div id="header-container">
+		<div id="sliverLine"></div>
+		<div id="header">
+			<div id="logoBox" class="img"></div>
+			<div id="rightBox">
+				<div id="user-container">
+					<div id="userBox">
+                        <!--
+						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
+						<div class="userName">An Jeungwon</div>-->
+					</div>
+					<div id="userInfoIcon" class="img"></div>
+				</div>
+				<!--user-container fin-->
+			</div>
+		</div>
+		<!--header fin-->
+	</div>
+	<!--header-container fin-->
+
+	<div id="content-container">
+		<div id="content">
+			<div id="content-body"><div id="content-position-change">
+				<div id="content-line"></div>
+				<div id="content-inverted-circle"></div>
+				<div id="overview">
+					<div id="overview-content">
+						<div class="pollution a-circle left">
+							<div class="rotation-circle"><div class="text">A</div></div>
+						</div>
+						<div class="text">Stanly</div>
+					</div>
+					<div id="overview-right">
+						<div class="text">POLLUTION</div>
+						<div class="icon"></div>
+					</div>
+					<div id="triangleS"></div>
+					<div id="triangleE"></div>
+				</div>
+
+				<!--overview fin-->
+				<div id="main">
+					<div class="dashboard-group">
+						<div class="pollution-title">
+							<div class="icon"><img src="../images/icon/class.gif" style="margin-top:2px;" alt="tree" /></div>
+							<div class="title"></div>
+						</div>
+						<div class="pollution-content content-box">
+							<table>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<div class="pollution-footer">
+							<div class="menu">
+								<div class="empty"></div>
+								<div class="fat selected"><div>FAT</div></div>
+								<div class="coupling"><div>Coupling</div></div>
+								<div class="change-propagation"><div>Change Propagation</div></div>
+								<div class="naming"><div>Naming</div></div>
+								<div class="basic"><div>Basic Rule</div></div>
+								<div class="empty"></div>
+							</div>
+							<table>
+								<tbody>
+									<tr class="body">
+										<td colspan="6">
+											<div class="fat show-div">
+												<div class="title"></div>
+												<table>
+													<tbody>
+													</tbody>
+												</table>
+												<pre class="brush: java; first-line: 1; toolbar: false; ">
+												</pre>
+											</div>
+											<div class="coupling hide-div">
+												<table>
+													<tbody>
+														<tr>
+															<td class="icon-td"></td>
+															<td style="width: 50%"></td>
+														</tr>
+													</tbody>
+												</table>
+												<div class="composition">
+                                                    <svg id="MainSVG" style="height:550px">
+                                                        <defs>
+                                                            <marker id="arrowhead"
+                                                                    viewBox="0 0 10 10"
+                                                                    refX="8"
+                                                                    refY="5"
+                                                                    markerUnits="strokeWidth"
+                                                                    markerWidth="8"
+                                                                    markerHeight="5"
+                                                                    orient="auto"
+                                                                    style="fill: #333">
+                                                                <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                                                            </marker>
+                                                        </defs>
+                                                    </svg>
+                                                    <script src="/Stanly/js/d3/lib/d3.v2.min.js"></script>
+                                                    <script src="/Stanly/js/PackageGraph/js/dagre.js"></script>
+                                                    <script src="/Stanly/js/PackageGraph/js/PackageGraph.js"></script>
+                                                    <script>
+                                                        function BuildMainView(){
+                                                            var backup = $('#MainSVG').find('defs');
+                                                            $('#MainSVG').empty();
+                                                            $('#MainSVG').append(backup);
+                                                            var Grapdata = document.querySelector("#inputGraph");
+                                                            var Mainsvg = d3.select("svg");
+                                                            var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
+                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+getParameter('nsleft'));
+                                                        }
+
+                                                        $(function(){
+                                                            BuildMainView();
+                                                        });
+
+                                                    </script>
+												</div>
+											</div>
+											<div class="change-propagation hide-div">
+                                                <div class="title"></div>
+												<table>
+													<tbody>
+														<tr>
+															<td class="icon-td"></td>
+															<td style="width: 50%"></td>
+														</tr>
+													</tbody>
+												</table>
+												<div class="mainview">
+                                                    <div id="chart">
+                                                        <svg style="height:700px; width:700px"></svg>
+                                                    </div>
+                                                    <script>
+                                                        $(document).ready(function(){
+                                                            BuildDistanceChar(2);
+                                                        });
+                                                        function BuildDistanceChar(id)
+                                                        {
+                                                            $.ajax( {
+                                                                type :'GET'
+                                                                ,asyn :true
+                                                                ,url :'/Stanly/component/MartinDistance'
+                                                                ,dataType :"json"
+                                                                ,data:{Name:getParameter('Project'),nodeID:id}
+                                                                //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                                                                ,beforeSend : function(xhr){
+                                                                }
+                                                                ,success : function(jsonData) {
+                                                                    dd = [{key:'A',values:[]},{key:'B',values:[]},{key:'C',values:[]}];
+                                                                    for(var i=0;i<jsonData.metricDistance.length;i++)
+                                                                    {
+                                                                        var idx;
+                                                                        if(Math.abs(jsonData.metricDistance[i].Distance) < 0.5)
+                                                                            idx = 0;
+                                                                        else if(Math.abs(jsonData.metricDistance[i].Distance) < 0.8)
+                                                                            idx = 1;
+                                                                        else
+                                                                            idx = 2;
+
+                                                                        dd[idx].values.push({
+                                                                            x: jsonData.metricDistance[i].instability,
+                                                                            y: jsonData.metricDistance[i].abstractness,
+                                                                            size: jsonData.metricDistance[i].size
+                                                                        });
+
+                                                                    }
+                                                                    DrowDistanceChart(dd);
+                                                                }
+                                                                ,error : function(xhr, textStatus) {
+                                                                }
+                                                                ,complete : function(xhr, textStatus) {
+                                                                }
+                                                            });
+                                                        }
+                                                        function DrowDistanceChart(dd){
+                                                            nv.addGraph(function() {
+                                                                var chart = nv.models.scatterChart()
+                                                                        .showDistX(true)
+                                                                        .showDistY(true)
+                                                                        .color(d3.scale.category10().range());
+
+                                                                chart.xAxis.tickFormat(d3.format('.02f'));
+                                                                chart.yAxis.tickFormat(d3.format('.02f'));
+
+                                                                d3.select('#chart svg')
+                                                                        .datum(dd)
+                                                                        .transition().duration(500)
+                                                                        .call(chart);
+
+                                                                nv.utils.windowResize(chart.update);
+
+                                                                return chart;
+                                                            });
+                                                        }
+
+
+
+
+
+                                                        /**************************************
+                                                         * Simple test data generator
+                                                         */
+
+                                                        function randomData(groups, points) { //# groups,# points per group
+                                                            var data = [],
+                                                                    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+                                                                    random = d3.random.normal();
+
+                                                            for (i = 0; i < groups; i++) {
+                                                                data.push({
+                                                                    key: 'Group ' + i,
+                                                                    values: []
+                                                                });
+
+                                                                for (j = 0; j < points; j++) {
+                                                                    data[i].values.push({
+                                                                        x: random()
+                                                                        , y: random()
+                                                                        , size: Math.random()
+                                                                        //, shape: shapes[j % 6]
+                                                                    });
+                                                                }
+                                                            }
+
+                                                            return data;
+                                                        }
+                                                    </script>
+												</div>
+											</div>
+											<div class="naming hide-div">
+												<div class="title"></div>
+												<table>
+													<tbody>
+														<tr>
+															<td style="padding-left: 20px; text-align: left; width: 100%"></td>
+														</tr>
+													</tbody>
+												</table>
+												<pre class="brush: java; first-line: 1; toolbar: false; ">
+												</pre>
+											</div>
+											<div class="basic hide-div">
+												<div class="title"></div>
+												<table>
+													<tbody>
+														<tr>
+															<td style="padding-left: 20px; text-align: left; width: 100%"></td>
+														</tr>
+													</tbody>
+												</table>
+												<pre class="brush: java; first-line: 1; toolbar: false; ">
+												</pre>
+											</div>
+										</td>
+									</tr>
+									<tr class="bottom-sizing"><td colspan="6"></td></tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--.dashboard-group fin-->
+
+					<div id="popup-info">
+						<div id="popup-tri"></div>
+						<div id="popup-body">
+							<div id="popup-title">Basic Rule</div>
+							<div id="popup-line"></div>
+							<div id="popup-content">PMD를 통해 나온 정보로 규칙 위반의 정도를 보여주는 지표이다.</div>
+						</div>
+					</div>
+				</div>
+				<!--main fin-->
+			</div></div>
+			<!--content-body fin-->
+		</div>
+		<!--content fin-->
+		<div id="sidebar-container-warrper">
+			<div id="sidebar-container">
+				<div id="sidebar">
+					<div id="projectMenu">
+						<a href="project.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">PROJECT</li>
+							</ol>
+						</a>
+					</div>
+					<div id="noneMenu"></div>
+					<div id="dashboardMenu">
+						<div class="shadow"></div>
+						<a href="dashboard.html">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">DASHBOARD</li>
+							</ol>
+						</a>
+						<div class="bottom"></div>
+					</div>
+					<div id="compositionMenu">
+						<a href="composition.html?project=stanly">
+							<ol>
+								<li class="icon"></li>
+								<li class="text">COMPOSITION</li>
+							</ol>
+						</a>
+					</div>
+					<div id="pollutionMenu">
+                        <a>
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">POLLUTION</li>
+                            </ol>
+                        </a>
+                    </div>
+				</div>
+				<!--sidebar fin-->
+			</div>
+		</div>
+	</div>
+	<!--content-container fin-->
+</div>
+
+<script type="text/javascript">
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#72c380", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#eloc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 39
+			},
+			{
+			  key: "Two",
+			  y: 10
+			},
+			{
+			  key: "Three",
+			  y: 51
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#eloc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#eloc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#eloc .graph .bar", (360 * 49 / 100) / 15 * 7 - 180 / 15 * 7);
+
+nv.addGraph(function() {
+	var width = 290 * 2.5,
+		height = 140 * 2.5;
+
+	var chart = nv.models.pieChart()
+		.x(function(d) { return d.key })
+		.values(function(d) { return d })
+		.color([ "#5a9ccc", "#de6262", "#c7c7c7" ])
+		.showLabels(false)
+		.tooltips(false)
+		.width(width)
+		.height(height)
+		.donut(true)
+		.donutRatio(0.55);
+
+	chart.pie
+		.startAngle(function(d) { return d.startAngle/5*2 -Math.PI/5*2 })
+		.endAngle(function(d) { return d.endAngle/5*2 -Math.PI/5*2 });
+
+	  d3.select("#ecoc .graph .donut")
+		  .datum([[
+			{
+			  key: "One",
+			  y: 68
+			},
+			{
+			  key: "Two",
+			  y: 20
+			},
+			{
+			  key: "Three",
+			  y: 12
+			}
+		]])
+		.transition().duration(100)
+		.attr('width', "290")
+		.attr('height', "105")
+		.call(chart);
+	
+	$("#ecoc .graph .donut .nv-pieChart").attr("transform", "translate(-200, -25)");
+	$("#ecoc .graph .donut .nv-legendWrap").remove();
+
+	return chart;
+});
+rotateObject("#ecoc .graph .bar", (360 * 68 / 100) / 15 * 7 - 180 / 15 * 7);
+</script>
+</body>
+</html>
