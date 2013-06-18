@@ -44,6 +44,8 @@
             {
                 if(list[i].Domain.toLowerCase() == 'project') continue;
                 if(list[i].Domain.toLowerCase() == 'library') continue;
+
+                list[i].type = trim(list[i].type);
                 item = $('<li class="'+list[i].type.toLowerCase()+'" id="'+list[i].nsleft+'"></li>');
                 item.append($('<div class="pollution"><img src="../images/pollution/'+list[i].type.toLowerCase()+'.png" alt="fat" /></div>'));
                 item.append($('<div class="rank">'+list[i].rank+'</div>'));

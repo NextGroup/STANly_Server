@@ -89,3 +89,7 @@ function set_title(){
         $("#pollutionMenu>a").attr('href',"pollution.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name'));
     });
 }
+
+function trim(s) {
+    return s.replace(/ /gi, '-');
+}

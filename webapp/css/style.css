@@ -1463,6 +1463,7 @@ div.agraph div.bar {
 #container.svg			#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.svg) no-repeat; }
 #container				#change-propagation-rate .rate-icon,
 #container.decelerate	#change-propagation-rate .rate-icon { background: url(../images/pollution/change-propagation.png) no-repeat; }
+
 #container.svg			#naming-rate .rate-icon { background: url(../images/pollution/naming.svg) no-repeat; }
 #container				#naming-rate .rate-icon,
 #container.decelerate	#naming-rate .rate-icon { background: url(../images/pollution/naming.png) no-repeat; }
