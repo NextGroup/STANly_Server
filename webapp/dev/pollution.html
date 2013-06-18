@@ -31,7 +31,7 @@
         function list_click_handler(eventObject)
         {
             console.log($(this).attr('id'));
-            location.href = 'detail-pollution.html'+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version')+"&nsleft="+$(this).attr('id')+"&fs="+$(this).attr('class')+"&domain="+$(this).children('.domain').attr('id');
+            location.href = 'detail-pollution.html'+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&nsleft="+$(this).attr('id')+"&fs="+$(this).attr('class')+"&domain="+$(this).children('.domain').attr('id');
         }
 
         function make_list(json)
