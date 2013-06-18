@@ -155,8 +155,9 @@ public class RankDAO {
 		PollutionRatioList pList = new PollutionRatioList();
 		try{
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select metric.fatRate ,count(metric.fatRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.fatRate");
+			Query query = session.createQuery("select metric.fatRate ,count(metric.fatRate) from ElementNodeMetric metric where metric.element.commit = ? and metric.fatRate != ? group by metric.fatRate");
 			query.setParameter(0, commit);
+			query.setParameter(1, MetricRate.NO_RATE);
 			List group = query.list();
 			Iterator ite = group.iterator();
 			int LastI = -1;
@@ -199,8 +200,9 @@ public class RankDAO {
 		PollutionRatioList pList = new PollutionRatioList();
 		try{
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select metric.CPRate ,count(metric.CPRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.CPRate");
+			Query query = session.createQuery("select metric.CPRate ,count(metric.CPRate) from ElementNodeMetric metric where metric.element.commit = ? and metric.CPRate != ? group by metric.CPRate");
 			query.setParameter(0, commit);
+			query.setParameter(1, MetricRate.NO_RATE);
 			List group = query.list();
 			Iterator ite = group.iterator();
 			int LastI = -1;
@@ -243,8 +245,9 @@ public class RankDAO {
 		PollutionRatioList pList = new PollutionRatioList();
 		try{
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select metric.CouplingRate ,count(metric.CouplingRate) from ElementNodeMetric metric where metric.element.commit = ? group by metric.CouplingRate");
+			Query query = session.createQuery("select metric.CouplingRate ,count(metric.CouplingRate) from ElementNodeMetric metric where metric.element.commit = ? and metric.CouplingRate != ?group by metric.CouplingRate");
 			query.setParameter(0, commit);
+			query.setParameter(1, MetricRate.NO_RATE);
 			List group = query.list();
 			Iterator ite = group.iterator();
 			int LastI = -1;

@@ -1,4 +1,4 @@
-package stanly.server.Analysis.Model.Metric;
+ package stanly.server.Analysis.Model.Metric;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
