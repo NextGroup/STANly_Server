@@ -78,7 +78,7 @@ function BuildDistanceChar(pname)
                 arr.push([element.abstractness,element.instability,element.size,element.name,element.Distance]);
                 if(element.name == pname)
                 {
-                    flag_data = jsonData.metricDistance[i];
+                    flag_data = [element.abstractness,element.instability,element.size,element.name,element.Distance];
                 }
                 //option.seriesColors.push('#' + Math.round(16*Math.abs(element.Distance)).toString(16) + 'D0');
                 if(element.Distance < 0.5 && element.Distance>-0.5)
@@ -87,7 +87,8 @@ function BuildDistanceChar(pname)
                     option.seriesColors.push('#DDDD00');
             }
             DrowDistanceChart();
-            show_tooltip([flag_data.abstractness,flag_data.instability,flag_data.size,flag_data.name,flag_data.Distance],5);
+            if(flag_data)
+                show_tooltip(flag_data,5);
         }
         ,error : function(xhr, textStatus) {
         }
@@ -95,6 +96,20 @@ function BuildDistanceChar(pname)
         }
     });
 }
+
+function set_flag(name)
+{
+    for(var i=0;i<arr.length;i++)
+    {
+        if(arr[i][3] == name)
+        {
+            flag_data = arr[i];
+            show_tooltip(flag_data,5);
+            break;
+        }
+    }
+}
+
 function DrowDistanceChart(){
     plot1b = $.jqplot('distance',[arr],option);
 
@@ -128,7 +143,7 @@ function DrowDistanceChart(){
         function (ev, seriesIndex, pointIndex, data) {
             $('#tooltip').empty();
             $('#tooltip').hide();
-            show_tooltip([flag_data.abstractness,flag_data.instability,flag_data.size,flag_data.name,flag_data.Distance],5);
+            show_tooltip(flag_data,5);
             //$('#legend1b tr').css('background-color', '#ffffff');
         });
     $('.button-reset').click(function() {

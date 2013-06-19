@@ -10,7 +10,8 @@
 	<link href="../css/style.css" rel="stylesheet" type="text/css">
     <link href="../js/PackageGraph/css/PackageGraph.css" rel="stylesheet" type="text/css">
 
-	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="../js/jqplot/jquery.js"></script>
+    <!--<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>-->
 	<script type="text/javascript" src="../js/arcadia.js"></script>
 
     <script type="text/javascript" src="../js/stanlyutils.js"></script>
@@ -20,10 +21,64 @@
     <script type="text/javascript" src="../js/jstree/jquery.jstree.js"></script>
     <script type="text/javascript" src="../js/ProjectTree.js"></script>
 
+
+    <script type="text/javascript" src="../js/jqplot/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="../js/jqplot/plugins/jqplot.bubbleRenderer.js"></script>
+    <script type="text/javascript" src="../js/jqplot/plugins/jqplot.cursor.js"></script>
+    <script type="text/javascript" src="../js/jqplot/plugins/jqplot.canvasTextRenderer.js"></script>
+    <script type="text/javascript" src="../js/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+    <link rel="stylesheet" href="../js/jqplot/jquery.jqplot.min.css">
+
+    <script type="text/javascript" src="../js/highcharts/js/highcharts.js"></script>
+    <script type="text/javascript" src="../js/highcharts/js/modules/exporting.js"></script>
+
+    <script type="text/javascript" src="../js/RanderDistance.js"></script>
+
+    <style>
+            /*@import url(http://bost.ocks.org/mike/style.css?20120608);*/
+
+        #codesize rect {
+            /*fill: none;*/
+            stroke: #fff;
+            /*fill: #e1e1e8;*//*Children Rect Color*/
+        }
+
+        #codesize rect.parent,
+        .grandparent rect {
+            stroke-width: 2px;
+            stroke: #000;
+            fill: none;
+        }
+
+        #codesize .grandparent rect {
+            fill: #e1e1e8;
+            stroke: #000;
+        }
+
+        #codesize .children rect.parent,
+        #codesize .grandparent rect {
+            cursor: pointer;
+        }
+
+        #codesize rect.parent {
+            pointer-events: all;
+        }
+
+        #codesize .children:hover rect.parent,
+        #codesize .grandparent:hover rect {
+            fill: #777777;/*마우스 오버 되었을때 색*/
+            opacity: 0.5;
+        }
+
+    </style>
+
     <script type="text/javascript">
 
         $(document).ready(function() {
             draw_project_explorer(getParameter('Project'));
+
+            BuildDistanceChar("");
+
         });
 
 
@@ -106,6 +161,258 @@
                 }
             });
         }
+
+
+        //codesize div
+        var csd_root;
+        var csd_margin;
+        var csd_width;
+        var csd_height;
+        var csd_formatNumber;
+        //var csd_transitioning;
+        var csd_x, csd_y;
+        var csd_treemap;
+        var csd_last_d;
+        var csd_svg,csd_grandparent;
+        var csd_transition;
+        $(function(){
+            $('#codesize').empty();
+            DrawCodeSize($("#codesize").width(),$("#codesize").height(),2);
+        });
+        //$(window).resize(codeSizeResizeFunc);
+        function codeSizeResizeFunc(){
+            //var option={
+            //    minWidth: $('.subtitle').width()-0.5,
+            //    maxWidth: $('.subtitle').width()-0.5
+            //}
+            //$("#codesize" ).resizable(option);
+            $("#codesize").width($('.subtitle').width()-0.5);
+            csd_width = $('.subtitle').width()-0.5;
+            csd_height = $("#codesize").height()-csd_margin.top;
+            if(csd_width == csd_root.dx && csd_width == csd_root.dy)
+                return;
+            csd_x = d3.scale.linear()
+                    .domain([0, csd_width])
+                    .range([0, csd_width]);
+
+            csd_y = d3.scale.linear()
+                    .domain([0, csd_height])
+                    .range([0, csd_height]);
+            //csd_svg
+            d3.select("#codesize").select("svg")
+                    .attr("width", csd_width + csd_margin.left + csd_margin.right)
+                    .attr("height", csd_height + csd_margin.bottom + csd_margin.top);
+
+            csd_root.dx = csd_width;
+            csd_root.dy = csd_height;
+            //layout(csd_last_d);
+            layout(csd_root);
+            csd_transition(csd_last_d,-1);
+        }
+        function DrawCodeSize(pallet_width,pallet_height,rootID) {
+
+            //var option={
+            //    minWidth: $('.subtitle').width()-0.5,
+            //    maxWidth: $('.subtitle').width()-0.5,
+            //    minHeight: 300,
+            //    resize: function(event, ui){codeSizeResizeFunc();}
+            //}
+            //$( "#codesize" ).resizable(option);
+
+            csd_margin = {top: 20, right: 0, bottom: 0, left: 0};
+            csd_width = pallet_width;
+            csd_height = pallet_height - csd_margin.top - csd_margin.bottom;
+            csd_formatNumber = d3.format(",d");
+
+            csd_x = d3.scale.linear()
+                    .domain([0, csd_width])
+                    .range([0, csd_width]);
+
+            csd_y = d3.scale.linear()
+                    .domain([0, csd_height])
+                    .range([0, csd_height]);
+
+            csd_treemap = d3.layout.treemap()
+                    .children(function(d, depth) { return depth ? null : d.children; })
+                    .sort(function(a, b) { return a.value - b.value; })
+                    .ratio(csd_height / csd_width * 0.5 * (1 + Math.sqrt(5)))
+                    .round(false);
+
+            csd_svg = d3.select("#codesize").append("svg")
+                    .attr("width", csd_width + csd_margin.left + csd_margin.right)
+                    .attr("height", csd_height + csd_margin.bottom + csd_margin.top)
+                    .style("margin-left", -csd_margin.left + "px")
+                    .style("margin.right", -csd_margin.right + "px")
+                    .append("g")
+                    .attr("transform", "translate(" + csd_margin.left + "," + csd_margin.top + ")")
+                    .style("shape-rendering", "crispEdges");
+
+            csd_grandparent = csd_svg.append("g")
+                    .attr("class", "grandparent");
+
+            csd_grandparent.append("rect")
+                    .attr("y", -csd_margin.top)
+                    .attr("width", "100%")
+                    .attr("height", csd_margin.top);
+
+            csd_grandparent.append("text")
+                    .attr("x", 6)
+                    .attr("y", 6 - csd_margin.top)
+                    .attr("dy", ".75em");
+
+            d3.json("/Stanly/component/CodeSize?Name="+getParameter('Project')+"&nodeID="+rootID, function(root) {
+                root = root;
+                csd_root = csd_last_d = root;
+                initialize(root);
+                accumulate(root);
+                layout(root);
+                display(root);
+            });
+
+
+        }
+        function initialize(root) {
+            root.x = root.y = 0;
+            root.dx = csd_width;
+            root.dy = csd_height;
+            root.depth = 0;
+        }
+
+        // Aggregate the values for internal nodes. This is normally done by the
+        // csd_treemap layout, but not here because of our custom implementation.
+        function accumulate(d) {
+            return d.children
+                    ? d.value = d.children.reduce(function(p, v) { return p + accumulate(v); }, 0)
+                    : d.value;
+        }
+
+        // Compute the csd_treemap layout recursively such that each group of siblings
+        // uses the same size (1×1) rather than the dimensions of the parent cell.
+        // This optimizes the layout for the current zoom state. Note that a wrapper
+        // object is created for the parent node for each group of siblings so that
+        // the parent’s dimensions are not discarded as we recurse. Since each group
+        // of sibling was laid out in 1×1, we must rescale to fit using absolute
+        // coordinates. This lets us use a viewport to zoom.
+        function layout(d) {
+            if (d.children) {
+                csd_treemap.nodes({children: d.children});
+                d.children.forEach(function(c) {
+                    c.x = d.x + c.x * d.dx;
+                    c.y = d.y + c.y * d.dy;
+                    c.dx *= d.dx;
+                    c.dy *= d.dy;
+                    c.parent = d;
+                    layout(c);
+                });
+            }
+        }
+
+        function display(d) {
+            csd_grandparent
+                    .datum(d.parent)
+                    .on("click", transition)
+                    .select("text")
+                    .text(name(d));
+
+            var g1 = csd_svg.insert("g", ".grandparent")
+                    .datum(d)
+                    .attr("class", "depth");
+
+            var g = g1.selectAll("g")
+                    .data(d.children)
+                    .enter().append("g");
+
+            g.filter(function(d) { return d.children; })
+                    .classed("children", true)
+                    .on("click", transition);
+
+            g.selectAll(".child")
+                    .data(function(d) { return d.children || [d]; })
+                    .enter().append("rect")
+                    .attr("class", "child")
+                    .style("fill",function(d) {
+                        //d.
+                        //return "#" + d.value.toString();
+                        return "#" + Math.round((16 * d.value / d.parent.value)).toString(16) + "F0";
+                        return "#e1e1e1";
+                    })
+                    .call(rect);
+
+            g.append("rect")
+                    .attr("class", "parent")
+                    .call(rect)
+                    .append("title")
+                //.style("fill","#FFFFFF")
+                    .text(function(d) { return csd_formatNumber(d.value); });
+
+            g.append("text")
+                    .attr("dy", ".75em")
+                    .text(function(d) { return d.name; })
+                    .call(text);
+            csd_transition = transition;
+            function transition(d,event) {
+                //if (csd_transitioning || !d) return;
+                if(!d)  return;
+                csd_last_d = d;
+                //csd_transitioning = true;
+
+                //console.log(d);
+                //console.log(csd_transitioning);
+                var g2 = display(d);
+                var duration;
+                if(event != -1) duration = 750;
+                else            duration = 0;
+
+                var t1 = g1.transition().duration(duration);
+                var t2 = g2.transition().duration(duration);
+
+                // Update the domain only after entering new elements.
+                csd_x.domain([d.x, d.x + d.dx]);
+                csd_y.domain([d.y, d.y + d.dy]);
+
+                // Enable anti-aliasing during the transition.
+                csd_svg.style("shape-rendering", null);
+
+                // Draw child nodes on top of parent nodes.
+                csd_svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
+
+                // Fade-in entering text.
+                g2.selectAll("text").style("fill-opacity", 0);
+
+                // Transition to the new view.
+                t1.selectAll("text").call(text).style("fill-opacity", 0);
+                t2.selectAll("text").call(text).style("fill-opacity", 1);
+                t1.selectAll("rect").call(rect);
+                t2.selectAll("rect").call(rect);
+
+                // Remove the old node when the transition is finished.
+                t1.remove().each("end", function() {
+                    csd_svg.style("shape-rendering", "crispEdges");
+                    //csd_transitioning = false;
+                    //console.log(csd_transitioning);
+                });
+            }
+
+            return g;
+        }
+
+        function text(text) {
+            text.attr("x", function(d) { return csd_x(d.x) + 6; })
+                    .attr("y", function(d) { return csd_y(d.y) + 6; });
+        }
+
+        function rect(rect) {
+            rect.attr("x", function(d) { return csd_x(d.x); })
+                    .attr("y", function(d) { return csd_y(d.y); })
+                    .attr("width", function(d) { return csd_x(d.x + d.dx) - csd_x(d.x); })
+                    .attr("height", function(d) { return csd_y(d.y + d.dy) - csd_y(d.y); });
+        }
+
+        function name(d) {
+            return d.parent
+                    ? name(d.parent) + "." + d.name
+                    : d.name;
+        }
     </script>
 
 </head>
@@ -146,6 +453,19 @@
                                         var Mainsvg = d3.select("svg");
                                         var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
                                         var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id);
+
+                                        $('#codesize').empty();
+                                        DrawCodeSize($("#codesize").width(),$("#codesize").height(),id);
+                                        BuildPollutionMainView(id,name);
+                                        $.ajax({
+                                            type: "get",
+                                            url: "/Stanly/detail/fat",
+                                            data: {name:getParameter('Project'),nsleft:id},
+                                            success: function(json){
+                                                name = jQuery.parseJSON(json).name;
+                                                set_flag(name);
+                                            }
+                                        });
                                     }
 
                                     $(function(){
@@ -154,11 +474,20 @@
 
                                 </script>
 							</td>
-							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);">
+                                <div id="pollution" style="height: 350px; border:1px; height:300px"></div>
+                                <!--오염도 그래프 그리-->
+                                <script type="text/javascript" src="../js/RanderPollution.js"></script>
+							</td>
 						</tr>
 						<tr class="composition-view">
-							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
-							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);">
+                                <div id="codesize" style="background-color: #e1e1e8;height: 300px;"></div><!-- 코드사이즈 배경 -->
+                            </td>
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);">
+                                <div id="distance" style="height:100%;"></div>
+                                <div id="tooltip" style="height:100px; width:300px; position:absolute"></div>
+							</td>
 						</tr>
 
                         <tr class="information"  style="height: 170px">
