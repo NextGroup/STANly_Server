@@ -405,9 +405,9 @@ Graph.prototype.update = function() {
        	 .y(function(e) { return e.y; })
        	 .interpolate("linear")
        	 (points);
-        }).attr("stroke",function(d) {  
+        }).attr("stroke",function(d) {
 
-      return (d.tangled) ? "#f00":"#000" });
+      return (d.source.dagre.y>d.target.dagre.y) ? "#f00":"#000" });
 
     this.svgGroup
  	   .selectAll("g."+this.id+"-label rect")

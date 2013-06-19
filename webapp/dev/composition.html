@@ -179,8 +179,9 @@
 
 
                                                         var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id, null ,function(d){
-                                                            console.log(d.source.id);
-                                                            console.log(d.target.id);
+                                                            console.log(d);
+                                                            console.log(d.source);
+                                                            console.log(d.target);
                                                         });
                                                     }
 
