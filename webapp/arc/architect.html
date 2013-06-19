@@ -25,6 +25,87 @@
         $(document).ready(function() {
             draw_project_explorer(getParameter('Project'));
         });
+
+
+        var table;
+        function BuildDetailList(id){
+            $.ajax( {
+                type :'GET'
+                ,asyn :true
+                ,url :'/Stanly/component/RelationList'
+                ,dataType :"json"
+                ,data:{Name:getParameter('Project'),SrcID:id}
+                //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                ,beforeSend : function(xhr){
+                }
+                ,success : function(jsonData) {
+                    table = jsonData.relation;
+
+                    $('.relations>.content-box').empty();
+                    $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+                    if(table.length < 4)
+                    {
+                        for(var i=0;i<table.length;i++)
+                        {
+                            templi = $('<li></li>');
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                            $('.relations>.content-box').append(templi);
+                        }
+                    }
+                    else
+                    {
+                        for(var i=0;i<3;i++)
+                        {
+                            templi = $('<li></li>');
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                            $('.relations>.content-box').append(templi);
+                        }
+                        $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
+                    }
+                    /*<li>
+                     <div class="source">Source</div>
+                     <div class="relation">Relation</div>
+                     <div class="target">Target</div>
+                     </li>
+                     <li class="center">··· 125 More ···</li>*/
+                }
+                ,error : function(xhr, textStatus) {
+                }
+                ,complete : function(xhr, textStatus) {
+                }
+            });
+
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/Stanly/linkdev/list",
+                data: {name:getParameter('Project'),nsleft:id},
+                success: function(json)
+                {
+                    devs = jQuery.parseJSON(json).list;
+                    $('.developer>.title')
+                            .text(devs.length)
+                            .append($('<span>Members</span>'));
+
+                    $('.developer>.content-box').empty();
+
+                    if(devs.length<4)
+                    {
+                        for(var i=0;i<devs.length;i++)
+                            $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                    }
+                    else
+                    {
+                        for(var i=0;i<3;i++)
+                            $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                        $('.developer>.content-box').append($('<li class="center">··· More members ···</li>'))
+                    }
+                }
+            });
+        }
     </script>
 
 </head>
@@ -37,35 +118,68 @@
 				<table>
 					<tbody>
 						<tr class="composition-view">
-							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
+							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05); height:300px">
+                                <svg id="MainSVG" style="height:100%">
+                                    <defs>
+                                        <marker id="arrowhead"
+                                                viewBox="0 0 10 10"
+                                                refX="8"
+                                                refY="5"
+                                                markerUnits="strokeWidth"
+                                                markerWidth="8"
+                                                markerHeight="5"
+                                                orient="auto"
+                                                style="fill: #333">
+                                            <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                                        </marker>
+                                    </defs>
+                                </svg>
+                                <script src="/Stanly/js/d3/lib/d3.v2.min.js"></script>
+                                <script src="/Stanly/js/PackageGraph/js/dagre.js"></script>
+                                <script src="/Stanly/js/PackageGraph/js/PackageGraph.js"></script>
+                                <script>
+                                    function BuildMainView(id,name){
+                                        var backup = $('#MainSVG').find('defs');
+                                        $('#MainSVG').empty();
+                                        $('#MainSVG').append(backup);
+                                        var Grapdata = document.querySelector("#inputGraph");
+                                        var Mainsvg = d3.select("svg");
+                                        var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
+                                        var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id);
+                                    }
+
+                                    $(function(){
+                                        BuildMainView(1);
+                                    });
+
+                                </script>
+							</td>
 							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
 						</tr>
 						<tr class="composition-view">
 							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
 							<td style="width: 50%; border-left: 1px solid rgba(0, 0, 0, 0.05);"></td>
 						</tr>
-						<tr class="information" style="height: 170px">
-							<td colspan="2">
-								<div class="relations" style="height: auto;">
-									<ol class="content-box">
-										<li class="head">Source</li>
-										<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
-										<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule</li>
-										<li>net.sourceforge.pmd.lang.rule.AbstractDelegateFlule.addExample(String)</li>
-										<li class="center">··· 125 More ···</li>
-									</ol>
-								</div>
-								<div class="developer" style="height: auto;">
-									<div class="icon"></div>
-									<div class="title">51<span>Members</span></div>
-									<ol class="content-box">
-										<li>Nicolas Rodriguez</li>
-										<li>Dan Carpenter</li>
-										<li>Eric Cooper</li>
-										<li class="center">··· 25 Members ···</li>
-									</ol>
-								</div>
-							</td>
+
+                        <tr class="information"  style="height: 170px">
+                            <td colspan="2">
+                                <div class="relations"  style="height: auto;">
+                                    <ol class="content-box">
+                                        <li id="relation-head">
+                                            <div class="source hover">Source</div>
+                                            <div class="relation hover">Relation</div>
+                                            <div class="target hover">Target</div>
+                                        </li>
+                                    </ol>
+                                </div>
+                                <div class="developer">
+                                    <div class="icon"></div>
+                                    <div class="title">0<span>Members</span></div>
+                                    <ol class="content-box">
+                                    </ol>
+                                </div>
+                            </td>
+                            <td class="right-white-area"></td>
 						</tr>
 					</tbody>
 				</table>
