@@ -23,7 +23,7 @@
         $(document).ready(function() {
             set_title();
             $("#add-project").click(function(eventObject){
-                location.href = "/Stanly/clone/index.jsp"+"?Name="+getParameter('Name');
+                location.href = "/Stanly/clone/index.jsp"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version');
             })
         });
         $.ajax({
@@ -68,7 +68,7 @@
                     howold = date.getDay() - d.lday;
                 }
 
-                newpjt = $('<a href="project.html?Project='+d.pname+'&Name='+getParameter('Name')+'"></a>');
+                newpjt = $('<a href="project.html?Project='+d.pname+'&Name='+getParameter('Name')+"&Version="+getParameter('Version')+'"></a>');
                 if(i == pjtdata.length)
                     $('#project-list-top').append(newpjt);
                 else

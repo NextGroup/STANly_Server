@@ -73,7 +73,7 @@ function set_title(){
     $.ajax({
         type: "get",
         url: "/Stanly/common/pollution/static",
-        data: {name:getParameter('Project'),mode:"0"},
+        data: {name:getParameter('Project'),mode:(getParameter('Version')=="Developer"?"0":"1")},
         success: function(json)
         {
             rate = jQuery.parseJSON(json).list;
@@ -83,10 +83,10 @@ function set_title(){
     });
     $(document).ready(function() {
         $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
-        $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name'));
-        $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name'));
-        $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name'));
-        $("#pollutionMenu>a").attr('href',"pollution.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name'));
+        $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"?Version="+getParameter('Name'));
+        $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"?Version="+getParameter('Name'));
+        $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"?Version="+getParameter('Name'));
+        $("#pollutionMenu>a").attr('href',"pollution.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"?Version="+getParameter('Name'));
     });
 }
 
