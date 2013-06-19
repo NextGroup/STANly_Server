@@ -67,7 +67,7 @@
                     howold = date.getDay() - d.lday;
                 }
 
-                newpjt = $('<a href="project.html?Project='+d.pname+'&Name='+getParameter('Name')+'&Version='+getParameter('Version')+'"></a>');
+                newpjt = $('<a href="project.html?Project='+d.pname+'&Name='+getParameter('Name')+'"></a>');
                 if(i == pjtdata.length)
                     $('#project-list-top').append(newpjt);
                 else

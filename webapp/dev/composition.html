@@ -33,7 +33,7 @@
         });
 
 
-
+        var devs;
         var table;
         function BuildDetailList(id){
             $.ajax( {
@@ -109,6 +109,11 @@
                         for(var i=0;i<3;i++)
                             $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
                         $('.developer>.content-box').append($('<li class="center">··· More members ···</li>'))
+                        $('.developer>.content-box>.center').click(function(){
+                            $('.developer>.content-box').empty();
+                            for(var i=0;i<devs.length;i++)
+                                $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                        })
                     }
                 }
             });

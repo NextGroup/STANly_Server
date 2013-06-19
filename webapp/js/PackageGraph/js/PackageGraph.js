@@ -403,7 +403,7 @@ Graph.prototype.update = function() {
        	 .interpolate("linear")
        	 (points);
         }).attr("stroke",function(d) {  
-
+              console.log(d);
       return (d.tangled) ? "#f00":"#000" });
 
     this.svgGroup
