@@ -26,6 +26,15 @@ public class MetricListController {
 	@Qualifier("metricViewService")
 	private MetricViewService metricView;
 	
+	
+	
+	@RequestMapping(value = "/composition/rlist", method=RequestMethod.GET)
+	@ResponseBody
+	public String getRelation(@RequestParam("name") String name,@RequestParam("src") int SrcID,@RequestParam("tar") int TarID,HttpServletResponse response) throws Exception {
+			logger.info("relation"+ SrcID );
+			return metricView.getRelation(name, SrcID,TarID);
+	}
+	
 	/**
 	 * 릴레이션 정보들을 가져온다. 
 	 * @param name

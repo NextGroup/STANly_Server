@@ -20,7 +20,7 @@ function createRequst(){
 var MainGraph;
 var clickNodeList = new Array();
 
-Graph = function(svg, svgGroup, GraphId, graphML,nodeevent){
+Graph = function(svg, svgGroup, GraphId, graphML,nodeevent, edgeEvent){
 
 	this.nodes;
 	this.edges;
@@ -36,6 +36,8 @@ Graph = function(svg, svgGroup, GraphId, graphML,nodeevent){
 
 	if(nodeevent!==null)
 		this.nodeevent = nodeevent;
+    if(edgeEvent!==null)
+    this.EdgeEv = edgeEvent;
 
 		self.GMLData = eval('('+this.request.responseText+')').dot;
 
@@ -176,8 +178,9 @@ Graph.prototype.draw = function(nodeData, edgeData) {
   
 
   this.edges.on("click", function(d) {
-
-	  })
+                     if(self.EdgeEv !==null)
+                        self.EdgeEv(d);
+  })
 	  
   this.edges.exit().remove();
 
@@ -268,7 +271,7 @@ Graph.prototype.addLabels = function(selection) {
 		var subGroup = subSvg.append("g").attr("id",SubArray[i]).each(function(d){
 				subgraphData = d.subgraph;
 		});
-	 self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData, self.nodeevent));	
+	 self.subGraphList.push(new Graph(subSvg, subGroup, SubArray[i],subgraphData, self.nodeevent,self.EdgeEv));
 	 	
 	 	subSvg.attr("width",subGroup.node().getBBox().width+10);	
 	 	//svg 테그가 자동적으로 크기를 리사이징 해주는줄 알았는데 그게 아님 이거 없으면 에러 남

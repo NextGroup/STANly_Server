@@ -224,6 +224,8 @@ public class RelationDAO {
 	}
 	
 	
+	
+	
 	/**
 	 *  해당하는 릴레이션의 갯수를 리턴한다. 
 	 * @param CommitID
