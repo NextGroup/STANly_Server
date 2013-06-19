@@ -74,7 +74,9 @@
                             .height(156)
                             .color([ color, "#949494" ])
                             .donut(true)
-                            .donutRatio(0.5);
+                            .donutRatio(0.5)
+                            .showLabels(true)
+                            .labelThreshold(.05);
 
                     d3.select("#fat-pol")
                             .datum([fat_data])
@@ -87,6 +89,7 @@
                 });
             }
         });
+
 
         $.ajax({
             type: "get",
@@ -276,10 +279,13 @@
 										<div class="rate-icon"></div>
 										<div class="rate-name">FAT</div>
 									</div>
-									<div class="pollution-rate-content">
-										<svg id="fat-pol"></svg>
-										<div class="rate-level"></div>
-									</div>
+
+                                    <div class="pollution-rate-content">
+                                        <a href="#">
+                                            <svg id="fat-pol"></svg>
+                                        </a>
+                                        <div class="rate-level"></div>
+                                    </div>
 									<!--.pollution-rate-content fin -->
 								</div>
 								<!--fat-rate fin-->
@@ -291,7 +297,9 @@
 										<div class="rate-name">Coupling</div>
 									</div>
 									<div class="pollution-rate-content">
-										<svg id="coupling-pol"></svg>
+                                        <a href="#">
+										    <svg id="coupling-pol"></svg>
+                                        </a>
 										<div class="rate-level"></div>
 
 									</div>

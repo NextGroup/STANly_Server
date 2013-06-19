@@ -21,6 +21,7 @@
     <script type="text/javascript">
         var cur_prj;
         $(document).ready(function() {
+            set_title();
             $("#add-project").click(function(eventObject){
                 location.href = "/Stanly/clone/index.jsp"+"?Name="+getParameter('Name');
             })
@@ -67,7 +68,7 @@
                     howold = date.getDay() - d.lday;
                 }
 
-                newpjt = $('<a href="project.html?Project='+d.pname+'&Name='+getParameter('Name')+'&Version='+getParameter('Version')+'"></a>');
+                newpjt = $('<a href="project.html?Project='+d.pname+'&Name='+getParameter('Name')+'"></a>');
                 if(i == pjtdata.length)
                     $('#project-list-top').append(newpjt);
                 else
@@ -139,43 +140,6 @@
 				<div id="overview">
 					<div class="text">Current Project</div>
 					<div id="project-list-top">
-                        <!--
-						<a href="project.html?project=stanly">
-							<div class="list-item">
-								<div class="info">
-									<div class="project-name">Stanly</div>
-									<div class="project-date">April 2013 - May 2013 <span class="normal">(1 month ago)</span></div>
-								</div>
-								<div class="pollution a-circle">
-									<div class="rotation-circle"><div class="text">A</div></div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="basic right a-rate">
-									<div class="box">
-										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-									</div>
-									<div class="rate">A</div>
-									<div class="text">BASIC RULE</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="naming b-rate">
-									<div class="donut"><div class="rate">B</div></div>
-									<div class="text">NAMING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="coupling c-rate">
-									<div class="thread"></div>
-									<div class="text">COUPLING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="fat f-rate">
-									<div class="wide"><div class="rate">F</div></div>
-									<div class="text">FAT</div>
-								</div>
-								<div class="sliderr"></div>
-							</div>
-						</a>
-					    <!--stanly fin-->
 					</div>
 					<ol>
 						<li class="pollution-graph">
