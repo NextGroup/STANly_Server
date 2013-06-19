@@ -235,14 +235,26 @@
                 for(var i=0;i<data.length;i++)
                 {
                     new_li = $('<li></li>');
-                    new_li.append($('<div class="picture"><div class="circle_wrapper"></div>'));
+                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i].Devloper+'"></div></div>'));
                     new_li.append($('<div class="name-id">'+data[i].Devloper+'</div>'));
                     new_li.append($('<div class="commit">'+data[i].Commit+'</div>'));
                     new_li.append($('<div class="rank">'+data[i].TotalScore+'</div>'));
 
+
+
                     $('#pollution-head').parent().append(new_li);
 
+
                 }
+
+                function set_avarta(json){
+                    $('.picture>#'+json.login).append($('<img src="'+ json.avatar_url +'" alt="profile" />'));
+                }
+                $.ajax({
+                    type: "get",
+                    url: "https://api.github.com/users/"+getParameter('Name'),
+                    success: set_avarta
+                });
 
                 //"{"list":[{"Devloper":"YangHyunchul","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":83,"TotalScore":"C"},{"Devloper":"sjdmldi","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":53,"TotalScore":"C"},{"Devloper":"karuana","CPRank":"F","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":10,"TotalScore":"C"}]}"
             }

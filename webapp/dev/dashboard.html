@@ -21,6 +21,7 @@
     <script type="text/javascript">
         var cur_prj;
         $(document).ready(function() {
+            set_title();
             $("#add-project").click(function(eventObject){
                 location.href = "/Stanly/clone/index.jsp"+"?Name="+getParameter('Name');
             })

@@ -73,7 +73,7 @@ function set_title(){
     $.ajax({
         type: "get",
         url: "/Stanly/common/pollution/static",
-        data: {name:getParameter('Project')},
+        data: {name:getParameter('Project'),mode:"0"},
         success: function(json)
         {
             rate = jQuery.parseJSON(json).list;
