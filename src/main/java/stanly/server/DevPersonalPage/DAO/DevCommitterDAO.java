@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import stanly.server.GitProject.Model.ProjectCommit;
+import stanly.server.GitProject.Model.ProjectInfo;
 import stanly.server.GitProject.Model.committer.ProjectCommitter;
 
 @Repository
@@ -45,6 +46,28 @@ public class DevCommitterDAO {
 			return committerProject;
 		}
 		return committerProject;
+	}
+
+	public List<ProjectInfo> getHMode()
+	{
+		List<ProjectInfo> projectList = null;
+		
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			
+			//쿼리에 테이블 명이 아닌 클래스명을 써야 한다.
+		
+			 Criteria crit = session.createCriteria(ProjectInfo.class);
+
+			 crit.addOrder(Order.desc("pid"));
+			 projectList =  crit.list();
+
+		}catch(Exception e)
+		{
+			logger.error(e);
+			return null;
+		}
+		return projectList;
 	}
 
 	

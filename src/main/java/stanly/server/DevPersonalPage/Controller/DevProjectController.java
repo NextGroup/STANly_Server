@@ -30,4 +30,11 @@ public class DevProjectController {
 			logger.info("Start");
 			return gson.toJson(DevProject.getCommitterProject(name));
 	}
+	@RequestMapping(value = "/projectH", method=RequestMethod.GET)
+	@ResponseBody
+	public String getHmode(HttpServletResponse response) throws Exception {
+			Gson gson = new Gson();
+			logger.info("Start");
+			return gson.toJson(DevProject.getHModeService());
+	}
 }

@@ -240,7 +240,7 @@ public class ClassMetric extends ElementNodeMetric {
 		NOFRate = fields;
 		NOMRate = methods;
 		ELOCRate = eloc;
-		fatRate = (int) Math.ceil((methods+fields+eloc)/3.0f);
+		fatRate = (int) Math.round((methods+fields+eloc)/3.0f);
 		
 		if(DIT<5)
 			DITRate = CPRate = MetricRate.A_RATE;
@@ -256,8 +256,8 @@ public class ClassMetric extends ElementNodeMetric {
 		int fRate = (Fat<60) ? MetricRate.A_RATE: ((Fat<120) ? MetricRate.B_RATE: MetricRate.C_RATE);
 		CCRate = (WMC<50) ? MetricRate.A_RATE: ((WMC<100) ? MetricRate.B_RATE: ((WMC<200) ? MetricRate.C_RATE: MetricRate.F_RATE));
 		NoRRate = fRate;
-		CouplingRate = (cboRate+rfcRate+fRate)/3;
+		CouplingRate = Math.round((cboRate+rfcRate+fRate)/3.0f);
 		
-		TotalRate = (fatRate +CPRate+ CouplingRate)/3;
+		TotalRate = Math.round((fatRate +CPRate+ CouplingRate)/3.0f);
 	}
 }

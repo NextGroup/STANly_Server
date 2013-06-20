@@ -24,16 +24,19 @@ public class RateData {
 
 	public void addFat(int f)
 	{
+		if(f==5) return;
 		fat= (fat> f) ? fat:f;
 		fatCount++;
 	}
 	public void addCprate(int cp)
 	{
+		if(cp==5) return;
 		cprate = (cprate > cp) ? cprate: cp;
 		cpCount++;
 	}
 	public void addCorate(int co)
 	{
+		if(co==5) return;
 		corate = (corate > co ) ? corate: co;
 		coCount++;
 	}

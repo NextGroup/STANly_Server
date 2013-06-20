@@ -29,4 +29,12 @@ public class ArchProjectController {
 			logger.info("Start");
 			return gson.toJson(archView.getCommitterProject(name));
 	}
+	
+	@RequestMapping(value = "/projectH", method=RequestMethod.GET)
+	@ResponseBody
+	public String getRelationSrc(HttpServletResponse response) throws Exception {
+			Gson gson = new Gson();
+			logger.info("Start");
+			return gson.toJson(archView.getHmode());
+	}
 }

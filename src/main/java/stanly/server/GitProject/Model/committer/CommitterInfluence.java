@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import stanly.server.Analysis.Model.ProjectElementNode;
 import stanly.server.GitProject.Model.ProjectInfo;
 
 @Entity
@@ -23,6 +24,7 @@ public class CommitterInfluence {
 	
 	@Column(name = "INFLUENCE")
 	private String influenceClass;
+	
 	
 	@ManyToOne( targetEntity  = stanly.server.GitProject.Model.ProjectInfo.class)
 	@JoinColumn(name = "PROJECT_ID", nullable = false)

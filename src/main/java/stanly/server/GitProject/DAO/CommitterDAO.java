@@ -3,6 +3,7 @@ package stanly.server.GitProject.DAO;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -58,4 +59,7 @@ public class CommitterDAO {
 		}
 		return data;
 	}
+	
+	
+
 }

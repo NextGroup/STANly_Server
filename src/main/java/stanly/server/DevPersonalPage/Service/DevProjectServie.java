@@ -40,4 +40,21 @@ public class DevProjectServie {
 		
 		return list;
 	}
+	
+	public DevProjectList getHModeService(){
+		DevProjectList list = new DevProjectList();
+		
+		for(ProjectInfo pinfo: committerDao.getHMode())
+		{
+			DevProjectInfo info = new DevProjectInfo();
+
+			info.setPollutionRank(MetricRate.ChangeRate(pinfo.getFAT_RANK()), MetricRate.ChangeRate(pinfo.getCoplingRANK()), MetricRate.ChangeRate(pinfo.getName_RANK()), MetricRate.ChangeRate(pinfo.getBasic_RANK()));
+			info.setPRank(MetricRate.ChangeRate(Math.round((pinfo.getFAT_RANK()+pinfo.getBasic_RANK()+pinfo.getCoplingRANK()+pinfo.getName_RANK())/4.0f)));
+			info.setPName(pinfo.getName()).setStartDay(pinfo.getFirstDate().getYear()+1900, pinfo.getFirstDate().getMonth()+1, pinfo.getFirstDate().getDate());
+			info.setLastDay(pinfo.getLastDate().getYear()+1900, pinfo.getLastDate().getMonth()+1, pinfo.getLastDate().getDate());
+			list.addInfo(info);
+		}
+		
+		return list;
+	}
 }

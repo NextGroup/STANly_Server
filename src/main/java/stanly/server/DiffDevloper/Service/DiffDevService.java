@@ -2,6 +2,7 @@ package stanly.server.DiffDevloper.Service;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class DiffDevService {
 	@Autowired
 	private ProjectDAO projectDAO;
 	
+	@Cacheable(value="DiffDev")
 	public String getDiffDev(String name)
 	{
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(name));

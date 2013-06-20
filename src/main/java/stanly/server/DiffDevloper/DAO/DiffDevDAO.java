@@ -101,7 +101,8 @@ public class DiffDevDAO {
 		DiffDevList diff = new DiffDevList();
 		try{
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select CI.committer, EM.EMetric.fatRate, EM.EMetric.CPRate,EM.EMetric.CouplingRate, EM.NSLeft from CommitterInfluence CI, ProjectElementNode EM where CI.influenceClass = EM.SingleName and (CI.PInfo = ? and EM.commit = ?)");
+
+			Query query = session.createQuery("select CI.committer, EM.EMetric.fatRate, EM.EMetric.CPRate,EM.EMetric.CouplingRate from CommitterInfluence CI, ProjectElementNode EM where CI.influenceClass = EM.SingleName and (CI.PInfo = ? and EM.commit = ?)");	
 			query.setParameter(0, commit.getPInfo());
 			query.setParameter(1, commit);
 			List list = query.list();

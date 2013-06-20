@@ -1,4 +1,4 @@
-package stanly.server.CommonView.Controller;
+	package stanly.server.CommonView.Controller;
 
 import javax.servlet.http.HttpServletResponse;
 
