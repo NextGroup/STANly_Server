@@ -155,9 +155,11 @@ public class RankDAO {
 		PollutionRatioList pList = new PollutionRatioList();
 		try{
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("select metric.fatRate ,count(metric.fatRate) from ElementNodeMetric metric where metric.element.commit = ? and metric.fatRate != ? group by metric.fatRate");
+			Query query = session.createQuery("select metric.fatRate ,count(metric.fatRate) from ElementNodeMetric metric where metric.element.commit = ? and  metric.type != ? and metric.type != ? and metric.fatRate != ? group by metric.fatRate");
 			query.setParameter(0, commit);
-			query.setParameter(1, MetricRate.NO_RATE);
+			query.setParameter(1, NodeType.METHOD);
+			query.setParameter(2, NodeType.FIELD);
+			query.setParameter(3, MetricRate.NO_RATE);
 			List group = query.list();
 			Iterator ite = group.iterator();
 			int LastI = -1;
@@ -181,7 +183,12 @@ public class RankDAO {
 
 			}
 			if(LastI==1)
+			{
 				pList.insertRatio("A", Total);
+				pList.insertRatio("etc", 0);
+				
+				
+			}
 			else
 			{
 				pList.insertRatio(RateChange(LastI),LastData);
