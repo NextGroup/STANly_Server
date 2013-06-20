@@ -33,7 +33,7 @@
         });
 
 
-        var devs;
+
         var table;
         function BuildDetailList(id){
             $.ajax( {
@@ -72,6 +72,19 @@
                             $('.relations>.content-box').append(templi);
                         }
                         $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
+                        $('.relations>.content-box>.center').click(function(){
+                            $('.relations>.content-box').empty();
+                            $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+
+                            for(var i=0;i<table.length;i++)
+                            {
+                                templi = $('<li></li>');
+                                templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                                templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                                templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                                $('.relations>.content-box').append(templi);
+                            }
+                        })
                     }
                     /*<li>
                      <div class="source">Source</div>
@@ -86,6 +99,7 @@
                 }
             });
 
+            var devs;
             $.ajax({
                 type: "get",
                 url: "http://localhost:8080/Stanly/linkdev/list",
@@ -149,7 +163,7 @@
 				<div id="content-inverted-circle"></div>
 				<div id="main">
 					<div class="dashboard-group wide-area">
-						<div class="group">
+						<div class="group" style="overflow: auto;">
 							<div class="right-content-area">
 								<table>
 									<tbody>
