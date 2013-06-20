@@ -168,6 +168,7 @@ var developer_img_list =
     "https://secure.gravatar.com/avatar/e5db3e98a858066748db3f817be7bc01?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/fa5767c967d4733b5937d4e9c265ee4b?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/956c7d246841e8507a1e1b96842994db?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
+    "https://secure.gravatar.com/avatar/f3cf3032aee769be35d1505dcd43eeba?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/8a1aabc40d859fcb786eb4d28b95d299?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/b336afe083d837848d94891e59ff3e82?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/3d940f701f1bc6bf922f910258e19698?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
