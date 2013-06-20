@@ -4,14 +4,23 @@ public class Relation {
 	private String Sources;
 	private String Relations;
 	private String Targets;
+	private int srcid;
+	private int tarid;
 	
 	
-	
-	public Relation(String sources, String targets, String relations ) {
+	public Relation(String sources, String relations, String targets) {
 		super();
 		Sources = sources;
 		Relations = relations;
 		Targets = targets;
+	}
+	public Relation(String sources, String targets, String relations,int src,int tar ) {
+		super();
+		Sources = sources;
+		Relations = relations;
+		Targets = targets;
+		srcid = src;
+		tarid=tar;
 	}
 	public String getSources() {
 		return Sources;

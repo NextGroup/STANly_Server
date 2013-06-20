@@ -81,9 +81,81 @@
 
         });
 
+        function RelationList(jsonData) {
+            table = jsonData.relation;
+
+            $('.relations>.content-box').empty();
+            $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+            if(table.length < 4)
+            {
+                for(var i=0;i<table.length;i++)
+                {
+                    templi = $('<li></li>');
+                    if(table[i].srcid !=0)
+                    {
+                        templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                    }
+                    else
+                    {
+                        templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    }
+
+                    $('.relations>.content-box').append(templi);
+                }
+            }
+            else
+            {
+                for(var i=0;i<3;i++)
+                {
+                    templi = $('<li></li>');
+                    if(table[i].srcid !=0)
+                    {
+                        templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                    }
+                    else
+                    {
+                        templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    }
+                    $('.relations>.content-box').append(templi);
+                }
+                $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
+                $('.relations>.content-box>.center').click(function(){
+                    $('.relations>.content-box').empty();
+                    $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+
+                    for(var i=0;i<table.length;i++)
+                    {
+                        templi = $('<li></li>');
+                        if(table[i].srcid !=0)
+                        {
+                            templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                        }
+                        else
+                        {
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                        }
+                        $('.relations>.content-box').append(templi);
+                    }
+                })
+            }
+        }
+
 
         var table;
         function BuildDetailList(id){
+            var self = this;
             $.ajax( {
                 type :'GET'
                 ,asyn :true
@@ -93,50 +165,18 @@
                 //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
                 ,beforeSend : function(xhr){
                 }
-                ,success : function(jsonData) {
-                    table = jsonData.relation;
+                ,success : self.RelationList
 
-                    $('.relations>.content-box').empty();
-                    $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
-                    if(table.length < 4)
-                    {
-                        for(var i=0;i<table.length;i++)
-                        {
-                            templi = $('<li></li>');
-                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
-                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
-                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
-                            $('.relations>.content-box').append(templi);
-                        }
-                    }
-                    else
-                    {
-                        for(var i=0;i<3;i++)
-                        {
-                            templi = $('<li></li>');
-                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
-                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
-                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
-                            $('.relations>.content-box').append(templi);
-                        }
-                        $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
-                    }
-                    /*<li>
-                     <div class="source">Source</div>
-                     <div class="relation">Relation</div>
-                     <div class="target">Target</div>
-                     </li>
-                     <li class="center">··· 125 More ···</li>*/
-                }
                 ,error : function(xhr, textStatus) {
                 }
                 ,complete : function(xhr, textStatus) {
                 }
             });
 
+            var devs;
             $.ajax({
                 type: "get",
-                url: "http://localhost:8080/Stanly/linkdev/list",
+                url: "/Stanly/linkdev/list",
                 data: {name:getParameter('Project'),nsleft:id},
                 success: function(json)
                 {
@@ -157,11 +197,36 @@
                         for(var i=0;i<3;i++)
                             $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
                         $('.developer>.content-box').append($('<li class="center">··· More members ···</li>'))
+                        $('.developer>.content-box>.center').click(function(){
+                            $('.developer>.content-box').empty();
+                            for(var i=0;i<devs.length;i++)
+                                $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
+                        })
                     }
                 }
             });
         }
 
+        function BuildDetailRelation(s,t)
+        {
+            var self = this;
+            $.ajax( {
+                type :'GET'
+                ,asyn :true
+                ,url :'/Stanly/component/composition/rlist'
+                ,dataType :"json"
+                ,data:{name:getParameter('Project'),src:s, tar:t}
+                //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                ,beforeSend : function(xhr){
+                }
+                ,success : self.RelationList
+
+                ,error : function(xhr, textStatus) {
+                }
+                ,complete : function(xhr, textStatus) {
+                }
+            });
+        }
 
         //codesize div
         var csd_root;
@@ -448,7 +513,9 @@
                                         var Grapdata = document.querySelector("#inputGraph");
                                         var Mainsvg = d3.select("svg");
                                         var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                                        var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id);
+                                        var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id,null,function(d){
+                                            BuildDetailRelation(d.source.id,d.target.id);
+                                        });
 
                                         $('#codesize').empty();
                                         DrawCodeSize($("#codesize").width(),$("#codesize").height(),id);

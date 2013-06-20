@@ -24,30 +24,30 @@ public class RateData {
 
 	public void addFat(int f)
 	{
-		fat+=f;
+		fat= (fat> f) ? fat:f;
 		fatCount++;
 	}
 	public void addCprate(int cp)
 	{
-		cprate+=cp;
+		cprate = (cprate > cp) ? cprate: cp;
 		cpCount++;
 	}
 	public void addCorate(int co)
 	{
-		corate+=co;
+		corate = (corate > co ) ? corate: co;
 		coCount++;
 	}
 
 	public int getFat()
 	{
-		return Math.round(fat/fatCount);
+		return Math.round(fat);
 	}
 	public int getCprate()
 	{
-		return Math.round(cprate/cpCount);
+		return Math.round(cprate);
 	}
 	public int getCorate()
 	{
-		return Math.round(corate/coCount);
+		return Math.round(corate);
 	}
 }
