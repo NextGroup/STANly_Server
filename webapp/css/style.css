@@ -1071,6 +1071,7 @@ div.agraph div.bar {
 	margin-top: 18px;
 	font: 500 14px "Helvetica";
 	color: #000000;
+    width: 160px;
 }
 #project-list-top .list-item .info .project-date,
 #project-list .list-item .info .project-date {

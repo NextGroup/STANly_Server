@@ -30,22 +30,19 @@
                 for(var i=0;i<data.length;i++)
                 {
                     new_item=$('<a><div class="list-item"></div></a>').attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+                    $('#project-list').append(new_item);
+
                     new_item = new_item.children('div');
                     new_item.append($('<div class="info">' +
-                            '<div class="developer-name">' +
-                            '<div class="circle_wrapper">' +
-                            '<img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" />' +
-                            '</div>' +
-                            data[i].Devloper +
-                            '</div>' +
-                            '</div>'));
+                            '<div class="developer-name"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" /></div>' +
+                            data[i].Devloper + '</div></div>'));
 
+                    new_item.append($('<div class="pollution ' + data[i].TotalScore.toLowerCase() + '-circle"><div class="rotation-circle"><div class="text">' + data[i].TotalScore + '</div></div></div>'));
                     new_item.append($('<div class="sliderr"></div>'));
                     new_item.append($('<div class="commit right a-rate">' + data[i].Commit + '</div>'));
                     new_item.append($('<div class="sliderr"></div>'));
 
-                    new_item.append($('<div class="basic right ' + data[i].BasicRank.toLowerCase() + '-rate">'));
-                    new_item.append($('<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>' +
+                    new_item.append($('<div class="basic right ' + data[i].BasicRank.toLowerCase() + '-rate">' + '<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>' +
                             '<div class="rate">' + data[i].BasicRank + '</div>' +
                             '<div class="text">BASIC RULE</div></div>'));
                     new_item.append($('<div class="sliderr"></div>'));
@@ -53,59 +50,12 @@
                     new_item.append($('<div class="sliderr"></div>'));
                     new_item.append($('<div class="coupling ' + data[i].CouplingRank.toLowerCase() + '-rate"><div class="thread"></div><div class="text">COUPLING</div></div>'));
                     new_item.append($('<div class="sliderr"></div>'));
-
-                    $('#project-list').append(new_item);
-                }
-                /*
-                <a href="project.html?project=stanly">
-                    <div class="list-item">
-
-
-                        <div class="coupling c-rate"><div class="thread"></div><div class="text">COUPLING</div></div>
-                    <div class="sliderr"></div>
-                    <div class="fat f-rate">
-                    <div class="wide"><div class="rate">F</div></div>
-                    <div class="text">FAT</div>
-                    </div>
-                    <div class="sliderr"></div>
-                    <div class="change-propagation f-rate">
-                    <div class="wide"><div class="rate">F</div></div>
-                    <div class="text">Propagation</div>
-                    </div>
-                    <div class="sliderr"></div>
-                    </div>
-                    <!--stanly fin-->
-                    </a>
-                */
-                /*
-                $('#pollution-head').parent()
-                        .empty()
-                        .append($('<li id="pollution-head"><div class="picture-name-id hover">Developer Picture / ID</div><div class="commit hover">Commit Count</div><div class="rank hover">Rank</div></li>'))
-                for(var i=0;i<data.length;i++)
-                {
-                    new_li = $('<li></li>');
-                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i].Devloper+'"></div></div>'));
-                    new_li.append($('<div class="name-id">'+data[i].Devloper+'</div>'));
-                    new_li.append($('<div class="commit">'+data[i].Commit+'</div>'));
-                    new_li.append($('<div class="rank">'+data[i].TotalScore+'</div>'));
-
-
-
-                    $('#pollution-head').parent().append(new_li);
-
-
+                    new_item.append($('<div class="fat ' + data[i].FatRank.toLowerCase() + '-rate"><div class="wide"><div class="rate">' + data[i].FatRank + '</div></div><div class="text">FAT</div></div>'));
+                    new_item.append($('<div class="sliderr"></div>'));
+                    new_item.append($('<div class="change-propagation ' + data[i].CPRank.toLowerCase() + '-rate"><div class="wide"><div class="rate">' + data[i].CPRank + '</div></div><div class="text">Propagation</div></div>'));
+                    new_item.append($('<div class="sliderr"></div>'));
                 }
 
-                function set_avarta(json){
-                    $('.picture>#'+json.login).append($('<img src="'+ json.avatar_url +'" alt="profile" />'));
-                }
-                $.ajax({
-                    type: "get",
-                    url: "https://api.github.com/users/"+getParameter('Name'),
-                    success: set_avarta
-                });*/
-
-                //"{"list":[{"Devloper":"YangHyunchul","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":83,"TotalScore":"C"},{"Devloper":"sjdmldi","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":53,"TotalScore":"C"},{"Devloper":"karuana","CPRank":"F","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":10,"TotalScore":"C"}]}"
             }
         });
     </script>
