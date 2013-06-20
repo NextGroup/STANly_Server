@@ -1,23 +1,20 @@
-var colors = [
-    {Distance:"#59B859"},
-    {NumberofMethods:"#2B8E2A"},
-    {EstimateLinesofCode:"#236123"},
-    {"#0000FF"},
-    "#972D96",
-    "#600060",
-    "#A47D7C",
-    {Tangled:"#FF0000"},
-    "#F7710D",
-    "#92A8CD",
-    "#FF00FF",
-    {NumberofFields:"#89A54E"},
-    {Fat:"#80699B"},
-    {ResponseforaClass:"#3D96AE"},
-    {CyclomaticComplexity:"#B5CA92"},
-    "#4572A7",
-    "#AA4643",
-    "#B5CA92"
-];
+var colors = {
+    "Number of Top Level Classes":"#59B859",
+    "Number of Methods":"#2B8E2A",
+    "Number of Fields":"#236123",
+    "Estimated Lines of Code":"#0000FF",
+    "Cyclomatic Complexity":"#972D96",
+    "Fat":"#600060",
+    "Component Dependency":"#A47D7C",
+    "Tangled":"#FF0000",
+    "Distance":"#F7710D",
+    "Average Absolute Distance":"#92A8CD",
+    "Weighted Methods per Class":"#FF00FF",
+    "Depth of Inheritance Tree":"#89A54E",
+    "Coupling between Objects":"#80699B",
+    "Response for a Class":"#3D96AE"
+};
+
 var chart;
 var categories;
 var name;
@@ -42,7 +39,7 @@ function BuildPollutionMainView(id,name){
                 if(Number(jsonData.PollutionScore[i]) != 0)
                 {
                     categories.push(jsonData.PollutionName[i]);
-                    data.push({y:Number(jsonData.PollutionScore[i]),color:colors[i]});
+                    data.push({y:Number(jsonData.PollutionScore[i]),color:colors[jsonData.PollutionName[i]]});
                     //data.push({y:Number(10),color:colors[i]});
                 }
             }

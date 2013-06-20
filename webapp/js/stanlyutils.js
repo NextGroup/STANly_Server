@@ -166,6 +166,7 @@ function set_tooltip_event()
 var developer_img_list =
 [
     "https://secure.gravatar.com/avatar/e5db3e98a858066748db3f817be7bc01?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
+    "https://secure.gravatar.com/avatar/e08e76c3ffd2cc5baeb5c532a94dc80f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/fa5767c967d4733b5937d4e9c265ee4b?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/956c7d246841e8507a1e1b96842994db?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
     "https://secure.gravatar.com/avatar/f3cf3032aee769be35d1505dcd43eeba?s=60&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
