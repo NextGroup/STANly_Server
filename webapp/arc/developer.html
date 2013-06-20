@@ -34,7 +34,7 @@
 
                     new_item = new_item.children('div');
                     new_item.append($('<div class="info">' +
-                            '<div class="developer-name"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" /></div>' +
+                            '<div class="developer-name"><div class="circle_wrapper"><img src="'+developer_img_list[i%57]+'" alt="profile" /></div>' +
                             data[i].Devloper + '</div></div>'));
 
                     new_item.append($('<div class="pollution ' + data[i].TotalScore.toLowerCase() + '-circle"><div class="rotation-circle"><div class="text">' + data[i].TotalScore + '</div></div></div>'));

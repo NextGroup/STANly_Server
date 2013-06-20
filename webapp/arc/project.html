@@ -235,7 +235,7 @@
                 for(var i=0;i<data.length;i++)
                 {
                     new_li = $('<li></li>');
-                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i].Devloper+'"></div></div>'));
+                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i].Devloper+'"><img src="'+developer_img_list[i%57]+'"></div></div>'));
                     new_li.append($('<div class="name-id">'+data[i].Devloper+'</div>'));
                     new_li.append($('<div class="commit">'+data[i].Commit+'</div>'));
                     new_li.append($('<div class="rank">'+data[i].TotalScore+'</div>'));
