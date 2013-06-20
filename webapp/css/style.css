@@ -796,7 +796,7 @@ div.agraph div.bar {
 #project-head .hover {
 	float: right;
 	padding-left: 6px;
-	width: 57px;
+	width: 87px;
 	height: 18px;
 	padding-top: 10px;
 	padding-bottom: 7px;
@@ -826,7 +826,7 @@ div.agraph div.bar {
 }
 #project-head .developer-name {
 	float: left;
-	width: 100%;
+	width: 186px;
 	margin-right: -577px;
 
 	box-shadow: none;

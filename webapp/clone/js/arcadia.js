@@ -1,9 +1,4 @@
-var popupmenu_info = [
-	{title: "Fat", content: "코드에서 객체간 연관 정도를 보여주는 지표이다."},
-	{title: "Coupling", content: "커플링 관련 지표이다."},
-	{title: "Naming", content: "변수나 객체의 작명 규칙 위반의 정도를 보여주는 지표이다."},
-	{title: "Basic Rule", content: "PMD를 통해 나온 정보로 규칙 위반의 정도를 보여주는 지표이다."}
-];
+
 
 function supportsSVG() {
 	return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect && !!(window.SVGSVGElement);

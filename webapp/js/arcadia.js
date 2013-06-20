@@ -57,45 +57,7 @@ $(document).ready(function() {
 	}
 	window.onresize = resizeEvent;
 
-	popup_hide = function() {
-		$("#popup-info").stop(true, true);
-		$("#popup-info").animate({
-			opacity: 0.0,
-		}, 250, function(){
-			$(this).css("display", "none");
-		});
-	};
-	popup_show = function(obj) {
-		$("#popup-info").stop(true, true);
-		$("#popup-info").css("display", "block");
-		$("#popup-info").animate({ opacity: 0.8 }, 250, function() {} );
-		$("#popup-info").css("top", obj.position().top + 45);
-		$("#popup-info").css("left", obj.position().left - 100);
-	};
 
-	$("#project-list .list-item .fat").hover(function() {
-		$("#popup-title").html(popupmenu_info[0].title);
-		$("#popup-content").html(popupmenu_info[0].content);
-		popup_show($(this));
-	},popup_hide);
-
-	$("#project-list .list-item .coupling").hover(function() {
-		$("#popup-title").html(popupmenu_info[1].title);
-		$("#popup-content").html(popupmenu_info[1].content);
-		popup_show($(this));
-	},popup_hide);
-
-	$("#project-list .list-item .naming").hover(function() {
-		$("#popup-title").html(popupmenu_info[2].title);
-		$("#popup-content").html(popupmenu_info[2].content);
-		popup_show($(this));
-	},popup_hide);
-
-	$("#project-list .list-item .basic").hover(function() {
-		$("#popup-title").html(popupmenu_info[3].title);
-		$("#popup-content").html(popupmenu_info[3].content);
-		popup_show($(this));
-	},popup_hide);
 	$(".left-hidden-menu .right-button").click(function() {
 		if($(".left-hidden-menu").css("margin-left") == "-210px")
 		{
