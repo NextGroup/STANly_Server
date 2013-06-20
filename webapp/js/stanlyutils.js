@@ -86,18 +86,18 @@ function set_title(){
     }
     $(document).ready(function() {
         $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
-        $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Name'));
-        $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
-        $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
-        $("#pollutionMenu>a").attr('href',"pollution.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
+        $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+        $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+        $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+        $("#pollutionMenu>a").attr('href',"pollution.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
 
         if(getParameter('Version')=='Architect')
         {
-            $("#advancedMenu>a").attr('href',"advanced.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
-            $("#developerMenu>a").attr('href',"developer.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
+            $("#advancedMenu>a").attr('onclick',"window.open('"+"advanced.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version')+"')");
+            $("#developerMenu>a").attr('href',"developer.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
         }
     });
-}
+}// onclick="window.open('archi-architect.html?project=stanly','architect-view','width=960,height=640')"
 
 function trim(s) {
     return s.replace(/ /gi, '-');

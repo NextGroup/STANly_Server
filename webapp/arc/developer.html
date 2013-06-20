@@ -16,6 +16,98 @@
 
     <script type="text/javascript">
         set_title();
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/diff/dev",
+            data: {name:getParameter('Project')},
+            success: function(json)
+            {
+                data = jQuery.parseJSON(json).list;
+
+                $('#project-list').empty();
+
+                for(var i=0;i<data.length;i++)
+                {
+                    new_item=$('<a><div class="list-item"></div></a>').attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+                    new_item = new_item.children('div');
+                    new_item.append($('<div class="info">' +
+                            '<div class="developer-name">' +
+                            '<div class="circle_wrapper">' +
+                            '<img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" />' +
+                            '</div>' +
+                            data[i].Devloper +
+                            '</div>' +
+                            '</div>'));
+
+                    new_item.append($('<div class="sliderr"></div>'));
+                    new_item.append($('<div class="commit right a-rate">' + data[i].Commit + '</div>'));
+                    new_item.append($('<div class="sliderr"></div>'));
+
+                    new_item.append($('<div class="basic right ' + data[i].BasicRank.toLowerCase() + '-rate">'));
+                    new_item.append($('<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>' +
+                            '<div class="rate">' + data[i].BasicRank + '</div>' +
+                            '<div class="text">BASIC RULE</div></div>'));
+                    new_item.append($('<div class="sliderr"></div>'));
+                    new_item.append($('<div class="naming ' + data[i].NamingRank.toLowerCase() + '-rate">' + '<div class="donut"><div class="rate">' + data[i].NamingRank + '</div></div><div class="text">NAMING</div></div>'));
+                    new_item.append($('<div class="sliderr"></div>'));
+                    new_item.append($('<div class="coupling ' + data[i].CouplingRank.toLowerCase() + '-rate"><div class="thread"></div><div class="text">COUPLING</div></div>'));
+                    new_item.append($('<div class="sliderr"></div>'));
+
+                    $('#project-list').append(new_item);
+                }
+                /*
+                <a href="project.html?project=stanly">
+                    <div class="list-item">
+
+
+                        <div class="coupling c-rate"><div class="thread"></div><div class="text">COUPLING</div></div>
+                    <div class="sliderr"></div>
+                    <div class="fat f-rate">
+                    <div class="wide"><div class="rate">F</div></div>
+                    <div class="text">FAT</div>
+                    </div>
+                    <div class="sliderr"></div>
+                    <div class="change-propagation f-rate">
+                    <div class="wide"><div class="rate">F</div></div>
+                    <div class="text">Propagation</div>
+                    </div>
+                    <div class="sliderr"></div>
+                    </div>
+                    <!--stanly fin-->
+                    </a>
+                */
+                /*
+                $('#pollution-head').parent()
+                        .empty()
+                        .append($('<li id="pollution-head"><div class="picture-name-id hover">Developer Picture / ID</div><div class="commit hover">Commit Count</div><div class="rank hover">Rank</div></li>'))
+                for(var i=0;i<data.length;i++)
+                {
+                    new_li = $('<li></li>');
+                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i].Devloper+'"></div></div>'));
+                    new_li.append($('<div class="name-id">'+data[i].Devloper+'</div>'));
+                    new_li.append($('<div class="commit">'+data[i].Commit+'</div>'));
+                    new_li.append($('<div class="rank">'+data[i].TotalScore+'</div>'));
+
+
+
+                    $('#pollution-head').parent().append(new_li);
+
+
+                }
+
+                function set_avarta(json){
+                    $('.picture>#'+json.login).append($('<img src="'+ json.avatar_url +'" alt="profile" />'));
+                }
+                $.ajax({
+                    type: "get",
+                    url: "https://api.github.com/users/"+getParameter('Name'),
+                    success: set_avarta
+                });*/
+
+                //"{"list":[{"Devloper":"YangHyunchul","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":83,"TotalScore":"C"},{"Devloper":"sjdmldi","CPRank":"C","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":53,"TotalScore":"C"},{"Devloper":"karuana","CPRank":"F","FatRank":"A","CouplingRank":"A","BasicRank":"F","NamingRank":"F","Commit":10,"TotalScore":"C"}]}"
+            }
+        });
     </script>
 </head>
 
@@ -118,132 +210,6 @@
 							</div>
 							<!--stanly fin-->
 						</a>
-						<a href="project.html?project=curing">
-							<div class="list-item">
-								<div class="info">
-									<div class="developer-name"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash4/c27.27.339.339/s160x160/260541_210315615676699_4226776_q.jpg" alt="profile" /></div>Nicolas Rodriguez</div>
-								</div>
-								<div class="pollution c-circle">
-									<div class="rotation-circle"><div class="text">C</div></div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="commit right a-rate">2,952</div>
-								<div class="sliderr"></div>
-								<div class="basic right c-rate">
-									<div class="box">
-										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-									</div>
-									<div class="rate">C</div>
-									<div class="text">BASIC RULE</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="naming a-rate">
-									<div class="donut"><div class="rate">A</div></div>
-									<div class="text">NAMING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="coupling f-rate">
-									<div class="thread"></div>
-									<div class="text">COUPLING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="fat b-rate">
-									<div class="wide"><div class="rate">B</div></div>
-									<div class="text">FAT</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="change-propagation a-rate">
-									<div class="wide"><div class="rate">A</div></div>
-									<div class="text">Propagation</div>
-								</div>
-								<div class="sliderr"></div>
-							</div>
-							<!--curing fin-->
-						</a>
-						<a href="project.html?project=dynamicwave">
-							<div class="list-item">
-								<div class="info">
-									<div class="developer-name"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash2/c49.49.617.617/s160x160/263332_10151372994880186_1815210871_q.jpg" alt="profile" /></div>Dan Carpenter</div>
-								</div>
-								<div class="pollution f-circle">
-									<div class="rotation-circle"><div class="text">F</div></div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="commit right a-rate">439</div>
-								<div class="sliderr"></div>
-								<div class="basic right f-rate">
-									<div class="box">
-										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-									</div>
-									<div class="rate">F</div>
-									<div class="text">BASIC RULE</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="naming c-rate">
-									<div class="donut"><div class="rate">C</div></div>
-									<div class="text">NAMING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="coupling a-rate">
-									<div class="thread"></div>
-									<div class="text">COUPLING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="fat a-rate">
-									<div class="wide"><div class="rate">A</div></div>
-									<div class="text">FAT</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="change-propagation b-rate">
-									<div class="wide"><div class="rate">B</div></div>
-									<div class="text">Propagation</div>
-								</div>
-								<div class="sliderr"></div>
-							</div>
-							<!--dynamicwave fin-->
-						</a>
-						<a href="project.html?project=secufs">
-							<div class="list-item">
-								<div class="info">
-									<div class="developer-name"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash4/211991_1553477271_1496075628_q.jpg" alt="profile" /></div>Eric Cooper</div>
-								</div>
-								<div class="pollution b-circle">
-									<div class="rotation-circle"><div class="text">B</div></div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="commit right a-rate">1,254</div>
-								<div class="sliderr"></div>
-								<div class="basic right b-rate">
-									<div class="box">
-										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-									</div>
-									<div class="rate">B</div>
-									<div class="text">BASIC RULE</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="naming f-rate">
-									<div class="donut"><div class="rate">F</div></div>
-									<div class="text">NAMING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="coupling b-rate">
-									<div class="thread"></div>
-									<div class="text">COUPLING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="fat c-rate">
-									<div class="wide"><div class="rate">C</div></div>
-									<div class="text">FAT</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="change-propagation c-rate">
-									<div class="wide"><div class="rate">C</div></div>
-									<div class="text">Propagation</div>
-								</div>
-								<div class="sliderr"></div>
-							</div>
-							<!--secufs fin-->
-						</a>
 					</div>
 					<!--project-list fin-->
 					<div id="popup-info">
@@ -307,7 +273,7 @@
 						</a>
 					</div>
                     <div id="advancedMenu">
-                        <a href="#" onclick="window.open('archi-architect.html?project=stanly','architect-view','width=960,height=640')">
+                        <a href="#">
                             <ol>
                                 <li class="icon"></li>
                                 <li class="text">ADVANCED</li>
