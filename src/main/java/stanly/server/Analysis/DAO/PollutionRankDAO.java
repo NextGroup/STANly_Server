@@ -41,6 +41,11 @@ public class PollutionRankDAO {
 		return (0.01>a) ?  MetricRate.A_RATE: ((0.02>a) ? MetricRate.B_RATE: ((0.04>a) ? MetricRate.C_RATE: MetricRate.F_RATE));
 	}
 	
+	private int getChangePropagationRate(double a)
+	{
+		return (0.01>a) ?  MetricRate.A_RATE: ((0.07>a) ? MetricRate.B_RATE: ((0.10>a) ? MetricRate.C_RATE: MetricRate.F_RATE));
+	}
+
 	public int getProjectFATRate(ProjectCommit commit)
 	{
 		int data = MetricRate.NO_RATE;
