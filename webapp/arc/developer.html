@@ -29,7 +29,7 @@
 
                 for(var i=0;i<data.length;i++)
                 {
-                    new_item=$('<a><div class="list-item"></div></a>').attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Version'));
+                    new_item=$('<a><div class="list-item"></div></a>').attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+data[i].Devloper+"&Version="+getParameter('Version'));
                     $('#project-list').append(new_item);
 
                     new_item = new_item.children('div');
