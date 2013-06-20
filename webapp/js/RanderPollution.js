@@ -1,4 +1,23 @@
-var colors = ["#59B859", "#2B8E2A", "#236123", "#0000FF", "#972D96", "#600060", "#A47D7C", "#FF0000", "#F7710D", "#92A8CD", "#FF00FF", "#89A54E", "#80699B", "#3D96AE", "#B5CA92", "#4572A7", "#AA4643", "#B5CA92"];
+var colors = [
+    {Distance:"#59B859"},
+    {NumberofMethods:"#2B8E2A"},
+    {EstimateLinesofCode:"#236123"},
+    {"#0000FF"},
+    "#972D96",
+    "#600060",
+    "#A47D7C",
+    {Tangled:"#FF0000"},
+    "#F7710D",
+    "#92A8CD",
+    "#FF00FF",
+    {NumberofFields:"#89A54E"},
+    {Fat:"#80699B"},
+    {ResponseforaClass:"#3D96AE"},
+    {CyclomaticComplexity:"#B5CA92"},
+    "#4572A7",
+    "#AA4643",
+    "#B5CA92"
+];
 var chart;
 var categories;
 var name;
