@@ -46,12 +46,12 @@
             data: {name:getParameter('Project')},
             success: function(json){
                 fat_data = jQuery.parseJSON(json).list;
-                color = "#EE0000";
+                var color = "#EE0000";
 
-                if(fat_data[0].key.toLowerCase() == 'F')    color = color_tbl[0];
-                if(fat_data[0].key.toLowerCase() == 'C')    color = color_tbl[1];
-                if(fat_data[0].key.toLowerCase() == 'B')    color = color_tbl[2];
-                if(fat_data[0].key.toLowerCase() == 'A')    color = color_tbl[3];
+                if(fat_data[0].key == 'F')    color = color_tbl[0];
+                if(fat_data[0].key == 'C')    color = color_tbl[1];
+                if(fat_data[0].key == 'B')    color = color_tbl[2];
+                if(fat_data[0].key == 'A')    color = color_tbl[3];
 
                 total = fat_data[0].y+fat_data[1].y;
                 //normal_data = fat_data;
@@ -94,12 +94,12 @@
             data: {name:getParameter('Project')},
             success: function(json){
                 coupling_data = jQuery.parseJSON(json).list;
-                color = "#EE0000";
+               var color = "#EE0000";
 
-                if(coupling_data[0].key.toLowerCase() == 'F')    color = color_tbl[0];
-                if(coupling_data[0].key.toLowerCase() == 'C')    color = color_tbl[1];
-                if(coupling_data[0].key.toLowerCase() == 'B')    color = color_tbl[2];
-                if(coupling_data[0].key.toLowerCase() == 'A')    color = color_tbl[3];
+                if(coupling_data[0].key == 'F')    color = color_tbl[0];
+                if(coupling_data[0].key == 'C')    color = color_tbl[1];
+                if(coupling_data[0].key == 'B')    color = color_tbl[2];
+                if(coupling_data[0].key == 'A')    color = color_tbl[3];
 
                 total = coupling_data[0].y+coupling_data[1].y;
                 //normal_data = coupling_data;
@@ -142,12 +142,12 @@
             data: {name:getParameter('Project')},
             success: function(json){
                 cp_data = jQuery.parseJSON(json).list;
-                color = "#EE0000";
+                var color = "#EE0000";
 
-                if(cp_data[0].key.toLowerCase() == 'F')    color = color_tbl[0];
-                if(cp_data[0].key.toLowerCase() == 'C')    color = color_tbl[1];
-                if(cp_data[0].key.toLowerCase() == 'B')    color = color_tbl[2];
-                if(cp_data[0].key.toLowerCase() == 'A')    color = color_tbl[3];
+                if(cp_data[0].key == 'F')    color = color_tbl[0];
+                if(cp_data[0].key == 'C')    color = color_tbl[1];
+                if(cp_data[0].key == 'B')    color = color_tbl[2];
+                if(cp_data[0].key == 'A')    color = color_tbl[3];
 
                 total = cp_data[0].y+cp_data[1].y;
                 //normal_data = cp_data;
@@ -357,7 +357,7 @@
 					<!--.dashboard-group fin-->
 
 					<div class="dashboard-group">
-						<div class="title">Pollution Rank</div>
+						<div class="title">Worst Case Pollution Rank</div>
 						<div style="height: 228px">
 							<div class="half-size">
 								<div id="fat-rate" class="content-box">
