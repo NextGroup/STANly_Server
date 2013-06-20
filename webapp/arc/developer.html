@@ -34,7 +34,7 @@
 
                     new_item = new_item.children('div');
                     new_item.append($('<div class="info">' +
-                            '<div class="developer-name"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" /></div>' +
+                            '<div class="developer-name"><div class="circle_wrapper"><img src="'+developer_img_list[i%57]+'" alt="profile" /></div>' +
                             data[i].Devloper + '</div></div>'));
 
                     new_item.append($('<div class="pollution ' + data[i].TotalScore.toLowerCase() + '-circle"><div class="rotation-circle"><div class="text">' + data[i].TotalScore + '</div></div></div>'));
@@ -118,48 +118,7 @@
 					</div>
 					<!--project-head fin-->
 					<div id="project-list">
-						<a href="project.html?project=stanly">
-							<div class="list-item">
-								<div class="info">
-									<div class="developer-name"><div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg" alt="profile" /></div>An Jeungwon</div>
-								</div>
-								<div class="pollution a-circle">
-									<div class="rotation-circle"><div class="text">A</div></div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="commit right a-rate">39,653</div>
-								<div class="sliderr"></div>
-								<div class="basic right a-rate">
-									<div class="box">
-										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
-									</div>
-									<div class="rate">A</div>
-									<div class="text">BASIC RULE</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="naming b-rate">
-									<div class="donut"><div class="rate">B</div></div>
-									<div class="text">NAMING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="coupling c-rate">
-									<div class="thread"></div>
-									<div class="text">COUPLING</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="fat f-rate">
-									<div class="wide"><div class="rate">F</div></div>
-									<div class="text">FAT</div>
-								</div>
-								<div class="sliderr"></div>
-								<div class="change-propagation f-rate">
-									<div class="wide"><div class="rate">F</div></div>
-									<div class="text">Propagation</div>
-								</div>
-								<div class="sliderr"></div>
-							</div>
-							<!--stanly fin-->
-						</a>
+						
 					</div>
 					<!--project-list fin-->
 					<div id="popup-info">
