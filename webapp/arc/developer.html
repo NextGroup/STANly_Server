@@ -7,11 +7,16 @@
 
 	<meta name="viewport" content="width=device-width">
 
-	<link href="./css/style.css" rel="stylesheet" type="text/css">
-	<link href="./js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
 
-	<script type="text/javascript" src="./js/jquery-2.0.0.min.js"></script>
-	<script type="text/javascript" src="./js/arcadia.js"></script>
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript">
+        set_title();
+    </script>
 </head>
 
 <body>
@@ -23,8 +28,6 @@
 			<div id="rightBox">
 				<div id="user-container">
 					<div id="userBox">
-						<div class="circle_wrapper"><img src="http://profile.ak.fbcdn.net/hprofile-ak-ash3/27350_100001314106197_1542605533_q.jpg"></div>
-						<div class="userName">An Jeungwon</div>
 					</div>
 					<div id="userInfoIcon" class="img"></div>
 				</div>
@@ -65,7 +68,7 @@
 						<div class="developer-name hover">Developer ID</div>
 						<div class="pollution hover">Rank</div>
 						<div class="commit hover">Commit</div>
-						<div class="basicrule hover">Basic Rule</div>
+						<div class="basic hover">Basic Rule</div>
 						<div class="naming hover">Naming</div>
 						<div class="coupling hover">Coupling</div>
 						<div class="fat hover">FAT</div>
@@ -84,7 +87,7 @@
 								<div class="sliderr"></div>
 								<div class="commit right a-rate">39,653</div>
 								<div class="sliderr"></div>
-								<div class="basicrule right a-rate">
+								<div class="basic right a-rate">
 									<div class="box">
 										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
 									</div>
@@ -126,7 +129,7 @@
 								<div class="sliderr"></div>
 								<div class="commit right a-rate">2,952</div>
 								<div class="sliderr"></div>
-								<div class="basicrule right c-rate">
+								<div class="basic right c-rate">
 									<div class="box">
 										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
 									</div>
@@ -168,7 +171,7 @@
 								<div class="sliderr"></div>
 								<div class="commit right a-rate">439</div>
 								<div class="sliderr"></div>
-								<div class="basicrule right f-rate">
+								<div class="basic right f-rate">
 									<div class="box">
 										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
 									</div>
@@ -210,7 +213,7 @@
 								<div class="sliderr"></div>
 								<div class="commit right a-rate">1,254</div>
 								<div class="sliderr"></div>
-								<div class="basicrule right b-rate">
+								<div class="basic right b-rate">
 									<div class="box">
 										<div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div>
 									</div>
@@ -258,11 +261,10 @@
 		</div>
 		<!--content fin-->
 		<div id="sidebar-container-warrper">
-			<div id="sidebar-container-warrper">
 			<div id="sidebar-container">
 				<div id="sidebar">
 					<div id="projectMenu">
-						<a href="archi-project.html?project=stanly">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">PROJECT</li>
@@ -272,7 +274,7 @@
 					<div id="noneMenu"></div>
 					<div id="dashboardMenu">
 						<div class="shadow"></div>
-						<a href="dashboard.html">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">DASHBOARD</li>
@@ -281,7 +283,7 @@
 						<div class="bottom"></div>
 					</div>
 					<div id="compositionMenu">
-						<a href="composition.html?project=stanly">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">COMPOSITION</li>
@@ -289,7 +291,7 @@
 						</a>
 					</div>
 					<div id="pollutionMenu">
-						<a href="archi-pollution.html?project=stanly">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">POLLUTION</li>
@@ -297,21 +299,21 @@
 						</a>
 					</div>
 					<div id="developerMenu">
-						<a href="archi-developer.html?project=stanly">
+						<a>
 							<ol>
 								<li class="icon"></li>
 								<li class="text">DEVELOPER</li>
 							</ol>
 						</a>
 					</div>
-					<div id="architectMenu">
-						<a href="#" onclick="window.open('archi-architect.html?project=stanly','architect-view','width=960,height=640')">
-							<ol>
-								<li class="icon"></li>
-								<li class="text">ARCHITECT</li>
-							</ol>
-						</a>
-					</div>
+                    <div id="advancedMenu">
+                        <a href="#" onclick="window.open('archi-architect.html?project=stanly','architect-view','width=960,height=640')">
+                            <ol>
+                                <li class="icon"></li>
+                                <li class="text">ADVANCED</li>
+                            </ol>
+                        </a>
+                    </div>
 				</div>
 				<!--sidebar fin-->
 			</div>

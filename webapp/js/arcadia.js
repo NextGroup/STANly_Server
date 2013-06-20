@@ -96,6 +96,7 @@ $(document).ready(function() {
 		$("#popup-content").html(popupmenu_info[3].content);
 		popup_show($(this));
 	},popup_hide);
+
 	$(".left-hidden-menu .right-button").click(function() {
 		if($(".left-hidden-menu").css("margin-left") == "-210px")
 		{

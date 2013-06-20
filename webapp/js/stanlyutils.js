@@ -70,17 +70,20 @@ function build_critical_risk(json)
 }
 
 function set_title(){
-    $.ajax({
-        type: "get",
-        url: "/Stanly/common/pollution/static",
-        data: {name:getParameter('Project'),mode:(getParameter('Version')=="Developer"?"0":"1")},
-        success: function(json)
-        {
-            rate = jQuery.parseJSON(json).list;
-            $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
-            $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
-        }
-    });
+    if(getParameter('Project') != null)
+    {
+        $.ajax({
+            type: "get",
+            url: "/Stanly/common/pollution/static",
+            data: {name:getParameter('Project'),mode:(getParameter('Version')=="Developer"?"0":"1")},
+            success: function(json)
+            {
+                rate = jQuery.parseJSON(json).list;
+                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution').addClass(rate[2].rate.toLowerCase()+'-circle');
+                $('#content>#content-body>#content-position-change>#overview>#overview-content>.pollution>.rotation-circle>.text').text(rate[2].rate.toUpperCase());
+            }
+        });
+    }
     $(document).ready(function() {
         $('#content>#content-body>#content-position-change>#overview>#overview-content>.text').text(getParameter('Project'));
         $("#dashboardMenu>a").attr('href',"dashboard.html"+"?Name="+getParameter('Name')+"&Version="+getParameter('Name'));
