@@ -87,6 +87,12 @@ function set_title(){
         $("#projectMenu>a").attr('href',"project.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
         $("#compositionMenu>a").attr('href',"composition.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
         $("#pollutionMenu>a").attr('href',"pollution.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
+
+        if(getParameter('Version')=='Architect')
+        {
+            $("#advancedMenu>a").attr('href',"advanced.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
+            $("#developerMenu>a").attr('href',"developer.html"+"?Project="+getParameter('Project')+"&Name="+getParameter('Name')+"&Version="+getParameter('Name'));
+        }
     });
 }
 
