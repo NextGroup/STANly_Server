@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	
+	<title>STANly :: Developer View</title>
+
+	<meta name="viewport" content="width=device-width">
+
+    <link href="../syntaxhighlighter/styles/shCore.css" rel="stylesheet" type="text/css">
+    <link href="../syntaxhighlighter/styles/shThemeEclipse.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../js/d3/src/nv.d3.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../js/arcadia.js"></script>
+    <script type="text/javascript" src="../js/stanlyutils.js"></script>
+
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushAS3.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushBash.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCpp.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCSharp.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushCss.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushDelphi.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushDiff.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushGroovy.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJava.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJavaFX.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPerl.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPhp.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPlain.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPowerShell.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushPython.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushRuby.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushScala.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushSql.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushVb.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shBrushXml.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter/scripts/shLegacy.js"></script>
+
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+        dp.SyntaxHighlighter.HighlightAll('code');
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/source",
+            data: {name:getParameter('Project'),nsleft:getParameter('target')},
+            success: function(json){
+                source = jQuery.parseJSON(json).source;
+                sum = "";
+                for(var i=0;i<source.length;i++)
+                    sum += (source[i] + '\n');
+                /*if(source.length < 58)
+                {
+                    for(i=source.length;i<58;i++)
+                        sum += ('\n');
+                }*/
+                $('#target_p>pre').text(sum);
+            }
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/source",
+            data: {name:getParameter('Project'),nsleft:getParameter('source')},
+            success: function(json){
+                source = jQuery.parseJSON(json).source;
+                sum = "";
+                for(var i=0;i<source.length;i++)
+                    sum += (source[i] + '\n');
+                /*if(source.length < 58)
+                {
+                    for(i=source.length;i<58;i++)
+                        sum += ('\n');
+                }*/
+                $('#source_p>pre').text(sum);
+            }
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/fat",
+            data: {name:getParameter('Project'),nsleft:getParameter('source')},
+            success: function(json){
+                name = jQuery.parseJSON(json).name;
+                name = "[Source] " + name.replace(/\./gi,'/') + '.java';
+                $('#source_title').text(name);
+            }
+        });
+        $.ajax({
+            type: "get",
+            url: "/Stanly/detail/fat",
+            data: {name:getParameter('Project'),nsleft:getParameter('target')},
+            success: function(json){
+                name = jQuery.parseJSON(json).name;
+                name = "[Target] " + name.replace(/\./gi,'/') + '.java';
+                $('#target_title').text(name);
+            }
+        });
+    </script>
+
+</head>
+
+<body>
+<div id="container" class="architect developer">
+	<div id="header-container">
+		<div id="sliverLine"></div>
+		<div id="header">
+			<div id="logoBox" class="img"></div>
+			<div id="rightBox">
+				<div id="user-container">
+					<div id="userBox">
+					</div>
+					<div id="userInfoIcon" class="img"></div>
+				</div>
+				<!--user-container fin-->
+			</div>
+		</div>
+		<!--header fin-->
+	</div>
+	<!--header-container fin-->
+
+	<div id="content-container">
+		<div id="content">
+			<div id="content-body"><div id="content-position-change">
+				<div id="content-line"></div>
+
+                <div id="main">
+                    <div style="width: 49%;float: left;border: 1px solid #BBBBBB;padding: 2px; overflow: auto; height: 800px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <div id='source_title' style="font-size: 15px;margin-top: 4px;margin-bottom: -10px;margin-left: 10px;">
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="source_p">
+                                        <pre class="brush: java; first-line: 1; toolbar: false;">
+										</pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="width: 49%;float: left;border: 1px solid #BBBBBB;padding: 2px; overflow: auto; height: 800px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <div id='target_title' style="font-size: 15px;margin-top: 4px;margin-bottom: -10px;margin-left: 10px;">
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td  id="target_p">
+                                        <pre class="brush: java; first-line: 1; toolbar: false;">
+										</pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+				<!--main fin-->
+			</div></div>
+			<!--content-body fin-->
+		</div>
+		<!--content fin-->
+		<div id="sidebar-container-warrper" style="width=50px">
+			<div id="sidebar-container">
+				<!--sidebar fin-->
+			</div>
+		</div>
+	</div>
+	<!--content-container fin-->
+</div>
+
+</body>
+</html>

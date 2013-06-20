@@ -101,6 +101,15 @@
                     }
                 })
             }
+            $('.relations>.content-box').children('li').children('div').click(function(){
+                window.open("sourceviewer.html?source="+$(this).parent().children('.source').attr('nodeid')+
+                        "&Project="+getParameter('Project')+
+                        "&target="+$(this).parent().children('.target').attr('nodeid')+
+                        "&Name="+getParameter('Name'));
+                // $(this).parent().children('.target').attr('nodeid')
+                // $(this).parent().children('.source').attr('nodeid')
+            });
+
         }
 
 
