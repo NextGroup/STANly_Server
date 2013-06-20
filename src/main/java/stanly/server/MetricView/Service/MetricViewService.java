@@ -144,7 +144,7 @@ public class MetricViewService {
 		for(int i=0;i<nodeR.size();i++)
 		{
 			NodeRelation node = nodeR.get(i);
-			Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name());
+			Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name(),SrcID,TarID);
 			rList.addRelation(rel);
 		}
 		return gson.toJson(rList);
