@@ -102,3 +102,61 @@ function set_title(){
 function trim(s) {
     return s.replace(/ /gi, '-');
 }
+
+
+var popupmenu_info = [
+    {title: "Fat", content: "Fat contains rules that find problems related to software size(Package, Class, Method, etc...)"},
+    {title: "Coupling", content: "Coupling metrics measure the dependencies between a given entity and other entities the program consists of."},
+    {title: "Naming", content: "Static analysis information about Nmaing rule. The Naming Ruleset contains rules regarding preferred usage of names and identifiers."},
+    {title: "Basic Rule", content: " The Basic ruleset contains a collection of good practices which should be followed."},
+    {title: "Change Propagation", content: "Change propagation practices explore how changes made to one version of the application are migrated to other living versions of the application."}
+];
+
+popup_hide = function() {
+    $("#popup-info").stop(true, true);
+    $("#popup-info").animate({
+        opacity: 0.0,
+    }, 250, function(){
+        $(this).css("display", "none");
+    });
+};
+popup_show = function(obj) {
+    $("#popup-info").stop(true, true);
+    $("#popup-info").css("display", "block");
+    $("#popup-info").animate({ opacity: 0.8 }, 250, function() {} );
+    $("#popup-info").css("top", obj.position().top + 45);
+    $("#popup-info").css("left", obj.position().left - 100);
+};
+
+function set_tooltip_event()
+{
+    $("#project-list .list-item .fat").hover(function() {
+        $("#popup-title").html(popupmenu_info[0].title);
+        $("#popup-content").html(popupmenu_info[0].content);
+        popup_show($(this));
+    },popup_hide);
+
+    $("#project-list .list-item .coupling").hover(function() {
+        $("#popup-title").html(popupmenu_info[1].title);
+        $("#popup-content").html(popupmenu_info[1].content);
+        popup_show($(this));
+    },popup_hide);
+
+    $("#project-list .list-item .naming").hover(function() {
+        $("#popup-title").html(popupmenu_info[2].title);
+        $("#popup-content").html(popupmenu_info[2].content);
+        popup_show($(this));
+    },popup_hide);
+
+    $("#project-list .list-item .basic").hover(function() {
+        $("#popup-title").html(popupmenu_info[3].title);
+        $("#popup-content").html(popupmenu_info[3].content);
+        popup_show($(this));
+    },popup_hide);
+
+    $("#project-list .list-item .change-propagation").hover(function() {
+        $("#popup-title").html(popupmenu_info[4].title);
+        $("#popup-content").html(popupmenu_info[4].content);
+        popup_show($(this));
+    },popup_hide);
+}

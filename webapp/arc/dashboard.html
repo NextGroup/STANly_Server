@@ -94,6 +94,7 @@
                 newpjt.append($('<div class="change-propagation '+d.prank5.toLowerCase()+'-rate"><div class="wide"><div class="rate">F</div></div><div class="text">Propagation</div></div>'));
                 newpjt.append($('<div class="sliderr"></div>'));
             }
+            set_tooltip_event();
             risk_size = 3;
             $.ajax({
                 type: "get",
