@@ -62,7 +62,7 @@ public class MetricViewService {
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
 
 		ProjectElementNode srcnode = EsearchDAO.getElementNode(commit, SrcID);
-		logger.info((srcnode==null) ? "Null error": "no error");
+	
 		List<NodeRelation> nodeR = relationDao.getSrcLikeRelation(commit, srcnode.getName());
 		Gson gson = new Gson();
 		RelationList rList = new RelationList();
@@ -111,6 +111,7 @@ public class MetricViewService {
 	{
 		
 		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+
 		List<NodeRelation> nodeR = relationDao.getLikeRelation(commit,SrcName, TarName);
 		Gson gson = new Gson();
 		RelationList rList = new RelationList();
@@ -123,7 +124,31 @@ public class MetricViewService {
 		}
 		return gson.toJson(rList);
 	}
+	/**
+	 * SRC와 TAR을 중심으로 릴레이션 정보를 가져온다.
+	 * @param projectName
+	 * @param SrcName
+	 * @param TarName
+	 * @return
+	 */
+	public String getRelation(String projectName, int SrcID, int TarID)
+	{
+		
+		ProjectCommit commit = projectDAO.getLastCommit(projectDAO.getProjectInfo(projectName));
+		ProjectElementNode srcnode = EsearchDAO.getElementNode(commit, SrcID);
+		ProjectElementNode tarnode = EsearchDAO.getElementNode(commit, TarID);
+		List<NodeRelation> nodeR = relationDao.getLikeRelation(commit,srcnode.getName(), tarnode.getName());
+		Gson gson = new Gson();
+		RelationList rList = new RelationList();
 	
+		for(int i=0;i<nodeR.size();i++)
+		{
+			NodeRelation node = nodeR.get(i);
+			Relation rel = new Relation(node.getSrcName(), node.getTarName(), node.getType().name());
+			rList.addRelation(rel);
+		}
+		return gson.toJson(rList);
+	}
 	/**
 	 * 트리 그래프를 리턴한다. 
 	 *  NSLeft  == nodeID 로 사용할 예
