@@ -242,10 +242,12 @@ public class ClassMetric extends ElementNodeMetric {
 		ELOCRate = eloc;
 		fatRate = (int) Math.ceil((methods+fields+eloc)/3.0f);
 		
-		if(DIT>5)
+		if(DIT<5)
 			DITRate = CPRate = MetricRate.A_RATE;
-		else if(DIT>7)
+		else if(DIT<7)
 			DITRate = CPRate = MetricRate.B_RATE;
+		else if(DIT<10)
+			DITRate = CPRate = MetricRate.C_RATE;
 		else 
 			DITRate = CPRate = MetricRate.F_RATE;
 		
