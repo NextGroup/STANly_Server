@@ -41,9 +41,19 @@
                 for(var i=0;i<table.length;i++)
                 {
                     templi = $('<li></li>');
-                    templi.append($('<div class="source">'+table[i].Sources+'</div>'));
-                    templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
-                    templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    if(table[i].srcid !=0)
+                    {
+                        templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                    }
+                    else
+                    {
+                        templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    }
+
                     $('.relations>.content-box').append(templi);
                 }
             }
@@ -52,9 +62,18 @@
                 for(var i=0;i<3;i++)
                 {
                     templi = $('<li></li>');
-                    templi.append($('<div class="source">'+table[i].Sources+'</div>'));
-                    templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
-                    templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    if(table[i].srcid !=0)
+                    {
+                        templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                    }
+                    else
+                    {
+                        templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    }
                     $('.relations>.content-box').append(templi);
                 }
                 $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
@@ -65,9 +84,18 @@
                     for(var i=0;i<table.length;i++)
                     {
                         templi = $('<li></li>');
-                        templi.append($('<div class="source">'+table[i].Sources+'</div>'));
-                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
-                        templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                        if(table[i].srcid !=0)
+                        {
+                            templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                        }
+                        else
+                        {
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                        }
                         $('.relations>.content-box').append(templi);
                     }
                 })
