@@ -340,6 +340,134 @@
                 $('table>tbody>.body>td>.naming>pre').text(sum);
             }
         });
+
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/linkdev/list",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json)
+            {
+                rankt = ['A','B','C','D'];
+                data = jQuery.parseJSON(json).list;
+                $('#pollution-head').parent()
+                        .empty()
+                        .append($('<li id="pollution-head"><div class="picture-name-id hover" style="width: 100%">Developer Picture / ID</div></li>'))
+                for(var i=0;i<data.length;i++)
+                {
+                    new_li = $('<li></li>');
+                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i]+'"><img src="'+developer_img_list[Math.floor(Math.random() * 56) + 1]+'"></div></div>'));
+                    new_li.append($('<div class="name-id">'+data[i]+'</div>'));
+                    new_li.append($('<div class="commit"> </div>'));
+                    new_li.append($('<div class="rank"> </div>'));
+
+                    $('#pollution-head').parent().append(new_li);
+
+
+                }
+            }
+        });
+
+        function BuildDetailRelation(s,t)
+        {
+            var self = this;
+            $.ajax( {
+                type :'GET'
+                ,asyn :true
+                ,url :'/Stanly/component/composition/rlist'
+                ,dataType :"json"
+                ,data:{name:getParameter('Project'),src:s, tar:t}
+                //,contentType :"application/x-www-form-urlencoded;charset=UTF-8"
+                ,beforeSend : function(xhr){
+                }
+                ,success : self.RelationList
+
+                ,error : function(xhr, textStatus) {
+                }
+                ,complete : function(xhr, textStatus) {
+                }
+            });
+        }
+
+        function RelationList(jsonData) {
+            table = jsonData.relation;
+
+            $('.relations>.content-box').empty();
+            $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+            if(table.length < 4)
+            {
+                for(var i=0;i<table.length;i++)
+                {
+                    templi = $('<li></li>');
+                    if(table[i].srcid !=0)
+                    {
+                        templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                    }
+                    else
+                    {
+                        templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    }
+
+                    $('.relations>.content-box').append(templi);
+                }
+            }
+            else
+            {
+                for(var i=0;i<3;i++)
+                {
+                    templi = $('<li></li>');
+                    if(table[i].srcid !=0)
+                    {
+                        templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                    }
+                    else
+                    {
+                        templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                        templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                        templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                    }
+                    $('.relations>.content-box').append(templi);
+                }
+                $('.relations>.content-box').append($('<li class="center">··· '+(table.length-3)+' More ···</li>'));
+                $('.relations>.content-box>.center').click(function(){
+                    $('.relations>.content-box').empty();
+                    $('.relations>.content-box').append($('<li id="relation-head"><div class="source hover">Source</div><div class="relation hover">Relation</div><div class="target hover">Target</div></li>'));
+
+                    for(var i=0;i<table.length;i++)
+                    {
+                        templi = $('<li></li>');
+                        if(table[i].srcid !=0)
+                        {
+                            templi.append($('<div class="source" nodeid="'+ table[i].srcid+'">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target" nodeid="'+ table[i].tarid+'">'+table[i].Targets+'</div>'));
+                        }
+                        else
+                        {
+                            templi.append($('<div class="source">'+table[i].Sources+'</div>'));
+                            templi.append($('<div class="relation">'+table[i].Relations+'</div>'));
+                            templi.append($('<div class="target">'+table[i].Targets+'</div>'));
+                        }
+                        $('.relations>.content-box').append(templi);
+                    }
+                })
+            }
+            $('.relations>.content-box').children('li').children('div').click(function(){
+                window.open("sourceviewer.html?source="+$(this).parent().children('.source').attr('nodeid')+
+                        "&Project="+getParameter('Project')+
+                        "&target="+$(this).parent().children('.target').attr('nodeid')+
+                        "&Name="+getParameter('Name'));
+                // $(this).parent().children('.target').attr('nodeid')
+                // $(this).parent().children('.source').attr('nodeid')
+            });
+
+        }
 	</script>
 </head>
 
@@ -457,7 +585,9 @@
                                                             var Grapdata = document.querySelector("#inputGraph");
                                                             var Mainsvg = d3.select("svg");
                                                             var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+getParameter('nsleft'));
+                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id,null,function(d){
+                                                                BuildDetailRelation(d.source.id,d.target.id);
+                                                            });
                                                         }
 
                                                         $(function(){
@@ -514,6 +644,20 @@
 						</div>
 					</div>
 					<!--.dashboard-group fin-->
+
+                    <div class="dashboard-group">
+                        <div class="title">Developer List</div>
+                        <div class="developer-list">
+                            <ol class="content-box">
+                                <li id="pollution-head">
+                                    <div class="picture-name-id hover">Developer Picture / ID</div>
+                                    <div class="commit hover">Commit Count</div>
+                                    <div class="rank hover">Rank</div>
+                                </li>
+                            </ol>
+                        </div>
+                        <!--count-metric fin -->
+                    </div>
 
 					<div id="popup-info">
 						<div id="popup-tri"></div>

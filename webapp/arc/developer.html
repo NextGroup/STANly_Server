@@ -42,20 +42,26 @@
                     new_item.append($('<div class="commit right a-rate">' + data[i].Commit + '</div>'));
                     new_item.append($('<div class="sliderr"></div>'));
 
+                    if(data[i].BasicRank == undefined)                        data[i].BasicRank = 'A';
                     new_item.append($('<div class="basic right ' + data[i].BasicRank.toLowerCase() + '-rate">' + '<div class="box"><div class="c1"></div><div class="c2"></div><div class="c3"></div><div class="c4"></div></div>' +
                             '<div class="rate">' + data[i].BasicRank + '</div>' +
                             '<div class="text">BASIC RULE</div></div>'));
                     new_item.append($('<div class="sliderr"></div>'));
+                    if(data[i].NamingRank == undefined)                        data[i].NamingRank = 'A';
                     new_item.append($('<div class="naming ' + data[i].NamingRank.toLowerCase() + '-rate">' + '<div class="donut"><div class="rate">' + data[i].NamingRank + '</div></div><div class="text">NAMING</div></div>'));
                     new_item.append($('<div class="sliderr"></div>'));
+                    if(data[i].CouplingRank == undefined)                        data[i].CouplingRank = 'A';
                     new_item.append($('<div class="coupling ' + data[i].CouplingRank.toLowerCase() + '-rate"><div class="thread"></div><div class="text">COUPLING</div></div>'));
+
                     new_item.append($('<div class="sliderr"></div>'));
+                    if(data[i].FatRank == undefined)                        data[i].FatRank = 'A';
                     new_item.append($('<div class="fat ' + data[i].FatRank.toLowerCase() + '-rate"><div class="wide"><div class="rate">' + data[i].FatRank + '</div></div><div class="text">FAT</div></div>'));
                     new_item.append($('<div class="sliderr"></div>'));
+
+                    if(data[i].CPRank == undefined)                        data[i].CPRank = 'A';
                     new_item.append($('<div class="change-propagation ' + data[i].CPRank.toLowerCase() + '-rate"><div class="wide"><div class="rate">' + data[i].CPRank + '</div></div><div class="text">Propagation</div></div>'));
                     new_item.append($('<div class="sliderr"></div>'));
                 }
-
             }
         });
     </script>
