@@ -27,8 +27,8 @@
         });
         $.ajax({
             type: "get",
-            url: "/Stanly/ArchProject/project",
-            data: {Name:getParameter('Name')},
+            url: "/Stanly/ArchProject/projectH",
+            data: null,
             success: build_project_list
         });
         function build_project_list(json)

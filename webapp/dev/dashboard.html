@@ -28,8 +28,8 @@
         });
         $.ajax({
             type: "get",
-            url: "/Stanly/DevProject/project",
-            data: {Name:getParameter('Name')},
+            url: "/Stanly/DevProject/projectH",
+            data: null,
             success: build_project_list
         });
         function build_project_list(json)
