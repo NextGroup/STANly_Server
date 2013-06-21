@@ -348,28 +348,22 @@
             data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
             success: function(json)
             {
-                devs = jQuery.parseJSON(json).list;
-                $('.developer>.title')
-                        .text(devs.length)
-                        .append($('<span>Members</span>'));
-
-                $('.developer>.content-box').empty();
-
-                if(devs.length<4)
+                rankt = ['A','B','C','D'];
+                data = jQuery.parseJSON(json).list;
+                $('#pollution-head').parent()
+                        .empty()
+                        .append($('<li id="pollution-head"><div class="picture-name-id hover" style="width: 100%">Developer Picture / ID</div></li>'))
+                for(var i=0;i<data.length;i++)
                 {
-                    for(var i=0;i<devs.length;i++)
-                        $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
-                }
-                else
-                {
-                    for(var i=0;i<3;i++)
-                        $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
-                    $('.developer>.content-box').append($('<li class="center">··· More members ···</li>'))
-                    $('.developer>.content-box>.center').click(function(){
-                        $('.developer>.content-box').empty();
-                        for(var i=0;i<devs.length;i++)
-                            $('.developer>.content-box').append($('<li>'+devs[i]+'</li>'))
-                    })
+                    new_li = $('<li></li>');
+                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i]+'"><img src="'+developer_img_list[Math.floor(Math.random() * 56) + 1]+'"></div></div>'));
+                    new_li.append($('<div class="name-id">'+data[i]+'</div>'));
+                    new_li.append($('<div class="commit"> </div>'));
+                    new_li.append($('<div class="rank"> </div>'));
+
+                    $('#pollution-head').parent().append(new_li);
+
+
                 }
             }
         });
@@ -591,7 +585,7 @@
                                                             var Grapdata = document.querySelector("#inputGraph");
                                                             var Mainsvg = d3.select("svg");
                                                             var MainsvgGroup = Mainsvg.append("g").attr("transform", "translate(5, 5)");
-                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+getParameter('nsleft'),null,function(d){
+                                                            var MainGraph = new Graph(Mainsvg,MainsvgGroup,"Main","/Stanly/component/CompositionView?Name="+getParameter('Project')+"&nodeID="+id,null,function(d){
                                                                 BuildDetailRelation(d.source.id,d.target.id);
                                                             });
                                                         }
@@ -652,42 +646,18 @@
 					<!--.dashboard-group fin-->
 
                     <div class="dashboard-group">
-                        <div class="group" style="overflow: auto;">
-                            <div class="right-content-area">
-                                <table>
-                                    <tbody>
-                                    <tr class="information">
-                                        <td>
-                                            <div class="relations">
-                                                <ol class="content-box">
-                                                    <li id="relation-head">
-                                                        <div class="source hover">Source</div>
-                                                        <div class="relation hover">Relation</div>
-                                                        <div class="target hover">Target</div>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                            <div class="developer">
-                                                <div class="icon"></div>
-                                                <div class="title">0<span>Members</span></div>
-                                                <ol class="content-box">
-                                                </ol>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="title">Developer List</div>
+                        <div class="developer-list">
+                            <ol class="content-box">
+                                <li id="pollution-head">
+                                    <div class="picture-name-id hover">Developer Picture / ID</div>
+                                    <div class="commit hover">Commit Count</div>
+                                    <div class="rank hover">Rank</div>
+                                </li>
+                            </ol>
                         </div>
-
-                        <div id="left-rate">
-                        </div>
-                        <!--left-rate fin-->
-                        <div id="right-rate">
-                        </div>
-                        <!--right-rate fin-->
+                        <!--count-metric fin -->
                     </div>
-
 
 					<div id="popup-info">
 						<div id="popup-tri"></div>
