@@ -293,6 +293,32 @@
                 $('table>tbody>.body>td>.naming>pre').text(sum);
             }
         });
+
+        $.ajax({
+            type: "get",
+            url: "/Stanly/linkdev/list",
+            data: {name:getParameter('Project'),nsleft:getParameter('nsleft')},
+            success: function(json)
+            {
+                rankt = ['A','B','C','D'];
+                data = jQuery.parseJSON(json).list;
+                $('#pollution-head').parent()
+                        .empty()
+                        .append($('<li id="pollution-head"><div class="picture-name-id hover" style="width: 100%">Developer Picture / ID</div></li>'))
+                for(var i=0;i<data.length;i++)
+                {
+                    new_li = $('<li></li>');
+                    new_li.append($('<div class="picture"><div class="circle_wrapper" id="'+data[i]+'"><img src="'+developer_img_list[Math.floor(Math.random() * 56) + 1]+'"></div></div>'));
+                    new_li.append($('<div class="name-id">'+data[i]+'</div>'));
+                    new_li.append($('<div class="commit"> </div>'));
+                    new_li.append($('<div class="rank"> </div>'));
+
+                    $('#pollution-head').parent().append(new_li);
+
+
+                }
+            }
+        });
 	</script>
 </head>
 
@@ -451,6 +477,20 @@
 						</div>
 					</div>
 					<!--.dashboard-group fin-->
+
+                    <div class="dashboard-group">
+                        <div class="title">Developer List</div>
+                        <div class="developer-list">
+                            <ol class="content-box">
+                                <li id="pollution-head">
+                                    <div class="picture-name-id hover">Developer Picture / ID</div>
+                                    <div class="commit hover">Commit Count</div>
+                                    <div class="rank hover">Rank</div>
+                                </li>
+                            </ol>
+                        </div>
+                        <!--count-metric fin -->
+                    </div>
 
 					<div id="popup-info">
 						<div id="popup-tri"></div>
